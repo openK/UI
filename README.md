@@ -1,4 +1,4 @@
-# angular-seed — the seed for AngularJS apps
+# openK-seed — the seed for AngularJS apps
 
 This project is an application skeleton for a typical [AngularJS](http://angularjs.org/) web app.
 You can use it to quickly bootstrap your angular webapp projects and dev environment for these
@@ -80,30 +80,23 @@ Now browse to the app at `http://localhost:8000/app/index.html`.
 
 ```
 app/                    --> all of the source files for the application
-  app.css               --> default stylesheet
-  components/           --> all app specific modules
-    version/              --> version related components
-      version.js                 --> version module declaration and basic "version" value service
-      version_test.js            --> "version" value service tests
-      version-directive.js       --> custom directive that returns the current app version
-      version-directive_test.js  --> version directive tests
-      interpolate-filter.js      --> custom interpolation filter
-      interpolate-filter_test.js --> interpolate filter tests
-  view1/                --> the view1 view template and logic
-    view1.html            --> the partial template
-    view1.js              --> the controller logic
-    view1_test.js         --> tests of the controller
-  view2/                --> the view2 view template and logic
-    view2.html            --> the partial template
-    view2.js              --> the controller logic
-    view2_test.js         --> tests of the controller
-  app.js                --> main application module
-  index.html            --> app layout file (the main html template file of the app)
-  index-async.html      --> just like index.html, but loads js files asynchronously
-karma.conf.js         --> config file for running unit tests with Karma
-e2e-tests/            --> end-to-end tests
-  protractor-conf.js    --> Protractor config file
-  scenarios.js          --> end-to-end scenarios to be run by Protractor
+app.css                 --> default stylesheet
+    lib/components/             --> all app specific modules
+        version/                --> version related components
+            version.js                  --> version module declaration and basic "version" value service
+            version_test.js             --> "version" value service tests
+            version-directive.js        --> custom directive that returns the current app version
+            version-directive_test.js   --> version directive tests
+            interpolate-filter.js       --> custom interpolation filter
+            interpolate-filter_test.js  --> interpolate filter tests
+    state1.html                         --> the partial template
+    state1.list.html                    --> the partial details template
+    app.js                              --> main application module
+    index.html                          --> app layout file (the main html template file of the app)
+    karma.conf.js           --> config file for running unit tests with Karma
+    e2e-tests/              --> end-to-end tests
+        protractor-conf.js  --> Protractor config file
+        scenarios.js        --> end-to-end scenarios to be run by Protractor
 ```
 
 ## Testing
@@ -137,7 +130,6 @@ predefined script to do this:
 ```
 npm run test-single-run
 ```
-
 
 ### End to end testing
 
@@ -270,17 +262,6 @@ tests when you push to GitHub.
 
 You will need to enable the integration between Travis and GitHub. See the Travis website for more
 instruction on how to do this.
-
-### CloudBees
-
-CloudBees have provided a CI/deployment setup:
-
-<a href="https://grandcentral.cloudbees.com/?CB_clickstart=https://raw.github.com/CloudBees-community/angular-js-clickstart/master/clickstart.json">
-<img src="https://d3ko533tu1ozfq.cloudfront.net/clickstart/deployInstantly.png"/></a>
-
-If you run this, you will get a cloned version of this repo to start working on in a private git repo,
-along with a CI service (in Jenkins) hosted that will run unit and end to end tests in both Firefox and Chrome.
-
 
 ## Contact
 
