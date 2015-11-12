@@ -1,6 +1,6 @@
-# openK-UI — the seed for openk-UI apps
+# openK-UI — the seed for openK web apps
 
-This project is an application skeleton for a typical [AngularJS](http://angularjs.org/) web app.
+This project is an application skeleton for a typical openK-UI web app based on [AngularJS](http://angularjs.org/) web app.
 You can use it to quickly bootstrap your angular webapp projects and dev environment for these
 projects.
 
