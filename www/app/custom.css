@@ -1,0 +1,233 @@
+<!--
+/*******************************************************************************
+* Copyright (c) 2015 BTC AG.
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*     Martin Boehm, http://www.minnemedia.de - initial API and implementation
+*******************************************************************************/
+-->
+html,
+body {
+    overflow-x: hidden; /* Prevent scroll on narrow devices */
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    padding-top: 53px;
+    /* Margin bottom by footer height*/
+    margin-bottom: 80px;
+}
+
+.voffset {
+    padding-top: 15px;
+}
+
+.breadcrumb .divider {
+    display: none;
+}
+
+.breadcrumb > li + li:before {
+    content: "\00276D";
+}
+
+/* Beginn Kopfleiste */
+.masthead {
+    border: 0;
+    background: rgb(232, 238, 231);
+    background: -moz-linear-gradient(left, rgba(232, 238, 231, 1) 0%, rgba(229, 237, 242, 1) 75%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(232, 238, 231, 1)), color-stop(75%, rgba(229, 237, 242, 1)));
+    background: -webkit-linear-gradient(left, rgba(232, 238, 231, 1) 0%, rgba(229, 237, 242, 1) 75%);
+    background: -o-linear-gradient(left, rgba(232, 238, 231, 1) 0%, rgba(229, 237, 242, 1) 75%);
+    background: -ms-linear-gradient(left, rgba(232, 238, 231, 1) 0%, rgba(229, 237, 242, 1) 75%);
+    background: linear-gradient(to right, rgba(232, 238, 231, 1) 0%, rgba(229, 237, 242, 1) 75%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e8eee7', endColorstr='#e5edf2', GradientType=1);
+}
+
+.masthead:after {
+    position: relative;
+    height: 4px;
+    width: 100%;
+    content: "";
+    background: rgb(121, 182, 28);
+    background: -moz-linear-gradient(left, rgba(121, 182, 28, 1) 0%, rgba(2, 129, 196, 1) 75%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(121, 182, 28, 1)), color-stop(75%, rgba(2, 129, 196, 1)));
+    background: -webkit-linear-gradient(left, rgba(121, 182, 28, 1) 0%, rgba(2, 129, 196, 1) 75%);
+    background: -o-linear-gradient(left, rgba(121, 182, 28, 1) 0%, rgba(2, 129, 196, 1) 75%);
+    background: -ms-linear-gradient(left, rgba(121, 182, 28, 1) 0%, rgba(2, 129, 196, 1) 75%);
+    background: linear-gradient(to right, rgba(121, 182, 28, 1) 0%, rgba(2, 129, 196, 1) 75%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#79b61c', endColorstr='#0281c4', GradientType=1);
+}
+
+.navbar-brand {
+    padding-top: 13px;
+    padding-bottom: 0;
+    padding-left: 70px;
+    background: url(../img/logo_openkonsequenz.png) no-repeat 5px center;
+    background-size: 63px 50px;
+}
+
+.navbar-brand .open {
+    font-size: 1.8em;
+    color: #000;
+    font-weight: 500;
+    text-transform: lowercase;
+}
+
+.navbar-brand .konsequenz {
+    margin-left: 3px;
+    font-size: 1.35em;
+    color: #000;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.masthead .navbar-toggle {
+    position: absolute;
+    right: 0;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* Ende Kopfleiste */
+
+/* Beginn Sidebar */
+#sidebar .list-group-item:first-child {
+    border-top-right-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+}
+
+.toggle-sidebar {
+    margin-top: 10px;
+}
+
+.row-offcanvas .toggle-sidebar .in,
+.row-offcanvas.active .toggle-sidebar .out {
+    display: block;
+}
+
+.row-offcanvas .toggle-sidebar .out,
+.row-offcanvas.active .toggle-sidebar .in {
+    display: none;
+}
+
+/* Ende Sidebar */
+
+.maincontent {
+    background: #fff;
+    margin: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.nav-tabs-maincontent {
+    margin-left: 0;
+    padding-left: 15px;
+}
+
+.checkboxes label.checkbox,
+.checkboxes label.radio {
+    font-weight: 400;
+    margin-left: 20px;
+}
+
+.checkboxes .input-group-addon {
+    width: 50px
+}
+
+.form-group.sicherheit-aufschlag .input-group {
+    width: 82px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.zeit {
+    float: right;
+}
+
+.zeit .alert {
+    margin-top: -6px;
+    margin-bottom: 10px;
+    padding: 4px;
+}
+
+#netzgebiete tr.toggle {
+    cursor: pointer;
+}
+
+#netzgebiete tbody:nth-child(2n) tr.toggle {
+    background: #f5f8fc;
+}
+
+#netzgebiete tbody tr.toggle td span.glyphicon {
+    margin-right: 5px;
+}
+
+#netzgebiete tbody:nth-child(2n+1) tr.toggle {
+    background: #f5f8fc;
+}
+
+#netzgebiete tfoot tr {
+    background: #e9f0f9;
+}
+
+#netzgebiete tr.collapsing td:first-child,
+#netzgebiete tr.collapse td:first-child {
+    padding-left: 15px;
+}
+
+#regulationSteps {
+    height: 23px;
+    margin-top: -2px;
+    margin-bottom: 4px;
+}
+
+@media screen and (max-width: 767px) {
+    .row-offcanvas {
+        position: relative;
+        -webkit-transition: all .25s ease-out;
+        -o-transition: all .25s ease-out;
+        transition: all .25s ease-out;
+    }
+
+    .row-offcanvas-right {
+        right: 0;
+    }
+
+    .row-offcanvas-left {
+        left: 0;
+    }
+
+    .row-offcanvas-right
+    .sidebar-offcanvas {
+        right: -50%; /* 6 columns */
+    }
+
+    .row-offcanvas-left
+    .sidebar-offcanvas {
+        left: -50%; /* 6 columns */
+    }
+
+    .row-offcanvas-right.active {
+        right: 50%; /* 6 columns */
+    }
+
+    .row-offcanvas-left.active {
+        left: 50%; /* 6 columns */
+    }
+
+    .sidebar-offcanvas {
+        position: absolute;
+        top: 0;
+        width: 50%; /* 6 columns */
+    }
+}
+

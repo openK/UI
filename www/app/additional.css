@@ -1,0 +1,191 @@
+<!--
+/*******************************************************************************
+* Copyright (c) 2015 BTC AG.
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*     Stefan Brockmann - initial API and implementation
+*     Jan Krueger - Login Portlet
+*******************************************************************************/
+-->
+
+/* Liferay Login */
+label[for="_58_login"] {
+    padding-right: 7px;
+    margin-bottom: 20px;
+}
+
+label[for="_58_password"] {
+    padding-right: 36px;
+    margin-bottom: 20px;
+}
+
+label[for="_58_firstName"] {
+    padding-right: 60px;
+    margin-bottom: 20px;
+}
+
+label[for="_58_middleName"] {
+    padding-right: 115px;
+    margin-bottom: 20px;
+}
+
+label[for="_58_lastName"] {
+    padding-right: 130px;
+    margin-bottom: 20px;
+}
+
+label[for="_58_screenName"] {
+    padding-right: 45px;
+    margin-bottom: 20px;
+}
+
+label[for="_58_emailAddress"] {
+    padding-right: 40px;
+    margin-bottom: 20px;
+}
+
+label[for="_58_birthday"] {
+    margin-bottom: 10px;
+}
+
+#_58_birthday {
+    margin-bottom: 10px;
+}
+
+label[for="_58_male"] {
+    padding-right: 6px;
+    margin-bottom: 20px;
+}
+
+label[for="_58_captchaText"] {
+    padding-right: 6px;
+    margin-bottom: 20px;
+}
+
+/*#_58_rjus_column1_2 {*/
+/*visibility: hidden;*/
+/*}*/
+
+.loading-display {
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    position: fixed;
+}
+
+.loading-display .filter {
+    opacity: 0.25;
+    background: #000;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+}
+
+.loading-display .center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-image: url("../img/spinner.gif");
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+}
+
+.mac-popover {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding-top: 20px;
+}
+
+.mac-popover .tip {
+    display: none;
+}
+
+#grid-overview {
+    height: 750px;
+}
+
+.ui-grid-header-cell {
+    min-height: 60px !important;
+}
+
+.ui-grid-header-canvas {
+    background: white !important;
+}
+
+.ui-grid-cell-align-right {
+    text-align: right;
+}
+
+.portlet-topper {
+    a: white;
+}
+
+.btn-default {
+    background-image: none !important;
+    background-color: white !important;
+}
+
+.selection .multiSelect > button {
+    background-image: none;
+    background-color: white;
+    border: 1px solid #b7cbda;
+    border-radius: 8px;
+    min-height: 34px !important;
+}
+
+.tree-grid table, .tree-grid td {
+    border: 1px solid #ccdbe6;
+}
+
+.tree-grid .level-1 {
+    background: none repeat scroll 0 0 #f5f8fc;
+    padding-left: 5px;
+}
+
+.tree-grid .level-2 {
+    background: none repeat scroll 0 0 #ffffff;
+    padding-left: 15px;
+}
+
+.tree-grid tr td:first-child {
+    width: 65px;
+}
+
+.tree-grid .level-3 .indented {
+    left: 0px;
+}
+
+.tree-grid .level-2 .indented {
+    left: 10px;
+}
+
+#proposalTree, #proposalStats {
+    height: 440px;
+}
+
+.label-required {
+    color: #a94442;
+}
+
+input[type="checkbox"] {
+    top: -1px;
+}
+
+.confirmContentBox {
+    padding: 0;
+    margin-left: 10px;
+}
+
+.hideRowSelectedSubStation {
+    opacity: 0.30;
+}

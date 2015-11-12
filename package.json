@@ -26,7 +26,7 @@
     "shelljs": "^0.5.3"
   },
 
-  "scripts": {// run like 'npm <script>'
+  "scripts": {
     "postinstall": "bower install",
     "prestart": "npm install",
     "start": "http-server -a localhost -p 8080 -c-1",
