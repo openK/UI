@@ -13,30 +13,21 @@ var rename = require('gulp-rename');
 var sh = require('shelljs');
 
 var paths = {
-    js: ['./app/*.js'],
-    css: ['./app/*.css'],
-    html: ['./app/*.html'],
+    js: ['./www/app/**/*.js'],
+    css: ['./www/app/**/*.css'],
+    html: ['./www/app/**/*.html'],
 };
 
-var webserver = require('gulp-webserver')
-
-gulp.task('webserver', function() {
-    gulp.src('www')
-        .pipe(webserver({
-            livereload: true,
-            open: true
-        }));
-});
-
-var sync = require('browser-sync');
-gulp.task('sync', function() {
-    sync({ server: { baseDir: 'app' } });
-});
-
-gulp.task('watch-paths', function() {
-    gulp.watch(paths.js, [sync.reload]);
-    gulp.watch(paths.css, [sync.reload]);
-    gulp.watch(paths.html, [sync.reload]);
+var browserSync = require('browser-sync').create();
+// Static server
+gulp.task('serve', function() {
+    browserSync.init({
+        files:  ["./www/app/*.css", "./www/app/*.js", "./www/app/*.html"],
+        server: {
+            baseDir: "./www",
+            index: "index.html"
+        }
+    });
 });
 
 gulp.task('sass', function (done) {
@@ -80,4 +71,4 @@ gulp.task('minify-js', function () {
         .pipe(gulp.dest('www/js'));
 });
 
-gulp.task('default', ['sync', 'watch-paths']);
+gulp.task('default', ['serve']);
