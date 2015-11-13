@@ -1,0 +1,833 @@
+<!--
+/*******************************************************************************
+* Copyright (c) 2015 BTC AG.
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+* Stefan Brockmann - initial API and implementation
+*******************************************************************************/
+-->
+
+<div data-ng-app="app">
+
+    <h3>{{'CREATE.ACTIVITY' | translate}}</h3>
+
+    <div id="tabs" data-ng-controller="CreateController">
+        <div class="row">
+            <div class="col-xs-6">
+                <ol class="breadcrumb">
+                    <li>{{'OPENK.ABBREVIATION' | translate}}</li>
+                    <li>{{'EISMANAPP' | translate}}</li>
+                    <li>{{'CREATE.ACTIVITY' | translate}}</li>
+                    <li class="active" data-ng-show="selectedStep == 'preselection'">{{'WORKFLOW.SETTINGS' |
+                        translate}}
+                    </li>
+                    <li class="active" data-ng-show="selectedStep == 'settings'">{{'WORKFLOW.DATA' | translate}}</li>
+                    <li class="active" data-ng-show="selectedStep == 'proposal'">{{'WORKFLOW.REDUCTIONADVICE' |
+                        translate}}
+                    </li>
+                    <li class="active" data-ng-show="selectedStep == 'confirm'">{{'WORKFLOW.CONFIRM' | translate}}</li>
+                </ol>
+            </div>
+        </div>
+        <div class="loading-display" style="" data-loading>
+            <div class="filter"></div>
+            <div class="center"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="btn-group btn-group">
+                    <a class="btn" data-ng-disabled="true"
+                       data-ng-class="{ 'btn-default' : selectedStep != 'preselection', 'btn-success' : selectedStep == 'preselection' }">{{'WORKFLOW.SETTINGS'
+                        | translate}}</a>
+                    <a class="btn" data-ng-disabled="true"
+                       data-ng-class="{ 'btn-default' : selectedStep != 'settings', 'btn-success' : selectedStep == 'settings' }">{{'WORKFLOW.DATA'
+                        | translate}}</a>
+                    <a class="btn" data-ng-disabled="true"
+                       data-ng-class="{ 'btn-default' : selectedStep != 'proposal', 'btn-success' : selectedStep == 'proposal' }">{{'WORKFLOW.REDUCTIONADVICE'
+                        | translate}}</a>
+                    <a class="btn" data-ng-disabled="true"
+                       data-ng-class="{ 'btn-default' : selectedStep != 'confirm', 'btn-success' : selectedStep == 'confirm' }">{{'WORKFLOW.CONFIRM'
+                        | translate}}</a>
+                </div>
+                <div class="col-xs-5 zeit" data-ng-show="selectedStep == 'proposal' || selectedStep == 'confirm'">
+                    <div role="alert" ng-class="timeElapsed" ng-click="activeButton()"><span aria-hidden="true"
+                                                                                             class="glyphicon glyphicon-time"></span>
+                        {{'TIMER.START' | translate}}
+                        <timer countdown="1800" max-time-unit="'minute'" interval="1000">{{mminutes}}:{{sseconds}}
+                        </timer>
+                        {{'TIMER.END' | translate}}
+                    </div>
+                </div>
+                <ul class="nav nav-tabs voffset nav-tabs-maincontent">
+                    <li ng-repeat="tab in tabs"
+                        data-ng-class="{'active' : isActiveTab(tab.id)}"
+                        data-ng-click="onClickTab(tab)"><a href="#">{{tab.title | translate}}</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row voffset maincontent">
+            <div id="mainView">
+                <div data-ng-include="currentTab"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="regulation">
+        <div data-ng-include="selectedStep"></div>
+    </script>
+
+    <!--
+        Netzzustand
+    -->
+    <script type="text/ng-template" id="stationlist">
+        <div class="col-xs-3 col-sm-3 col-md-4 table-responsive"
+             data-ng-controller="NetworkStateController">
+            <tree-grid col-defs="treeColumns" tree-data="treeData" icon-leaf="glyphicon glyphicon-arrow-right"
+                       icon-expand="glyphicon glyphicon-folder-open" icon-collapse="glyphicon glyphicon-folder-open"
+                       expand-on="name"></tree-grid>
+        </div>
+        <div id="stats" class="col-xs-9 col-sm-9 col-md-8 table-responsive"
+             data-ng-controller="SubStationController">
+            <div class="grid table" data-ui-grid="substations" data-ui-grid-pagination data-ui-grid-selection></div>
+        </div>
+    </script>
+
+    <!--
+        Voreinstellungen
+    -->
+    <script type="text/ng-template" id="preselection">
+        <div class="col-xs-12">
+            <form name="preselectionForm" class="form-horizontal" data-toggle="validator">
+                <div class="form-group">
+                    <label for="template" class="control-label col-xs-2">{{'PRESELECTION.USEFROMTEMPLATE' |
+                        translate}}:</label>
+
+                    <div class="col-xs-3">
+                        <select class="form-control" id="template" name="template"
+                                data-ng-options="c.name for c in templates track by c.id"
+                                data-ng-model="selectedTemplate"
+                                data-ng-change="loadTemplateData(selectedTemplate)"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-2 label-required">{{'PRESELECTION.REGULATIONSTEPS' |
+                        translate}}*:</label>
+
+                    <div ng-repeat="n in regulationSteps">
+                        <div class="col-xs-1" data-ng-class="{'has-error': preselectionForm.regulationsteps.$invalid}">
+                            <label class="radio-inline">
+                                <input type="radio" data-ng-required="true" name="regulationsteps" value="{{n}}"
+                                       data-ng-model="activity.preselection.reductionSetting"> {{n}}%
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-2 label-required">{{'PRESELECTION.DISCRIMINATIONFACTOR'
+                        | translate}}*:</label>
+
+                    <div>
+                        <div class="col-xs-1">
+                            <label class="radio-inline">
+                                <input type="radio" value="true"
+                                       data-ng-model="activity.preselection.discriminationCoefficientEnabled"> {{'YES' |
+                                translate}}
+                            </label>
+                        </div>
+                        <div class="col-xs-1">
+                            <label class="radio-inline">
+                                <input type="radio" value="false"
+                                       data-ng-model="activity.preselection.discriminationCoefficientEnabled"> {{'NO' |
+                                translate}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 label-required">{{'PRESELECTION.MISSINGMEASUREMENTFWT'
+                                | translate}}*:</label>
+
+                            <div class="col-xs-6 checkboxes"
+                                 data-ng-class="{'has-error': activity.preselection.characteristicForMissingMeasurementFwt.$invalid}">
+                                <label class="radio">
+                                    <input type="radio" name="missingMeasurementFwt" value="NotIncluded" required
+                                           data-ng-model="activity.preselection.characteristicForMissingMeasurementFwt">{{'PRESELECTION.NOTINCLUDED'
+                                    | translate}}
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="missingMeasurementFwt" value="SubstituteByReference"
+                                           required
+                                           data-ng-model="activity.preselection.characteristicForMissingMeasurementFwt">{{'PRESELECTION.SUBSTITUTEBYREFERENCE'
+                                    | translate}}
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="missingMeasurementFwt" value="SubstituteWithInputFactor"
+                                           required
+                                           data-ng-model="activity.preselection.characteristicForMissingMeasurementFwt">{{'PRESELECTION.SUBSTITUTEWITHINPUTFACTOR'
+                                    | translate}}
+                                </label>
+
+                                <div class="row">
+                                    <div class="col-xs-6 checkboxes voffset">
+                                        <div class="input-group input-group-sm"
+                                             data-ng-class="{'has-error': preselectionForm.substituteValueWindFwt.$invalid}">
+                                            <span id="wind" class="input-group-addon">{{'WIND' | translate}}</span>
+                                            <input type="number" min="0" name="substituteValueWindFwt" max="100"
+                                                   data-ng-required="activity.preselection.characteristicForMissingMeasurementFwt == 'SubstituteWithInputFactor'"
+                                                   data-ng-disabled="activity.preselection.characteristicForMissingMeasurementFwt != 'SubstituteWithInputFactor'"
+                                                   data-ng-model="activity.preselection.substituteValueWindFwt"
+                                                   data-area-describedby="wind" class="form-control"/>
+                                            <span class="input-group-addon">%</span>
+
+                                        </div>
+                                        <div class="input-group input-group-sm"
+                                             data-ng-class="{'has-error': preselectionForm.substituteValuePhotovoltaicFwt.$invalid}">
+                                            <span id="pv" class="input-group-addon">{{'PV' | translate}}</span>
+                                            <input type="number" min="0" max="100" name="substituteValuePhotovoltaicFwt"
+                                                   data-ng-required="activity.preselection.characteristicForMissingMeasurementFwt == 'SubstituteWithInputFactor'"
+                                                   data-ng-disabled="activity.preselection.characteristicForMissingMeasurementFwt != 'SubstituteWithInputFactor'"
+                                                   data-ng-model="activity.preselection.substituteValuePhotovoltaicFwt"
+                                                   data-area-describedby="pv" class="form-control"/>
+                                            <span class="input-group-addon">%</span>
+                                        </div>
+                                        <div class="input-group input-group-sm"
+                                             data-ng-class="{'has-error': preselectionForm.substituteValueBiogasFwt.$invalid}">
+                                            <span id="bio" class="input-group-addon">{{'BIO' | translate}}</span>
+                                            <input type="number" name="substituteValueBiogasFwt" min="0" max="100"
+                                                   data-ng-required="activity.preselection.characteristicForMissingMeasurementFwt == 'SubstituteWithInputFactor'"
+                                                   data-ng-disabled="activity.preselection.characteristicForMissingMeasurementFwt != 'SubstituteWithInputFactor'"
+                                                   data-ng-model="activity.preselection.substituteValueBiogasFwt"
+                                                   data-area-describedby="bio" class="form-control"/>
+                                            <span class="input-group-addon">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 label-required">{{'PRESELECTION.MISSINGMEASUREMENTEFR'|
+                                translate}}*:</label>
+
+                            <div class="col-xs-6 checkboxes"
+                                 data-ng-class="{'has-error': activity.preselection.characteristicForMissingMeasurementEfr.$invalid}">
+                                <label class="radio">
+                                    <input type="radio" name="missingMeasurementEfr" value="NotIncluded" required
+                                           data-ng-model="activity.preselection.characteristicForMissingMeasurementEfr">{{'PRESELECTION.NOTINCLUDED'|
+                                    translate}}
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="missingMeasurementEfr" value="SubstituteByReference"
+                                           required
+                                           data-ng-model="activity.preselection.characteristicForMissingMeasurementEfr">{{'PRESELECTION.SUBSTITUTEBYREFERENCE'|
+                                    translate}}
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="missingMeasurementEfr" value="SubstituteWithInputFactor"
+                                           required
+                                           data-ng-model="activity.preselection.characteristicForMissingMeasurementEfr">{{'PRESELECTION.SUBSTITUTEWITHINPUTFACTOR'|
+                                    translate}}
+                                </label>
+
+                                <div class="row">
+                                    <div class="col-xs-6 checkboxes voffset">
+                                        <div class="input-group input-group-sm"
+                                             data-ng-class="{'has-error': preselectionForm.substituteValueWindEfr.$invalid}">
+                                            <span id="wind" class="input-group-addon">{{'WIND'| translate}}</span>
+                                            <input type="number" min="0" name="substituteValueWindEfr" max="100"
+                                                   data-ng-required="activity.preselection.characteristicForMissingMeasurementEfr == 'SubstituteWithInputFactor'"
+                                                   data-ng-disabled="activity.preselection.characteristicForMissingMeasurementEfr != 'SubstituteWithInputFactor'"
+                                                   data-ng-model="activity.preselection.substituteValueWindEfr"
+                                                   data-area-describedby="wind" class="form-control"/>
+                                            <span class="input-group-addon">%</span>
+
+                                        </div>
+                                        <div class="input-group input-group-sm"
+                                             data-ng-class="{'has-error': preselectionForm.substituteValuePhotovoltaicEfr.$invalid}">
+                                            <span id="pv" class="input-group-addon">{{'PV'| translate}}</span>
+                                            <input type="number" min="0" max="100" name="substituteValuePhotovoltaicEfr"
+                                                   data-ng-required="activity.preselection.characteristicForMissingMeasurementEfr == 'SubstituteWithInputFactor'"
+                                                   data-ng-disabled="activity.preselection.characteristicForMissingMeasurementEfr != 'SubstituteWithInputFactor'"
+                                                   data-ng-model="activity.preselection.substituteValuePhotovoltaicEfr"
+                                                   data-area-describedby="pv" class="form-control"/>
+                                            <span class="input-group-addon">%</span>
+                                        </div>
+                                        <div class="input-group input-group-sm"
+                                             data-ng-class="{'has-error': preselectionForm.substituteValueBiogasEfr.$invalid}">
+                                            <span id="bio" class="input-group-addon">{{'BIO'| translate}}</span>
+                                            <input type="number" name="substituteValueBiogasEfr" min="0" max="100"
+                                                   data-ng-required="activity.preselection.characteristicForMissingMeasurementEfr == 'SubstituteWithInputFactor'"
+                                                   data-ng-disabled="activity.preselection.characteristicForMissingMeasurementEfr != 'SubstituteWithInputFactor'"
+                                                   data-ng-model="activity.preselection.substituteValueBiogasEfr"
+                                                   data-area-describedby="bio" class="form-control"/>
+                                            <span class="input-group-addon">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-2">{{'PRESELECTION.HYSTERESIS' |
+                        translate}}:</label>
+
+                    <div class="col-xs-2">
+                        <p class="form-control-static">{{hysteresis}} %</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    *{{'MANDATORY' | translate}}
+                </div>
+                <div class="alert alert-warning"
+                     data-ng-show="preselectionFormSubmitted &&
+                     (preselectionForm.regulationsteps.$invalid || preselectionForm.missingMeasurementFwt.$error.required || preselectionForm.missingMeasurementEfr.$error.required
+                     || preselectionForm.substituteValueBiogasFwt.$invalid || preselectionForm.substituteValuePhotovoltaicFwt.$invalid || preselectionForm.substituteValueWindFwt.$invalid
+                     || preselectionForm.substituteValueBiogasEfr.$invalid || preselectionForm.substituteValuePhotovoltaicEfr.$invalid || preselectionForm.substituteValueWindEfr.$invalid)">
+                    <div>
+                        <normal class="warning"
+                                data-ng-show="preselectionFormSubmitted && preselectionForm.regulationsteps.$invalid">
+                            {{'PRESELECTION.REGULATIONSTEPS.ERROR' | translate}}
+                        </normal>
+                    </div>
+                    <div>
+                        <normal class="warning"
+                                data-ng-show="preselectionFormSubmitted && preselectionForm.missingMeasurementFwt.$error.required">
+                            {{'PRESELECTION.MISSINGMEASUREMENTFWT.ERROR' | translate}}
+                        </normal>
+                    </div>
+                    <div>
+                        <normal class="warning"
+                                data-ng-show="preselectionFormSubmitted && preselectionForm.missingMeasurementEfr.$error.required">
+                            {{'PRESELECTION.MISSINGMEASUREMENTEFR.ERROR' | translate}}
+                        </normal>
+                    </div>
+                    <div>
+                        <normal class="warning"
+                                data-ng-show="preselectionFormSubmitted &&
+                                (preselectionForm.substituteValueBiogasFwt.$invalid || preselectionForm.substituteValuePhotovoltaicFwt.$invalid || preselectionForm.substituteValueWindFwt.$invalid
+                                || preselectionForm.substituteValueBiogasEfr.$invalid || preselectionForm.substituteValuePhotovoltaicEfr.$invalid || preselectionForm.substituteValueWindEfr.$invalid)">
+                            {{'PRESELECTION.SUBSTITUTEWITHINPUTFACTORERROR' | translate}}
+                        </normal>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <button class="btn btn-default btn-sm" data-ng-click="gotoOverview()">{{'CANCEL'
+                            | translate}}
+                        </button>
+                        <div class="btn-group pull-right" role="group">
+                            <button data-ng-click="openModal(preselectionForm)"
+                                    data-ng-disabled="!preselectionForm.$valid"
+                                    class="btn btn-primary btn-sm">{{'PRESELECTION.SAVETEMPLATEAS'
+                                |
+                                translate}}
+                            </button>
+                            <button class="btn btn-primary btn-sm"
+                                    data-ng-click="gotoSettings(preselectionForm)">{{'NEXT'
+                                | translate}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+    <!--
+        Benutzereinstellungen
+    -->
+    <script type="text/ng-template" id="settings">
+        <form name="settingsForm" class="form-horizontal" data-toggle="validator">
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label for="datestarted" class="control-label col-xs-4 label-required">{{'SETTINGS.DATESTARTED'
+                        | translate}}*:</label>
+
+                    <div class="controls col-xs-8">
+                        <div class="input-prepend input-group"
+                             data-ng-class="{'has-error': settingsForm.datestarted.$invalid}">
+                            <input type="text" required value="" startrange
+                                   data-ng-model="activity.settings.dateStarted" class="form-control"
+                                   id="datestarted" name="datestarted">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    </div>
+                    <label for="datefinished" class="control-label col-xs-4 label-required">{{'SETTINGS.DATEFINISHED' |
+                        translate}}*:</label>
+
+                    <div class="controls col-xs-8">
+                        <div class="input-prepend input-group"
+                             data-ng-class="{'has-error': settingsForm.datefinished.$invalid}">
+                            <input type="text" required value="" data-ng-model="activity.settings.dateFinished" endrange
+                                   class="form-control" id="datefinished" name="datefinished">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reasonofreduction" class="control-label col-xs-4 label-required">{{'SETTINGS.REASONOFREDUCTION'
+                        | translate}}*:</label>
+
+                    <div class="col-xs-8" data-ng-class="{'has-error': activity.settings.reasonOfReduction == ''}">
+                        <select id="reasonofreduction" required data-ng-model="activity.settings.reasonOfReduction"
+                                data-ng-options="c for c in regulationReasons track by c" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="requiredReductionPower"
+                           data-ng-class="{'has-error': settingsForm.requiredReductionPower.$invalid}"
+                           class="control-label col-xs-4 label-required">{{'SETTINGS.REQUIREDREDUCTION' |
+                        translate}}*:</label>
+
+                    <div class="col-xs-8">
+                        <div class="input-group input-group-sm"
+                             data-ng-class="{'has-error': activity.settings.requiredReductionPower == ''}">
+                            <input type="number" required data-ng-model="activity.settings.requiredReductionPower"
+                                   data-area-describedby="requiredreductionaddon"
+                                   name="requiredReductionPower" id="requiredReductionPower"
+                                   class="form-control">
+                            <span id="requiredreductionaddon" class="input-group-addon">MW</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="geographicalregion" class="control-label col-xs-4 label-required">{{'SETTINGS.WHOLEAREA'
+                        | translate}}*:</label>
+
+                    <div class="col-xs-8">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="1" data-ng-required="checkForWholeAreaRequired()"
+                                   data-ng-disabled="checkForWholeAreaDisabling()"
+                                   data-ng-model="activity.settings.useWholeArea" id="geographicalregion"
+                                   name="geographicalregion">
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group selection">
+                    <label for="subgeographicalregion" class="control-label col-xs-4 label-required">{{'SETTINGS.SUBGEOGRAPHICALREGION'
+                        | translate}}*:</label>
+
+                    <div class="col-xs-8">
+                        <div id="subgeographicalregion" isteven-multi-select input-model="subGeographicalRegions"
+                             output-model="activity.settings.subGeographicalRegions" button-label="icon name"
+                             item-label="icon name maker" tick-property="ticked"
+                             is-disabled="checkForSubGeographicalRegionsDisabling()"
+                             data-ng-required="checkSubGeographicalRegionsRequired()">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group selection">
+                    <label for="transformerstation" class="control-label col-xs-4 label-required">{{'SETTINGS.TRANSFORMERSTATIONS'
+                        | translate}}*:</label>
+
+                    <div class="col-xs-8">
+                        <div id="transformerstation" isteven-multi-select input-model="transformerStations"
+                             output-model="activity.settings.transformerStations" button-label="icon name"
+                             item-label="icon name maker"
+                             tick-property="ticked" is-disabled="checkForTransformerStationsDisabling()"
+                             data-ng-required="checkForTransformerStationsRequired()">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="control-label col-xs-4 label-required">{{'SETTINGS.DESCRIPTION' |
+                        translate}}*:</label>
+
+                    <div class="col-xs-8" data-ng-class="{'has-error': activity.settings.description == ''}">
+                            <textarea id="description" required data-ng-model="activity.settings.description" rows="3"
+                                      class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-4 label-required">{{'SETTINGS.PRACTICE' |
+                        translate}}*:</label>
+
+                    <div class="col-xs-2">
+                        <label class="radio-inline">
+                            <input type="radio" required data-ng-model="activity.settings.practise" value="true"
+                                   name="practise"> {{'YES' | translate}}
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="radio-inline">
+                            <input type="radio" required value="false" data-ng-model="activity.settings.practise"
+                                   name="practise"> {{'NO' | translate}}
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    *{{'MANDATORY' | translate}}
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="alert alert-warning"
+                     data-ng-show="settingsFormSubmitted &&
+                     (settingsForm.datestarted.$error.required || settingsForm.datefinished.$error.required
+                     || isNoValidTimeInterval(activity.settings.dateStarted, activity.settings.dateFinished)
+                     || activity.settings.reasonOfReduction == ''
+                     || settingsForm.requiredReductionPower.$invalid
+                     <%--|| (activity.settings.useWholeArea == '' && activity.settings.ruledAreas == '' && activity.settings.transformerStations == '')--%>
+                     <%--|| settingsFormSubmitted && (checkForWholeAreaRequired() || checkForSubGeographicalRegionsRequired() || checkForTransformerStationsRequired())--%>
+                     || settingsFormSubmitted && isNoAreaDefined()
+                     || activity.settings.description == '' || activity.settings.practise == '')">
+                    <div>
+                        <normal class="warning"
+                                data-ng-show="settingsFormSubmitted && settingsForm.datestarted.$error.required">
+                            {{'SETTINGS.DATESTARTED.ERROR' | translate}}
+                        </normal>
+                    </div>
+                    <div>
+                        <normal class="warning"
+                                data-ng-show="settingsFormSubmitted && settingsForm.datefinished.$error.required">
+                            {{'SETTINGS.DATEFINISHED.ERROR' | translate}}
+                        </normal>
+                    </div>
+                    <div>
+                        <normal class="warning"
+                                data-ng-show="settingsFormSubmitted && isNoValidTimeInterval(activity.settings.dateStarted, activity.settings.dateFinished)">
+                            {{'SETTINGS.DATEINTERVAL.ERROR' | translate}}
+                        </normal>
+                    </div>
+                    <div>
+                        <normal class="warning"
+                                data-ng-show="settingsFormSubmitted && activity.settings.reasonOfReduction == ''">
+                            {{'SETTINGS.REASONOFREDUCTION.ERROR' | translate}}
+                        </normal>
+                    </div>
+                    <div>
+                        <normal class="warning"
+                                data-ng-show="settingsFormSubmitted && settingsForm.requiredReductionPower.$invalid">
+                            {{'SETTINGS.REQUIREDREDUCTION.ERROR' | translate}}
+                        </normal>
+                    </div>
+                    <div>
+                        <normal class="warning"
+                                data-ng-show="settingsFormSubmitted && isNoAreaDefined()">
+                            <%--data-ng-show="settingsFormSubmitted && activity.settings.useWholeArea == '' && activity.settings.ruledAreas == '' && activity.settings.transformerStations == ''">--%>
+                            <%--data-ng-show="settingsFormSubmitted && (checkForWholeAreaRequired() || checkForSubGeographicalRegionsRequired() || checkForTransformerStationsRequired())">--%>
+                            {{'SETTINGS.AREA.ERROR' | translate}}
+                        </normal>
+                    </div>
+                    <div>
+                        <normal class="warning"
+                                data-ng-show="settingsFormSubmitted && activity.settings.description == ''">
+                            {{'SETTINGS.DESCRIPTION.ERROR' | translate}}
+                        </normal>
+                    </div>
+                    <div>
+                        <normal class="warning"
+                                data-ng-show="settingsFormSubmitted && activity.settings.practise == ''">
+                            {{'SETTINGS.PRACTICE.ERROR' | translate}}
+                        </normal>
+                    </div>
+                </div>
+                <div class="col-xs-12 voffset">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-default btn-sm"
+                                        data-ng-click="gotoPreselection(settingsForm)">
+                                    {{'BACK' | translate}}
+                                </button>
+                                <button class="btn btn-default btn-sm" data-ng-click="gotoOverview()">{{'CANCEL' |
+                                    translate}}
+                                </button>
+                            </div>
+                            <div class="btn-group pull-right" role="group">
+                                <button data-ng-click="saveAndReturn()"
+                                        data-ng-disabled="!settingsForm.$valid"
+                                        class="btn btn-primary btn-sm">{{'SETTINGS.SAVEACTIVITYANDRETURN' | translate}}
+                                </button>
+                                <button class="btn btn-primary btn-sm"
+                                        data-ng-click="gotoStationList(settingsForm)">{{'SETTINGS.CREATEADVICE'
+                                    | translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <script src="/openk-eisman-portlet/js/eismandaterangepicker.js"/>
+    </script>
+
+    <!--
+        Abregelvorschlag
+    -->
+    <script type="text/ng-template" id="proposal">
+        <div class="row maincontent">
+            <div id="proposalTree" class="col-xs-3 col-sm-3 col-md-4 table-responsive"
+                 data-ng-controller="NetworkStateController">
+                <tree-grid col-defs="treeColumns" tree-data="treeData" icon-leaf="glyphicon glyphicon-arrow-right"
+                           icon-expand="glyphicon glyphicon-folder-open" icon-collapse="glyphicon glyphicon-folder-open"
+                           expand-on="name"></tree-grid>
+            </div>
+            <div id="proposalStats" class="col-xs-9 col-sm-9 col-md-8 table-responsive"
+                 data-ng-controller="SubStationController">
+                <div>
+                    <h4> {{'DETAILS' | translate}} {{substationname}}</h4>
+                </div>
+                <div class="grid table" data-ui-grid="substations" data-ui-grid-pagination data-ui-grid-selection></div>
+            </div>
+            <div id="proposalList" class="col-xs-12 voffset table-responsive voffset"
+                 data-ng-controller="SelectedSubStationController">
+                <div>
+                    <h4> {{'WORKFLOW.REDUCTIONADVICE' | translate}}</h4>
+                </div>
+                <div class="grid table" data-ui-grid="substations" data-ui-grid-pagination data-ui-grid-selection></div>
+            </div>
+            <div class="col-xs-12 voffset">
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <a class="btn btn-default btn-sm" data-ng-click="menueJumpTo(2,'settings')">{{'BACK' |
+                            translate}}</a>
+                        <a class="btn btn-primary btn-sm pull-right" data-ng-click="openModalConfirmProposal()">{{'NEXT'
+                            | translate}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <!--
+        Bestaetigung
+    -->
+    <script type="text/ng-template" id="confirm">
+        <div class="col-sm-12 col-xs-12" data-ng-controller="ConfirmController">
+            <div class="col-sm-3 panel panel-default confirmContentBox">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{'SETTINGS.REASONOFREDUCTION' | translate}}</h3>
+                </div>
+                <div class="panel-body">
+                    {{activity.settings.reasonOfReduction}} &nbsp;
+                </div>
+            </div>
+            <div class="col-sm-3 panel panel-default confirmContentBox">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{'SETTINGS.REQUIREDREDUCTION' | translate}}</h3>
+                </div>
+                <div class="panel-body">
+                    {{activity.settings.requiredReductionPower}} MW
+                </div>
+            </div>
+            <div class="col-sm-3 panel panel-default confirmContentBox">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{'CONFIRM.AUTOR' | translate}}</h3>
+                </div>
+                <div class="panel-body">
+                    {{'CONFIRM.AUTOR' | translate}}: {{activity.createdBy}}
+                </div>
+            </div>
+            <div class="col-sm-3 panel panel-default confirmContentBox">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{'SETTINGS.DATESTARTED' | translate}}</h3>
+                </div>
+                <div class="panel-body">
+                    {{activity.settings.dateStarted}} &nbsp;
+                </div>
+            </div>
+            <div class="col-sm-3 panel panel-default confirmContentBox">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{'SETTINGS.DATEFINISHED' | translate}}</h3>
+                </div>
+                <div class="panel-body">
+                    {{activity.settings.dateFinished}} &nbsp;
+                </div>
+            </div>
+            <div class="col-sm-3 panel panel-default confirmContentBox">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{'CONFIRM.DURATION' | translate}}</h3>
+                </div>
+                <div class="panel-body">
+                    {{activity.dateDiff}}
+                </div>
+            </div>
+            <div id="proposalListConfirm" class="col-xs-12 voffset table-responsive voffset">
+                <div class="grid table" data-ui-grid="substations" data-ui-grid-pagination data-ui-grid-selection></div>
+            </div>
+            <div class="col-xs-12">
+                <!-- Button trigger modal -->
+                <button data-ng-click="menueJumpTo(3,'proposal')" class="btn btn-default btn-sm">{{'BACK'
+                    | translate}}
+                </button>
+                <button data-ng-click="saveActivity()" class="btn btn-primary btn-sm pull-right">
+                    {{'CONFIRM' | translate}}
+                </button>
+            </div>
+        </div>
+    </script>
+
+    <!--
+        Modal: Preselection speichern
+    -->
+    <script type="text/ng-template" id="modalContent">
+        <div class="modal-header">
+            <%--<button class="close" type="button" data-ng-click="close()"><span>x</span></button>--%>
+            <button class="close" aria-label="Close" data-ng-click="close()"><span
+                    aria-hidden="true">&times;</span></button>
+            <h4 id="saveTemplateLabel" class="modal-title">{{ 'PRESELECTION.SAVETEMPLATE' | translate}}</h4>
+        </div>
+        <div class="modal-body">
+            <div class="input-group input-group-sm" data-ng-class="{'has-error': templateName == ''}">
+                <span id="bezeichnung"
+                      class="input-group-addon">{{ 'PRESELECTION.TEMPLATEDESCRIPTION' | translate}}</span>
+                <input type="text" data-ng-model="templateName" name="templateName" required data-ng-disabled='saveOk'
+                       placeholder="Name der Vorlage" class="form-control">
+            </div>
+            </p>
+            <div class="alert alert-success" data-ng-show='saveOk'>{{ 'PRESELECTION.SAVEOK' | translate}}</div>
+        </div>
+        <div class="modal-footer">
+            <button data-dismiss="modal" class="btn btn-default" data-ng-disabled="saveOk" data-ng-click="cancel()">{{
+                'CANCEL' |
+                translate}}
+            </button>
+            <button class="btn btn-primary" data-ng-disabled="isNameInvalid() || saveOk" data-ng-click="ok()">{{
+                'SAVE' | translate}}
+            </button>
+            <button data-dismiss="modal" class="btn btn-default" data-ng-click="close()">{{ 'CLOSE' |
+                translate}}
+            </button>
+        </div>
+    </script>
+
+    <!--
+        Modal: Error
+    -->
+    <script type="text/ng-template" id="errorHint">
+        <div class="modal-header">
+            <%--<button class="close"><span>x</span></button>--%>
+            <button class="close" aria-label="Close" data-ng-click="close()"><span
+                    aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">{{ 'ERROR.HEADER' | translate}}</h4>
+        </div>
+        <div class="modal-body">
+            <div class="input-group input-group-sm">
+                {{item[0]}}
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-default" data-ng-click="ok()">{{ 'OK' | translate}}</button>
+        </div>
+    </script>
+
+    <!--
+        Modal: Timeout
+    -->
+    <script type="text/ng-template" id="timeoutHint">
+        <div class="modal-header">
+            <%--<button class="close"><span>x</span></button>--%>
+            <button class="close" aria-label="Close" data-ng-click="close()"><span
+                    aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">{{ 'TIMEOUTHINT.HEADER' | translate}}</h4>
+        </div>
+        <div class="modal-body">
+            <div class="input-group input-group-sm" data-ng-class="{'has-error': templateName == ''}">
+                {{ 'TIMEOUTHINT.CONTENT' | translate}}
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-default" data-ng-click="use()">{{ 'STATE.USE' | translate}}</button>
+            <button style="display:none;" class="btn btn-default" data-ng-click="reCalc()">{{
+                'STATE.RECAL' | translate}}
+            </button>
+        </div>
+    </script>
+
+    <!--
+        Modal: Werte bestaetigen
+    -->
+    <script type="text/ng-template" id="modalContentConfirmPorposal">
+        <div class="modal-header">
+            <button class="close" aria-label="Close" data-ng-click="cancel()"><span
+                    aria-hidden="true">&times;</span></button>
+            <h4 id="save_TemplateLabel" class="modal-title">{{ 'PROPOSAL.MODAL.HEADER' | translate}}</h4>
+        </div>
+        <div class="modal-body">
+            <form name="dummyForm" class="form-horizontal">
+                <div class="form-group">
+                    <label for="datestartedmodal" class="control-label col-xs-4">{{'SETTINGS.DATESTARTED' |
+                        translate}}:</label>
+
+                    <div class="controls col-xs-8">
+                        <input disabled="disabled" type="text"
+                               data-ng-model="activity.settings.dateStarted" class="form-control"
+                               id="datestartedmodal">
+                    </div>
+                    <div class="form-group">
+                    </div>
+                    <label for="datefinishedmodal" class="control-label col-xs-4">{{'SETTINGS.DATEFINISHED'
+                        |
+                        translate}}:</label>
+
+                    <div class="controls col-xs-8">
+                        <input disabled="disabled" type="text"
+                               data-ng-model="activity.settings.dateFinished"
+                               class="form-control" id="datefinishedmodal">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="requiredreductionpowermodal" class="control-label col-xs-4">{{'SETTINGS.REQUIREDREDUCTION'
+                        | translate}}:</label>
+
+                    <div class="col-xs-8">
+                        <div class="input-group input-group-sm">
+                            <input disabled="disabled" type="text" required
+                                   data-ng-model="activity.proposal.modal.requiredReductionPower"
+                                   data-area-describedby="requiredreductionaddonmodal" name="requiredReductionPower"
+                                   id="requiredreductionpowermodal" class="form-control">
+                            <span id="requiredreductionpoweraddonmodal" class="input-group-addon">MW</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sumrequiredreductionpowermodal" class="control-label col-xs-4">{{'PROPOSAL.MODAL.SUMREQUIREDREDUCTION'
+                        | translate}}:</label>
+
+                    <div class="col-xs-8">
+                        <div class="input-group input-group-sm">
+                            <input disabled="disabled" type="text" required
+                                   data-ng-model="activity.proposal.modal.sumRequiredReductionPower"
+                                   data-area-describedby="abregelleistung-sum-addon" name="requiredReductionPower"
+                                   id="sumrequiredreductionpowermodal" class="form-control">
+                            <span id="sumrequiredreductionpoweraddonmodal" class="input-group-addon">MW</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-style="{ 'color' : enough}">
+                    <label for="abregelleistung-diff" class="control-label col-xs-4">{{'PROPOSAL.MODAL.DIFF' |
+                        translate}}:</label>
+
+                    <div class="col-xs-8">
+                        <div class="input-group input-group-sm">
+                            <input disabled="disabled" ng-style="{ 'border-color' : enough}" type="text" required
+                                   data-ng-model="activity.proposal.modal.diffReductionPower"
+                                   data-area-describedby="abregelleistung-diff-addon" name="requiredReductionPower"
+                                   id="abregelleistung-diff" class="form-control">
+                            <span id="abregelleistung-diff-addon"
+                                  ng-style="{ 'background-color' : enough, 'border-color' : enough}"
+                                  class="input-group-addon">MW</span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button data-dismiss="modal" class="btn btn-default" data-ng-click="cancel()">{{ 'CANCEL' |
+                translate}}
+            </button>
+            <button class="btn btn-primary" data-ng-click="ok()">{{ 'NEXT' | translate}}</button>
+        </div>
+    </script>
+
+</div>
+

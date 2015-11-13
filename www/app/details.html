@@ -1,0 +1,36 @@
+<!--
+/*******************************************************************************
+* Copyright (c) 2015 BTC AG.
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+* Stefan Brockmann - initial API and implementation
+*******************************************************************************/
+-->
+
+<div data-ng-app="app" class="row maincontent">
+
+    <div class="feature" data-ng-controller="DetailController">
+        <div class="loading-display" style="" data-loading>
+            <div class="filter"></div>
+            <div class="center"></div>
+        </div>
+        <div class="feature-heading">
+            <i class="fa fa-4x fa-certificate"></i>
+
+            <h4 class="feature-heading"></h4>
+        </div>
+        <div class="col-sm-12">
+            <div class="grid table" data-ui-grid="detail" data-ui-grid-pagination data-ui-grid-selection></div>
+        </div>
+        <div data-ng-bind-html="detailHTML"></div>
+        <div class="col-xs-12 col-sm-12"><a style="" class="btn btn-primary btn-sm"
+                                            data-ng-click="navigateToCreate(activityId)">{{ 'CREATE' | translate }}</a>
+            <a style="" class="btn btn-primary btn-sm" data-ng-click="endActivity(activityId)">{{ 'END' | translate
+                }}</a>
+        </div>
+    </div>
+</div>
