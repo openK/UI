@@ -25,11 +25,16 @@ angular.module('myApp', ['ui.router'])
         // For any unmatched url, redirect to /state1
         $urlRouterProvider.otherwise("/state1");
     }]).controller('State1Ctrl', ['$scope', function ($scope) {
-    console.log('State1Ctrl')
+        console.log('State1Ctrl');
     }]).controller('State2Ctrl', ['$scope', function ($scope) {
-        console.log('State2Ctrl')
-    }]).controller('State1ListCtrl', ['$scope', function ($scope) {
+        console.log('State2Ctrl');
+    }]).controller('State1ListCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.items = ["A", "List", "Of", "Items"];
+        $http.get('test.json').then(function(result){
+            alert('succsess');
+        }, function(error){
+            alert(JSON.stringify(error));
+        });
     }]).controller('State2ListCtrl', ['$scope', function ($scope) {
         $scope.things = ["A", "Set", "Of", "Things"];
     }]);

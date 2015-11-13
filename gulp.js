@@ -28,6 +28,17 @@ gulp.task('webserver', function() {
         }));
 });
 
+var sync = require('browser-sync');
+gulp.task('sync', function() {
+    sync({ server: { baseDir: 'app' } });
+});
+
+gulp.task('watch-paths', function() {
+    gulp.watch(paths.js, [sync.reload]);
+    gulp.watch(paths.css, [sync.reload]);
+    gulp.watch(paths.html, [sync.reload]);
+});
+
 gulp.task('sass', function (done) {
     gulp.src('./www/css/ionic.app.scss')
         .pipe(sass())
@@ -69,4 +80,4 @@ gulp.task('minify-js', function () {
         .pipe(gulp.dest('www/js'));
 });
 
-gulp.task('default', ['webserver']);
+gulp.task('default', ['sync', 'watch-paths']);
