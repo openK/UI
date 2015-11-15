@@ -1,5 +1,14 @@
-angular.module('myApp', ['ui.router'])
-    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGrid', 'isteven-multi-select', 'ngTouch', 'ui.grid', 'ui.bootstrap', 'ngResource', 'ui.grid.selection', 'ui.grid.pagination'])
+
+    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider, $translateProvider) {
+        $translateProvider.useStaticFilesLoader({
+            prefix: 'locale-',
+            suffix: '.json'
+        });
+        $translateProvider.preferredLanguage('de');
+        $translateProvider.useSanitizeValueStrategy('escaped');
+        //$translateProvider.useLoaderCache(true);
+
         // Now set up the states
         $stateProvider
             .state('state1', {
@@ -37,4 +46,7 @@ angular.module('myApp', ['ui.router'])
         });
     }]).controller('State2ListCtrl', ['$scope', function ($scope) {
         $scope.things = ["A", "Set", "Of", "Things"];
+    }])
+    .run(['$log', function($log) {
+        $log.info("App Module openK Eisman initiated");
     }]);

@@ -1,15 +1,22 @@
-angular.module('myApp', ['ui.router'])
-    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGrid', 'isteven-multi-select', 'ui.grid', 'ui.bootstrap', 'ngResource', 'ui.grid.selection', 'ui.grid.pagination'])
+    .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', function ($stateProvider, $urlRouterProvider, $translateProvider) {
+
+        $translateProvider.preferredLanguage('de');
+        $translateProvider.useStaticFilesLoader({
+            prefix: 'app/locale-',
+            suffix: '.json'
+        });
+
         // Now set up the states
         $stateProvider
             .state('state1', {
-                url: "/state1",
-                templateUrl: "app/state1.html",
-                controller: 'State1Ctrl'
+                url: "/",
+                templateUrl: "app/Overview.html",
+                controller: 'OverviewCtrl',
             })
-            .state('state1.list', {
-                url: "/list",
-                templateUrl: "app/state1.list.html",
+            .state('state1.details', {
+                url: "/details",
+                templateUrl: "app/details.html",
                 controller: 'State1ListCtrl'
             })
             .state('state2', {
@@ -23,18 +30,8 @@ angular.module('myApp', ['ui.router'])
                 controller: 'State2ListCtrl'
             });
         // For any unmatched url, redirect to /state1
-        $urlRouterProvider.otherwise("/state1");
-    }]).controller('State1Ctrl', ['$scope', function ($scope) {
-    console.log('State1Ctrl')
-}]).controller('State2Ctrl', ['$scope', function ($scope) {
-    console.log('State2Ctrl')
-}]).controller('State1ListCtrl', ['$scope', '$http', function ($scope, $http) {
-    $scope.items = ["A", "List", "Of", "Items"];
-    $http.get('app/findparentactivitylist.json').then(function(result){
-        alert('success');
-    }, function(error){
-       alert(JSON.stringify(error))
-    });
-}]).controller('State2ListCtrl', ['$scope', function ($scope) {
-    $scope.things = ["A", "Set", "Of", "Things"];
-}]);
+        $urlRouterProvider.otherwise("/");
+
+    }]).run(['$log', function($log) {
+        $log.info("App Module openK Eisman initiated");
+    }]);

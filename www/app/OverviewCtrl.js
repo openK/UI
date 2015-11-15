@@ -9,31 +9,25 @@
  * Stefan Brockmann - initial API and implementation
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
-
-app.controller('OverviewController', ['$scope', '$log', '$timeout', '$http', '$filter', '$translate', function ($scope, $log, $timeout, $http, $filter, $translate) {
-
-
+angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout', '$http', '$filter', '$translate', function ($scope, $log, $timeout, $http, $filter, $translate) {
     $scope.navigateToDetails = function (entity) {
         window.location.search += '?page=details&activityId=' + entity.id;
     };
-
     $scope.navigateToCreate = function (id) {
-
         if (isFinite($scope.activityId)) {
             window.location.search += '?page=create&parentID=' + $scope.activityId;
         } else {
             window.location.search += '?page=create';
         }
     };
-
     $scope.linkToDetailsTemplate =
         '<div class="btn-group" role="group" aria-label="details">' +
-        '<button type="button" class="btn-sm btn-default" ng-click="grid.appScope.navigateToDetails(row.entity)">' +
-        '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
-        '</button>' +
-        '<button type="button" class="btn-sm btn-default" disabled="disabled">' +
-        '<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>' +
-        '</button>' +
+            '<button type="button" class="btn-sm btn-default" ng-click="grid.appScope.navigateToDetails(row.entity)">' +
+                '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
+            '</button>' +
+            '<button type="button" class="btn-sm btn-default" disabled="disabled">' +
+                '<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>' +
+            '</button>' +
         '</div>';
 
     $scope.searchOptions = {
@@ -62,7 +56,12 @@ app.controller('OverviewController', ['$scope', '$log', '$timeout', '$http', '$f
         enableVerticalScrollbar: 2, // 0: never, 1: always, 2: when needed
         //sortInfo: {fields:['id'], directions:['desc']},
         columnDefs: [
-            {name: 'id', headerCellFilter: 'translate', displayName: 'GRID.ID', width: '8%'},
+            {
+                name:'id',
+                headerCellFilter: 'translate',
+                displayName: 'GRID.ID',
+                width: '8%'
+            },
             {
                 name: 'dateStarted',
                 headerCellFilter: 'translate',
@@ -109,6 +108,7 @@ app.controller('OverviewController', ['$scope', '$log', '$timeout', '$http', '$f
             }
         ],
         onRegisterApi: function (gridApi) {
+
             $scope.gridApi = gridApi;
 
             $scope.gridApi.core.on.filterChanged($scope, function () {
@@ -146,7 +146,6 @@ app.controller('OverviewController', ['$scope', '$log', '$timeout', '$http', '$f
                     $scope.searchOptions.sortColumn = undefined;
 
                 } else {
-
                     $scope.searchOptions.sort = sortColumns[0].sort.direction;
                     $scope.searchOptions.sortColumn = sortColumns[0].colDef.name;
                 }
@@ -170,7 +169,6 @@ app.controller('OverviewController', ['$scope', '$log', '$timeout', '$http', '$f
 
     // get data from server
     $scope.getDataAsync = function () {
-
         var params = {
             'page': ($scope.searchOptions.pageNumber - 1),
             'size': $scope.searchOptions.pageSize,
@@ -185,21 +183,26 @@ app.controller('OverviewController', ['$scope', '$log', '$timeout', '$http', '$f
             params.filter = $scope.searchOptions.filter.filter;
         }
 
-        $http.get("/openk-eisman-portlet/rest/findparentactivitylist", {
-
-            "timeout": 30000,
-            "params": params
-
-        }).success(function (data) {
-
-            $log.info("Success loading /openk-eisman-portlet/rest/findparentactivitylist");
-            //$scope.overview.data = $filter('orderBy')(data.content, "id", true);
-            $scope.overview.data = data.content;
-
-        }).error(function (data, status, headers, config) {
-
-            $log.error('Can not load /openk-eisman-portlet/rest/findparentactivitylist/');
+        $http.get('app/findparentactivitylist.json').then(function(result){
+            $scope.overview.data = result.data.content;
+        }, function(error){
+            alert(JSON.stringify(error));
         });
+        //$http.get("/openk-eisman-portlet/rest/findparentactivitylist", {
+        //
+        //    "timeout": 30000,
+        //    "params": params
+        //
+        //}).success(function (data) {
+        //
+        //    $log.info("Success loading /openk-eisman-portlet/rest/findparentactivitylist");
+        //    //$scope.overview.data = $filter('orderBy')(data.content, "id", true);
+        //    $scope.overview.data = data.content;
+        //
+        //}).error(function (data, status, headers, config) {
+        //
+        //    $log.error('Can not load /openk-eisman-portlet/rest/findparentactivitylist/');
+        //});
     };
 
     $scope.getDataAsync();
