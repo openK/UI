@@ -183,27 +183,29 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
         if ($scope.searchOptions.filter && $scope.searchOptions.filter.filter) {
             params.filter = $scope.searchOptions.filter.filter;
         }
-
+/*
         $http.get('app/findparentactivitylist.json').then(function(result){
             $scope.overview.data = result.data.content;
         }, function(error){
             alert(JSON.stringify(error));
         });
-        //$http.get("/openk-eisman-portlet/rest/findparentactivitylist", {
-        //
-        //    "timeout": 30000,
-        //    "params": params
-        //
-        //}).success(function (data) {
-        //
-        //    $log.info("Success loading /openk-eisman-portlet/rest/findparentactivitylist");
-        //    //$scope.overview.data = $filter('orderBy')(data.content, "id", true);
-        //    $scope.overview.data = data.content;
-        //
-        //}).error(function (data, status, headers, config) {
-        //
-        //    $log.error('Can not load /openk-eisman-portlet/rest/findparentactivitylist/');
-        //});
+        
+*/
+        $http.get("http://192.168.1.2:8080/openk-eisman-portlet/rest/findparentactivitylist", {
+        
+            "timeout": 30000,
+            "params": params
+        
+        }).success(function (data) {
+        
+            $log.info("Success loading /openk-eisman-portlet/rest/findparentactivitylist");
+            //$scope.overview.data = $filter('orderBy')(data.content, "id", true);
+            $scope.overview.data = data.content;
+        
+        }).error(function (data, status, headers, config) {
+        
+            $log.error('Cannot load /openk-eisman-portlet/rest/findparentactivitylist/');
+        });
     };
 
     $scope.getDataAsync();
