@@ -9,20 +9,21 @@
  * Stefan Brockmann - initial API and implementation
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
-angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout', '$http', '$filter', '$translate', function ($scope, $log, $timeout, $http, $filter, $translate) {
-    $scope.navigateToDetails = function (entity) {
-        window.location.search += '?page=details&activityId=' + entity.id;
+angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout', '$http', '$filter', '$translate', '$state', function ($scope, $log, $timeout, $http, $filter, $translate, $state) {
+    $scope.navigateToDetails = function (activityId) {
+        //window.location.search += '?page=details&activityId=' + entity.id;
+        $state.go('state1details', { activityId: activityId });
     };
     $scope.navigateToCreate = function (id) {
         if (isFinite($scope.activityId)) {
             window.location.search += '?page=create&parentID=' + $scope.activityId;
         } else {
             window.location.search += '?page=create';
-        }
+    }
     };
     $scope.linkToDetailsTemplate =
         '<div class="btn-group" role="group" aria-label="details">' +
-            '<button type="button" class="btn-sm btn-default" ng-click="grid.appScope.navigateToDetails(row.entity)">' +
+            '<button type="button" class="btn-sm btn-default" ng-click="grid.appScope.navigateToDetails(row.entity.id)">' +
                 '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>' +
             '</button>' +
             '<button type="button" class="btn-sm btn-default" disabled="disabled">' +

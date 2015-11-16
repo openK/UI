@@ -1,0 +1,291 @@
+{
+	"content": [{
+		"dateCreated": "2015-11-12T11:55:11.439+0100",
+		"createdBy": "test",
+		"dateUpdated": "2015-11-12T11:55:26.607+0100",
+		"updatedBy": "test",
+		"id": 82,
+		"preselectionConfigurationJpa": {
+			"reductionSetting": 30,
+			"discriminationCoefficientEnabled": false,
+			"characteristicForMissingMeasurementFwt": "NotIncluded",
+			"substituteValueWindFwt": null,
+			"substituteValuePhotovoltaicFwt": null,
+			"substituteValueBiogasFwt": null,
+			"characteristicForMissingMeasurementEfr": null,
+			"substituteValueWindEfr": null,
+			"substituteValuePhotovoltaicEfr": null,
+			"substituteValueBiogasEfr": null
+		},
+		"dateStarted": "2015-11-20T13:00:00.000+0100",
+		"dateFinished": "2015-11-27T13:00:00.000+0100",
+		"activePowerJpaToBeReduced": {
+			"value": 120,
+			"multiplier": "M",
+			"unit": "W"
+		},
+		"reasonOfReduction": "Systembilanzstörung infolge Einspeiseüberschuss",
+		"description": null,
+		"practise": false,
+		"dateConfirmed": "2015-11-12T11:55:28.697+0100",
+		"confirmedBy": "test",
+		"geographicalRegion": true,
+		"subGeographicalRegionJpaList": [{
+			"name": "Netzgebiet A",
+			"mRid": "1000101",
+			"id": 73,
+			"oid": 1000,
+			"substationJpaList": [{
+				"name": "Substation03 - Ortsnetzstation Alesheim04",
+				"mRid": "2366456",
+				"id": 62,
+				"oid": 1002,
+				"synchronousMachineJpaList": [{
+					"@classname": "org.eclipse.openk.eisman.model.jpa.wires.SynchronousMachineJpa",
+					"name": "SynchronousMachine33",
+					"mRid": "103-4-4577/45669",
+					"id": 84,
+					"oid": 1033,
+					"maxU": {
+						"value": 20,
+						"multiplier": "k",
+						"unit": "V"
+					},
+					"feedInRandomNumber": 0.3883348306537472,
+					"feedInRanking": 1,
+					"feedInPriority": 4,
+					"discriminatorCoefficient": 0.0,
+					"communicationTypeJpa": "FWT",
+					"communicationGroup": 3,
+					"reductionAdvice": 30,
+					"reductionAdviceAdjusted": false,
+					"activePowerJpaToBeReduced": {
+						"value": 90.00,
+						"multiplier": "M",
+						"unit": "W"
+					},
+					"referencedSynchronousMachineJpa": null,
+					"generatingUnitJpa": {
+						"@classname": "org.eclipse.openk.eisman.model.jpa.production.GeneratingUnitJpa",
+						"name": "Generating Unit 33",
+						"mRid": "103-33-555487878",
+						"id": 85,
+						"oid": 1033,
+						"highControlLimit": {
+							"value": 400,
+							"multiplier": "M",
+							"unit": "W"
+						},
+						"maxOperatingP": {
+							"value": 400,
+							"multiplier": "M",
+							"unit": "W"
+						},
+						"registeredGeneratorJpa": {
+							"unitTypeJpa": "Wind"
+						}
+					},
+					"reductionSettingJpaList": [{
+						"setting": {
+							"value": 0
+						}
+					},
+					{
+						"setting": {
+							"value": 30
+						}
+					},
+					{
+						"setting": {
+							"value": 60
+						}
+					}],
+					"locationJpa": null,
+					"analogJpaList": [{
+						"name": "Measurement SynchMach 1033",
+						"mRid": "1020",
+						"measurementType": "GeneratorVoltage",
+						"unitMultiplierJpa": "M",
+						"unitSymbolJpa": "W",
+						"analogValueJpaList": [{
+							"name": "Measurement Value",
+							"mRid": "1025",
+							"timeStamp": {
+								"value": "06.06.2015 02:12:35"
+							},
+							"measurementValueQualityJpa": {
+								"failure": false
+							},
+							"value": 210.0
+						}]
+					},
+					{
+						"name": "Measurement SynchMach 1033 ReductionSetting",
+						"mRid": "1021",
+						"measurementType": "ReductionSetting",
+						"unitMultiplierJpa": null,
+						"unitSymbolJpa": null,
+						"analogValueJpaList": [{
+							"name": "Measurement Reduction Value",
+							"mRid": "1026",
+							"timeStamp": {
+								"value": "06.06.2015 02:12:35"
+							},
+							"measurementValueQualityJpa": {
+								"failure": false
+							},
+							"value": 60.0
+						}]
+					}],
+					"psrEventJpaList": [],
+					"reductionSettingMeasured": {
+						"name": "Measurement Reduction Value",
+						"mRid": "1026",
+						"timeStamp": {
+							"value": "06.06.2015 02:12:35"
+						},
+						"measurementValueQualityJpa": {
+							"failure": false
+						},
+						"value": 60.0
+					},
+					"generatorVoltageMeasured": {
+						"value": 210,
+						"multiplier": "M",
+						"unit": "W"
+					}
+				},
+				{
+					"@classname": "org.eclipse.openk.eisman.model.jpa.wires.SynchronousMachineJpa",
+					"name": "SynchronousMachine31",
+					"mRid": "103-45545669",
+					"id": 82,
+					"oid": 1031,
+					"maxU": {
+						"value": 20,
+						"multiplier": "k",
+						"unit": "V"
+					},
+					"feedInRandomNumber": 0.20795765504692898,
+					"feedInRanking": 1,
+					"feedInPriority": 2,
+					"discriminatorCoefficient": 0.01176,
+					"communicationTypeJpa": "FWT",
+					"communicationGroup": 4,
+					"reductionAdvice": 30,
+					"reductionAdviceAdjusted": false,
+					"activePowerJpaToBeReduced": {
+						"value": 0.42,
+						"multiplier": "M",
+						"unit": "W"
+					},
+					"referencedSynchronousMachineJpa": null,
+					"generatingUnitJpa": {
+						"@classname": "org.eclipse.openk.eisman.model.jpa.production.GeneratingUnitJpa",
+						"name": "Generating Unit 31",
+						"mRid": "103-55487878",
+						"id": 83,
+						"oid": 1031,
+						"highControlLimit": {
+							"value": 0.9,
+							"multiplier": "M",
+							"unit": "W"
+						},
+						"maxOperatingP": {
+							"value": 0.9,
+							"multiplier": "M",
+							"unit": "W"
+						},
+						"registeredGeneratorJpa": {
+							"unitTypeJpa": "Bio"
+						}
+					},
+					"reductionSettingJpaList": [{
+						"setting": {
+							"value": 0
+						}
+					},
+					{
+						"setting": {
+							"value": 30
+						}
+					},
+					{
+						"setting": {
+							"value": 60
+						}
+					}],
+					"locationJpa": null,
+					"analogJpaList": [{
+						"name": "Measurement SynchMach 1031",
+						"mRid": "1016",
+						"measurementType": "GeneratorVoltage",
+						"unitMultiplierJpa": "M",
+						"unitSymbolJpa": "W",
+						"analogValueJpaList": [{
+							"name": "Measurement Value",
+							"mRid": "1021",
+							"timeStamp": {
+								"value": "06.06.2015 02:12:35"
+							},
+							"measurementValueQualityJpa": {
+								"failure": false
+							},
+							"value": 0.69
+						}]
+					},
+					{
+						"name": "Measurement SynchMach 1031 ReductionSetting",
+						"mRid": "1017",
+						"measurementType": "ReductionSetting",
+						"unitMultiplierJpa": null,
+						"unitSymbolJpa": null,
+						"analogValueJpaList": [{
+							"name": "Measurement Reduction Value",
+							"mRid": "1022",
+							"timeStamp": {
+								"value": "06.06.2015 02:12:35"
+							},
+							"measurementValueQualityJpa": {
+								"failure": false
+							},
+							"value": 60.0
+						}]
+					}],
+					"psrEventJpaList": [],
+					"reductionSettingMeasured": {
+						"name": "Measurement Reduction Value",
+						"mRid": "1022",
+						"timeStamp": {
+							"value": "06.06.2015 02:12:35"
+						},
+						"measurementValueQualityJpa": {
+							"failure": false
+						},
+						"value": 60.0
+					},
+					"generatorVoltageMeasured": {
+						"value": 0.689999997615814208984375,
+						"multiplier": "M",
+						"unit": "W"
+					}
+				}],
+				"voltageLevelJpaList": []
+			}]
+		}],
+		"substationJpaList": [],
+		"childrenActivityJpaList": [],
+		"parentActivityJpaId": 81,
+		"synchronousMachineJpaReducedList": [],
+		"reductionAdviceNotFulfilled": null,
+		"childrenActivityJpaListConfirmed": []
+	}],
+	"totalElements": 1,
+	"totalPages": 1,
+	"last": true,
+	"sort": null,
+	"numberOfElements": 1,
+	"first": true,
+	"size": 25,
+	"number": 0
+}

@@ -10,8 +10,8 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('DetailController', ['$scope', '$log', '$timeout', '$http', '$location', '$sce', '$filter', '$translate', 'dateService',
-    function ($scope, $log, $timeout, $http, $location, $sce, $filter, $translate, dateService) {
+app.controller('DetailController', ['$scope', '$state', '$log', '$timeout', '$http', '$location', '$sce', '$filter', '$translate',
+    function ($scope, $state, $log, $timeout, $http, $location, $sce, $filter, $translate) {
 
         $scope.getParam = function getParameterByName(name) {
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -47,7 +47,7 @@ app.controller('DetailController', ['$scope', '$log', '$timeout', '$http', '$loc
 
         $scope.detailHTML = '';
 
-        $scope.editTemplate = '<a class="btn btn-primary btn-sm" style="margin:1px; {{row.entity | showFilter}}" ng-click="grid.appScope.navigateToCreateWithProposal(row.entity)" >{{ "CHANGE" | translate }}</a>';
+        $scope.editTemplate = '<a class="btn btn-primary btn-sm" style="margin:1px; {{row.entity}}" ng-click="grid.appScope.navigateToCreateWithProposal(row.entity)" >{{ "CHANGE" | translate }}</a>';
         $scope.feederStationTemplate = '<div><span custom-popover popover-placement="bottom" popover-label="{{row.entity.substationList}}"></span></div>';
 
         $scope.detailTemplate = '<div class="col-xs-12 col-sm-6 col-lg-3"><div class="panel panel-default"><div class="panel-heading">' +
@@ -198,17 +198,17 @@ app.controller('DetailController', ['$scope', '$log', '$timeout', '$http', '$loc
 
             //Daten
             if (dataEntity.dateCreated) {
-                tmp += $scope.getDetailEntry('DETAILS.CREATEDAT', $filter('date')(new Date(dataEntity.dateCreated), 'short'));
+                tmp += $scope.getDetailEntry('DETAILS.CREATEDAT', new Date(dataEntity.dateCreated));
             }
             if (dataEntity.dateFinished && dataEntity.dateStarted) {
                 var d = new Date(dataEntity.dateFinished - dataEntity.dateStarted);
-                tmp += $scope.getDetailEntry('DETAILS.RUNTIME', dateService.getDateDiff($filter('date')(new Date(dataEntity.dateStarted), 'short'), $filter('date')(new Date(dataEntity.dateFinished), 'short')));
+                tmp += $scope.getDetailEntry('DETAILS.RUNTIME', new Date(dataEntity.dateStarted), new Date(dataEntity.dateFinished));
             }
             if (dataEntity.dateStarted) {
-                tmp += $scope.getDetailEntry('DETAILS.STARTDATE', $filter('date')(new Date(dataEntity.dateStarted), 'short'));
+                tmp += $scope.getDetailEntry('DETAILS.STARTDATE', new Date(dataEntity.dateStarted));
             }
             if (dataEntity.dateFinished) {
-                tmp += $scope.getDetailEntry('DETAILS.ENDDATE', $filter('date')(new Date(dataEntity.dateFinished), 'short'));
+                tmp += $scope.getDetailEntry('DETAILS.ENDDATE', new Date(dataEntity.dateFinished));
             }
 
             //Abregelgebiet
@@ -298,7 +298,15 @@ app.controller('DetailController', ['$scope', '$log', '$timeout', '$http', '$loc
 
             //params.activityId = $scope.getParam('activityId');
 
+            var id = $state.params.activityId;
+
             // Request absenden
+            $http.get('app/finddetailactivitylist' + $state.params.activityId + '.json').then(function(result){
+                $scope.detail.data = result.data.content;
+            }, function(error){
+                alert(JSON.stringify(error))
+            });
+/*
             $http.get("/openk-eisman-portlet/rest/finddetailactivitiylist/" + $scope.getParam('activityId'), {
                 "timeout": 30000,
                 "params": params
@@ -309,6 +317,7 @@ app.controller('DetailController', ['$scope', '$log', '$timeout', '$http', '$loc
                 error(function (data, status, headers, config) {
                     $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
                 });
+*/
         };
 
         $scope.getDataAsync();
