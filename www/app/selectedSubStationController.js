@@ -296,7 +296,7 @@ app.controller('SelectedSubStationController', ['$scope', '$http', '$timeout', '
             "timeout": 30000
         };
 
-        $http.put("/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
+        $http.put(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
 
             $scope.gotoConfirm();
 

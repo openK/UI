@@ -299,25 +299,24 @@ app.controller('DetailController', ['$scope', '$state', '$log', '$timeout', '$ht
             //params.activityId = $scope.getParam('activityId');
 
             var id = $state.params.activityId;
-
+/*
             // Request absenden
             $http.get('app/finddetailactivitylist' + $state.params.activityId + '.json').then(function(result){
                 $scope.detail.data = result.data.content;
             }, function(error){
                 alert(JSON.stringify(error))
             });
-/*
-            $http.get("/openk-eisman-portlet/rest/finddetailactivitiylist/" + $scope.getParam('activityId'), {
-                "timeout": 30000,
-                "params": params
-            }).success(function (data) {
+*/
+
+            $http.get("http://192.168.1.2:8080/openk-eisman-portlet/rest/finddetailactivitiylist/" + $state.params.activityId).success(function (data) {
                 $log.info("Success");
                 $scope.detail.data = data.content;
             }).
                 error(function (data, status, headers, config) {
                     $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
+                    
                 });
-*/
+
         };
 
         $scope.getDataAsync();

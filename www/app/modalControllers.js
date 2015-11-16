@@ -7,7 +7,7 @@
  *
  * Contributors:
  * Stefan Brockmann - initial API and implementation
- * Jan Krueger - initial API and implementation
+ * Jan Krueger - initial API and implementation XXX
  *******************************************************************************/
 
 app.controller('ProposalModalController', function ($scope, $rootScope, $modalInstance, $http, $filter, items) {
@@ -111,7 +111,7 @@ app.controller('PreselectionModalController', function ($scope, $rootScope, $mod
         $modalInstance.close();
     };
 
-    $scope.ok = function () {
+    $scope.ok = function () {alert('Test');
 
         var tmp = {
             preselectionConfigurationJpa: {
@@ -152,7 +152,7 @@ app.controller('PreselectionModalController', function ($scope, $rootScope, $mod
                 tmp.name = $scope.templateName;
                 //tmp.id = id;
 
-                $http.put("/openk-eisman-portlet/rest/preselection/" + tmp.id, tmp).success(function (data) {
+                $http.put(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/preselection/" + tmp.id, tmp).success(function (data) {
 
                     $rootScope.$emit('resetPreselection', [true, data]);
                     //$scope.templateName = '';
@@ -164,7 +164,7 @@ app.controller('PreselectionModalController', function ($scope, $rootScope, $mod
 
                 tmp.name = $scope.templateName;
 
-                $http.post("/openk-eisman-portlet/rest/preselection/", tmp).success(function (data) {
+                $http.post(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/preselection/", tmp).success(function (data) {
 
                     $rootScope.$emit('resetPreselection', [false, data]);
                     //$scope.templateName = '';
