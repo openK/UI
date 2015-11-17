@@ -1,0 +1,72 @@
+<!--
+/*******************************************************************************
+* Copyright (c) 2015 BTC AG.
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+* Stefan Brockmann - initial API and implementation
+*******************************************************************************/
+-->
+
+<h3>{{'CREATE.ACTIVITY' | translate}}</h3>
+
+<div id="tabs">
+    <div class="row">
+        <div class="col-xs-6">
+            <ol class="breadcrumb">
+                <li>{{'OPENK.ABBREVIATION' | translate}}</li>
+                <li>{{'EISMANAPP' | translate}}</li>
+                <li>{{'CREATE.ACTIVITY' | translate}}</li>
+                <li class="active" data-ng-show="selectedStep == 'preselection'">{{'WORKFLOW.SETTINGS' |
+                    translate}}
+                </li>
+                <li class="active" data-ng-show="selectedStep == 'settings'">{{'WORKFLOW.DATA' | translate}}</li>
+                <li class="active" data-ng-show="selectedStep == 'proposal'">{{'WORKFLOW.REDUCTIONADVICE' |
+                    translate}}
+                </li>
+                <li class="active" data-ng-show="selectedStep == 'confirm'">{{'WORKFLOW.CONFIRM' | translate}}</li>
+            </ol>
+        </div>
+    </div>
+    <!--<div class="loading-display" style="" data-loading>
+        <div class="filter"></div>
+        <div class="center"></div>
+    </div>-->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="btn-group btn-group">
+                <a class="btn" data-ng-disabled="true"
+                    data-ng-class="{ 'btn-default' : selectedStep != 'preselection', 'btn-success' : selectedStep == 'preselection' }">{{'WORKFLOW.SETTINGS'
+                    | translate}}</a>
+                <a class="btn" data-ng-disabled="true"
+                    data-ng-class="{ 'btn-default' : selectedStep != 'settings', 'btn-success' : selectedStep == 'settings' }">{{'WORKFLOW.DATA'
+                    | translate}}</a>
+                <a class="btn" data-ng-disabled="true"
+                    data-ng-class="{ 'btn-default' : selectedStep != 'proposal', 'btn-success' : selectedStep == 'proposal' }">{{'WORKFLOW.REDUCTIONADVICE'
+                    | translate}}</a>
+                <a class="btn" data-ng-disabled="true"
+                    data-ng-class="{ 'btn-default' : selectedStep != 'confirm', 'btn-success' : selectedStep == 'confirm' }">{{'WORKFLOW.CONFIRM'
+                    | translate}}</a>
+            </div>
+            <div class="col-xs-5 zeit" data-ng-show="selectedStep == 'proposal' || selectedStep == 'confirm'">
+                <div role="alert" ng-class="timeElapsed" ng-click="activeButton()"><span aria-hidden="true"
+                                                                                            class="glyphicon glyphicon-time"></span>
+                    {{'TIMER.START' | translate}}
+                    <timer countdown="1800" max-time-unit="'minute'" interval="1000">{{mminutes}}:{{sseconds}}
+                    </timer>
+                    {{'TIMER.END' | translate}}
+                </div>
+            </div>
+            <ul class="nav nav-tabs voffset nav-tabs-maincontent">
+                <li class="active"
+                    data-ng-click="onClickTab(tab)"><a ui-sref="Regulation.CreateDownRegulation">Abregelung</a></li>
+                <li data-ng-click="onClickTab(tab)"><a ui-sref="Regulation.NetworkState">Netzzustand</a></li>
+            </ul>
+            <div ui-view></div>
+        </div>
+    </div>
+</div>
+

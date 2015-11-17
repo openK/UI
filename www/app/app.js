@@ -19,19 +19,23 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 templateUrl: "app/details.html",
                 controller: 'DetailController'
             })
-            .state('state2', {
-                url: "/state2",
-                templateUrl: "app/create.html",
-                controller: 'CreateController'
+            .state('Regulation', {
+                url: "/Regulation",
+                templateUrl: "app/Regulation.html",
+                abstract: true
             })
-            .state('state2.list', {
-                url: "/list",
-                templateUrl: "app/state2.list.html",
-                controller: 'State2ListCtrl'
+            .state('Regulation.CreateDownRegulation', {
+                url: '/CreateDownRegulation',
+                templateUrl: "app/CreateDownRegulation.html",
+                controller: 'CreateDownRegulationController'
+            }).state('Regulation.NetworkState', {
+                url: '/NetworkState',
+                templateUrl: "app/NetworkState.html",
+                controller: 'NetworkStateController'
             });
         // For any unmatched url, redirect to /state1
         $urlRouterProvider.otherwise("/home");
 
     }]).run(['$log', function($log) {
-    $log.info("App Module openK Eisman initiated");
+        $log.info("App Module openK Eisman initiated");
 }]);

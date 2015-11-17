@@ -15,7 +15,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
         $state.go('state1details', { activityId: activityId });
     };
     $scope.navigateToCreate = function (id) {
-        $state.go('state2');
+        $state.go('Regulation.CreateDownRegulation');
         /*
                 $state.go('state1details', { activityId: activityId });
                 if (isFinite($scope.activityId)) {

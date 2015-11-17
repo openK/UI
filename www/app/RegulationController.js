@@ -10,7 +10,7 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '$log', '$interval', function ($scope, $rootScope, $http, $modal, $log, $interval) {
+app.controller('RegulationController', ['$scope', '$rootScope', '$http', '$modal', '$log', '$interval', function ($scope, $rootScope, $http, $modal, $log, $interval) {
 
     $scope.getParam = function getParameterByName(name) {
 
