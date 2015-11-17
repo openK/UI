@@ -72,7 +72,7 @@ app.controller('NetworkStateController', ['$scope', '$http', '$timeout', '$trans
 
     $scope.treeData = [];
 
-    $http.get("/openk-eisman-portlet/rest/subgeographicalregion/tree/", {
+    $http.get(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/subgeographicalregion/tree/", {
         "timeout": 30000
     }).success(function (data) {
         $scope.treeData = data;

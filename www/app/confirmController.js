@@ -134,7 +134,7 @@ app.controller('ConfirmController', ['$scope', '$http', '$timeout', '$translate'
             "id": $scope.activityId
         };
 
-        $http.put("/openk-eisman-portlet/rest/confirmactivity/", postData).success(function (data) {
+        $http.put(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/confirmactivity/", postData).success(function (data) {
             window.location.search = '';
             //window.location.search = '?page=details&activityId=' + $scope.parentActivityId;
         }).error(function (data, status, headers, config) {

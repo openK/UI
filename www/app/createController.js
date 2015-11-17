@@ -221,7 +221,7 @@ app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '
 
         if (postData.parentActivityJpaId && postData.activityId) {
 
-            $http.put("/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
+            $http.put(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
 
                 window.location.search = ''; //?page=details&activityId=' + data.parentActivityJpaId
 
@@ -231,7 +231,7 @@ app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '
 
         } else {
 
-            $http.post("/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
+            $http.post(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
 
                 window.location.search = '';//?page=details&activityId=' + data.id;
 
@@ -335,7 +335,7 @@ app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '
 
             $scope.activity.dateDiff = $scope.activity.settings.dateFinished - $scope.activity.settings.dateStarted;
 
-            $http.post("/openk-eisman-portlet/rest/activity/createreductionadvice", $scope.getPostData()).success(function (data) {
+            $http.post(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/activity/createreductionadvice", $scope.getPostData()).success(function (data) {
 
                 var advice = [];
                 var activity = {};
@@ -446,7 +446,7 @@ app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '
 
     if ($scope.editActivityId) {
 
-        $http.get("/openk-eisman-portlet/rest/activity/" + $scope.editActivityId, {
+        $http.get(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/activity/" + $scope.editActivityId, {
 
             "timeout": 30000
 
@@ -585,7 +585,7 @@ app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '
     /*
      Daten laden
      */
-    $http.get("/openk-eisman-portlet/rest/preselection/", {
+    $http.get(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/preselection/", {
         "timeout": 30000
     }).success(function (data) {
         $scope.templates = data;
@@ -593,7 +593,7 @@ app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '
         $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
     });
 
-    $http.get("/openk-eisman-portlet/rest/reductionsettinglist/", {
+    $http.get(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/reductionsettinglist/", {
         "timeout": 30000
     }).success(function (data) {
         $scope.regulationSteps = data;
@@ -601,7 +601,7 @@ app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '
         $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
     });
 
-    $http.get("/openk-eisman-portlet/rest/reasonofreductions/", {
+    $http.get(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/reasonofreductions/", {
         "timeout": 30000
     }).success(function (data) {
         $scope.regulationReasons = data;
@@ -609,7 +609,7 @@ app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '
         $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
     });
 
-    $http.get("/openk-eisman-portlet/rest/substation/lov/", {
+    $http.get(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/substation/lov/", {
         "timeout": 30000
     }).success(function (data) {
 
@@ -634,7 +634,7 @@ app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '
         $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
     });
 
-    $http.get("/openk-eisman-portlet/rest/reasonofreductions/", {
+    $http.get(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/reasonofreductions/", {
         "timeout": 30000,
         "cache": true
     }).success(function (data) {
@@ -644,7 +644,7 @@ app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '
         $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
     });
 
-    $http.get("/openk-eisman-portlet/rest/subgeographicalregion/lov/", {
+    $http.get(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/subgeographicalregion/lov/", {
         "timeout": 30000,
         "cache": true
     }).success(function (data) {
@@ -671,7 +671,7 @@ app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '
         $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
     });
 
-    $http.get("/openk-eisman-portlet/rest/timeintervaldataexpired", {
+    $http.get(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/timeintervaldataexpired", {
         "timeout": 30000,
         "cache": true
     }).success(function (data) {
@@ -681,7 +681,7 @@ app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '
         $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
     });
 
-    $http.get("/openk-eisman-portlet/rest/hysteresis", {
+    $http.get(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/hysteresis", {
         "timeout": 30000,
         "cache": true
     }).success(function (data) {

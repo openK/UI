@@ -39,7 +39,7 @@ app.controller('SubStationController', ['$scope', '$http', '$timeout', '$transla
 
             var timestamp = dateService.formatDateForRestRequest($scope.activity.dateCreated);
 
-            $http.get("/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist/timestamp/" + timestamp, {
+            $http.get(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist/timestamp/" + timestamp, {
 
                 "timeout": 30000
 
@@ -55,7 +55,7 @@ app.controller('SubStationController', ['$scope', '$http', '$timeout', '$transla
 
         } else {
 
-            $http.get("/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist", {
+            $http.get(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist", {
 
                 "timeout": 30000
 
