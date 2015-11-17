@@ -15,11 +15,14 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
         $state.go('state1details', { activityId: activityId });
     };
     $scope.navigateToCreate = function (id) {
-        if (isFinite($scope.activityId)) {
-            window.location.search += '?page=create&parentID=' + $scope.activityId;
-        } else {
-            window.location.search += '?page=create';
-    }
+        $state.go('state2');
+        /*
+                $state.go('state1details', { activityId: activityId });
+                if (isFinite($scope.activityId)) {
+                    window.location.search += '?page=create&parentID=' +    $scope.activityId;
+                } else {
+                    window.location.search += '?page=create';
+        */
     };
     $scope.linkToDetailsTemplate =
         '<div class="btn-group" role="group" aria-label="details">' +

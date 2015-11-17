@@ -21,8 +21,8 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
             })
             .state('state2', {
                 url: "/state2",
-                templateUrl: "app/state2.html",
-                controller: 'State2Ctrl'
+                templateUrl: "app/create.html",
+                controller: 'CreateController'
             })
             .state('state2.list', {
                 url: "/list",

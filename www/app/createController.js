@@ -10,7 +10,7 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '$log', '$interval', 'dateService', function ($scope, $rootScope, $http, $modal, $log, $interval, dateService) {
+app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '$log', '$interval', function ($scope, $rootScope, $http, $modal, $log, $interval) {
 
     $scope.getParam = function getParameterByName(name) {
 
@@ -189,8 +189,8 @@ app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '
             "createdBy": $scope.activity.createdBy,
             "id": $scope.activityId,
             "parentActivityJpaId": $scope.parentActivityId,
-            "dateStarted": dateService.formatDateForBackend($scope.activity.settings.dateStarted),
-            "dateFinished": dateService.formatDateForBackend($scope.activity.settings.dateFinished),
+            "dateStarted": $scope.activity.settings.dateStarted,
+            "dateFinished": $scope.activity.settings.dateFinished,
             "description": $scope.activity.settings.description,
             "activePowerJpaToBeReduced": {
                 "value": $scope.activity.settings.requiredReductionPower,
@@ -284,8 +284,8 @@ app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '
         var data = {
             "id": $scope.activity.id,
             "parentActivityJpaId": $scope.activity.parentActivityJpaId,
-            "dateStarted": dateService.formatDateForBackend($scope.activity.settings.dateStarted),
-            "dateFinished": dateService.formatDateForBackend($scope.activity.settings.dateFinished),
+            "dateStarted": $scope.activity.settings.dateStarted,
+            "dateFinished": $scope.activity.settings.dateFinished,
             "description": $scope.activity.settings.description,
             "activePowerJpaToBeReduced": {
                 "value": $scope.activity.settings.requiredReductionPower,
@@ -317,8 +317,8 @@ app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '
     };
 
     $scope.isNoValidTimeInterval = function (dateStarted, dateFinished) {
-
-        return !dateService.isDateBehind(dateStarted, dateFinished);
+        alert("isNoValidTimeInterval: not defined");
+        //return !dateService.isDateBehind(dateStarted, dateFinished);
     };
 
     $scope.isNoAreaDefined = function () {
@@ -333,7 +333,7 @@ app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '
 
         if (settingsForm.$valid && !$scope.isNoValidTimeInterval($scope.activity.settings.dateStarted, $scope.activity.settings.dateFinished)) {
 
-            $scope.activity.dateDiff = dateService.getDateDiff($scope.activity.settings.dateStarted, $scope.activity.settings.dateFinished);
+            $scope.activity.dateDiff = $scope.activity.settings.dateFinished - $scope.activity.settings.dateStarted;
 
             $http.post("/openk-eisman-portlet/rest/activity/createreductionadvice", $scope.getPostData()).success(function (data) {
 
@@ -470,9 +470,9 @@ app.controller('CreateController', ['$scope', '$rootScope', '$http', '$modal', '
             $scope.activity.preselection.substituteValuePhotovoltaicEfr = data.preselectionConfigurationJpa.substituteValuePhotovoltaicEfr;
             $scope.activity.preselection.substituteValueWindEfr = data.preselectionConfigurationJpa.substituteValueWindEfr;
             $scope.activity.preselection.substituteValueBiogasEfr = data.preselectionConfigurationJpa.substituteValueBiogasEfr;
-            $scope.activity.settings.dateStarted = dateService.formateDateForClient(data.dateStarted);
-            $scope.activity.settings.dateFinished = dateService.formateDateForClient(data.dateFinished);
-            $scope.activity.dateDiff = dateService.getDateDiff($scope.activity.settings.dateStarted, $scope.activity.settings.dateFinished);
+            $scope.activity.settings.dateStarted = data.dateStarted;
+            $scope.activity.settings.dateFinished = data.dateFinished;
+            $scope.activity.dateDiff = $scope.activity.settings.dateFinished - $scope.activity.settings.dateStarted;
             $scope.activity.settings.reasonOfReduction = data.reasonOfReduction;
             $scope.activity.settings.requiredReductionPower = data.activePowerJpaToBeReduced.value;
             $scope.activity.settings.useWholeArea = data.geographicalRegion;
