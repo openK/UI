@@ -12,15 +12,6 @@
 
 app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScope', '$http', '$modal', '$log', 'activityService', function ($scope, $state, $rootScope, $http, $modal, $log, activityService) {
 
-    $scope.getParam = function getParameterByName(name) {
-
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec(location.search);
-
-        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    };
-
     $scope.activityConfigData = activityService.activityConfigData();
 
 
@@ -29,8 +20,7 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
     */
 
     $scope.preselectionForm = {};
-    $scope.selectedTemplate = null;
-    $scope.saveTemplateName = '';
+    $scope.selectedTemplate = $rootScope.selectedTemplate || '';
     $scope.localLang = {};
     $scope.regulationSteps = $scope.activityConfigData.regulationSteps;
     $scope.templates = $scope.activityConfigData.templates;
@@ -40,7 +30,7 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
     $scope.loadTemplateData = function (selectedTemplate) {
 
         if (selectedTemplate) {
-            $scope.selectedTemplate = selectedTemplate.preselectionConfigurationJpa;
+            $rootScope.selectedTemplate = selectedTemplate;
             $scope.activity.preselection.reductionSetting = selectedTemplate.preselectionConfigurationJpa.reductionSetting;
             $scope.activity.preselection.discriminationCoefficientEnabled = selectedTemplate.preselectionConfigurationJpa.discriminationCoefficientEnabled;
             $scope.activity.preselection.characteristicForMissingMeasurementFwt = selectedTemplate.preselectionConfigurationJpa.characteristicForMissingMeasurementFwt;
@@ -54,10 +44,6 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
             $scope.activity.substationProposalList = selectedTemplate.substationJpaList;
         }
     };
-
-    if ($scope.editActivityId) {
-        $scope.activityId = $scope.editActivityId;
-    }
 
     $scope.activity = activityService.activity();
 
@@ -74,7 +60,6 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
 
             $scope.preselectionFormSubmitted = true;
         }
-
         return false;
     };
 
