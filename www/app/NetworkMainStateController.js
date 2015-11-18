@@ -10,64 +10,64 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('NetworkMainStateController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope) {
+app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootScope', function ($scope, $http, $log, $rootScope) {
 
     $scope.handleTreeClick = function (branch) {
 
-        if (branch && branch.level > 1) {
-
-            $rootScope.$broadcast('loadSubstations', branch);
+        if (branch && branch.level > 1) {alert('Test');
+           $rootScope.$broadcast('loadSubstations', branch);
+           console.log(branch);
         }
     };
 
     $scope.treeColumns = [{
         field: "name",
-        displayName: $translate.instant('STATE.NETWORK')
+        displayName: 'STATE.NETWORK'
     }, {
         field: "pv",
-        displayName: $translate.instant('STATE.PV'),
-        cellTemplate: '<div ng-click="cellTemplateScope.click({{ row.branch }})">{{row.branch[col.field] | number: 2}} MW</div>\n',
+        displayName: 'STATE.PV',
+        cellTemplate: '<div ng-click="cellTemplateScope.click( row.branch )">{{row.branch[col.field] | number: 2}} MW</div>\n',
         cellFilter: 'number: 2',
         cellTemplateScope: {
             click: $scope.handleTreeClick
         }
     }, {
         field: "bio",
-        displayName: $translate.instant('STATE.BIO'),
-        cellTemplate: '<div ng-click="cellTemplateScope.click({{ row.branch }})">{{row.branch[col.field] | number: 2}} MW</div>\n',
+        displayName: 'STATE.BIO',
+        cellTemplate: '<div ng-click="cellTemplateScope.click( row.branch )">{{row.branch[col.field] | number: 2}} MW</div>\n',
         cellTemplateScope: {
             click: $scope.handleTreeClick
         }
     }, {
         field: "wind",
-        displayName: $translate.instant('STATE.WIND'),
-        cellTemplate: '<div ng-click="cellTemplateScope.click({{ row.branch }})">{{row.branch[col.field] | number: 2}} MW</div>\n',
+        displayName: 'STATE.WIND',
+        cellTemplate: '<div ng-click="cellTemplateScope.click( row.branch )">{{row.branch[col.field] | number: 2}} MW</div>\n',
         cellTemplateScope: {
             click: $scope.handleTreeClick
         }
     }, {
         field: "noBioPvWind",
-        displayName: $translate.instant('STATE.ELSE'),
-        cellTemplate: '<div ng-click="cellTemplateScope.click({{ row.branch }})">{{row.branch[col.field] | number: 2}} MW</div>\n',
+        displayName: 'STATE.ELSE',
+        cellTemplate: '<div ng-click="cellTemplateScope.click( row.branch )">{{row.branch[col.field] | number: 2}} MW</div>\n',
         cellTemplateScope: {
             click: $scope.handleTreeClick
         }
     }, {
         field: "sum",
-        displayName: $translate.instant('STATE.SUM'),
-        cellTemplate: '<div ng-click="cellTemplateScope.click({{ row.branch }})">{{row.branch[col.field] | number: 2}} MW</div>\n',
+        displayName: 'STATE.SUM',
+        cellTemplate: '<div ng-click="cellTemplateScope.click( row.branch )">{{row.branch[col.field] | number: 2}} MW</div>\n',
         cellTemplateScope: {
             click: $scope.handleTreeClick
         }
     }, {
         field: "select",
         displayName: ' ',
-        cellTemplate: '<button ng-hide="row.branch.level === 1" data-target="#spg" data-parent="#stats" data-toggle="collapse" class="btn btn-default btn-xs" ng-click="cellTemplateScope.click({{ row.branch }})" type="button">' +
+        cellTemplate: '<button ng-hide="row.branch.level === 1" data-target="#spg" data-parent="#stats" data-toggle="collapse" class="btn btn-default btn-xs" ng-click="cellTemplateScope.click( row.branch )" type="button">' +
         '<span aria-hidden="true" class="glyphicon glyphicon-stats"></span>' +
         '</button>',
         cellTemplateScope: {
             click: $scope.handleTreeClick
-        }
+            }
     }];
 
     $scope.treeData = [];
