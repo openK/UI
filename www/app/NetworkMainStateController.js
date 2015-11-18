@@ -14,8 +14,9 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
 
     $scope.handleTreeClick = function (branch) {
 
-        if (branch && branch.level > 1) {
+        if (branch && branch.level > 1) {alert('Test');
            $rootScope.$broadcast('loadSubstations', branch);
+           console.log(branch);
         }
     };
 
