@@ -19,7 +19,6 @@
     "bootstrap-daterangepicker": "~2.1.13",
     "angular-ui-grid": "~3.0.7",
     "isteven-angular-multiselect": "~4.0.0",
-    "angular-bootstrap-grid-tree": "*",
     "angular-resource": "~1.4.7",
     "angular-i18n": "~1.4.7",
     "angular-translate": "~2.8.1",
