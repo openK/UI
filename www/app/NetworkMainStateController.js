@@ -10,7 +10,7 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('NetworkStateController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope) {
+app.controller('NetworkMainStateController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope) {
 
     $scope.handleTreeClick = function (branch) {
 

@@ -23,7 +23,12 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 url: "/Regulation",
                 templateUrl: "app/Regulation.html",
                 controller: 'RegulationController',
-                abstract: true
+                abstract: true,
+                resolve: {
+                    activity: function(activityService) {
+                        return activityService.loadActivityConfiguration();
+                    }
+                }
             })
             .state('Regulation.CreateDownRegulation', {
                 url: '/CreateDownRegulation',
@@ -34,6 +39,27 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 templateUrl: "app/NetworkState.html",
                 abstract: true
             }).state('Regulation.NetworkState.Main', {
+                url: '/Main',
+                views: {
+                    "NetworkMainState": {
+                        templateUrl: "app/NetworkMainState.html",
+                        controller: 'NetworkMainStateController'
+                    },
+                    "NetworkSubState": {
+                        templateUrl: "app/NetworkSubState.html",
+                        controller: 'NetworkSubStateController'
+                    }
+                }
+            }).state('Regulation.CreateSettings', {
+                url: '/CreateSettings',
+                templateUrl: "app/CreateSettings.html",
+                controller: 'CreateSettingsController'
+            }).state('Regulation.CreateProposal', {
+                url: '/CreateProposal',
+                templateUrl: "app/CreateProposal.html",
+                controller: 'CreateProposalController',
+                abstract: true
+            }).state('Regulation.CreateProposal.Main', {
                 url: '/Main',
                 views: {
                     "NetworkMainState": {
