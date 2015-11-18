@@ -121,7 +121,10 @@ app.factory('activityService', ['$http', '$q', function ($http, $q) {
 
     return {
         resetActivity: resetActivity,
-        activity: function() {
+        activity: function (act) {
+            if (act) {
+                activity = act;
+            }
             return activity;
         },
         activityConfigData: function() {

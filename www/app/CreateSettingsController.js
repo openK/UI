@@ -1,13 +1,4 @@
-app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$http', '$modal', '$log', 'activityService', function ($scope, $state, $rootScope, $http, $modal, $log, activityService) {
-
-    $scope.getParam = function getParameterByName(name) {
-
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec(location.search);
-
-        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    };
+app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', function ($scope, $state, $rootScope, $http, $modal, $log, activityService, $translate) {
 
     $scope.activity = activityService.activity();
     $scope.activityConfigData = activityService.activityConfigData();
@@ -17,20 +8,6 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$
     $scope.transformerStations = $scope.activityConfigData.transformerStations;
     $scope.subGeographicalRegions = $scope.activityConfigData.subGeographicalRegions;
     $scope.regulationReasons = $scope.activityConfigData.regulationReasons;
-
-    $scope.activityId = $scope.getParam('activityId');
-    $scope.editActivityId = $scope.getParam('editActivityId');
-    $scope.parentActivityId = $scope.getParam('parentActivityId');
-
-    if ($scope.editActivityId) {
-        $scope.activityId = $scope.editActivityId;
-    }
-
-
-    if ($scope.parentActivityId) {
-
-        $scope.activity.parentActivityJpaId = $scope.parentActivityId;
-    }
 
     $scope.saveAndReturn = function () {
 
@@ -73,7 +50,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$
 
             $http.put(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
 
-                window.location.search = ''; //?page=details&activityId=' + data.parentActivityJpaId
+                $state.go('state1');
 
             }).error(function (data, status, headers, config) {
                 $log.error('openk-eisman-portlet/rest/activity/');
@@ -83,7 +60,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$
 
             $http.post(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
 
-                window.location.search = '';//?page=details&activityId=' + data.id;
+                $state.go('state1');
 
             }).error(function (data, status, headers, config) {
                 $log.error('openk-eisman-portlet/rest/activity/');
@@ -131,9 +108,11 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$
         return data;
     };
 
-    $scope.isNoValidTimeInterval = function (dateStarted, dateFinished) {
+    $scope.isValidTimeInterval = function (dateStarted, dateFinished) {
         if (dateStarted > dateFinished)
-            alert("isNoValidTimeInterval: not defined");
+            return false;
+
+        return true;
     };
 
     $scope.isNoAreaDefined = function () {
@@ -146,9 +125,11 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$
 
     $scope.gotoStationList = function (settingsForm) {
 
-        if (settingsForm.$valid && !$scope.isNoValidTimeInterval($scope.activity.settings.dateStarted, $scope.activity.settings.dateFinished)) {
+        if (settingsForm.$valid && $scope.isValidTimeInterval($scope.activity.settings.dateStarted, $scope.activity.settings.dateFinished)) {
 
-            $scope.activity.dateDiff = $scope.activity.settings.dateFinished - $scope.activity.settings.dateStarted;
+            var timespan = TimeSpan.FromDates($scope.activity.settings.dateStarted, $scope.activity.settings.dateFinished);
+
+            $scope.activity.dateDiff = timespan.days() + " " + $translate.instant('DAYS') + " " + timespan.hours() + " " + $translate.instant('HOURS') + " " + timespan.minutes() + " " + $translate.instant('MINUTES');
 
             $http.post(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/activity/createreductionadvice", $scope.getPostData()).success(function (data) {
 
@@ -180,7 +161,8 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$
                     value.getCalculatedPower = parseInt(value.generatorVoltageMeasured.value - (value.reductionAdvice / 100 * value.generatingUnitJpa.maxOperatingP.value));
                 });
 
-                $rootScope.$broadcast('replaceData', activity);
+                activityService.activity(activity);
+
                 $scope.activity.calculatedReductionAdvice = data;
 
                 $state.go('Regulation.CreateProposal.Main');
