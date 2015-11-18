@@ -11,7 +11,7 @@
  *******************************************************************************/
 
 app.controller('CreateProposalController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService) {
-
+    $scope.activity = activityService.activity();
     $rootScope.$on('showSubstationProposalGrid', function (event, row, job, subStationRegStep) {
 
         $log.info('showSubstationProposalGrid ' + job);
@@ -226,8 +226,8 @@ app.controller('CreateProposalController', ['$scope', '$http', '$timeout', '$tra
         var data = {
             "id": $scope.activity.id,
             "parentActivityJpaId": $scope.activity.parentActivityJpaId,
-            "dateStarted": dateService.formatDateForBackend($scope.activity.settings.dateStarted),
-            "dateFinished": dateService.formatDateForBackend($scope.activity.settings.dateFinished),
+            "dateStarted": $scope.activity.settings.dateStarted.d.toISOString(),
+            "dateFinished": $scope.activity.settings.dateFinished.d.toISOString(),
             "description": $scope.activity.settings.reason,
             "activePowerJpaToBeReduced": {
                 "value": $scope.activity.settings.requiredReductionPower,
@@ -270,8 +270,8 @@ app.controller('CreateProposalController', ['$scope', '$http', '$timeout', '$tra
             "parentActivityJpaId": $scope.activity.parentActivityJpaId,
             "dateCreated": $scope.activity.dateCreated,
             "createdBy": $scope.activity.createdBy,
-            "dateStarted": dateService.formatDateForBackend($scope.activity.settings.dateStarted),
-            "dateFinished": dateService.formatDateForBackend($scope.activity.settings.dateFinished),
+            "dateStarted": $scope.activity.settings.dateStarted.d.toISOString(),
+            "dateFinished": $scope.activity.settings.dateFinished.d.toISOString(),
             "description": $scope.activity.settings.reason,
             "activePowerJpaToBeReduced": {
                 "value": $scope.activity.settings.requiredReductionPower,

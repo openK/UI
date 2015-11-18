@@ -40,8 +40,7 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
 
         if ($scope.activity.dateCreated) {  
 
-            var timestamp = $scope.activity.dateCreated;
-
+            var timestamp = new Date(new Date(Date.parse($scope.activity.dateCreated)).setMilliseconds(0)).toISOString().replace('.000Z', 'Z');
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist/timestamp/" + timestamp, {
 
                 "timeout": 30000
