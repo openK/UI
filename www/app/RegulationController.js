@@ -10,7 +10,7 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('RegulationController', ['$scope', '$rootScope', '$http', '$modal', '$log', '$interval', function ($scope, $rootScope, $http, $modal, $log, $interval) {
+app.controller('RegulationController', ['$scope', '$rootScope', 'activityService', function ($scope, $rootScope, activityService) {
     $scope.IsDownRegulationActive = true;
     $scope.SetActive = function (regulation) {
         if (regulation === 'DownRegulation') {
