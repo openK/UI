@@ -10,7 +10,7 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope) {
+app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService' , function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService) {
 
     function rowTemplate() {
 
@@ -25,6 +25,9 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
 
         var oid = parseInt(branch.oid);
         $scope.substationname = branch.name;
+        console.log('loadSubstations');
+        
+        $scope.activity = activityService.activity();
 
         if ($scope.selectedStep === 'proposal') {
 
@@ -35,7 +38,7 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
             $scope.substations.columnDefs[10].visible = false;
         }
 
-        if ($scope.activity.dateCreated) {
+        if ($scope.activity.dateCreated) {  
 
             var timestamp = $scope.activity.dateCreated;
 
