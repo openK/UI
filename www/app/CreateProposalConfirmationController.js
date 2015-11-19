@@ -124,7 +124,7 @@ app.controller('CreateProposalConfirmationController', ['$scope', '$state', '$ht
         };
 
         $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/confirmactivity/", postData).success(function (data) {
-            $state.go('Regulation.CreateProposalConfirmation');
+            $state.go('state1');
             //window.location.search = '?page=details&activityId=' + $scope.parentActivityId;
         }).error(function (data, status, headers, config) {
             $scope.$broadcast('displayError', ['Es gab einen Fehler bei der Datenabfrage.']);

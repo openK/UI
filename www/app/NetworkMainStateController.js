@@ -1,4 +1,4 @@
-app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootScope', function ($scope, $http, $log, $rootScope) {
+app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootScope', '$translate', function ($scope, $http, $log, $rootScope, $translate) {
 
     $scope.handleTreeClick = function (branch) {
 
@@ -10,10 +10,10 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
 
     $scope.treeColumns = [{
         field: "name",
-        displayName: 'STATE.NETWORK'
+        displayName: $translate.instant('STATE.NETWORK')
     }, {
         field: "pv",
-        displayName: 'STATE.PV',
+        displayName: $translate.instant('STATE.PV'),
         cellTemplate: '<div ng-click="cellTemplateScope.click( row.branch )">{{row.branch[col.field] | number: 2}} MW</div>\n',
         cellFilter: 'number: 2',
         cellTemplateScope: {
@@ -21,28 +21,28 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
         }
     }, {
         field: "bio",
-        displayName: 'STATE.BIO',
+        displayName: $translate.instant('STATE.BIO'),
         cellTemplate: '<div ng-click="cellTemplateScope.click( row.branch )">{{row.branch[col.field] | number: 2}} MW</div>\n',
         cellTemplateScope: {
             click: $scope.handleTreeClick
         }
     }, {
         field: "wind",
-        displayName: 'STATE.WIND',
+        displayName: $translate.instant('STATE.WIND'),
         cellTemplate: '<div ng-click="cellTemplateScope.click( row.branch )">{{row.branch[col.field] | number: 2}} MW</div>\n',
         cellTemplateScope: {
             click: $scope.handleTreeClick
         }
     }, {
         field: "noBioPvWind",
-        displayName: 'STATE.ELSE',
+        displayName: $translate.instant('STATE.ELSE'),
         cellTemplate: '<div ng-click="cellTemplateScope.click( row.branch )">{{row.branch[col.field] | number: 2}} MW</div>\n',
         cellTemplateScope: {
             click: $scope.handleTreeClick
         }
     }, {
         field: "sum",
-        displayName: 'STATE.SUM',
+        displayName: $translate.instant('STATE.SUM'),
         cellTemplate: '<div ng-click="cellTemplateScope.click( row.branch )">{{row.branch[col.field] | number: 2}} MW</div>\n',
         cellTemplateScope: {
             click: $scope.handleTreeClick
