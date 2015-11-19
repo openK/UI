@@ -1,0 +1,85 @@
+﻿<div class="modal-header">
+    <button class="close" aria-label="Close" data-ng-click="cancel()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 id="save_TemplateLabel" class="modal-title">{{ 'PROPOSAL.MODAL.HEADER' | translate}}</h4>
+</div>
+<div class="modal-body">
+    <form name="dummyForm" class="form-horizontal">
+        <div class="form-group">
+            <label for="datestartedmodal" class="control-label col-xs-4">
+                {{ 'SETTINGS.DATESTARTED' | translate }}:
+            </label>
+
+            <div class="controls col-xs-8">
+                <input disabled="disabled" type="text"
+                       data-ng-model="activity.settings.dateStarted" class="form-control"
+                       id="datestartedmodal">
+            </div>
+            <div class="form-group">
+            </div>
+            <label for="datefinishedmodal" class="control-label col-xs-4">
+                {{ 'SETTINGS.DATEFINISHED' | translate }}:
+            </label>
+
+            <div class="controls col-xs-8">
+                <input disabled="disabled" type="text"
+                       data-ng-model="activity.settings.dateFinished"
+                       class="form-control" id="datefinishedmodal">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="requiredreductionpowermodal" class="control-label col-xs-4">
+                {{ 'SETTINGS.REQUIREDREDUCTION' | translate }}:
+            </label>
+
+            <div class="col-xs-8">
+                <div class="input-group input-group-sm">
+                    <input disabled="disabled" type="text" required
+                           data-ng-model="activity.proposal.modal.requiredReductionPower"
+                           data-area-describedby="requiredreductionaddonmodal" name="requiredReductionPower"
+                           id="requiredreductionpowermodal" class="form-control">
+                    <span id="requiredreductionpoweraddonmodal" class="input-group-addon">MW</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="sumrequiredreductionpowermodal" class="control-label col-xs-4">
+                {{ 'PROPOSAL.MODAL.SUMREQUIREDREDUCTION' | translate }}:
+            </label>
+
+            <div class="col-xs-8">
+                <div class="input-group input-group-sm">
+                    <input disabled="disabled" type="text" required
+                           data-ng-model="activity.proposal.modal.sumRequiredReductionPower"
+                           data-area-describedby="abregelleistung-sum-addon" name="requiredReductionPower"
+                           id="sumrequiredreductionpowermodal" class="form-control">
+                    <span id="sumrequiredreductionpoweraddonmodal" class="input-group-addon">MW</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-style="{ 'color' : enough}">
+            <label for="abregelleistung-diff" class="control-label col-xs-4">
+                {{ 'PROPOSAL.MODAL.DIFF' | translate }}:
+            </label>
+
+            <div class="col-xs-8">
+                <div class="input-group input-group-sm">
+                    <input disabled="disabled" ng-style="{ 'border-color' : enough}" type="text" required
+                           data-ng-model="activity.proposal.modal.diffReductionPower"
+                           data-area-describedby="abregelleistung-diff-addon" name="requiredReductionPower"
+                           id="abregelleistung-diff" class="form-control">
+                    <span id="abregelleistung-diff-addon"
+                          ng-style="{ 'background-color' : enough, 'border-color' : enough}"
+                          class="input-group-addon">MW</span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button data-dismiss="modal" class="btn btn-default" data-ng-click="cancel()">
+        {{ 'CANCEL' | translate }}
+    </button>
+    <button class="btn btn-primary" data-ng-click="ok()">{{ 'NEXT' | translate}}</button>
+</div>

@@ -71,6 +71,10 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                         controller: 'NetworkSubStateController'
                     }
                 }
+            }).state('Regulation.CreateProposalConfirmation', {
+                url: '/CreateProposalConfirmation',
+                templateUrl: "app/CreateProposalConfirmation.html",
+                controller: 'CreateProposalConfirmationController',
             });
         // For any unmatched url, redirect to /state1
         $urlRouterProvider.otherwise("/home");

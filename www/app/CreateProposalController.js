@@ -10,7 +10,7 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('CreateProposalController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService) {
+app.controller('CreateProposalController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', '$modal', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, $modal) {
     $scope.activity = activityService.activity();
     $rootScope.$on('showSubstationProposalGrid', function (event, row, job, subStationRegStep) {
 
@@ -221,93 +221,19 @@ app.controller('CreateProposalController', ['$scope', '$http', '$timeout', '$tra
         $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.ALL);
     };
 
-    $scope.getPostData = function () {
+    $scope.openModalConfirmProposal = function () {
 
-        var data = {
-            "id": $scope.activity.id,
-            "parentActivityJpaId": $scope.activity.parentActivityJpaId,
-            "dateStarted": $scope.activity.settings.dateStarted.d.toISOString(),
-            "dateFinished": $scope.activity.settings.dateFinished.d.toISOString(),
-            "description": $scope.activity.settings.reason,
-            "activePowerJpaToBeReduced": {
-                "value": $scope.activity.settings.requiredReductionPower,
-                "multiplier": "M",
-                "unit": "W"
-            },
-            "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
-            "subGeographicalRegionJpaList": $scope.activity.settings.subGeographicalRegions,
-            "substationJpaList": $scope.activity.settings.transformerStations,
-            "practice": $scope.activity.settings.training,
-            'geographicalRegion': $scope.activity.settings.useWholeArea,
-            "preselectionName": "",
-            "preselectionConfigurationJpa": {
-                "reductionSetting": $scope.activity.preselection.reductionSetting,
-                "discriminationCoefficientEnabled": $scope.activity.preselection.discriminationCoefficientEnabled,
-                "characteristicForMissingMeasurementFwt": $scope.activity.preselection.characteristicForMissingMeasurementFwt,
-                "characteristicForMissingMeasurementEfr": $scope.activity.preselection.characteristicForMissingMeasurementEfr,
-                "substituteValueWindFwt": $scope.activity.preselection.substituteValueWindFwt,
-                "substituteValuePhotovoltaicFwt": $scope.activity.preselection.substituteValuePhotovoltaicFwt,
-                "substituteValueBiogasFwt": $scope.activity.preselection.substituteValueBiogasFwt,
-                'substituteValueWindEfr': $scope.activity.preselection.substituteValueWindEfr,
-                'substituteValuePhotovoltaicEfr': $scope.activity.preselection.substituteValuePhotovoltaicEfr,
-                'substituteValueBiogasEfr': $scope.activity.preselection.substituteValueBiogasEfr
-            },
-            "timeout": 30000
-        };
-
-        return data;
-    };
-
-    if (typeof $scope.activityId === "undefined") {
-
-        $scope.activityId = null;
-    }
-
-    $rootScope.deregisterOnGoToConfirm = $rootScope.$on('gotoConfirm', function (event, args) {
-
-        var postData = {
-            "id": $scope.activity.id,
-            "parentActivityJpaId": $scope.activity.parentActivityJpaId,
-            "dateCreated": $scope.activity.dateCreated,
-            "createdBy": $scope.activity.createdBy,
-            "dateStarted": $scope.activity.settings.dateStarted.d.toISOString(),
-            "dateFinished": $scope.activity.settings.dateFinished.d.toISOString(),
-            "description": $scope.activity.settings.reason,
-            "activePowerJpaToBeReduced": {
-                "value": $scope.activity.settings.requiredReductionPower,
-                "multiplier": "M",
-                "unit": "W"
-            },
-            "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
-            "subGeographicalRegionJpaList": $scope.activity.settings.subGeographicalRegions,
-            "substationJpaList": $scope.activity.settings.transformerStations,
-            "practice": $scope.activity.settings.training,
-            'geographicalRegion': $scope.activity.settings.useWholeArea,
-            "preselectionName": "",
-            "preselectionConfigurationJpa": {
-                "reductionSetting": $scope.activity.preselection.reductionSetting,
-                "discriminationCoefficientEnabled": $scope.activity.preselection.discriminationCoefficientEnabled,
-                "characteristicForMissingMeasurementFwt": $scope.activity.preselection.characteristicForMissingMeasurementFwt,
-                "substituteValueWindFwt": $scope.activity.preselection.substituteValueWindFwt,
-                "substituteValuePhotovoltaicFwt": $scope.activity.preselection.substituteValuePhotovoltaicFwt,
-                "substituteValueBiogasFwt": $scope.activity.preselection.substituteValueBiogasFwt
-            },
-            'synchronousMachineJpaReducedList': $scope.activity.substationProposalList,
-            "timeout": 30000
-        };
-
-        $http.put("/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
-
-            $scope.gotoConfirm();
-
-        }).error(function (data, status, headers, config) {
-
-            $scope.$broadcast('displayError', ['Es gab einen Fehler bei der Datenabfrage.']);
-            $log.error('Can not load /openk-eisman-portlet/rest/activity/');
-
+        $modal.open({
+            animation: true,
+            templateUrl: 'app/CreateProposalConfirmationModal.html',
+            controller: 'CreateProposalConfirmationModalController',
+            resolve: {
+                items: function () {
+                    return [$scope.activity];
+                }
+            }
         });
-
-    });
+    };
 
     /*
      $rootScope.$on('reCalculateAfterTimeout', function(event, args) {

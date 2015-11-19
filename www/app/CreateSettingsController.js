@@ -161,15 +161,14 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$
                     value.getCalculatedPower = parseInt(value.generatorVoltageMeasured.value - (value.reductionAdvice / 100 * value.generatingUnitJpa.maxOperatingP.value));
                 });
 
-                activityService.activity(activity);
-
                 $scope.activity.calculatedReductionAdvice = data;
+
+                activityService.activity($scope.activity);
 
                 $state.go('Regulation.CreateProposal.Main');
                 $rootScope.$broadcast('showSubstationProposalGrid', [], 'refresh');
 
             }).error(function (data, status, headers, config) {
-
                 $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
                 $log.error('Can not load /openk-eisman-portlet/rest/activity/createreductionadvice/');
             });
