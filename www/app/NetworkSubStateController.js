@@ -21,13 +21,16 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
             '</div>';
     }
 
+    $scope.activity = activityService.activity();
+
     $rootScope.$on('loadSubstations', function (event, branch) {
+
+        $scope.activity = activityService.activity();
 
         var oid = parseInt(branch.oid);
         $scope.substationname = branch.name;
         console.log('loadSubstations');
         
-        $scope.activity = activityService.activity();
 
         if ($scope.selectedStep === 'proposal') {
 

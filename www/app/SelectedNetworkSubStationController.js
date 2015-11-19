@@ -10,9 +10,13 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('SelectedSubStationController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'dateService', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, dateService) {
+app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService) {
+
+    $scope.activity = activityService.activity();
 
     $rootScope.$on('showSubstationProposalGrid', function (event, row, job, subStationRegStep) {
+
+        $scope.activity = activityService.activity();
 
         $log.info('showSubstationProposalGrid ' + job);
 
@@ -223,11 +227,14 @@ app.controller('SelectedSubStationController', ['$scope', '$http', '$timeout', '
 
     $scope.getPostData = function () {
 
+        var dateStarted = $filter('date')($scope.activity.settings.dateStarted, 'yyyy-MM-ddTHH:mm:ss.sssZ');
+        var dateFinished = $filter('date')($scope.activity.settings.dateFinished, 'yyyy-MM-ddTHH:mm:ss.sssZ');
+        var dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
         var data = {
             "id": $scope.activity.id,
             "parentActivityJpaId": $scope.activity.parentActivityJpaId,
-            "dateStarted": dateService.formatDateForBackend($scope.activity.settings.dateStarted),
-            "dateFinished": dateService.formatDateForBackend($scope.activity.settings.dateFinished),
+            "dateStarted": dateStarted,
+            "dateFinished": dateFinished,
             "description": $scope.activity.settings.reason,
             "activePowerJpaToBeReduced": {
                 "value": $scope.activity.settings.requiredReductionPower,
@@ -265,13 +272,16 @@ app.controller('SelectedSubStationController', ['$scope', '$http', '$timeout', '
 
     $rootScope.deregisterOnGoToConfirm = $rootScope.$on('gotoConfirm', function (event, args) {
 
+        var dateStarted = $filter('date')($scope.activity.settings.dateStarted, 'yyyy-MM-ddTHH:mm:ss.sssZ');
+        var dateFinished = $filter('date')($scope.activity.settings.dateFinished, 'yyyy-MM-ddTHH:mm:ss.sssZ');
+        var dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
         var postData = {
             "id": $scope.activity.id,
             "parentActivityJpaId": $scope.activity.parentActivityJpaId,
-            "dateCreated": $scope.activity.dateCreated,
+            "dateCreated": dateCreated,
             "createdBy": $scope.activity.createdBy,
-            "dateStarted": dateService.formatDateForBackend($scope.activity.settings.dateStarted),
-            "dateFinished": dateService.formatDateForBackend($scope.activity.settings.dateFinished),
+            "dateStarted": dateStarted,
+            "dateFinished": dateFinished,
             "description": $scope.activity.settings.reason,
             "activePowerJpaToBeReduced": {
                 "value": $scope.activity.settings.requiredReductionPower,
@@ -296,7 +306,7 @@ app.controller('SelectedSubStationController', ['$scope', '$http', '$timeout', '
             "timeout": 30000
         };
 
-        $http.put("/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
+        $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
 
             $scope.gotoConfirm();
 
@@ -306,24 +316,5 @@ app.controller('SelectedSubStationController', ['$scope', '$http', '$timeout', '
             $log.error('Can not load /openk-eisman-portlet/rest/activity/');
 
         });
-
     });
-
-    /*
-     $rootScope.$on('reCalculateAfterTimeout', function(event, args) {
-
-     $http.post("/openk-eisman-portlet/rest/activity/createreductionadvice",  $scope.getPostData()).success(function (payload) {
-     $scope.parentActivityId = payload.id;
-     $scope.activityId = payload.childrenActivityJPaList[0].id;
-     $scope.activity.calculatedReductionAdvice = payload;
-     $scope.activity.substationProposalList = payload.childrenActivityJpaList[0].synchronousMachineJpaReducedList;
-     $rootScope.$broadcast('showSubstationProposalGrid', [], 'refresh');
-
-     }).error(function(data, status, headers, config) {
-     $scope.$broadcast('displayError', ['Es gab einen Fehler bei der Datenabfrage.']);
-     $log.error('Can not load /openk-eisman-portlet/rest/activity/createreductionadvice/');
-     });
-     });
-     */
-
 }]);

@@ -68,7 +68,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     },
                     "NetworkSubState": {
                         templateUrl: "app/NetworkSubState.html",
-                        controller: 'NetworkSubStateController'
+                        controller: 'SelectedNetworkSubStationController'
                     }
                 }
             }).state('Regulation.CreateProposalConfirmation', {
