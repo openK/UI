@@ -9,7 +9,7 @@
  * Stefan Brockmann - initial API and implementation
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
-app.controller('CreateProposalConfirmationModalController',['$scope', '$state', '$rootScope', '$modalInstance', '$http', '$filter', 'activityService', function ($scope, $state, $rootScope, $modalInstance, $http, $filter, activityService) {
+app.controller('CreateProposalConfirmationModalController', ['$scope', '$state', '$rootScope', '$modalInstance', '$http', '$filter', 'activityService', 'dateService', function ($scope, $state, $rootScope, $modalInstance, $http, $filter, activityService, dateService) {
 
     $scope.activity = activityService.activity();
 
@@ -52,8 +52,8 @@ app.controller('CreateProposalConfirmationModalController',['$scope', '$state', 
     };
 
     $scope.ok = function () {
-        var dateStarted = $filter('date')($scope.activity.settings.dateStarted, 'yyyy-MM-ddTHH:mm:ss.sssZ');
-        var dateFinished = $filter('date')($scope.activity.settings.dateFinished, 'yyyy-MM-ddTHH:mm:ss.sssZ');
+        var dateStarted = dateService.formatDateForBackend($scope.activity.settings.dateStarted);
+        var dateFinished = dateService.formatDateForBackend($scope.activity.settings.dateFinished);
         var dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
         var postData = {
             "id": $scope.activity.id,

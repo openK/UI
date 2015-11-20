@@ -1,4 +1,4 @@
-app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', function ($scope, $state, $rootScope, $http, $modal, $log, activityService, $translate) {
+app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', function ($scope, $state, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService) {
 
     $scope.activity = activityService.activity();
     $scope.activityConfigData = activityService.activityConfigData();
@@ -10,14 +10,16 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$
     $scope.regulationReasons = $scope.activityConfigData.regulationReasons;
 
     $scope.saveAndReturn = function () {
-
+        var dateStarted = dateService.formatDateForBackend($scope.activity.settings.dateStarted);
+        var dateFinished = dateService.formatDateForBackend($scope.activity.settings.dateFinished);
+        var dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
         var postData = {
-            "dateCreated": $scope.activity.dateCreated,
+            "dateCreated": dateCreated,
             "createdBy": $scope.activity.createdBy,
-            "id": $scope.activityId,
+            "id": $scope.activity.activityId,
             "parentActivityJpaId": $scope.parentActivityId,
-            "dateStarted": $scope.activity.settings.dateStarted,
-            "dateFinished": $scope.activity.settings.dateFinished,
+            "dateStarted": dateStarted,
+            "dateFinished": dateFinished,
             "description": $scope.activity.settings.description,
             "activePowerJpaToBeReduced": {
                 "value": $scope.activity.settings.requiredReductionPower,
@@ -73,11 +75,13 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$
      */
     $scope.getPostData = function () {
 
+        var dateStarted = dateService.formatDateForBackend($scope.activity.settings.dateStarted);
+        var dateFinished = dateService.formatDateForBackend($scope.activity.settings.dateFinished);
         var data = {
-            "id": $scope.activity.id,
+            "id": $scope.activityId,
+            "dateStarted": dateStarted,
+            "dateFinished": dateFinished,
             "parentActivityJpaId": $scope.activity.parentActivityJpaId,
-            "dateStarted": $scope.activity.settings.dateStarted,
-            "dateFinished": $scope.activity.settings.dateFinished,
             "description": $scope.activity.settings.description,
             "activePowerJpaToBeReduced": {
                 "value": $scope.activity.settings.requiredReductionPower,
@@ -109,10 +113,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$
     };
 
     $scope.isValidTimeInterval = function (dateStarted, dateFinished) {
-        if (dateStarted > dateFinished)
-            return false;
-
-        return true;
+        return dateService.isDateBehind(dateStarted, dateFinished);
     };
 
     $scope.isNoAreaDefined = function () {
@@ -127,9 +128,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$
 
         if (settingsForm.$valid && $scope.isValidTimeInterval($scope.activity.settings.dateStarted, $scope.activity.settings.dateFinished)) {
 
-            var timespan = TimeSpan.FromDates($scope.activity.settings.dateStarted, $scope.activity.settings.dateFinished);
-
-            $scope.activity.dateDiff = timespan.days() + " " + $translate.instant('DAYS') + " " + timespan.hours() + " " + $translate.instant('HOURS') + " " + timespan.minutes() + " " + $translate.instant('MINUTES');
+            $scope.activity.dateDiff = dateService.getDateDiff($scope.activity.settings.dateStarted, $scope.activity.settings.dateFinished);
 
             $http.post(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/activity/createreductionadvice", $scope.getPostData()).success(function (data) {
 
@@ -232,8 +231,8 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$
             $scope.activity.preselection.substituteValuePhotovoltaicEfr = data.preselectionConfigurationJpa.substituteValuePhotovoltaicEfr;
             $scope.activity.preselection.substituteValueWindEfr = data.preselectionConfigurationJpa.substituteValueWindEfr;
             $scope.activity.preselection.substituteValueBiogasEfr = data.preselectionConfigurationJpa.substituteValueBiogasEfr;
-            $scope.activity.settings.dateStarted = data.dateStarted;
-            $scope.activity.settings.dateFinished = data.dateFinished;
+            $scope.activity.settings.dateStarted = dateService.formateDateForClient(data.dateStarted);
+            $scope.activity.settings.dateFinished = dateService.formateDateForClient(data.dateFinished);
             $scope.activity.dateDiff = $scope.activity.settings.dateFinished - $scope.activity.settings.dateStarted;
             $scope.activity.settings.reasonOfReduction = data.reasonOfReduction;
             $scope.activity.settings.requiredReductionPower = data.activePowerJpaToBeReduced.value;

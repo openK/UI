@@ -6,7 +6,7 @@
             <div class="controls col-xs-8">
                 <div class="input-prepend input-group"
                      data-ng-class="{'has-error': settingsForm.datestarted.$invalid}">
-                    <input type="datetime-local" required value="" startrange
+                    <input type="text" required value="" startrange
                            data-ng-model="activity.settings.dateStarted" class="form-control"
                            id="datestarted" name="datestarted">
                 </div>
@@ -18,7 +18,7 @@
             <div class="controls col-xs-8">
                 <div class="input-prepend input-group"
                      data-ng-class="{'has-error': settingsForm.datefinished.$invalid}">
-                    <input type="datetime-local" required value="" data-ng-model="activity.settings.dateFinished" endrange
+                    <input type="text" required value="" data-ng-model="activity.settings.dateFinished" endrange
                            class="form-control" id="datefinished" name="datefinished">
                 </div>
             </div>
@@ -194,4 +194,5 @@
             </div>
         </div>
     </div>
+    <script src="app/libs/eismandaterangepicker.js"></script>
 </form>
