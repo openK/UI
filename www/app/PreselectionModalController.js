@@ -1,8 +1,9 @@
 ﻿app.controller('PreselectionModalController', function ($scope, $rootScope, $modalInstance, $http, activityService) {
 
-    $scope.templateName = '';
     $scope.saveOk = false;
-    $scope.templateName = $rootScope.selectedTemplate.name;
+    if ($rootScope.selectedTemplate && $rootScope.selectedTemplate.name) {
+        $scope.templateName = $rootScope.selectedTemplate.name;
+    }
 
     $scope.activity = activityService.activity();
     $scope.templates = activityService.activityConfigData().templates;
@@ -17,7 +18,7 @@
     };
 
     $scope.ok = function () {
-        var tmp = {
+        var templateData = {
             preselectionConfigurationJpa: {
                 reductionSetting: $scope.activity.preselection.reductionSetting,
                 discriminationCoefficientEnabled: $scope.activity.preselection.discriminationCoefficientEnabled,
@@ -33,56 +34,25 @@
                 substituteValueBiogasEfr: $scope.activity.preselection.substituteValueBiogasEfr
             },
             id: '',
-            name: ''
+            name: $scope.templateName
         };
 
-
-        var exists = false;
-        for (var i in $scope.templates) {
-
-            if ($scope.templates[i] && $scope.templates[i].name === $scope.templateName) {
-                tmp.id = $scope.templates[i].id;
-                exists = true;
+        $rootScope.templates.forEach(function(template) {
+            if (template.name === $scope.templateName) {
+                templateData.id = template.id;
             }
-        }
+        });
 
-        if (exists) {
-            tmp.name = $scope.templateName;
-            $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/preselection/" + tmp.id, tmp).then(function (result) {
-                var index;
-                $scope.templates.forEach(function (template, i) {
-                    if (template.name === result.data.name) {
-                        index = i;
-                    }
-                });
-                activityService.activityConfigData().templates[index] = result.data;
-                $scope.templates[index] = result.data;
-                $rootScope.selectedTemplate = result.data;
+        if (templateData.id) {
+            $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/preselection/" + templateData.id, templateData).then(function (result) {
                 $scope.saveOk = true;
             });
-
         } else {
-            tmp.name = $scope.templateName;
-            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/preselection/", tmp).then(function (result) {
-                var index;
-                $scope.templates.forEach(function (template, i) {
-                    if (template.name === result.data.name) {
-                        index = i;
-                    }
-                });
-                activityService.activityConfigData().templates[index] = result.data;
-                $scope.templates[index] = result.data;
+            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/preselection/", templateData).then(function (result) {
+                $rootScope.templates.push(result.data);
                 $rootScope.selectedTemplate = result.data;
                 $scope.saveOk = true;
             });
         }
-    };
-
-    $scope.isNameValid = function () {
-        $scope.templateName = $scope.templateName.trim();
-        if ($scope.templateName) {
-            return true;
-        }
-        return false;
     };
 });
