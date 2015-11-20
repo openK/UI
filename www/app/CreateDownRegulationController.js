@@ -9,17 +9,13 @@
  * Stefan Brockmann - initial API and implementation
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
-
 app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScope', '$http', '$modal', '$log', 'activityService', function ($scope, $state, $rootScope, $http, $modal, $log, activityService) {
 
     $scope.activityConfigData = activityService.activityConfigData();
 
-
     /*
     * Preselection Data
     */
-
-    $scope.preselectionForm = {};
     $scope.selectedTemplate = $rootScope.selectedTemplate || '';
     $scope.localLang = {};
     $scope.regulationSteps = $scope.activityConfigData.regulationSteps;
@@ -68,11 +64,6 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
             animation: true,
             templateUrl: 'app/PreselectionModal.html',
             controller: 'PreselectionModalController',
-            resolve: {
-                items: function () {
-                    return [$scope.selectedTemplate, $scope.activity, $scope.templates];
-                }
-            }
         });
     };
 }]);
