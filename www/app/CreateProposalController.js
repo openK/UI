@@ -9,7 +9,6 @@
  * Stefan Brockmann - initial API and implementation
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
-
 app.controller('CreateProposalController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', '$modal', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, $modal) {
     $scope.activity = activityService.activity();
     $rootScope.$on('showSubstationProposalGrid', function (event, row, job, subStationRegStep) {
@@ -196,17 +195,15 @@ app.controller('CreateProposalController', ['$scope', '$http', '$timeout', '$tra
         $log.info('removeSubStation');
 
         var mRid = myRow.entity.mRid;
-        var row = {};
-
+        var index;
         $scope.activity.substationProposalList.forEach(function (value, key) {
 
             if (value.mRid === mRid) {
-
-                row = $scope.activity.substationProposalList[key];
-                $scope.activity.substationProposalList.splice(key, 1);
+                index = key;
             }
         });
-
+        var row = $scope.activity.substationProposalList[key];
+        $scope.activity.substationProposalList.splice(index, 1);
         $rootScope.$broadcast('showSubstationGrid', row, $scope.activity.substationProposalList, 'remove');
     };
 
@@ -234,22 +231,5 @@ app.controller('CreateProposalController', ['$scope', '$http', '$timeout', '$tra
             }
         });
     };
-
-    /*
-     $rootScope.$on('reCalculateAfterTimeout', function(event, args) {
-
-     $http.post("/openk-eisman-portlet/rest/activity/createreductionadvice",  $scope.getPostData()).success(function (payload) {
-     $scope.parentActivityId = payload.id;
-     $scope.activityId = payload.childrenActivityJPaList[0].id;
-     $scope.activity.calculatedReductionAdvice = payload;
-     $scope.activity.substationProposalList = payload.childrenActivityJpaList[0].synchronousMachineJpaReducedList;
-     $rootScope.$broadcast('showSubstationProposalGrid', [], 'refresh');
-
-     }).error(function(data, status, headers, config) {
-     $scope.$broadcast('displayError', ['Es gab einen Fehler bei der Datenabfrage.']);
-     $log.error('Can not load /openk-eisman-portlet/rest/activity/createreductionadvice/');
-     });
-     });
-     */
 
 }]);

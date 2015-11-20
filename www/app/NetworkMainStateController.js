@@ -59,13 +59,9 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
     }];
 
     $scope.treeData = [];
-
-    $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/tree/", {
-        "timeout": 30000
-    }).success(function (data) {
-        $scope.treeData = data;
-    }).error(function (data, status, headers, config) {
-        $scope.$broadcast('displayError', ['Es gab einen Fehler bei der Datenabfrage.']);
+    $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/tree/").then(function (result) {
+        $scope.treeData = result.data;
+    }, function(error) {
         $log.error('Can not load /openk-eisman-portlet/rest/subgeographicalregion/tree/');
     });
 
@@ -84,6 +80,4 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
         });
         return data;
     };
-
-
 }]);

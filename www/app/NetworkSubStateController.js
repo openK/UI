@@ -10,10 +10,9 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService' , function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService) {
+app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', 'dateService', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, dateService) {
 
     function rowTemplate() {
-
         return '<div ng-class="{ \'hideRowSelectedSubStation\': grid.appScope.isInUse( row )  }">' +
             '<div ng-if="row.entity.merge">{{row.entity.title}}</div>' +
             '<div ng-if="!row.entity.merge" ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }"  ui-grid-cell>' +
@@ -24,69 +23,32 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
     $scope.activity = activityService.activity();
 
     $rootScope.$on('loadSubstations', function (event, branch) {
-
         $scope.activity = activityService.activity();
-
         var oid = parseInt(branch.oid);
         $scope.substationname = branch.name;
         console.log('loadSubstations');
-        
 
-        if ($scope.selectedStep === 'proposal') {
-
-            $scope.substations.columnDefs[10].visible = true;
-
-        } else {
-
-            $scope.substations.columnDefs[10].visible = false;
-        }
-
-        if ($scope.activity.dateCreated) {  
-
-            var timestamp = new Date(new Date(Date.parse($scope.activity.dateCreated)).setMilliseconds(0)).toISOString().replace('.000Z', 'Z');
-            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist/timestamp/" + timestamp, {
-
-                "timeout": 30000
-
-            }).success(function (data) {
-
-                $scope.substationList = data.synchronousMachineJpaList;
-
-            }).error(function (data, status, headers, config) {
-
-                $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
+        if ($scope.activity.dateCreated) {
+            var timestamp = dateService.formatDateForRestRequest($scope.activity.dateCreated);
+            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist/timestamp/").then(function (result) {
+                $scope.substationList = result.data.synchronousMachineJpaList;
+            }, function (error) {
                 $log.error('Can not load /openk-eisman-portlet/rest/substation/oid/' + oid + '/synchronousmachinelist/timestamp/' + timestamp);
             });
-
         } else {
-
-            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist", {
-
-                "timeout": 30000
-
-            }).success(function (data) {
-
-                $scope.substationList = data.synchronousMachineJpaList;
-
-            }).error(function (data, status, headers, config) {
-
-                $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
+            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist").then(function (result) {
+                $scope.substationList = result.data.synchronousMachineJpaList;
+            }, function (error) {
                 $log.error('Can not load /openk-eisman-portlet/rest/substation/oid/' + oid + '/synchronousmachinelist');
             });
         }
-
     });
 
     $rootScope.$on('showSubstationGrid', function (event, row, list, job) {
-
         $log.info('showSubstationGrid');
-
         if (job === 'remove') {
-
             $scope.tmpSubstation = list;
-
             var mRid = row.mRid;
-
             $scope.substationList.forEach(function (value, key) {
                 if (value.mRid === mRid) {
                     $scope.substationList[key].subStationRegSteps = null;
@@ -221,7 +183,6 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
 
         var disabled = false;
         var tmpSubstations = $scope.activity.substationProposalList;
-
         if (tmpSubstations) {
             for (var i = 0; i < tmpSubstations.length; i++) {
 
@@ -231,20 +192,6 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
                 }
             }
         }
-
         return disabled;
     };
-
-    //function rowTemplate () {
-    //
-    //    return '<div ng-class="{ \'hideRowSelectedSubStation\': grid.appScope.isInUse( row )  }">' +
-    //        '  <div ng-if="row.entity.merge">{{row.entity.title}}</div>' +
-    //        '  <div ng-if="!row.entity.merge" ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }"  ui-grid-cell></div>' +
-    //        '</div>';
-    //}
-
-    //$scope.rowFormatter = function (row) {
-    //    return row.entity.subStationRegSteps > 0;
-    //};
-
 }]);
