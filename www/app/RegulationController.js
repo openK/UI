@@ -10,16 +10,20 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('RegulationController', ['$scope', '$rootScope', 'activityService', function ($scope, $rootScope, activityService) {
+app.controller('RegulationController', ['$scope', '$stage', '$rootScope', function ($scope, $state, $rootScope) {
     $scope.IsDownRegulationActive = true;
-    $scope.SetActive = function (regulation) {
-        if (regulation === 'DownRegulation') {
+    $scope.SetActive = function () {
+        if ($scope.IsNetworkStateActive) {
+            $state.go($rootScope.previousState.name);
             $scope.IsDownRegulationActive = true;
             $scope.IsNetworkStateActive = false;
-        }
-        if (regulation === 'NetworkState') {
+        } else {
             $scope.IsDownRegulationActive = false;
             $scope.IsNetworkStateActive = true;
         }
     };
+    
+    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+        $rootScope.previousState = fromState;
+    });
 }]);
