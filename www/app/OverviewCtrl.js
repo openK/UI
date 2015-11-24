@@ -12,7 +12,10 @@
 angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout', '$http', '$filter', '$translate', '$state', 'uiGridConstants', 'i18nService', function ($scope, $log, $timeout, $http, $filter, $translate, $state, uiGridConstants, i18nService) {
 
         $scope.data = {};
+        $scope.data.count = 0;
         $scope.data.details = {};
+        $scope.firstcall = true;
+        $scope.data.currentNumber = 1;
         var detailsToBeDisplayed = ['id', 'dateCreated', 'dateStarted', 'dateFinished', 'geographicalRegion', 'reasonOfReduction', 'activePowerJpaToBeReduced'];
         i18nService.setCurrentLang('de');
 
@@ -38,13 +41,14 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             //window.location.search += '?page=details&activityId=' + entity.id;
             //$state.go('state1details', { activityId: activityId }); 
 
+            $scope.data.count = $scope.overview.data.length;
 
-
-            for (var i = 0; i < $scope.overview.data.length; i++) {
+            for (var i = 0; i < $scope.data.count; i++) {
 
                 if ($scope.overview.data[i].id === activityId) {
 
                     $scope.data.id = activityId;
+                    $scope.data.currentNumber = i + 1;
                     for (var j = 0; j < detailsToBeDisplayed.length; j++) {
 
                         $scope.data.isDate = true;
@@ -112,15 +116,15 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             enableRowSelection: true,
             multiSelect: false,
             keepLastSelected: false,
-            minRowsToShow: 12,
+            minRowsToShow: 10,
             enableSorting: true,
             enableFiltering: true,
             enableScrollbars: false,
-            enablePagination: true,
-            enablePaginationControls: true,
+            enablePagination: false,
+            enablePaginationControls: false,
             enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
-            enableVerticalScrollbar: uiGridConstants.scrollbars.WHEN_NEEDED,
-            paginationPageSizes: [10, 25, 50],
+            enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
+            paginationPageSizes: [5, 10, 25, 50],
             paginationPageSize: 10,
             columnDefs: [
                 {
@@ -338,10 +342,12 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     if ($scope.gridApi.selection.selectRow) {
                         $scope.gridApi.selection.selectRow($scope.overview.data[0]);
                     }
-                 
-                    $scope.gridApi.cellNav.scrollToFocus( $scope.overview.data[0], $scope.overview.columnDefs[0]);
-                    
-                    
+                    if ($scope.firstcall) {
+                        $scope.gridApi.cellNav.scrollToFocus($scope.overview.data[0], $scope.overview.columnDefs[0]);
+                        $scope.firstcall = false;
+                    }
+
+
                 });
 
 
