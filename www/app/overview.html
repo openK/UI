@@ -60,10 +60,10 @@
         <div class="col-xs-12 col-sm-12 mtdefault">
             <a name="buttonNavigateToCreate"
                class="btn btn-primary btn-sm"
-               data-ng-click="navigateToCreate()">{{ 'CREATE' | translate }}</a>
+               ui-sref="Regulation.CreateDownRegulation">{{ 'CREATE' | translate }}</a>
             <a name="buttonNavigateToCreateChildActivity"
                class="btn btn-primary btn-sm"
-               ui-sref="state1.list({activityId: row.entity})">{{ 'CREATECHILDACTIVITY' | translate }}</a>
+               ui-sref="Regulation.CreateDownRegulation">{{ 'CREATECHILDACTIVITY' | translate }}</a>
             
         </div>
 
@@ -73,3 +73,5 @@
         </div>
     </div>
 </div>
+
+
