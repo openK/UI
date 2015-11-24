@@ -108,6 +108,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             }
         };
         $scope.overview = {
+            enableRowHeaderSelection: false,
             enableRowSelection: true,
             multiSelect: false,
             keepLastSelected: false,
@@ -183,6 +184,10 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             onRegisterApi: function (gridApi) {
 
                 $scope.gridApi = gridApi;
+
+                gridApi.cellNav.on.navigate($scope, function (newRowCol, oldRowCol) {
+                    $scope.gridApi.selection.selectRow(newRowCol.row.entity);
+                });
 
                 $scope.gridApi.core.on.filterChanged($scope, function () {
 
@@ -333,6 +338,10 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     if ($scope.gridApi.selection.selectRow) {
                         $scope.gridApi.selection.selectRow($scope.overview.data[0]);
                     }
+                 
+                    $scope.gridApi.cellNav.scrollToFocus( $scope.overview.data[0], $scope.overview.columnDefs[0]);
+                    
+                    
                 });
 
 
