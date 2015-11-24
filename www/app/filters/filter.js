@@ -51,3 +51,38 @@ app.filter('showFilter', ['dateService', function (dateService) {
         return dateService.isDateBehind(time, thenTime) ? '' : 'display:none;';
     };
 }]);
+
+app.filter('date', function (i18nService) {
+
+    return function (value) {
+
+        var lang = i18nService.getCurrentLang();
+        var datetime = value.split('T');
+        var date = datetime[0].split('-');
+        var time = datetime[1].split(':');
+        var patterns = {};
+        patterns.de = 'dd.mm.YYYY hh:MM';
+        patterns.en = 'YYYY-mm-dd hh:MM';
+        patterns.fr = 'dd.mm.YYYY hh:MM';
+        return patterns[lang].replace(/YYYY/, date[0]).replace(/mm/, date[1]).replace(/dd/, date[2]).replace(/hh/, time[0]).replace(/MM/, time[1]);
+
+    }
+
+
+});
+
+app.filter('decision', function () {
+
+    return function (value) {
+        var lang = {};
+        lang.de = ['Ja', ' Nein'];
+        lang.en = ['Yes', ' No'];
+
+        if (value) {
+            return lang['de'][0];
+        } else {
+            return lang['de'][1];
+        }
+    }
+});
+

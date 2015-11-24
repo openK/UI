@@ -2,6 +2,7 @@
   "EISMANAPP": "EISMAN",
   "OPENK.ABBREVIATION": "oK",
   "CREATE": "neuen Vorgang erstellen",
+  "CREATECHILDACTIVITY" : "Maßnahme hinzufügen",
   "DELETE": "Löschen",
   "END": "Abschließen",
   "YES": "Ja",
@@ -38,6 +39,7 @@
   "GRID.ID": "ID",
   "GRID.SUBSTATIONLIST": "Speisepunkte",
   "GRID.EDIT": "Bearbeiten",
+  "GRID.DESCRIPTION": "Beschreibung",
   "CREATE.ACTIVITY": "Vorgang erstellen",
   "CREATE.REGULATIONTAB": "Abregelung",
   "CREATE.STATIONLIST": "Netzzustand",
@@ -143,5 +145,16 @@
   "TIMEOUTHINT.HEADER" : "Zeit abgelaufen",
   "TIMEOUTHINT.CONTENT" : "Die Zeit für die Bearbeitung ist abgelaufen. Bitte prüfen Sie, ob Sie den Abregelvorschlag neu berechnen oder den bestehenden weiter anwenden wollen.",
   "STATE.RECAL" : "Neu berechnen",
-  "STATE.USE" : "Weiter"
+  "STATE.USE" : "Weiter",
+      "id": "ID",
+    "dateCreated": "Erstellt am",
+    "dateStarted": "Startdatum",
+    "dateFinished": "Enddatum",
+    "geographicalRegion": "Abgeregeltes Gebiet",
+    "reasonOfReduction": "Begründung",
+    "EntireRegion": "Gesamtgebiet",
+    "activePowerJpaToBeReduced": "reduzierte Leistung",
+    "activities": "Vorgänge",
+    "activity": "Vorgang",
+    "actions": "Maßnamhen"
   }
