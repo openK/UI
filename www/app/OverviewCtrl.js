@@ -9,7 +9,7 @@
  * Stefan Brockmann - initial API and implementation
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
-angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout', '$http', '$filter', '$translate', '$state', 'uiGridConstants','i18nService', function ($scope, $log, $timeout, $http, $filter, $translate, $state, uiGridConstants, i18nService) {
+angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout', '$http', '$filter', '$translate', '$state', 'uiGridConstants', 'i18nService', function ($scope, $log, $timeout, $http, $filter, $translate, $state, uiGridConstants, i18nService) {
 
         $scope.data = {};
         $scope.data.details = {};
@@ -108,6 +108,9 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             }
         };
         $scope.overview = {
+            enableRowSelection: true,
+            multiSelect: false,
+            keepLastSelected: false,
             minRowsToShow: 12,
             enableSorting: true,
             enableFiltering: true,
@@ -116,7 +119,6 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             enablePaginationControls: true,
             enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
             enableVerticalScrollbar: uiGridConstants.scrollbars.WHEN_NEEDED,
-            enableRowSelection: false,
             paginationPageSizes: [10, 25, 50],
             paginationPageSize: 10,
             columnDefs: [
@@ -151,7 +153,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     name: 'reasonOfReduction',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.REASONOFREDUCTION',
-                    width: '40%'
+                    width: '50%'
                 },
                 //{
                 //    name: 'substationList', headerCellFilter: 'translate', displayName: 'GRID.SUBSTATIONLIST',
@@ -162,14 +164,21 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     headerCellFilter: 'translate',
                     displayName: 'GRID.PRACTISE',
                     enableFiltering: false,
-                    cellFilter: 'booleanFilter',
-                    width: '10%'
-                },
-                {
-                    name: 'action', headerCellFilter: 'translate', displayName: '', enableColumnMenu: false,
-                    enableFiltering: false,
-                    cellTemplate: $scope.linkToDetailsTemplate
+                    cellFilter: 'booleanFilter'
+
                 }
+
+                /*          
+                 {
+                 name: 'action', 
+                 headerCellFilter: 'translate', 
+                 displayName: '', 
+                 enableColumnMenu: false,
+                 enableFiltering: false,
+                 cellTemplate: $scope.linkToDetailsTemplate
+                 }
+                 */
+
             ],
             onRegisterApi: function (gridApi) {
 
@@ -215,6 +224,13 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     }
 
                     $scope.getDataAsync();
+                });
+
+                $scope.gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+
+                    console.log(row.entity.id);
+                    $scope.navigateToDetails(row.entity.id);
+
                 });
 
                 $scope.gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
@@ -269,7 +285,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     field: 'description',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.DESCRIPTION'
-                    
+
                 },
             ]
 
@@ -312,6 +328,15 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                 $log.info("Success loading /openk-eisman-portlet/rest/findparentactivitylist");
                 //$scope.overview.data = $filter('orderBy')(data.content, "id", true);
                 $scope.overview.data = data.content;
+
+                $timeout(function () {
+                    if ($scope.gridApi.selection.selectRow) {
+                        $scope.gridApi.selection.selectRow($scope.overview.data[0]);
+                    }
+                });
+
+
+
                 $scope.navigateToDetails(data.content[0].id);
 
             }).error(function (data, status, headers, config) {
