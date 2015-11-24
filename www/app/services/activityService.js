@@ -29,7 +29,7 @@ app.factory('activityService', ['$http', '$q', function ($http, $q) {
         substationProposalList: []
     };
 
-    var configData = '';
+    var configData = {};
 
     function resetActivity() {
         configData = null;
@@ -64,61 +64,72 @@ app.factory('activityService', ['$http', '$q', function ($http, $q) {
     /*
      Daten laden
      */
-    function loadActivityConfiguration() {
-        if (configData) {
-            return $q.resolve(configData);
+    function loadTaskConfiguration() {
+        if (configData.task) {
+            return $q.resolve(configData.task);
         }
-        configData = {};
+        configData.task = {};
         return $q.all([
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/preselection/").then(function (result) {
-                configData.templates = result.data;
+                configData.task.templates = result.data;
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/reductionsettinglist/").then(function (result) {
-                configData.regulationSteps = result.data;
+                configData.task.regulationSteps = result.data;
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/reasonofreductions/").then(function (result) {
-                configData.regulationReasons = result.data;
+                configData.task.regulationReasons = result.data;
             }),
-            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/lov/").then(function (result) {
-                configData.transformerStations = result.data;
-                if (activity.settings.transformerStations && configData.transformerStations) {
-                    var tmpTicked = activity.settings.transformerStations;
-                    for (var i = 0; i < configData.transformerStations.length; i++) {
-                        for (var j = 0; j < tmpTicked.length; j++) {
-                            if (configData.transformerStations[i].mRid === tmpTicked[j].mRid) {
-                                configData.transformerStations[i].ticked = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }),
-            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/reasonofreductions/").then(function (result) {
-                activity.mailReasons = result.data;
-            }),
-            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/lov/").then(function (result) {
-                configData.subGeographicalRegions = result.data;
-                if (activity.settings.subGeographicalRegions && configData.subGeographicalRegions) {
-                    var tmpTicked = activity.settings.subGeographicalRegions;
-                    for (var i = 0; i < configData.subGeographicalRegions.length; i++) {
-                        for (var j = 0; j < tmpTicked.length; j++) {
-                            if (configData.subGeographicalRegions[i].mRid === tmpTicked[j].mRid) {
-                                configData.subGeographicalRegions[i].ticked = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }),
-            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/timeintervaldataexpired").then(function (result) {
-                activity.timerTick = result.data;
-            }),
-            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/hysteresis").then(function (result) {
-                activity.hysteresis = result.data;
-            })
+             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/timeintervaldataexpired").then(function (result) {
+                configData.task.timerTick = result.data;
+             }),
         ]);
     }
 
+    function loadActivityConfiguration() {
+        if (configData.activity) {
+            return $q.resolve(configData.activity);
+        }
+        configData.activity = {};
+        return $q.all([
+            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/reasonofreductions/").then(function (result) {
+                configData.activity.regulationReasons = result.data;
+            }),
+            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/lov/").then(function (result) {
+                configData.activity.transformerStations = result.data;
+                if (activity.settings.transformerStations && configData.activity.transformerStations) {
+                    var tmpTicked = activity.settings.transformerStations;
+                    for (var i = 0; i < configData.activity.transformerStations.length; i++) {
+                        for (var j = 0; j < tmpTicked.length; j++) {
+                            if (configData.activity.transformerStations[i].mRid === tmpTicked[j].mRid) {
+                                configData.activity.transformerStations[i].ticked = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }),
+            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/lov/").then(function (result) {
+                configData.activity.subGeographicalRegions = result.data;
+                if (activity.settings.subGeographicalRegions && configData.activity.subGeographicalRegions) {
+                    var tmpTicked = activity.settings.subGeographicalRegions;
+                    for (var i = 0; i < configData.activity.subGeographicalRegions.length; i++) {
+                        for (var j = 0; j < tmpTicked.length; j++) {
+                            if (configData.activity.subGeographicalRegions[i].mRid === tmpTicked[j].mRid) {
+                                configData.activity.subGeographicalRegions[i].ticked = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }),
+            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/hysteresis").then(function (result) {
+                configData.activity.hysteresis = result.data;
+            })
+        ]);
+    }
+    var loadConfiguration = function() {
+        return $q.all([loadTaskConfiguration(), loadActivityConfiguration()]);
+    }
     return {
         resetActivity: resetActivity,
         activity: function (act) {
@@ -130,7 +141,9 @@ app.factory('activityService', ['$http', '$q', function ($http, $q) {
         activityConfigData: function() {
             return configData;
         },
-        loadActivityConfiguration: loadActivityConfiguration
+        loadConfiguration: loadConfiguration,
+        loadTaskConfiguration: loadTaskConfiguration,
+        loadActivityConfiguration: loadActivityConfiguration,
     };
 
 }]);

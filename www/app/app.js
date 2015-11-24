@@ -26,7 +26,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 abstract: true,
                 resolve: {
                     activity: function(activityService) {
-                        return activityService.loadActivityConfiguration();
+                        return activityService.loadConfiguration();
                     }
                 }
             })

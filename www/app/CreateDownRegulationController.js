@@ -17,8 +17,8 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
     * Preselection Data
     */
     $rootScope.selectedTemplate = $rootScope.selectedTemplate || '';
-    $rootScope.templates = $scope.activityConfigData.templates;
-    $scope.regulationSteps = $scope.activityConfigData.regulationSteps;
+    $rootScope.templates = $scope.activityConfigData.task.templates;
+    $scope.regulationSteps = $scope.activityConfigData.task.regulationSteps;
     /*
     * Preselection Functions
     */

@@ -1,7 +1,7 @@
 app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', function ($scope, $state, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService) {
 
     $scope.activity = activityService.activity();
-    $scope.activityConfigData = activityService.activityConfigData();
+    $scope.activityConfigData = activityService.activityConfigData().activity;
 
     $scope.saveAndReturn = function () {
         var dateStarted = dateService.formatDateForBackend($scope.activity.settings.dateStarted);
@@ -75,7 +75,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$
             "id": $scope.activityId,
             "dateStarted": dateStarted,
             "dateFinished": dateFinished,
-            "parentActivityJpaId": $scope.activity.parentActivityJpaId,
+            //"parentActivityJpaId": $scope.activity.parentActivityJpaId,
             "description": $scope.activity.settings.description,
             "activePowerJpaToBeReduced": {
                 "value": $scope.activity.settings.requiredReductionPower,
