@@ -38,7 +38,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
 
 
     $scope.navigateToDetails = function (activityId) {
-        activityService.currentParentActivityId(activityId); 
+        activityService.currentParentActivityId(activityId);
         $scope.data.count = $scope.overview.data.length;
 
         for (var i = 0; i < $scope.data.count; i++) {
@@ -159,7 +159,69 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             }
         ],
         onRegisterApi: function (gridApi) {
+
             $scope.gridApi = gridApi;
+
+            gridApi.cellNav.on.navigate($scope, function (newRowCol, oldRowCol) {
+                $scope.gridApi.selection.selectRow(newRowCol.row.entity);
+            });
+
+            //$scope.gridApi.core.on.filterChanged($scope, function () {
+
+            //    var grid = this.grid;
+
+            //    if (angular.isDefined($scope.filterTimeout)) {
+            //        $timeout.cancel($scope.filterTimeout);
+            //    }
+            //    $scope.filterTimeout = $timeout(function () {
+
+            //        var filter = {
+            //            filter: {}
+            //        };
+
+            //        grid.columns.forEach(function (column) {
+
+            //            if (column.filters && column.filters.length > 0 && column.filters[0].term) {
+
+            //                filter.filter[column.field] = column.filters[0].term;
+            //            }
+            //        });
+
+            //        $scope.searchOptions.filter = filter;
+
+            //        $scope.getDataAsync();
+            //    }, 250);
+            //});
+
+            //$scope.gridApi.core.on.sortChanged($scope, function (grid, sortColumns) {
+
+            //    if (sortColumns.length === 0) {
+
+            //        $scope.searchOptions.sort = undefined;
+            //        $scope.searchOptions.sortColumn = undefined;
+
+            //    } else {
+            //        $scope.searchOptions.sort = sortColumns[0].sort.direction;
+            //        $scope.searchOptions.sortColumn = sortColumns[0].colDef.name;
+            //    }
+
+            //    $scope.getDataAsync();
+            //});
+
+            $scope.gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+
+                console.log(row.entity.id);
+                $scope.navigateToDetails(row.entity.id);
+
+            });
+
+            //$scope.gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
+
+            //    $scope.searchOptions.pageNumber = newPage;
+            //    $scope.searchOptions.pageSize = pageSize;
+
+            //    $scope.getDataAsync();
+            //});
         }
     };
     $scope.childActivities = {
