@@ -1,0 +1,227 @@
+﻿<div class="col-xs-12">
+    <form name="preselectionForm" class="form-horizontal" data-toggle="validator">
+        <div class="form-group">
+            <label class="control-label col-xs-2 label-required">
+                {{ 'PRESELECTION.REGULATIONSTEPS' | translate }}*:
+            </label>
+
+            <div ng-repeat="n in regulationSteps">
+                <div class="col-xs-1" data-ng-class="{'has-error': preselectionForm.regulationsteps.$invalid}">
+                    <label class="radio-inline">
+                        <input type="radio" data-ng-required="true" name="regulationsteps" value="{{n}}"
+                               data-ng-model="activity.preselectionConfigurationJpa.reductionSetting"> {{n}}%
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2 label-required">
+                {{ 'PRESELECTION.DISCRIMINATIONFACTOR' | translate }}*:
+            </label>
+
+            <div>
+                <div class="col-xs-1">
+                    <label class="radio-inline">
+                        <input type="radio" data-ng-value="true"
+                               data-ng-model="activity.preselectionConfigurationJpa.discriminationCoefficientEnabled">
+                        {{ 'YES' | translate }}
+                    </label>
+                </div>
+                <div class="col-xs-1">
+                    <label class="radio-inline">
+                        <input type="radio" data-ng-value="false"
+                               data-ng-model="activity.preselectionConfigurationJpa.discriminationCoefficientEnabled">
+                        {{ 'NO' | translate }}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="control-label col-xs-4 label-required">
+                        {{ 'PRESELECTION.MISSINGMEASUREMENTFWT' | translate }}*:
+                    </label>
+
+                    <div class="col-xs-6 checkboxes"
+                         data-ng-class="{'has-error': activity.preselectionConfigurationJpa.characteristicForMissingMeasurementFwt.$invalid}">
+                        <label class="radio">
+                            <input type="radio" name="missingMeasurementFwt" value="NotIncluded" required
+                                   data-ng-model="activity.preselectionConfigurationJpa.characteristicForMissingMeasurementFwt">
+                            {{ 'PRESELECTION.NOTINCLUDED' | translate }}
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="missingMeasurementFwt" value="SubstituteByReference"
+                                   required
+                                   data-ng-model="activity.preselectionConfigurationJpa.characteristicForMissingMeasurementFwt">
+                            {{ 'PRESELECTION.SUBSTITUTEBYREFERENCE' | translate }}
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="missingMeasurementFwt" value="SubstituteWithInputFactor"
+                                   required
+                                   data-ng-model="activity.preselectionConfigurationJpa.characteristicForMissingMeasurementFwt">
+                            {{ 'PRESELECTION.SUBSTITUTEWITHINPUTFACTOR' | translate }}
+                        </label>
+
+                        <div class="row">
+                            <div class="col-xs-6 checkboxes voffset">
+                                <div class="input-group input-group-sm"
+                                     data-ng-class="{'has-error': preselectionForm.substituteValueWindFwt.$invalid}">
+                                    <span id="wind" class="input-group-addon">{{'WIND' | translate}}</span>
+                                    <input type="number" min="0" name="substituteValueWindFwt" max="100"
+                                           data-ng-required="activity.preselectionConfigurationJpa.characteristicForMissingMeasurementFwt == 'SubstituteWithInputFactor'"
+                                           data-ng-disabled="activity.preselectionConfigurationJpa.characteristicForMissingMeasurementFwt != 'SubstituteWithInputFactor'"
+                                           data-ng-model="activity.preselectionConfigurationJpa.substituteValueWindFwt"
+                                           data-area-describedby="wind" class="form-control" />
+                                    <span class="input-group-addon">%</span>
+
+                                </div>
+                                <div class="input-group input-group-sm"
+                                     data-ng-class="{'has-error': preselectionForm.substituteValuePhotovoltaicFwt.$invalid}">
+                                    <span id="pv" class="input-group-addon">{{'PV' | translate}}</span>
+                                    <input type="number" min="0" max="100" name="substituteValuePhotovoltaicFwt"
+                                           data-ng-required="activity.preselectionConfigurationJpa.characteristicForMissingMeasurementFwt == 'SubstituteWithInputFactor'"
+                                           data-ng-disabled="activity.preselectionConfigurationJpa.characteristicForMissingMeasurementFwt != 'SubstituteWithInputFactor'"
+                                           data-ng-model="activity.preselectionConfigurationJpa.substituteValuePhotovoltaicFwt"
+                                           data-area-describedby="pv" class="form-control" />
+                                    <span class="input-group-addon">%</span>
+                                </div>
+                                <div class="input-group input-group-sm"
+                                     data-ng-class="{'has-error': preselectionForm.substituteValueBiogasFwt.$invalid}">
+                                    <span id="bio" class="input-group-addon">{{'BIO' | translate}}</span>
+                                    <input type="number" name="substituteValueBiogasFwt" min="0" max="100"
+                                           data-ng-required="activity.preselectionConfigurationJpa.characteristicForMissingMeasurementFwt == 'SubstituteWithInputFactor'"
+                                           data-ng-disabled="activity.preselectionConfigurationJpa.characteristicForMissingMeasurementFwt != 'SubstituteWithInputFactor'"
+                                           data-ng-model="activity.preselectionConfigurationJpa.substituteValueBiogasFwt"
+                                           data-area-describedby="bio" class="form-control" />
+                                    <span class="input-group-addon">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="control-label col-xs-4 label-required">
+                        {{ 'PRESELECTION.MISSINGMEASUREMENTEFR'| translate }}*:
+                    </label>
+
+                    <div class="col-xs-6 checkboxes"
+                         data-ng-class="{'has-error': activity.preselectionConfigurationJpa.characteristicForMissingMeasurementEfr.$invalid}">
+                        <label class="radio">
+                            <input type="radio" name="missingMeasurementEfr" value="NotIncluded" required
+                                   data-ng-model="activity.preselectionConfigurationJpa.characteristicForMissingMeasurementEfr">
+                            {{ 'PRESELECTION.NOTINCLUDED'| translate }}
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="missingMeasurementEfr" value="SubstituteByReference"
+                                   required
+                                   data-ng-model="activity.preselectionConfigurationJpa.characteristicForMissingMeasurementEfr">
+                            {{ 'PRESELECTION.SUBSTITUTEBYREFERENCE'| translate }}
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="missingMeasurementEfr" value="SubstituteWithInputFactor"
+                                   required
+                                   data-ng-model="activity.preselectionConfigurationJpa.characteristicForMissingMeasurementEfr">
+                                {{ 'PRESELECTION.SUBSTITUTEWITHINPUTFACTOR'| translate }}
+                        </label>
+
+                        <div class="row">
+                            <div class="col-xs-6 checkboxes voffset">
+                                <div class="input-group input-group-sm"
+                                     data-ng-class="{'has-error': preselectionForm.substituteValueWindEfr.$invalid}">
+                                    <span id="wind" class="input-group-addon">{{'WIND'| translate}}</span>
+                                    <input type="number" min="0" name="substituteValueWindEfr" max="100"
+                                           data-ng-required="activity.preselectionConfigurationJpa.characteristicForMissingMeasurementEfr == 'SubstituteWithInputFactor'"
+                                           data-ng-disabled="activity.preselectionConfigurationJpa.characteristicForMissingMeasurementEfr != 'SubstituteWithInputFactor'"
+                                           data-ng-model="activity.preselectionConfigurationJpa.substituteValueWindEfr"
+                                           data-area-describedby="wind" class="form-control" />
+                                    <span class="input-group-addon">%</span>
+
+                                </div>
+                                <div class="input-group input-group-sm"
+                                     data-ng-class="{'has-error': preselectionForm.substituteValuePhotovoltaicEfr.$invalid}">
+                                    <span id="pv" class="input-group-addon">{{'PV'| translate}}</span>
+                                    <input type="number" min="0" max="100" name="substituteValuePhotovoltaicEfr"
+                                           data-ng-required="activity.preselectionConfigurationJpa.characteristicForMissingMeasurementEfr == 'SubstituteWithInputFactor'"
+                                           data-ng-disabled="activity.preselectionConfigurationJpa.characteristicForMissingMeasurementEfr != 'SubstituteWithInputFactor'"
+                                           data-ng-model="activity.preselectionConfigurationJpa.substituteValuePhotovoltaicEfr"
+                                           data-area-describedby="pv" class="form-control" />
+                                    <span class="input-group-addon">%</span>
+                                </div>
+                                <div class="input-group input-group-sm"
+                                     data-ng-class="{'has-error': preselectionForm.substituteValueBiogasEfr.$invalid}">
+                                    <span id="bio" class="input-group-addon">{{'BIO'| translate}}</span>
+                                    <input type="number" name="substituteValueBiogasEfr" min="0" max="100"
+                                           data-ng-required="activity.preselectionConfigurationJpa.characteristicForMissingMeasurementEfr == 'SubstituteWithInputFactor'"
+                                           data-ng-disabled="activity.preselectionConfigurationJpa.characteristicForMissingMeasurementEfr != 'SubstituteWithInputFactor'"
+                                           data-ng-model="activity.preselectionConfigurationJpa.substituteValueBiogasEfr"
+                                           data-area-describedby="bio" class="form-control" />
+                                    <span class="input-group-addon">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2">
+                {{ 'PRESELECTION.HYSTERESIS' | translate }}:
+            </label>
+
+            <div class="col-xs-2">
+                <p class="form-control-static">{{hysteresis}} %</p>
+            </div>
+        </div>
+        <div class="form-group">
+            *{{'MANDATORY' | translate}}
+        </div>
+        <div class="alert alert-warning"
+             data-ng-show="preselectionFormSubmitted &&
+                     (preselectionForm.regulationsteps.$invalid || preselectionForm.missingMeasurementFwt.$error.required || preselectionForm.missingMeasurementEfr.$error.required
+                     || preselectionForm.substituteValueBiogasFwt.$invalid || preselectionForm.substituteValuePhotovoltaicFwt.$invalid || preselectionForm.substituteValueWindFwt.$invalid
+                     || preselectionForm.substituteValueBiogasEfr.$invalid || preselectionForm.substituteValuePhotovoltaicEfr.$invalid || preselectionForm.substituteValueWindEfr.$invalid)">
+            <div>
+                <normal class="warning"
+                        data-ng-show="preselectionFormSubmitted && preselectionForm.regulationsteps.$invalid">
+                    {{'PRESELECTION.REGULATIONSTEPS.ERROR' | translate}}
+                </normal>
+            </div>
+            <div>
+                <normal class="warning"
+                        data-ng-show="preselectionFormSubmitted && preselectionForm.missingMeasurementFwt.$error.required">
+                    {{'PRESELECTION.MISSINGMEASUREMENTFWT.ERROR' | translate}}
+                </normal>
+            </div>
+            <div>
+                <normal class="warning"
+                        data-ng-show="preselectionFormSubmitted && preselectionForm.missingMeasurementEfr.$error.required">
+                    {{'PRESELECTION.MISSINGMEASUREMENTEFR.ERROR' | translate}}
+                </normal>
+            </div>
+            <div>
+                <normal class="warning"
+                        data-ng-show="preselectionFormSubmitted && 
+                                (preselectionForm.substituteValueBiogasFwt.$invalid || preselectionForm.substituteValuePhotovoltaicFwt.$invalid || preselectionForm.substituteValueWindFwt.$invalid
+                                || preselectionForm.substituteValueBiogasEfr.$invalid || preselectionForm.substituteValuePhotovoltaicEfr.$invalid || preselectionForm.substituteValueWindEfr.$invalid)">
+                    {{'PRESELECTION.SUBSTITUTEWITHINPUTFACTORERROR' | translate}}
+                </normal>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <button class="btn btn-default btn-sm" ui-sref="state1">
+                    {{ 'CANCEL' | translate }}
+                </button>
+                <div class="btn-group pull-right" role="group">
+                    <button class="btn btn-primary btn-sm"
+                            ng-click="gotoSettings(preselectionForm)">
+                        {{ 'NEXT' | translate }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

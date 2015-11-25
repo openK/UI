@@ -113,8 +113,6 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
         enablePaginationControls: false,
         enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
         enableVerticalScrollbar: uiGridConstants.scrollbars.WHEN_NEEDED,
-        paginationPageSizes: [5, 10, 25, 50],
-        paginationPageSize: 10,
         columnDefs: [
             {
                 name: 'id',
@@ -166,75 +164,30 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                 $scope.gridApi.selection.selectRow(newRowCol.row.entity);
             });
 
-            //$scope.gridApi.core.on.filterChanged($scope, function () {
-
-            //    var grid = this.grid;
-
-            //    if (angular.isDefined($scope.filterTimeout)) {
-            //        $timeout.cancel($scope.filterTimeout);
-            //    }
-            //    $scope.filterTimeout = $timeout(function () {
-
-            //        var filter = {
-            //            filter: {}
-            //        };
-
-            //        grid.columns.forEach(function (column) {
-
-            //            if (column.filters && column.filters.length > 0 && column.filters[0].term) {
-
-            //                filter.filter[column.field] = column.filters[0].term;
-            //            }
-            //        });
-
-            //        $scope.searchOptions.filter = filter;
-
-            //        $scope.getDataAsync();
-            //    }, 250);
-            //});
-
-            //$scope.gridApi.core.on.sortChanged($scope, function (grid, sortColumns) {
-
-            //    if (sortColumns.length === 0) {
-
-            //        $scope.searchOptions.sort = undefined;
-            //        $scope.searchOptions.sortColumn = undefined;
-
-            //    } else {
-            //        $scope.searchOptions.sort = sortColumns[0].sort.direction;
-            //        $scope.searchOptions.sortColumn = sortColumns[0].colDef.name;
-            //    }
-
-            //    $scope.getDataAsync();
-            //});
-
             $scope.gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-
                 console.log(row.entity.id);
                 $scope.navigateToDetails(row.entity.id);
+                $timeout(function () {
+                    activityService.activity($scope.childActivities.data[$scope.childActivities.data.length - 1]);
+                    $scope.childGridApi.selection.selectRow($scope.childActivities.data[$scope.childActivities.data.length - 1]);
+                    $scope.childGridApi.cellNav.scrollToFocus($scope.childActivities.data[$scope.overview.data.length - 1], $scope.childActivities.columnDefs[0]);
+                });
 
             });
-
-            //$scope.gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
-
-            //    $scope.searchOptions.pageNumber = newPage;
-            //    $scope.searchOptions.pageSize = pageSize;
-
-            //    $scope.getDataAsync();
-            //});
         }
     };
     $scope.childActivities = {
+        enableRowHeaderSelection: false,
+        enableRowSelection: true,
+        multiSelect: false,
+        keepLastSelected: false,
         minRowsToShow: 5,
         enableSorting: true,
         enableFiltering: true,
         enableScrollbars: false,
-        enablePagination: false,
         enablePaginationControls: false,
         enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
         enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
-        paginationPageSizes: [5],
-        paginationPageSize: 5,
         columnDefs: [
             { field: 'id', width: '5%' },
             {
@@ -269,8 +222,13 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                 displayName: 'GRID.DESCRIPTION'
 
             },
-        ]
-
+        ],
+        onRegisterApi: function (gridApi) {
+            $scope.childGridApi = gridApi;
+            $scope.childGridApi.cellNav.on.navigate($scope, function (newRowCol, oldRowCol) {
+                $scope.childGridApi.selection.selectRow(newRowCol.row.entity);
+            });
+        }
     };
 
     $scope.overview.data = activityService.getParentActivities();
@@ -280,8 +238,13 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
         if ($scope.gridApi.selection.selectRow) {
             $scope.gridApi.selection.selectRow($scope.overview.data[0]);
         }
+        if ($scope.childGridApi.selection.selectRow) {
+            $scope.childGridApi.selection.selectRow($scope.childActivities.data[$scope.childActivities.data.length - 1]);
+        }
+
         if ($scope.firstcall) {
             $scope.gridApi.cellNav.scrollToFocus($scope.overview.data[0], $scope.overview.columnDefs[0]);
+            $scope.childGridApi.cellNav.scrollToFocus($scope.childActivities.data[$scope.overview.data.length - 1], $scope.childActivities.columnDefs[0]);
             $scope.firstcall = false;
         }
 

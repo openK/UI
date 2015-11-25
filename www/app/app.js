@@ -23,20 +23,19 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 url: "/details/:activityId",
                 templateUrl: "app/details.html",
                 controller: 'DetailController'
-            })
-            .state('Regulation', {
+            }).state('Regulation', {
                 url: "/Regulation",
                 templateUrl: "app/Regulation.html",
                 controller: 'RegulationController',
                 abstract: true,
                 resolve: {
                     activity: function(activityService) {
+                        activityService.resetActivity();
                         return activityService.loadConfiguration();
                     }
 
                 }
-            })
-            .state('Regulation.CreateDownRegulation', {
+            }).state('Regulation.CreateDownRegulation', {
                 url: '/CreateDownRegulation',
                 templateUrl: "app/CreateDownRegulation.html",
                 controller: 'CreateDownRegulationController'
@@ -81,6 +80,52 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 url: '/CreateProposalConfirmation/',
                 templateUrl: "app/CreateProposalConfirmation.html",
                 controller: 'CreateProposalConfirmationController',
+            })
+
+
+
+
+
+            .state('ChangeRegulation', {
+                url: "/Change",
+                templateUrl: "app/ChangeRegulation.html",
+                controller: 'ChangeRegulationController',
+                abstract: true,
+                resolve: {
+                    activity: function (activityService) {
+                        return activityService.loadConfiguration();
+                    }
+
+                }
+            }).state('ChangeRegulation.ChangeDownRegulation', {
+                url: '/ChangeDownRegulation',
+                templateUrl: "app/ChangeDownRegulation.html",
+                controller: 'ChangeDownRegulationController'
+            }).state('ChangeRegulation.ChangeSettings', {
+                url: '/ChangeSettings',
+                templateUrl: "app/ChangeSettings.html",
+                controller: 'ChangeSettingsController'
+            }).state('ChangeRegulation.ChangeProposal', {
+                url: '/ChangeProposal',
+                templateUrl: "app/ChangeProposal.html",
+                controller: 'ChangeProposalController',
+                abstract: true
+            }).state('ChangeRegulation.ChangeProposal.Main', {
+                url: '/Main',
+                views: {
+                    "NetworkMainState": {
+                        templateUrl: "app/NetworkMainState.html",
+                        controller: 'NetworkMainStateController'
+                    },
+                    "NetworkSubState": {
+                        templateUrl: "app/NetworkSubState.html",
+                        controller: 'SelectedNetworkSubStationController'
+                    }
+                }
+            }).state('ChangeRegulation.ChangeProposalConfirmation', {
+                url: '/ChangeProposalConfirmation/',
+                templateUrl: "app/ChangeProposalConfirmation.html",
+                controller: 'ChangeProposalConfirmationController',
             });
         // For any unmatched url, redirect to /state1
         $urlRouterProvider.otherwise("/home");

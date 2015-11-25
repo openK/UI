@@ -32,7 +32,7 @@ app.factory('activityService', ['$http', '$q', function ($http, $q) {
     var configData = {};
 
     function resetActivity() {
-        configData = null;
+        configData = {};
         activity.dateCreated = null;
         activity.id = null;
         activity.preselection = {
@@ -96,31 +96,31 @@ app.factory('activityService', ['$http', '$q', function ($http, $q) {
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/lov/").then(function (result) {
                 configData.activity.transformerStations = result.data;
-                if (activity.settings.transformerStations && configData.activity.transformerStations) {
-                    var tmpTicked = activity.settings.transformerStations;
-                    for (var i = 0; i < configData.activity.transformerStations.length; i++) {
-                        for (var j = 0; j < tmpTicked.length; j++) {
-                            if (configData.activity.transformerStations[i].mRid === tmpTicked[j].mRid) {
-                                configData.activity.transformerStations[i].ticked = true;
-                                break;
-                            }
-                        }
-                    }
-                }
+                //if (activity.settings.transformerStations && configData.activity.transformerStations) {
+                //    var tmpTicked = activity.settings.transformerStations;
+                //    for (var i = 0; i < configData.activity.transformerStations.length; i++) {
+                //        for (var j = 0; j < tmpTicked.length; j++) {
+                //            if (configData.activity.transformerStations[i].mRid === tmpTicked[j].mRid) {
+                //                configData.activity.transformerStations[i].ticked = true;
+                //                break;
+                //            }
+                //        }
+                //    }
+                //}
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/lov/").then(function (result) {
                 configData.activity.subGeographicalRegions = result.data;
-                if (activity.settings.subGeographicalRegions && configData.activity.subGeographicalRegions) {
-                    var tmpTicked = activity.settings.subGeographicalRegions;
-                    for (var i = 0; i < configData.activity.subGeographicalRegions.length; i++) {
-                        for (var j = 0; j < tmpTicked.length; j++) {
-                            if (configData.activity.subGeographicalRegions[i].mRid === tmpTicked[j].mRid) {
-                                configData.activity.subGeographicalRegions[i].ticked = true;
-                                break;
-                            }
-                        }
-                    }
-                }
+                //if (activity.settings.subGeographicalRegions && configData.activity.subGeographicalRegions) {
+                //    var tmpTicked = activity.settings.subGeographicalRegions;
+                //    for (var i = 0; i < configData.activity.subGeographicalRegions.length; i++) {
+                //        for (var j = 0; j < tmpTicked.length; j++) {
+                //            if (configData.activity.subGeographicalRegions[i].mRid === tmpTicked[j].mRid) {
+                //                configData.activity.subGeographicalRegions[i].ticked = true;
+                //                break;
+                //            }
+                //        }
+                //    }
+                //}
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/hysteresis").then(function (result) {
                 configData.activity.hysteresis = result.data;
@@ -172,7 +172,10 @@ app.factory('activityService', ['$http', '$q', function ($http, $q) {
         currentParentActivityId: function(id) {
             if (id) {
                 currentParentActivityId = id;
+                //parentActivities.childrenActivityJpaList.forEach(function(activity) {
+                //});
             }
+
             return currentParentActivityId;
         },
 

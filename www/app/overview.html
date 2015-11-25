@@ -34,7 +34,6 @@
                 ui-grid-cellNav
                 class="grid table"
                 data-ui-grid="overview"
-                data-ui-grid-pagination
                 data-ui-grid-resize-columns></div>
         </div>
 
@@ -54,7 +53,9 @@
 
 
         <div class="col-sm-12">
-            <div ui-grid="childActivities"  ui-grid-pagination></div>
+            <div ui-grid="childActivities" 
+                ui-grid-selection
+                ui-grid-cellNav></div>
         </div>
 
 
@@ -64,7 +65,7 @@
                ui-sref="Regulation.CreateDownRegulation">{{ 'CREATE' | translate }}</a>
             <a name="buttonNavigateToCreateChildActivity"
                class="btn btn-primary btn-sm"
-               ui-sref="Regulation.CreateSettings">{{ 'CREATECHILDACTIVITY' | translate }}</a>
+               ui-sref="ChangeRegulation.ChangeDownRegulation">{{ 'CREATECHILDACTIVITY' | translate }}</a>
             
         </div>
 

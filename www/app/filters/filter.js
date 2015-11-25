@@ -51,14 +51,14 @@ app.filter('showFilter', ['dateService', function (dateService) {
     };
 }]);
 
-app.filter('date', function (i18nService) {
+app.filter('datex', function (i18nService) {
 
     return function (value) {
         if (!value)
             return null;
 
         var lang = i18nService.getCurrentLang();
-        var datetime = value.split('T');
+        var datetime = value.toString().split('T');
         var date = datetime[0].split('-');
         var time = datetime[1].split(':');
         var patterns = {};
