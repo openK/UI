@@ -17,7 +17,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
     $scope.firstcall = true;
     $scope.data.currentNumber = 1;
     var detailsToBeDisplayed = ['dateCreated', 'dateStarted', 'dateFinished', 'geographicalRegion', 'reasonOfReduction', 'activePowerJpaToBeReduced'];
-    i18nService.setCurrentLang('de');
+   // i18nService.setCurrentLang('de');
 
     var makeFlat = function (obj) {
 
@@ -249,7 +249,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                 field: 'dateStarted',
                 headerCellFilter: 'translate',
                 displayName: 'GRID.STARTDATE',
-                cellFilter: 'date:this',
+                cellFilter: "date : 'dd.MM.yyyy HH:mm'",
                 width: '10%',
             },
             {
@@ -257,7 +257,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                 headerCellFilter: 'translate',
                 displayName: 'GRID.ENDDATE',
                 width: '10%',
-                cellFilter: 'date:this',
+                cellFilter: "date : 'dd.MM.yyyy HH:mm'",
             },
             {
                 field: 'activePowerJpaToBeReduced.value',
