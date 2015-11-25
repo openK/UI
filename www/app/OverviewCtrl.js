@@ -9,10 +9,13 @@
  * Stefan Brockmann - initial API and implementation
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
-angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout', '$http', '$filter', '$translate', '$state', 'uiGridConstants','i18nService', function ($scope, $log, $timeout, $http, $filter, $translate, $state, uiGridConstants, i18nService) {
+angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout', '$http', '$filter', '$translate', '$state', 'uiGridConstants', 'i18nService', function ($scope, $log, $timeout, $http, $filter, $translate, $state, uiGridConstants, i18nService) {
 
         $scope.data = {};
+        $scope.data.count = 0;
         $scope.data.details = {};
+        $scope.firstcall = true;
+        $scope.data.currentNumber = 1;
         var detailsToBeDisplayed = ['id', 'dateCreated', 'dateStarted', 'dateFinished', 'geographicalRegion', 'reasonOfReduction', 'activePowerJpaToBeReduced'];
         i18nService.setCurrentLang('de');
 
@@ -38,13 +41,14 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             //window.location.search += '?page=details&activityId=' + entity.id;
             //$state.go('state1details', { activityId: activityId }); 
 
+            $scope.data.count = $scope.overview.data.length;
 
-
-            for (var i = 0; i < $scope.overview.data.length; i++) {
+            for (var i = 0; i < $scope.data.count; i++) {
 
                 if ($scope.overview.data[i].id === activityId) {
 
                     $scope.data.id = activityId;
+                    $scope.data.currentNumber = i + 1;
                     for (var j = 0; j < detailsToBeDisplayed.length; j++) {
 
                         $scope.data.isDate = true;
@@ -108,16 +112,19 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             }
         };
         $scope.overview = {
-            minRowsToShow: 12,
+            enableRowHeaderSelection: false,
+            enableRowSelection: true,
+            multiSelect: false,
+            keepLastSelected: false,
+            minRowsToShow: 10,
             enableSorting: true,
             enableFiltering: true,
             enableScrollbars: false,
-            enablePagination: true,
-            enablePaginationControls: true,
+            enablePagination: false,
+            enablePaginationControls: false,
             enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
-            enableVerticalScrollbar: uiGridConstants.scrollbars.WHEN_NEEDED,
-            enableRowSelection: false,
-            paginationPageSizes: [10, 25, 50],
+            enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
+            paginationPageSizes: [5, 10, 25, 50],
             paginationPageSize: 10,
             columnDefs: [
                 {
@@ -151,7 +158,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     name: 'reasonOfReduction',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.REASONOFREDUCTION',
-                    width: '40%'
+                    width: '50%'
                 },
                 //{
                 //    name: 'substationList', headerCellFilter: 'translate', displayName: 'GRID.SUBSTATIONLIST',
@@ -162,18 +169,29 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     headerCellFilter: 'translate',
                     displayName: 'GRID.PRACTISE',
                     enableFiltering: false,
-                    cellFilter: 'booleanFilter',
-                    width: '10%'
-                },
-                {
-                    name: 'action', headerCellFilter: 'translate', displayName: '', enableColumnMenu: false,
-                    enableFiltering: false,
-                    cellTemplate: $scope.linkToDetailsTemplate
+                    cellFilter: 'booleanFilter'
+
                 }
+
+                /*          
+                 {
+                 name: 'action', 
+                 headerCellFilter: 'translate', 
+                 displayName: '', 
+                 enableColumnMenu: false,
+                 enableFiltering: false,
+                 cellTemplate: $scope.linkToDetailsTemplate
+                 }
+                 */
+
             ],
             onRegisterApi: function (gridApi) {
 
                 $scope.gridApi = gridApi;
+
+                gridApi.cellNav.on.navigate($scope, function (newRowCol, oldRowCol) {
+                    $scope.gridApi.selection.selectRow(newRowCol.row.entity);
+                });
 
                 $scope.gridApi.core.on.filterChanged($scope, function () {
 
@@ -215,6 +233,13 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     }
 
                     $scope.getDataAsync();
+                });
+
+                $scope.gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+
+                    console.log(row.entity.id);
+                    $scope.navigateToDetails(row.entity.id);
+
                 });
 
                 $scope.gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
@@ -269,7 +294,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     field: 'description',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.DESCRIPTION'
-                    
+
                 },
             ]
 
@@ -312,6 +337,21 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                 $log.info("Success loading /openk-eisman-portlet/rest/findparentactivitylist");
                 //$scope.overview.data = $filter('orderBy')(data.content, "id", true);
                 $scope.overview.data = data.content;
+
+                $timeout(function () {
+                    if ($scope.gridApi.selection.selectRow) {
+                        $scope.gridApi.selection.selectRow($scope.overview.data[0]);
+                    }
+                    if ($scope.firstcall) {
+                        $scope.gridApi.cellNav.scrollToFocus($scope.overview.data[0], $scope.overview.columnDefs[0]);
+                        $scope.firstcall = false;
+                    }
+
+
+                });
+
+
+
                 $scope.navigateToDetails(data.content[0].id);
 
             }).error(function (data, status, headers, config) {

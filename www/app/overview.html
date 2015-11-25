@@ -11,7 +11,6 @@
 * Jan Kruger - implementation
 *******************************************************************************/
 -->
-<h3>EISMAN</h3>
 <div class="row maincontent">
     <div class="feature" >
         <div class="row">
@@ -19,6 +18,7 @@
                 <ol class="breadcrumb">
                     <li>{{'OPENK.ABBREVIATION'| translate}}</li>
                     <li class="active">{{'EISMANAPP'| translate}}</li>
+                    <li>Vorgang {{data.id}} ({{data.currentNumber}} von {{data.count}})    </li>
                 </ol>
             </div>
         </div>
@@ -30,7 +30,8 @@
 
         <div class="col-sm-12">
             <div 
-
+                ui-grid-selection
+                ui-grid-cellNav
                 class="grid table"
                 data-ui-grid="overview"
                 data-ui-grid-pagination
@@ -63,7 +64,7 @@
                ui-sref="Regulation.CreateDownRegulation">{{ 'CREATE' | translate }}</a>
             <a name="buttonNavigateToCreateChildActivity"
                class="btn btn-primary btn-sm"
-               ui-sref="Regulation.CreateDownRegulation">{{ 'CREATECHILDACTIVITY' | translate }}</a>
+               ui-sref="Regulation.CreateDownRegulation({activityId : data.id})">{{ 'CREATECHILDACTIVITY' | translate }}</a>
             
         </div>
 
