@@ -87,3 +87,28 @@ app.filter('decision', function () {
     }
 });
 
+app.filter('status', function () {
+
+    return function (value) {
+        
+        var now =  new Date();
+        var startdate = new Date(value[0]);
+        var enddate = new Date(value[1]);
+        
+        if(now.getTime() >= startdate.getTime() && now.getTime() <= enddate.getTime()){
+            return 'STATE.ACTIVE';
+        }
+        else{
+            if(now.getTime() >= enddate.getTime()){
+                return 'STATE.FINISHED';
+            }
+            else{
+                return 'STATE.PENDING';
+            }
+        }
+        
+        
+        return value[0];
+    }
+});
+

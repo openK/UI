@@ -21,7 +21,7 @@ html {
 }
 
 body {
-    padding-top: 53px;
+    padding-top: 20px;
     /* Margin bottom by footer height*/
     margin-bottom: 80px;
 }
@@ -288,4 +288,7 @@ button.btn-sm.btn-default.active{
 }
 
 
-
+div.panel-default{
+    
+    min-height: 120px;
+}

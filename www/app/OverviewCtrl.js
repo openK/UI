@@ -16,8 +16,8 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
     $scope.data.details = {};
     $scope.firstcall = true;
     $scope.data.currentNumber = 1;
-    var detailsToBeDisplayed = ['id', 'dateCreated', 'dateStarted', 'dateFinished', 'geographicalRegion', 'reasonOfReduction', 'activePowerJpaToBeReduced'];
-    i18nService.setCurrentLang('de');
+    var detailsToBeDisplayed = ['dateCreated', 'dateStarted', 'dateFinished', 'geographicalRegion', 'reasonOfReduction', 'activePowerJpaToBeReduced'];
+   // i18nService.setCurrentLang('de');
 
     var makeFlat = function (obj) {
 
@@ -145,8 +145,16 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                 name: 'reasonOfReduction',
                 headerCellFilter: 'translate',
                 displayName: 'GRID.REASONOFREDUCTION',
-                width: '50%'
+                width: '30%'
             },
+            {
+                name: 'status',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{[row.entity.dateStarted,row.entity.dateFinished] | status | translate}}</div>',
+                headerCellFilter: 'translate',
+                displayName: 'STATE.STATE'
+                
+            },
+            
             {
                 name: 'practice',
                 headerCellFilter: 'translate',
@@ -194,7 +202,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                 field: 'dateStarted',
                 headerCellFilter: 'translate',
                 displayName: 'GRID.STARTDATE',
-                cellFilter: 'date:this',
+                cellFilter: "date : 'dd.MM.yyyy HH:mm'",
                 width: '10%',
             },
             {
@@ -202,7 +210,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                 headerCellFilter: 'translate',
                 displayName: 'GRID.ENDDATE',
                 width: '10%',
-                cellFilter: 'date:this',
+                cellFilter: "date : 'dd.MM.yyyy HH:mm'",
             },
             {
                 field: 'activePowerJpaToBeReduced.value',

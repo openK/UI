@@ -15,8 +15,10 @@ $(document).ready(function () {
 // todo: translation? hier evtl. eine AngularJs Directive erstellen
 
     var now = new Date();
-    now.setHours(now.getHours() + 2);
-    now.setMinutes(0);
+    now.setHours(now.getHours());
+    var minutes = now.getMinutes();
+    var interval = 15;
+    now.setMinutes(Math.ceil(minutes/interval) * interval);
 
     $('#datestarted').daterangepicker({
         singleDatePicker: true,
