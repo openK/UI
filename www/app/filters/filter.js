@@ -12,7 +12,6 @@
 
 app.filter('booleanFilter', ['$filter', function ($filter) {
     return function (value) {
-
         var val = $filter('translate')('NO');
 
         if (value) {
@@ -55,6 +54,8 @@ app.filter('showFilter', ['dateService', function (dateService) {
 app.filter('date', function (i18nService) {
 
     return function (value) {
+        if (!value)
+            return null;
 
         var lang = i18nService.getCurrentLang();
         var datetime = value.split('T');

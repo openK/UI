@@ -1,8 +1,14 @@
-app.controller('CreateSettingsController', ['$scope', '$state', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', function ($scope, $state, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService) {
+app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', function ($scope, $state, $stateParams, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService) {
 
     $scope.activity = activityService.activity();
     $scope.activityConfigData = activityService.activityConfigData().activity;
+    if ($stateParams.taskId) {
 
+        $scope.data.forEach(function(a) {
+            if (a.id == $stateParams.taskId)
+                $scope.currentParentActivity = a;
+        });
+    }
     $scope.saveAndReturn = function () {
         var dateStarted = dateService.formatDateForBackend($scope.activity.settings.dateStarted);
         var dateFinished = dateService.formatDateForBackend($scope.activity.settings.dateFinished);

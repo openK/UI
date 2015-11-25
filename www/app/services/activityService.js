@@ -80,7 +80,7 @@ app.factory('activityService', ['$http', '$q', function ($http, $q) {
                 configData.task.regulationReasons = result.data;
             }),
              $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/timeintervaldataexpired").then(function (result) {
-                configData.task.timerTick = result.data;
+                 configData.task.timerTick = result.data;
              }),
         ]);
     }
@@ -127,9 +127,31 @@ app.factory('activityService', ['$http', '$q', function ($http, $q) {
             })
         ]);
     }
-    var loadConfiguration = function() {
+    var loadConfiguration = function () {
         return $q.all([loadTaskConfiguration(), loadActivityConfiguration()]);
     }
+    var parentActivities;
+    var loadParentActivities = function (page, size, time, sortExpression, filterExpression) {
+        var params = {
+            page: page || 0,
+            size: size || 100,
+            t: time || new Date().getTime()
+        };
+        if (sortExpression) {
+            params.sort = ($scope.searchOptions.sortColumn + "," + $scope.searchOptions.sort);
+        }
+
+        if (filterExpression) {
+            params.filter = $scope.searchOptions.filter.filter;
+        }
+        return $http.get("http://192.168.1.2:8080/openk-eisman-portlet/rest/findparentactivitylist", { "params": params }).success(function (data) {
+            //$log.info("Success loading /openk-eisman-portlet/rest/findparentactivitylist");
+            //$scope.overview.data = $filter('orderBy')(data.content, "id", true);
+            parentActivities = data.content;
+        }).error(function (data, status, headers, config) {
+            $log.error('Cannot load /openk-eisman-portlet/rest/findparentactivitylist/');
+        });
+    };
     return {
         resetActivity: resetActivity,
         activity: function (act) {
@@ -138,12 +160,16 @@ app.factory('activityService', ['$http', '$q', function ($http, $q) {
             }
             return activity;
         },
-        activityConfigData: function() {
+        activityConfigData: function () {
             return configData;
         },
+        loadParentActivities : loadParentActivities,
         loadConfiguration: loadConfiguration,
         loadTaskConfiguration: loadTaskConfiguration,
         loadActivityConfiguration: loadActivityConfiguration,
+        getParentActivities: function() {
+            return parentActivities;
+        }
     };
 
 }]);

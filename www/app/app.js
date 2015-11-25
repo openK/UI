@@ -13,6 +13,11 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 url: "/home",
                 templateUrl: "app/Overview.html",
                 controller: 'OverviewCtrl',
+                resolve: {
+                    parentActivities: function (activityService) {
+                        return activityService.loadParentActivities();
+                    }
+                }
             })
             .state('state1details', {
                 url: "/details/:activityId",
@@ -28,6 +33,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     activity: function(activityService) {
                         return activityService.loadConfiguration();
                     }
+
                 }
             })
             .state('Regulation.CreateDownRegulation', {
@@ -51,7 +57,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     }
                 }
             }).state('Regulation.CreateSettings', {
-                url: '/CreateSettings',
+                url: '/CreateSettings/:taskId',
                 templateUrl: "app/CreateSettings.html",
                 controller: 'CreateSettingsController'
             }).state('Regulation.CreateProposal', {
@@ -72,7 +78,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     }
                 }
             }).state('Regulation.CreateProposalConfirmation', {
-                url: '/CreateProposalConfirmation',
+                url: '/CreateProposalConfirmation/',
                 templateUrl: "app/CreateProposalConfirmation.html",
                 controller: 'CreateProposalConfirmationController',
             });
