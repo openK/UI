@@ -152,6 +152,7 @@ app.factory('activityService', ['$http', '$q', function ($http, $q) {
             $log.error('Cannot load /openk-eisman-portlet/rest/findparentactivitylist/');
         });
     };
+    var currentParentActivityId;
     return {
         resetActivity: resetActivity,
         activity: function (act) {
@@ -167,6 +168,14 @@ app.factory('activityService', ['$http', '$q', function ($http, $q) {
         loadConfiguration: loadConfiguration,
         loadTaskConfiguration: loadTaskConfiguration,
         loadActivityConfiguration: loadActivityConfiguration,
+
+        currentParentActivityId: function(id) {
+            if (id) {
+                currentParentActivityId = id;
+            }
+            return currentParentActivityId;
+        },
+
         getParentActivities: function() {
             return parentActivities;
         }

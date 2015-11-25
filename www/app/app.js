@@ -57,7 +57,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     }
                 }
             }).state('Regulation.CreateSettings', {
-                url: '/CreateSettings/:taskId',
+                url: '/CreateSettings',
                 templateUrl: "app/CreateSettings.html",
                 controller: 'CreateSettingsController'
             }).state('Regulation.CreateProposal', {
