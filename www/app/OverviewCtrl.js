@@ -16,7 +16,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
     $scope.data.details = {};
     $scope.firstcall = true;
     $scope.data.currentNumber = 1;
-    var detailsToBeDisplayed = ['id', 'dateCreated', 'dateStarted', 'dateFinished', 'geographicalRegion', 'reasonOfReduction', 'activePowerJpaToBeReduced'];
+    var detailsToBeDisplayed = ['dateCreated', 'dateStarted', 'dateFinished', 'geographicalRegion', 'reasonOfReduction', 'activePowerJpaToBeReduced'];
     i18nService.setCurrentLang('de');
 
     var makeFlat = function (obj) {
@@ -147,8 +147,16 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                 name: 'reasonOfReduction',
                 headerCellFilter: 'translate',
                 displayName: 'GRID.REASONOFREDUCTION',
-                width: '50%'
+                width: '30%'
             },
+            {
+                name: 'status',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{[row.entity.dateStarted,row.entity.dateFinished] | status | translate}}</div>',
+                headerCellFilter: 'translate',
+                displayName: 'STATE.STATE'
+                
+            },
+            
             {
                 name: 'practice',
                 headerCellFilter: 'translate',

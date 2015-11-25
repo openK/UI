@@ -18,7 +18,7 @@ $(document).ready(function () {
     now.setHours(now.getHours());
     var minutes = now.getMinutes();
     var interval = 15;
-    now.setMinutes(Math.round(minutes/interval) * interval);
+    now.setMinutes(Math.ceil(minutes/interval) * interval);
 
     $('#datestarted').daterangepicker({
         singleDatePicker: true,
