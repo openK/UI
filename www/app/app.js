@@ -2,6 +2,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
     .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', function ($stateProvider, $urlRouterProvider, $translateProvider) {
 
         $translateProvider.preferredLanguage('de');
+
         $translateProvider.useStaticFilesLoader({
             prefix: 'app/locale-',
             suffix: '.json'
@@ -10,7 +11,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
         // Now set up the states
         $stateProvider
             .state('state1', {
-                url: "/home",
+                url: "/",
                 templateUrl: "app/Overview.html",
                 controller: 'OverviewCtrl',
                 resolve: {
@@ -23,7 +24,9 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 url: "/details/:activityId",
                 templateUrl: "app/details.html",
                 controller: 'DetailController'
-            }).state('Regulation', {
+            })
+            // neuen Vorgang anlegen...
+            .state('Regulation', {
                 url: "/Regulation",
                 templateUrl: "app/Regulation.html",
                 controller: 'RegulationController',
@@ -86,6 +89,9 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
 
 
 
+
+
+            // neue Maﬂnahme hinzufuegen...
             .state('ChangeRegulation', {
                 url: "/Change",
                 templateUrl: "app/ChangeRegulation.html",
@@ -128,8 +134,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 controller: 'ChangeProposalConfirmationController',
             });
         // For any unmatched url, redirect to /state1
-        $urlRouterProvider.otherwise("/home");
+        $urlRouterProvider.otherwise("/");
 
     }]).run(['$log', function ($log) {
-        $log.info("App Module openK Eisman initiated");
     }]);

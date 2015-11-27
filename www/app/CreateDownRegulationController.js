@@ -43,7 +43,6 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
     $scope.activity = activityService.activity();
 
     if ($scope.parentActivityId) {
-
         $scope.activity.parentActivityJpaId = $scope.parentActivityId;
     }
 
@@ -52,7 +51,7 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
         if (preselectionForm.$valid) {
             $state.go('Regulation.CreateSettings');
         } else {
-
+            $rootScope.CanNavigateToCreateSettings = false;
             $scope.preselectionFormSubmitted = true;
         }
         return false;

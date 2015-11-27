@@ -23,6 +23,15 @@ app.controller('RegulationController', ['$scope', '$state', '$rootScope', functi
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         $rootScope.previousState = fromState;
         $rootScope.currentState = toState;
+        if (toState.name === 'Regulation.CreateSettings') {
+            $rootScope.CanNavigateToCreateSettings = true;
+        }
+        if (toState.name === 'Regulation.CreateProposal') {
+            $rootScope.CanNavigateToCreateProposal = true;
+        }
+        if (toState.name === 'Regulation.CreateProposalConfirmation') {
+            $rootScope.CanNavigateToCreateProposalConfirmation = true;
+        }
     });
     $scope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
         console.log(unfoundState.to); 
