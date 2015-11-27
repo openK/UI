@@ -437,6 +437,8 @@
         <script src="app/selectedSubStationController.js" type="text/javascript"></script>
         <script src="app/subStationController.js" type="text/javascript"></script>
         <script src="app/app.js" type="text/javascript"></script>
+        <script src="app/services/modalService.js" type="text/javascript"></script>
+        
         <script type="text/javascript">
 // <![CDATA[
             Liferay.Util.addInputFocus();

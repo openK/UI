@@ -11,7 +11,36 @@
 * Jan Kruger - implementation
 *******************************************************************************/
 -->
-<h3>EISMAN</h3>
+
+
+<div class="toolbar">
+
+    <div class="col-xs-12 col-sm-12 mtdefault">
+        <a name="buttonNavigateToCreate"
+           class="btn btn-primary btn-sm"
+           ui-sref="Regulation.CreateDownRegulation">{{ 'CREATE' | translate }}</a>
+        <a name="buttonNavigateToCreateChildActivity"
+           class="btn btn-primary btn-sm"
+           ui-sref="ChangeRegulation.ChangeDownRegulation">{{ 'CREATECHILDACTIVITY' | translate }}</a>
+        <a name="buttonNavigateToCreateChildActivity"
+           ng-show="isDeletable"
+           ng-click="deleteProcess()"
+           class="btn btn-primary btn-sm">
+            {{ 'DELETE.PROCESS' | translate }}
+        </a>
+        <a name="buttonNavigateToCreateChildActivity"
+           ng-show="isDeletable"
+           ng-click="deleteProcess()"
+           class="btn btn-primary btn-sm">
+            {{ 'PROCESS.FINISHDATE.EDIT' | translate }}
+        </a>
+
+
+    </div>
+</div>
+
+
+<h2>EISMAN</h2>
 <div class="row maincontent">
     <div class="feature" >
         <div class="row">
@@ -30,57 +59,67 @@
 
 
         <div class="col-sm-12">
+
+            <h3>Vorgänge</h3>
+
             <div 
                 ui-grid-selection
                 ui-grid-cellNav
                 class="grid table"
                 data-ui-grid="overview"
                 data-ui-grid-resize-columns></div>
+
+            <div style="margin: -10px 10px 10px 0px;">
+                <a class="btn btn-primary btn-sm"><span aria-hidden="true" class="glyphicon glyphicon-fast-backward"></span></a>    
+                <a class="btn btn-primary btn-sm"><span aria-hidden="true" class="glyphicon glyphicon-step-backward"></span></a>
+                <input type="text" class="goto" ng-model="currentpage" value="{{currentpage}}"   placeholder="{{currentpage}}"  />
+                <a class="btn btn-primary btn-sm"><span aria-hidden="true" class="glyphicon glyphicon-play"></span></a>
+                <a class="btn btn-primary btn-sm"><span aria-hidden="true" class="glyphicon glyphicon-step-forward"></span></a>
+                <a class="btn btn-primary btn-sm"><span aria-hidden="true" class="glyphicon glyphicon-fast-forward"></span></a>
+            </div>
+
+
         </div>
+
 
 
         <div class="row">
             <div class="col-sm-12">
+                <div class="col-lg-6">
+                    <div class="panel panel-default panel-details">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Details zum Vorgang {{data.id}}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <table>
+                                <tr ng-repeat="item in data.details">
 
-                <div class="col-lg-9">
-                    <div  ng-repeat="item in data.details" class="col-xs-12 col-sm-6 col-lg-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">{{item.key| translate}}</h3>
+                                    <td>{{item.key| translate}}</td>
+                                    <td>{{item.value| translate}}</td>
+
+                                </tr>
+                            </table>
                         </div>
-                        <div class="panel-body">{{item.value| translate}}<span ng-show="!item.value">{{'EntireRegion'| translate }}</span></div>
-                    </div>
-                </div>  
-                </div>
-                <div class="col-lg-3">
-                    <div class="panel panel-default" style="min-height:258px">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Speisepunkte</h3>
-                        </div>
-                        <div class="panel-body">Test Speisepunkte</div>
                     </div>
                 </div>
 
+                <div class="col-lg-6">   
+
+                    <div class="panel panel-default panel-activities">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Maßnahmen</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div ui-grid="childActivities" 
+                                 ui-grid-selection
+                                 ui-grid-cellNav></div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
 
-
-        <div class="col-sm-12">
-            <div ui-grid="childActivities" 
-                ui-grid-selection
-                ui-grid-cellNav></div>
-        </div>
-
-
-        <div class="col-xs-12 col-sm-12 mtdefault">
-            <a name="buttonNavigateToCreate"
-               class="btn btn-primary btn-sm"
-               ui-sref="Regulation.CreateDownRegulation">{{ 'CREATE' | translate }}</a>
-            <a name="buttonNavigateToCreateChildActivity"
-               class="btn btn-primary btn-sm"
-               ui-sref="ChangeRegulation.ChangeDownRegulation">{{ 'CREATECHILDACTIVITY' | translate }}</a>
-            
-        </div>
 
 
         <div style="float:right">

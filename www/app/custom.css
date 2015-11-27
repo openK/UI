@@ -292,3 +292,39 @@ div.panel-default{
     
     min-height: 120px;
 }
+
+
+
+
+.toolbar{
+    
+    position:absolute;
+    right: 10px;
+    top: 20px;
+}
+
+div.panel.panel-default.panel-details, div.panel.panel-default.panel-activities{
+    
+    min-height:436px;
+}
+
+.panel-details table tr td{
+    padding:4px 20px 4px 4px;
+}
+.panel-details table tr td:first-child{
+    
+    font-weight:bold;
+}
+.feature-heading{
+    display:none;
+}
+
+.breadcrumb{
+    margin-bottom:10px;
+}
+
+input.goto{
+    width: 40px;
+    height: 28px;
+}
+
