@@ -17,6 +17,11 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
         $scope.firstcall = true;
         $scope.data.currentNumber = 1;
         $scope.currentItem = {};
+        $scope.currentpage = 0;
+        $scope.data.currentpage = 0;
+        $scope.parentActivities = {};
+        $scope.data.currentpage = 1;
+
 
         var detailsToBeDisplayed = ['dateCreated', 'createdBy', 'updatedBy'];
         i18nService.setCurrentLang('de');
@@ -46,14 +51,64 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
 
             modalService.open($scope, '/app/partials/confirm.html');
 
-
-            console.log($scope.currentItem.id);
         }
 
+        $scope.gotoPageNumber = function () {
+            if ($scope.data.currentpage >= $scope.data.totalPages) {
+                $scope.data.currentpage = $scope.data.totalPages;
+            }
+            $scope.currentpage = $scope.data.currentpage - 1;
+            callPageObject();
+        }
+
+        var callPageObject = function () {
+            $response = activityService.loadParentActivities(
+                    $scope.currentpage,
+                    $scope.searchOptions.pageSize,
+                    (new Date()).getTime(),
+                    $scope.searchOptions.sort ? $scope.searchOptions.sortColumn + "," + $scope.searchOptions.sort : '',
+                    $scope.searchOptions.filter.filter ? $scope.searchOptions.filter.filter: ''
+                    );
+            $response.success(function (data) {
+                $scope.overview.data = data.content;
+                $scope.data.totalPages = $scope.parentActivities.totalPages;
+                $scope.data.currentpage = $scope.currentpage + 1;
+                $scope.navigateToDetails(data.content[0].id);
+            })
+        }
+
+        $scope.getFirstPage = function () {
+            $scope.currentpage = 0;
+            callPageObject();
+        }
+
+        $scope.getLastPage = function () {
+            $scope.currentpage = $scope.data.totalPages - 1;
+            callPageObject();
+        }
+
+        $scope.getNextPage = function () {
+            $scope.currentpage++;
+            if ($scope.currentpage < $scope.data.totalPages) {
+                callPageObject();
+            } else {
+                $scope.currentpage = $scope.data.totalPages - 1;
+            }
+        }
+
+        $scope.getPreviousPage = function () {
+            $scope.currentpage--;
+            if ($scope.currentpage >= 0) {
+                callPageObject();
+            } else {
+                $scope.currentpage = 0;
+            }
+        }
 
         $scope.navigateToDetails = function (activityId) {
             activityService.currentParentActivityId(activityId);
             $scope.data.count = $scope.overview.data.length;
+
 
             for (var i = 0; i < $scope.data.count; i++) {
 
@@ -85,7 +140,6 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     }
                     $scope.currentItem = $scope.overview.data[i];
                     $scope.childActivities.data = $scope.overview.data[i].childrenActivityJpaList;
-                    console.log($scope.childActivities.data);
 
                 }
             }
@@ -93,9 +147,11 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
 
 
         };
+
         $scope.navigateToCreate = function (id) {
             $state.go('Regulation.CreateDownRegulation');
         };
+
         $scope.linkToDetailsTemplate =
                 '<div class="btn-group" role="group" aria-label="details">' +
                 '<button type="button" class="btn-sm btn-default" ng-click="grid.appScope.navigateToDetails(row.entity.id)">' +
@@ -108,7 +164,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
 
         $scope.searchOptions = {
             pageNumber: 1,
-            pageSize: 25,
+            pageSize: activityService.pageSize,
             sort: null,
             sortColumn: '',
             filter: {
@@ -116,11 +172,13 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             }
         };
         $scope.overview = {
+            useExternalSorting: true,
+            useExternalFiltering: true,
             enableRowHeaderSelection: false,
             enableRowSelection: true,
             multiSelect: false,
             keepLastSelected: false,
-            minRowsToShow: 10,
+            minRowsToShow: $scope.searchOptions.pageSize,
             enableSorting: true,
             enableFiltering: true,
             enableScrollbars: false,
@@ -187,7 +245,6 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                 });
 
                 $scope.gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-                    console.log(row.entity.id);
                     $scope.navigateToDetails(row.entity.id);
                     $timeout(function () {
                         activityService.activity($scope.childActivities.data[$scope.childActivities.data.length - 1]);
@@ -196,6 +253,48 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     });
 
                 });
+
+                $scope.gridApi.core.on.filterChanged($scope, function () {
+
+                    var grid = this.grid;
+
+                    if (angular.isDefined($scope.filterTimeout)) {
+                        $timeout.cancel($scope.filterTimeout);
+                    }
+                    $scope.filterTimeout = $timeout(function () {
+
+                        var filter = {
+                            filter: {}
+                        };
+
+                        grid.columns.forEach(function (column) {
+
+                            if (column.filters && column.filters.length > 0 && column.filters[0].term) {
+
+                                filter.filter[column.field] = column.filters[0].term;
+                            }
+                        });
+
+                        $scope.searchOptions.filter = filter;
+                        callPageObject();
+                    }, 250);
+                });
+
+                $scope.gridApi.core.on.sortChanged($scope, function (grid, sortColumns) {
+
+                    if (sortColumns.length === 0) {
+
+                        $scope.searchOptions.sort = undefined;
+                        $scope.searchOptions.sortColumn = undefined;
+
+                    } else {
+
+                        $scope.searchOptions.sort = sortColumns[0].sort.direction;
+                        $scope.searchOptions.sortColumn = sortColumns[0].colDef.name;
+                    }
+                    callPageObject();
+                });
+
             }
         };
         $scope.childActivities = {
@@ -253,10 +352,11 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             }
         };
 
-        $scope.overview.data = activityService.getParentActivities();
-        
-      
-        $scope.overview.data.details = {};
+
+       $scope.parentActivities = activityService.getParentActivities();
+       $scope.overview.data = $scope.parentActivities.content;
+       $scope.data.totalPages = $scope.parentActivities.totalPages; 
+
 
         $timeout(function () {
             if ($scope.gridApi.selection.selectRow) {
@@ -274,5 +374,10 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
 
         });
         $scope.navigateToDetails($scope.overview.data[0].id);
+        
+
+
+
+
 
     }]);
