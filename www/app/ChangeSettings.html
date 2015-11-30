@@ -1,17 +1,17 @@
-﻿<form name="settingsForm" class="form-horizontal" data-toggle="validator">
+﻿<form name="settingsForm" class="form-horizontal" data-toggle="validator" novalidate>
     <div class="row">
-        <div class="col-xs-8">
+        <div class="col-xs-7">
             <div class="form-group">
                 <label for="datestarted" class="control-label col-xs-4">{{'SETTINGS.DATESTARTED'| translate}} *</label>
-                <div class="controls col-xs-8" data-ng-class="{'has-error' settingsForm.datestarted.$invalid}">
-                    <input type="text" placeholder="erforderlich" required value="" startrange data-ng-model="activity.dateStarted" class="form-control" id="datestarted" name="datestarted">
+                <div class="controls col-xs-8" data-ng-class="{'has-error': settingsForm.datestarted.$invalid}">
+                    <input type="text" placeholder="erforderlich" data-ng-required="true" value="" startrange data-ng-model="activity.dateStarted" class="form-control" id="datestarted" name="datestarted">
                 </div>
             </div>
             <div class="form-group">
                 <label for="datefinished" class="control-label col-xs-4">{{'SETTINGS.DATEFINISHED' | translate}} *</label>
 
-                <div class="controls col-xs-8" data-ng-class="{'has-error' settingsForm.datefinished.$invalid}">
-                    <input type="text" required value="" data-ng-model="activity.dateFinished" endrange class="form-control" id="datefinished" name="datefinished">
+                <div class="controls col-xs-8" data-ng-class="{'has-error': settingsForm.datefinished.$invalid}">
+                    <input type="text" data-ng-required="true" value="" data-ng-model="activity.dateFinished" endrange class="form-control" id="datefinished" name="datefinished">
                 </div>
             </div>
             <div class="form-group">
@@ -42,14 +42,13 @@
             </div>
             <div class="form-group">
                 <label for="requiredAdditionalReductionPower"
-                       data-ng-class="{'has-error' settingsForm.requiredAdditionalReductionPower.$invalid}"
+                       data-ng-class="{'has-error': settingsForm.requiredAdditionalReductionPower.$invalid}"
                        class="control-label col-xs-4">Änderung der Abregelleistung um *</label>
                 <div class="col-xs-4">
-                    <div class="input-group input-group-sm"
-                         data-ng-class="{'has-error' activity.activePowerJpaToBeReduced.additionalReductionPowerValue == ''}">
-                        <input type="number" required data-ng-model="activity.activePowerJpaToBeReduced.additionalReductionPowerValue"
-                               data-area-describedby="requiredreductionaddon"
-                               name="requiredAdditionalReductionPower" id="requiredAdditionalReductionPower"
+                    <div class="input-group input-group-sm" 
+                         data-ng-class="{'has-error': activity.activePowerJpaToBeReduced.additionalReductionPowerValue.value < 0 || !activity.activePowerJpaToBeReduced.additionalReductionPowerValue.value }">
+                        <input type="number" data-ng-required="true" data-ng-model="activity.activePowerJpaToBeReduced.additionalReductionPowerValue.value"
+                               min="1" name="requiredAdditionalReductionPower" id="requiredAdditionalReductionPower"
                                class="form-control">
                         <span id="requiredreductionaddon" class="input-group-addon">MW</span>
                     </div>
@@ -58,14 +57,14 @@
                     <div class="row">
                         <div class="col-xs-6">
                             <label class="radio-inline">
-                                <input type="radio" value="true" name="test1"
+                                <input type="radio" ng-value="true" name="test1"
                                        data-ng-model="activity.activePowerJpaToBeReduced.additionalReductionPowerValue.positiv">
                                 Erhöhung
                             </label>
                         </div>
                         <div class="col-xs-6">
                             <label class="radio-inline">
-                                <input type="radio" value="false" name="test1"
+                                <input type="radio" ng-value="false" name="test1"
                                        data-ng-model="activity.activePowerJpaToBeReduced.additionalReductionPowerValue.positiv">
                                 Reduzierung
                             </label>
@@ -100,8 +99,8 @@
             <div class="form-group">
                 <label for="description" class="control-label col-xs-4">{{'SETTINGS.DESCRIPTION' | translate}} *</label>
 
-                <div class="col-xs-8" data-ng-class="{'has-error' activity.description == ''}">
-                    <textarea id="description" required data-ng-model="activity.description" rows="3"
+                <div class="col-xs-8" data-ng-class="{'has-error': activity.description == ''}">
+                    <textarea id="description" data-ng-required="true" data-ng-model="activity.description" rows="3"
                               class="form-control"></textarea>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-app.factory('activityService', ['$http', '$q', function ($http, $q) {
+app.factory('activityService', ['$http', '$q', '$log', function ($http, $q, $log) {
 
     var activity = {
         dateCreated: null,

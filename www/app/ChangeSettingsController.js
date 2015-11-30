@@ -1,7 +1,33 @@
 app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', function ($scope, $state, $stateParams, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService) {
 
     $scope.activity = activityService.activity();
+    // get current time as date...
+    var now = new Date($.now());
+    // get activity start date as date...
+    var newStartDate = new Date($scope.activity.dateStarted);
+    // check the time gap between now and activity startDateTime...
+    var distance = newStartDate.getTime() - now.getTime();
+    // if the time gap is less than 15 minutes set the gap to more than 15 minutes but less or equal to 30 minutes...
+    if (distance > 0 && new Date(distance).getMinutes() < 15) {
+        var quaters = parseInt(now.getMinutes() / 15);
+        var minutes = quaters * 15 + 30;
+        var hours = parseInt(minutes / 60);
+        if (hours) {
+            newStartDate = new Date(newStartDate.setHours(newStartDate.getHours() + 1));
+            minutes = minutes % 60;
+            newStartDate = newStartDate.setMinutes(minutes-1, 0, 0);
+        } else {
+            newStartDate = newStartDate.setMinutes(minutes-1, 0, 0);
+        }
+    }
+
+    $scope.startDateEdit = newStartDate;
+
+    $scope.activity.dateStarted = $filter('date')(new Date(newStartDate), 'dd.MM.yyyy HH:mm');
+    $scope.activity.dateFinished = $filter('date')(new Date($scope.activity.dateFinished), 'dd.MM.yyyy HH:mm');
     $scope.activityConfigData = activityService.activityConfigData().activity;
+    $scope.activity.activePowerJpaToBeReduced.additionalReductionPowerValue = { positiv: true, value: 0 };
+
     if ($stateParams.taskId) {
 
         $scope.data.forEach(function(a) {
@@ -74,25 +100,26 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
      * Usersettings Functions
      */
     $scope.getPostData = function () {
-
-        var dateStarted = dateService.formatDateForBackend($scope.activity.settings.dateStarted);
-        var dateFinished = dateService.formatDateForBackend($scope.activity.settings.dateFinished);
+        //var startDateEdit = $('#datestarted').data('daterangepicker').startDate.toISOString();
+        //var startDateEdit = $('#datefinished').data('daterangepicker').startDate.toISOString();
+        var dateStarted = dateService.formatDateForBackend($scope.activity.dateStarted);
+        var dateFinished = dateService.formatDateForBackend($scope.activity.dateFinished);
         var data = {
             "id": $scope.activityId,
             "dateStarted": dateStarted,
             "dateFinished": dateFinished,
             //"parentActivityJpaId": $scope.activity.parentActivityJpaId,
-            "description": $scope.activity.settings.description,
+            "description": $scope.activity.description,
             "activePowerJpaToBeReduced": {
-                "value": $scope.activity.settings.requiredReductionPower,
+                "value": $scope.activity.requiredReductionPower,
                 "multiplier": "M",
                 "unit": "W"
             },
-            "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
-            "subGeographicalRegionJpaList": $scope.activity.settings.subGeographicalRegions,
-            "substationJpaList": $scope.activity.settings.transformerStations,
-            "practise": $scope.activity.settings.practise,
-            'geographicalRegion': $scope.activity.settings.useWholeArea,
+            "reasonOfReduction": $scope.activity.reasonOfReduction,
+            "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
+            "substationJpaList": $scope.activity.transformerStations,
+            "practise": $scope.activity.practise,
+            'geographicalRegion': $scope.activity.useWholeArea,
             "preselectionName": "",
             "preselectionConfigurationJpa": {
                 "reductionSetting": $scope.activity.preselection.reductionSetting,
@@ -165,31 +192,6 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
         }
 
         return false;
-    };
-
-    $scope.checkForWholeAreaDisabling = function () {
-
-        return $scope.activity.subGeographicalRegions.length > 0 || $scope.activity.transformerStations.length > 0;
-    };
-
-    $scope.checkForSubGeographicalRegionsDisabling = function () {
-
-        return $scope.activity.useWholeArea || $scope.activity.transformerStations.length > 0;
-    };
-
-    $scope.checkForTransformerStationsDisabling = function () {
-
-        return $scope.activity.useWholeArea || $scope.activity.subGeographicalRegions.length > 0;
-    };
-
-    $scope.checkForWholeAreaRequired = function () {
-
-        return !($scope.activity.subGeographicalRegions.length > 0 || $scope.activity.transformerStations.length > 0);
-    };
-
-    $scope.checkForTransformerStationsRequired = function () {
-
-        return !($scope.activity.useWholeArea || $scope.activity.subGeographicalRegions.length > 0);
     };
 
 }]);

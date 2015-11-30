@@ -182,8 +182,14 @@
     </div>
     <div class="form-group">
         <label class="control-label col-xs-3">
-            {{ 'PRESELECTION.HYSTERESIS' | translate }}:
+            {{ 'PRESELECTION.HYSTERESIS' | translate }}
         </label>
+        <div class="col-xs-1">
+            <div class="input-group">
+                <p data-ng-model="hysteresis" class="form-control"/>
+                <div class="input-group-addon">%</div>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-xs-1">
