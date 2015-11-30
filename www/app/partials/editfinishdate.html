@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h3>{{modalOptions.headline}}: <span ng-show="modalOptions.id">{{modalOptions.id}}</span></h3>
+</div>
+<div class="modal-body">
+    <p>{{modalOptions.bodyText}} {{modalOptions.finishdate | date : "dd.MM.yyyy hh:mm"}}</p>  
+  <input type="text" name="datefinished" id="datefinished" placeholder="{{modalOptions.finishdate | date : 'dd.MM.yyyy hh:mm'}}" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" endrange="" data-ng-model="data.dateFinished" value="" required="" />
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" 
+          data-ng-click="modalOptions.close()">{{modalOptions.closeButtonText}}</button>
+  <button class="btn btn-primary" 
+          data-ng-click="modalOptions.ok();">{{modalOptions.actionButtonText}}</button>
+    <script src="app/libs/eismandaterangepicker.js"></script>
+</div>
+

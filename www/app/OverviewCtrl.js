@@ -53,6 +53,29 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
 
         }
 
+        $scope.editFinishDate = function () {
+console.log($scope.currentItem);
+            $scope.modalOptions = {
+                "headline": $filter('translate')('PROCESS.EDIT.FINISHDATE'),
+                "id": $scope.currentItem.id,
+                "bodyText": $filter('translate')('PROCESS.EDIT.RECENTDATE'),
+                "finishdate": $scope.currentItem.dateFinished,
+                "actionButtonText": $filter('translate')('PROCESS.EDIT.CONFIRM'),
+                "closeButtonText": $filter('translate')('PROCESS.EDIT.CANCEL'),
+                "close": function () {
+                    modalService.close();
+                },
+                "ok": function () {
+
+                    modalService.close();
+                }
+
+            };
+
+            modalService.open($scope, '/app/partials/editfinishdate.html');
+
+        }
+
         $scope.gotoPageNumber = function () {
             if ($scope.data.currentpage >= $scope.data.totalPages) {
                 $scope.data.currentpage = $scope.data.totalPages;
@@ -67,7 +90,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     $scope.searchOptions.pageSize,
                     (new Date()).getTime(),
                     $scope.searchOptions.sort ? $scope.searchOptions.sortColumn + "," + $scope.searchOptions.sort : '',
-                    $scope.searchOptions.filter.filter ? $scope.searchOptions.filter.filter: ''
+                    $scope.searchOptions.filter.filter ? $scope.searchOptions.filter.filter : ''
                     );
             $response.success(function (data) {
                 $scope.overview.data = data.content;
@@ -353,9 +376,9 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
         };
 
 
-       $scope.parentActivities = activityService.getParentActivities();
-       $scope.overview.data = $scope.parentActivities.content;
-       $scope.data.totalPages = $scope.parentActivities.totalPages; 
+        $scope.parentActivities = activityService.getParentActivities();
+        $scope.overview.data = $scope.parentActivities.content;
+        $scope.data.totalPages = $scope.parentActivities.totalPages;
 
 
         $timeout(function () {
@@ -374,7 +397,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
 
         });
         $scope.navigateToDetails($scope.overview.data[0].id);
-        
+
 
 
 
