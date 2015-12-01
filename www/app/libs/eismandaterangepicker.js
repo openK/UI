@@ -51,5 +51,21 @@ $(document).ready(function () {
             firstDay: 1
         }
     });
+    
+    $('#editdatefinished').daterangepicker({
+        singleDatePicker: true,
+        timePicker12Hour: false,
+        timePicker: true,
+        timePickerIncrement: 15,
+
+        locale: {
+            format: 'DD.MM.YYYY HH:mm',
+            applyLabel: '&Uuml;bernehmen',
+            daysOfWeek: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+            monthNames: ['Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+            firstDay: 1
+        }
+    });
+    
 
 });

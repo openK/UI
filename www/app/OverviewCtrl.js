@@ -21,7 +21,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
         $scope.data.currentpage = 0;
         $scope.parentActivities = {};
         $scope.data.currentpage = 1;
-
+        $scope.activity = activityService.activity();
 
         var detailsToBeDisplayed = ['dateCreated', 'createdBy', 'updatedBy'];
         i18nService.setCurrentLang('de');
@@ -32,7 +32,6 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
         }
 
         $scope.deleteProcess = function () {
-
             $scope.modalOptions = {
                 "headline": $filter('translate')('DELETE.PROCESS'),
                 "id": $scope.currentItem.id,
@@ -43,23 +42,22 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     modalService.close();
                 },
                 "ok": function () {
-
                     modalService.close();
                 }
-
             };
-
             modalService.open($scope, '/app/partials/confirm.html');
-
         }
 
         $scope.editFinishDate = function () {
-console.log($scope.currentItem);
+
+            var fd = $filter('date')(new Date($scope.currentItem.userSettingsJpa.dateFinished), 'dd.MM.yyyy HH:mm');
+            $scope.activity.dateFinished = fd;
+
             $scope.modalOptions = {
                 "headline": $filter('translate')('PROCESS.EDIT.FINISHDATE'),
                 "id": $scope.currentItem.id,
                 "bodyText": $filter('translate')('PROCESS.EDIT.RECENTDATE'),
-                "finishdate": $scope.currentItem.dateFinished,
+                "finishdate": $scope.currentItem.userSettingsJpa.dateFinished,
                 "actionButtonText": $filter('translate')('PROCESS.EDIT.CONFIRM'),
                 "closeButtonText": $filter('translate')('PROCESS.EDIT.CANCEL'),
                 "close": function () {
@@ -72,7 +70,30 @@ console.log($scope.currentItem);
 
             };
 
-            modalService.open($scope, '/app/partials/editfinishdate.html');
+            var callback = function () {
+                $('#editdatefinished').daterangepicker({
+                    singleDatePicker: true,
+                    timePicker24Hour: true,
+                    timePicker: true,
+                    timePickerIncrement: 15,
+                    startDate: fd,
+                    minDate: $.now(),
+                    locale: {
+                        format: 'DD.MM.YYYY HH:mm',
+                        applyLabel: '&Uuml;bernehmen',
+                        daysOfWeek: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+                        monthNames: ['Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+                        firstDay: 1
+                    }
+                });
+            }
+
+            modalService.open($scope, '/app/partials/editfinishdate.html', callback);
+
+
+
+
+
 
         }
 
@@ -148,7 +169,7 @@ console.log($scope.currentItem);
                             case 'dateCreated':
                             case 'dateStarted':
                             case 'dateFinished':
-                                value = {key: detailsToBeDisplayed[j], value: new Date($scope.overview.data[i][detailsToBeDisplayed[j]])};
+                                value = {key: detailsToBeDisplayed[j], value: $scope.overview.data[i][detailsToBeDisplayed[j]]};
                                 $scope.data.isDate = true;
                                 break;
                             case 'activePowerJpaToBeReduced':
@@ -174,6 +195,11 @@ console.log($scope.currentItem);
         $scope.navigateToCreate = function (id) {
             $state.go('Regulation.CreateDownRegulation');
         };
+        
+        $scope.isValidDateFinish = function(){
+            
+            return true;
+        }
 
         $scope.linkToDetailsTemplate =
                 '<div class="btn-group" role="group" aria-label="details">' +
@@ -217,14 +243,14 @@ console.log($scope.currentItem);
                     width: '8%'
                 },
                 {
-                    name: 'dateStarted',
+                    name: 'userSettingsJpa.dateStarted',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.STARTDATE',
                     cellFilter: "date : 'dd.MM.yyyy HH:mm'",
                     width: '8%'
                 },
                 {
-                    name: 'dateFinished',
+                    name: 'userSettingsJpa.dateFinished',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.ENDDATE',
                     cellFilter: "date : 'dd.MM.yyyy HH:mm'",
@@ -238,14 +264,13 @@ console.log($scope.currentItem);
                     width: '15%'
                 },
                 {
-                    name: 'reasonOfReduction',
+                    name: 'userSettingsJpa.reasonOfReduction',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.REASONOFREDUCTION',
                     width: '30%'
                 },
                 {
-                    name: 'status',
-                    cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{[row.entity.dateStarted,row.entity.dateFinished] | status | translate}}</div>',
+                    name: 'processStatus',
                     headerCellFilter: 'translate',
                     displayName: 'STATE.STATE'
 
@@ -339,14 +364,14 @@ console.log($scope.currentItem);
                     displayName: 'ID'
                 },
                 {
-                    field: 'dateStarted',
+                    field: 'userSettingsJpa.dateStarted',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.STARTDATE',
                     cellFilter: "date : 'dd.MM.yyyy HH:mm'",
                     width: '20%',
                 },
                 {
-                    field: 'dateFinished',
+                    field: 'userSettingsJpa.dateFinished',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.ENDDATE',
                     width: '20%',

@@ -80,7 +80,7 @@
                             <table>
                                 <tr ng-repeat="item in data.details">
                                     <td>{{item.key| translate}}</td>
-                                    <td>{{item.value| translate}}</td>
+                                    <td>{{item.value| translate | date: DATE.PATTERN | translate}}</td>
                                 </tr>
                             </table>
                         </div>

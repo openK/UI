@@ -22,7 +22,23 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
     }
 
     $scope.startDateEdit = newStartDate;
-
+    $('#datestarted').daterangepicker({
+        singleDatePicker: true,
+        timePicker12Hour: false,
+        timePicker: true,
+        timePickerIncrement: 15,
+        startDate: newStartDate,
+        minDate: $.now(),
+        locale: {
+            format: 'DD.MM.YYYY HH:mm',
+            applyLabel: '&Uuml;bernehmen',
+            daysOfWeek: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+            monthNames: ['Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+            firstDay: 1
+        }
+    });
+    
+   
     $scope.activity.dateStarted = $filter('date')(new Date(newStartDate), 'dd.MM.yyyy HH:mm');
     $scope.activity.dateFinished = $filter('date')(new Date($scope.activity.dateFinished), 'dd.MM.yyyy HH:mm');
     $scope.activityConfigData = activityService.activityConfigData().activity;

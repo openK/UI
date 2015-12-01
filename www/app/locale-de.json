@@ -172,6 +172,7 @@
     "PROCESS.EDIT.FINISHDATE": "Vorgangsende bearbeiten",
     "PROCESS.EDIT.CANCEL": "Abbbruch",
     "PROCESS.EDIT.CONFIRM": "Neues Enddatum speichern",
-    "PROCESS.EDIT.RECENTDATE": "Aktuelles Enddatum: "
+    "PROCESS.EDIT.RECENTDATE": "Aktuelles Enddatum: ",
+    "DATE.PATTERN": "dd.MM.yyyy HH:mm"
 }
           
