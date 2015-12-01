@@ -11,10 +11,7 @@
 * Jan Kruger - implementation
 *******************************************************************************/
 -->
-
-
 <div class="toolbar">
-
     <div class="col-xs-12 col-sm-12 mtdefault">
         <a name="buttonNavigateToCreate"
            class="btn btn-primary btn-sm"
@@ -30,16 +27,12 @@
         </a>
         <a name="buttonNavigateToCreateChildActivity"
            ng-show="isDeletable"
-           ng-click="deleteProcess()"
+           ng-click="editFinishDate()"
            class="btn btn-primary btn-sm">
             {{ 'PROCESS.FINISHDATE.EDIT' | translate }}
         </a>
-
-
     </div>
 </div>
-
-
 <h2>EISMAN</h2>
 <div class="row maincontent">
     <div class="feature" >
@@ -59,9 +52,7 @@
 
 
         <div class="col-sm-12">
-
             <h3>Vorgänge</h3>
-
             <div 
                 ui-grid-selection
                 ui-grid-cellNav
@@ -70,19 +61,14 @@
                 data-ui-grid-resize-columns></div>
 
             <div style="margin: -10px 10px 10px 0px;">
-                <a class="btn btn-primary btn-sm"><span aria-hidden="true" class="glyphicon glyphicon-fast-backward"></span></a>    
-                <a class="btn btn-primary btn-sm"><span aria-hidden="true" class="glyphicon glyphicon-step-backward"></span></a>
-                <input type="text" class="goto" ng-model="currentpage" value="{{currentpage}}"   placeholder="{{currentpage}}"  />
-                <a class="btn btn-primary btn-sm"><span aria-hidden="true" class="glyphicon glyphicon-play"></span></a>
-                <a class="btn btn-primary btn-sm"><span aria-hidden="true" class="glyphicon glyphicon-step-forward"></span></a>
-                <a class="btn btn-primary btn-sm"><span aria-hidden="true" class="glyphicon glyphicon-fast-forward"></span></a>
+                <a class="btn btn-primary btn-sm" ng-click="getFirstPage()"><span aria-hidden="true" class="glyphicon glyphicon-fast-backward"></span></a>    
+                <a class="btn btn-primary btn-sm" ng-click="getPreviousPage()"><span aria-hidden="true" class="glyphicon glyphicon-step-backward"></span></a>
+                <input type="text" class="goto" ng-model="data.currentpage" value="{{data.currentpage}}"   placeholder="{{data.currentpage}}"  />
+                <a class="btn btn-primary btn-sm" ng-click="gotoPageNumber()"><span aria-hidden="true" class="glyphicon glyphicon-play"></span></a>
+                <a class="btn btn-primary btn-sm" ng-click="getNextPage()"><span aria-hidden="true" class="glyphicon glyphicon-step-forward"></span></a>
+                <a class="btn btn-primary btn-sm" ng-click="getLastPage()"><span aria-hidden="true" class="glyphicon glyphicon-fast-forward"></span></a>
             </div>
-
-
         </div>
-
-
-
         <div class="row">
             <div class="col-sm-12">
                 <div class="col-lg-6">
@@ -93,10 +79,8 @@
                         <div class="panel-body">
                             <table>
                                 <tr ng-repeat="item in data.details">
-
                                     <td>{{item.key| translate}}</td>
                                     <td>{{item.value| translate}}</td>
-
                                 </tr>
                             </table>
                         </div>
@@ -104,7 +88,6 @@
                 </div>
 
                 <div class="col-lg-6">   
-
                     <div class="panel panel-default panel-activities">
                         <div class="panel-heading">
                             <h3 class="panel-title">Maßnahmen</h3>
@@ -115,13 +98,9 @@
                                  ui-grid-cellNav></div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-
-
-
         <div style="float:right">
             V.0.9.0.7
         </div>

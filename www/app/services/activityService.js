@@ -59,7 +59,8 @@ app.factory('activityService', ['$http', '$q', '$log', function ($http, $q, $log
             practise: "false"
         };
         activity.substationProposalList = [];
-    };
+        }
+        ;
 
     /*
      Daten laden
@@ -131,29 +132,33 @@ app.factory('activityService', ['$http', '$q', '$log', function ($http, $q, $log
         return $q.all([loadTaskConfiguration(), loadActivityConfiguration()]);
     }
     var parentActivities;
+        var pageSize = 5;
     var loadParentActivities = function (page, size, time, sortExpression, filterExpression) {
         var params = {
             page: page || 0,
-            size: size || 100,
+                size: size || pageSize,
             t: time || new Date().getTime()
         };
         if (sortExpression) {
-            params.sort = ($scope.searchOptions.sortColumn + "," + $scope.searchOptions.sort);
+                params.sort = sortExpression;
         }
 
+            console.log(filterExpression); 
         if (filterExpression) {
-            params.filter = $scope.searchOptions.filter.filter;
+                params.filter = filterExpression;
         }
-        return $http.get("http://192.168.1.2:8080/openk-eisman-portlet/rest/findparentactivitylist", { "params": params }).success(function (data) {
+            return $http.get("http://192.168.1.2:8080/openk-eisman-portlet/rest/findparentactivitylist", {"params": params}).success(function (data) {
             //$log.info("Success loading /openk-eisman-portlet/rest/findparentactivitylist");
             //$scope.overview.data = $filter('orderBy')(data.content, "id", true);
-            parentActivities = data.content;
+                parentActivities = data;
         }).error(function (data, status, headers, config) {
             $log.error('Cannot load /openk-eisman-portlet/rest/findparentactivitylist/');
         });
     };
+
     var currentParentActivityId;
     return {
+            pageSize: pageSize,
         resetActivity: resetActivity,
         activity: function (act) {
             if (act) {
@@ -164,12 +169,11 @@ app.factory('activityService', ['$http', '$q', '$log', function ($http, $q, $log
         activityConfigData: function () {
             return configData;
         },
-        loadParentActivities : loadParentActivities,
+            loadParentActivities: loadParentActivities,
         loadConfiguration: loadConfiguration,
         loadTaskConfiguration: loadTaskConfiguration,
         loadActivityConfiguration: loadActivityConfiguration,
-
-        currentParentActivityId: function(id) {
+            currentParentActivityId: function (id) {
             if (id) {
                 currentParentActivityId = id;
                 //parentActivities.childrenActivityJpaList.forEach(function(activity) {
@@ -178,8 +182,7 @@ app.factory('activityService', ['$http', '$q', '$log', function ($http, $q, $log
 
             return currentParentActivityId;
         },
-
-        getParentActivities: function() {
+            getParentActivities: function () {
             return parentActivities;
         }
     };
