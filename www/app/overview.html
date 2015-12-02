@@ -41,7 +41,7 @@
                 <ol class="breadcrumb">
                     <li>{{'OPENK.ABBREVIATION'| translate}}</li>
                     <li class="active">{{'EISMANAPP'| translate}}</li>
-                    <li>Vorgang {{data.id}} ({{data.currentNumber}} von {{data.count}})    </li>
+                    <li>Vorgang {{data.id}} </li>
                 </ol>
             </div>
         </div>
@@ -63,10 +63,14 @@
             <div style="margin: -10px 10px 10px 0px;">
                 <a class="btn btn-primary btn-sm" ng-click="getFirstPage()"><span aria-hidden="true" class="glyphicon glyphicon-fast-backward"></span></a>    
                 <a class="btn btn-primary btn-sm" ng-click="getPreviousPage()"><span aria-hidden="true" class="glyphicon glyphicon-step-backward"></span></a>
-                <input type="text" class="goto" ng-model="data.currentpage" value="{{data.currentpage}}"   placeholder="{{data.currentpage}}"  />
-                <a class="btn btn-primary btn-sm" ng-click="gotoPageNumber()"><span aria-hidden="true" class="glyphicon glyphicon-play"></span></a>
+                <span class="paging">{{"PAGING.PAGE" | translate}} {{data.currentpage}} {{"PAGING.OF" | translate}} {{data.totalPages }}</span>
                 <a class="btn btn-primary btn-sm" ng-click="getNextPage()"><span aria-hidden="true" class="glyphicon glyphicon-step-forward"></span></a>
                 <a class="btn btn-primary btn-sm" ng-click="getLastPage()"><span aria-hidden="true" class="glyphicon glyphicon-fast-forward"></span></a>
+                <span class="paging">{{"PAGING.GOTO" | translate}}</span>
+                <input type="text" class="goto" ng-model="data.currentpage" value="{{data.currentpage}}"   placeholder="{{data.currentpage}}"  />
+                <a class="btn btn-primary btn-sm" ng-click="gotoPageNumber()"><span aria-hidden="true" class="glyphicon glyphicon-play"></span></a>
+                
+                
             </div>
         </div>
         <div class="row">

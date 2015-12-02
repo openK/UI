@@ -326,5 +326,11 @@ div.panel.panel-default.panel-details, div.panel.panel-default.panel-activities{
 input.goto{
     width: 40px;
     height: 28px;
+    text-align: center;
+}
+
+span.paging{
+    display:inline-block;
+    margin: 0px 10px 0px 10px;
 }
 
