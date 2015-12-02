@@ -24,6 +24,15 @@ app.controller('ChangeRegulationController', ['$scope', '$state', '$rootScope', 
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         $rootScope.previousState = fromState;
         $rootScope.currentState = toState;
+        if (toState.name === 'Regulation.ChangeSettings') {
+            $rootScope.CanNavigateToChangeSettings = true;
+        }
+        if (toState.name === 'Regulation.ChangeProposal') {
+            $rootScope.CanNavigateToChangeProposal = true;
+        }
+        if (toState.name === 'Regulation.ChangeProposalConfirmation') {
+            $rootScope.CanNavigateToChangeProposalConfirmation = true;
+        }
     });
     $scope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
         console.log(unfoundState.to); 

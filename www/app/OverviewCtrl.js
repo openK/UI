@@ -54,7 +54,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
         }
 
         $scope.editFinishDate = function () {
-console.log($scope.currentItem);
+            console.log($scope.currentItem);
             $scope.modalOptions = {
                 "headline": $filter('translate')('PROCESS.EDIT.FINISHDATE'),
                 "id": $scope.currentItem.id,
@@ -208,7 +208,7 @@ console.log($scope.currentItem);
             enablePagination: false,
             enablePaginationControls: false,
             enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
-            enableVerticalScrollbar: uiGridConstants.scrollbars.WHEN_NEEDED,
+            enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
             columnDefs: [
                 {
                     name: 'id',

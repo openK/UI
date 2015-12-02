@@ -220,18 +220,20 @@
                     </normal>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-xs-12">
-                    <button class="btn btn-default btn-sm" ui-sref="state1">
-                        {{ 'CANCEL' | translate }}
-                    </button>
-                    <div class="btn-group pull-right" role="group">
-                        <button class="btn btn-primary btn-sm"
-                                ng-click="gotoSettings(preselectionForm)">
-                            {{ 'NEXT' | translate }}
-                        </button>
-                    </div>
-                </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class=" col-xs-offset-3 col-xs-8">
+            <button class="btn btn-default" ui-sref="state1">
+                {{ 'CANCEL' | translate }}
+            </button>
+                <button data-ng-click="openModal(preselectionForm)" data-ng-disabled="!preselectionForm.$valid" class="btn btn-primary">
+                    {{ 'PRESELECTION.SAVETEMPLATEAS' | translate }}
+                </button>
+            <div class="pull-right">
+                <button class="btn btn-primary" ng-click="gotoSettings(preselectionForm)">
+                    {{ 'NEXT' | translate }}
+                </button>
             </div>
         </div>
     </div>

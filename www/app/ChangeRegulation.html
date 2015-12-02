@@ -14,7 +14,7 @@
 <h3>{{'ADD.ACTIVITY' | translate}}</h3>
 
 <div id="tabs">
-    <div class="row">
+    <!--<div class="row">
         <div class="col-xs-6">
             <ol class="breadcrumb">
                 <li>{{'OPENK.ABBREVIATION' | translate}}</li>
@@ -31,27 +31,33 @@
                 <li class="active" data-ng-show="selectedStep == 'confirm'">{{'WORKFLOW.CONFIRM' | translate}}</li>
             </ol>
         </div>
-    </div>
+    </div>-->
     <!--<div class="loading-display" style="" data-loading>
         <div class="filter"></div>
         <div class="center"></div>
     </div>-->
     <div class="row">
         <div class="col-xs-12">
-            <div class="btn-group btn-group">
-                <a class="btn" data-ng-disabled="true"
-                    data-ng-class="{ 'btn-default' : selectedStep != 'preselection', 'btn-success' : selectedStep == 'preselection' }">{{'WORKFLOW.SETTINGS'
-                    | translate}}</a>
-                <a class="btn" data-ng-disabled="true"
-                    data-ng-class="{ 'btn-default' : selectedStep != 'settings', 'btn-success' : selectedStep == 'settings' }">{{'WORKFLOW.DATA'
-                    | translate}}</a>
-                <a class="btn" data-ng-disabled="true"
-                    data-ng-class="{ 'btn-default' : selectedStep != 'proposal', 'btn-success' : selectedStep == 'proposal' }">{{'WORKFLOW.REDUCTIONADVICE'
-                    | translate}}</a>
-                <a class="btn" data-ng-disabled="true"
-                    data-ng-class="{ 'btn-default' : selectedStep != 'confirm', 'btn-success' : selectedStep == 'confirm' }">{{'WORKFLOW.CONFIRM'
-                    | translate}}</a>
-            </div>
+            <button class="btn btn-arrow-right" ui-sref="Regulation.ChangeDownRegulation"
+                    data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.ChangeDownRegulation') != 0,
+                                     'btn-success' : currentState.name.indexOf('Regulation.ChangeDownRegulation') == 0 }">
+                {{'WORKFLOW.SETTINGS' | translate}}
+            </button>
+            <button class="btn btn-arrow-right" ui-sref="Regulation.ChangeSettings" data-ng-disabled="!CanNavigateToChangeSettings"
+                    data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.ChangeSettings') != 0,
+                                     'btn-success' : currentState.name.indexOf('Regulation.ChangeSettings') == 0 }">
+                {{'WORKFLOW.DATA' | translate}}
+            </button>
+            <button class="btn btn-arrow-right" ui-sref="Regulation.ChangeProposal" data-ng-disabled="!CanNavigateToChangeProposal"
+                    data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.ChangeProposal') != 0,
+                                     'btn-success' : currentState.name.indexOf('Regulation.ChangeProposal') == 0 }">
+                {{'WORKFLOW.REDUCTIONADVICE' | translate}}
+            </button>
+            <button class="btn btn-arrow-right" ui-sref="Regulation.ChangeProposalConfirmation" data-ng-disabled="!CanNavigateToChangeProposalConfirmation"
+                    data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.ChangeProposalConfirmation') != 0,
+                                     'btn-success' : currentState.name.indexOf('Regulation.ChangeProposalConfirmation') == 0 }">
+                {{'WORKFLOW.CONFIRM' | translate}}
+            </button>
             <div class="col-xs-5 zeit" data-ng-show="selectedStep == 'proposal' || selectedStep == 'confirm'">
                 <div role="alert" ng-class="timeElapsed" ng-click="activeButton()"><span aria-hidden="true"
                                                                                             class="glyphicon glyphicon-time"></span>
