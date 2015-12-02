@@ -20,13 +20,13 @@
            class="btn btn-primary btn-sm"
            ui-sref="ChangeRegulation.ChangeDownRegulation">{{ 'CREATECHILDACTIVITY' | translate }}</a>
         <a name="buttonNavigateToCreateChildActivity"
-           ng-show="isDeletable"
+           ng-disabled="!isDeletable()"
            ng-click="deleteProcess()"
            class="btn btn-primary btn-sm">
             {{ 'DELETE.PROCESS' | translate }}
         </a>
         <a name="buttonNavigateToCreateChildActivity"
-           ng-show="isDeletable"
+           ng-disabled="!isValidDateFinish()"
            ng-click="editFinishDate()"
            class="btn btn-primary btn-sm">
             {{ 'PROCESS.FINISHDATE.EDIT' | translate }}

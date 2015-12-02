@@ -23,12 +23,40 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
         $scope.data.currentpage = 1;
         $scope.activity = activityService.activity();
 
-        var detailsToBeDisplayed = ['dateCreated', 'createdBy', 'updatedBy'];
+        var KDate = function (c) {
+            if (typeof c === 'undefined') {
+                return new Date();
+            } else {
+                c = c.split('+');
+                return new Date(c[0]);
+            }
+        }
+
+        var detailsToBeDisplayed = ['dateCreated', 'createdBy', 'dateUpdated', 'updatedBy'];
         i18nService.setCurrentLang('de');
 
         $scope.isDeletable = function () {
 
-            return true;
+            if ($scope.currentItem.processStatus !== "Beended") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        $scope.isValidDateFinish = function () {
+
+            var dateStarted = new KDate($scope.currentItem.userSettingsJpa.dateStarted);
+            var dateFinished = new KDate($scope.currentItem.userSettingsJpa.dateFinished);
+            var now = new KDate();
+            if (now.getTime() <= dateStarted.getTime() || now.getTime() <= dateFinished.getTime()) {
+
+                return true;
+            } else {
+                return false;
+            }
+
+
         }
 
         $scope.deleteProcess = function () {
@@ -50,7 +78,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
 
         $scope.editFinishDate = function () {
 
-            var fd = $filter('date')(new Date($scope.currentItem.userSettingsJpa.dateFinished), 'dd.MM.yyyy HH:mm');
+            var fd = $filter('date')(new KDate($scope.currentItem.userSettingsJpa.dateFinished), 'dd.MM.yyyy HH:mm');
             $scope.activity.dateFinished = fd;
 
             $scope.modalOptions = {
@@ -109,7 +137,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             $response = activityService.loadParentActivities(
                     $scope.currentpage,
                     $scope.searchOptions.pageSize,
-                    (new Date()).getTime(),
+                    (new KDate()).getTime(),
                     $scope.searchOptions.sort ? $scope.searchOptions.sortColumn + "," + $scope.searchOptions.sort : '',
                     $scope.searchOptions.filter.filter ? $scope.searchOptions.filter.filter : ''
                     );
@@ -195,11 +223,6 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
         $scope.navigateToCreate = function (id) {
             $state.go('Regulation.CreateDownRegulation');
         };
-        
-        $scope.isValidDateFinish = function(){
-            
-            return true;
-        }
 
         $scope.linkToDetailsTemplate =
                 '<div class="btn-group" role="group" aria-label="details">' +
