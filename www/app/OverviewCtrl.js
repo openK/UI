@@ -46,8 +46,8 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
 
         $scope.isValidDateFinish = function () {
 
-            var dateStarted = new KDate($scope.currentItem.userSettingsJpa.dateStarted);
-            var dateFinished = new KDate($scope.currentItem.userSettingsJpa.dateFinished);
+            var dateStarted = new KDate($scope.currentItem.dateStarted);
+            var dateFinished = new KDate($scope.currentItem.dateFinished);
             var now = new KDate();
             if (now.getTime() <= dateStarted.getTime() || now.getTime() <= dateFinished.getTime()) {
 
@@ -78,14 +78,14 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
 
         $scope.editFinishDate = function () {
 
-            var fd = $filter('date')(new KDate($scope.currentItem.userSettingsJpa.dateFinished), 'dd.MM.yyyy HH:mm');
+            var fd = $filter('date')(new KDate($scope.currentItem.dateFinished), 'dd.MM.yyyy HH:mm');
             $scope.activity.dateFinished = fd;
 
             $scope.modalOptions = {
                 "headline": $filter('translate')('PROCESS.EDIT.FINISHDATE'),
                 "id": $scope.currentItem.id,
                 "bodyText": $filter('translate')('PROCESS.EDIT.RECENTDATE'),
-                "finishdate": $scope.currentItem.userSettingsJpa.dateFinished,
+                "finishdate": $scope.currentItem.dateFinished,
                 "actionButtonText": $filter('translate')('PROCESS.EDIT.CONFIRM'),
                 "closeButtonText": $filter('translate')('PROCESS.EDIT.CANCEL'),
                 "close": function () {
@@ -211,7 +211,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
 
                     }
                     $scope.currentItem = $scope.overview.data[i];
-                    $scope.childActivities.data = $scope.overview.data[i].childrenActivityJpaList;
+                    $scope.childActivities.data = $scope.overview.data[i].actionOverviewDtoList;
 
                 }
             }
@@ -266,14 +266,14 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     width: '8%'
                 },
                 {
-                    name: 'userSettingsJpa.dateStarted',
+                    name: 'dateStarted',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.STARTDATE',
                     cellFilter: "date : 'dd.MM.yyyy HH:mm'",
                     width: '8%'
                 },
                 {
-                    name: 'userSettingsJpa.dateFinished',
+                    name: 'dateFinished',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.ENDDATE',
                     cellFilter: "date : 'dd.MM.yyyy HH:mm'",
@@ -287,7 +287,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     width: '15%'
                 },
                 {
-                    name: 'userSettingsJpa.reasonOfReduction',
+                    name: 'reasonOfReduction',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.REASONOFREDUCTION',
                     width: '30%'
@@ -387,14 +387,14 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     displayName: 'ID'
                 },
                 {
-                    field: 'userSettingsJpa.dateStarted',
+                    field: 'dateStarted',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.STARTDATE',
                     cellFilter: "date : 'dd.MM.yyyy HH:mm'",
                     width: '20%',
                 },
                 {
-                    field: 'userSettingsJpa.dateFinished',
+                    field: 'dateFinished',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.ENDDATE',
                     width: '20%',

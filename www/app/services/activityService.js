@@ -147,12 +147,12 @@ app.factory('activityService', ['$http', '$q', '$log', function ($http, $q, $log
         if (filterExpression) {
                 params.filter = filterExpression;
         }
-            return $http.get("http://192.168.1.2:8080/openk-eisman-portlet/rest/findparentactivitylist", {"params": params}).success(function (data) {
+            return $http.get("http://192.168.1.2:8080/openk-eisman-portlet/rest/findprocessoverviewlist", {"params": params}).success(function (data) {
             //$log.info("Success loading /openk-eisman-portlet/rest/findparentactivitylist");
             //$scope.overview.data = $filter('orderBy')(data.content, "id", true);
                 parentActivities = data;
         }).error(function (data, status, headers, config) {
-            $log.error('Cannot load /openk-eisman-portlet/rest/findparentactivitylist/');
+            $log.error('Cannot load /openk-eisman-portlet/rest/findprocessoverviewlist/');
         });
     };
 
