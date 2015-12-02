@@ -257,7 +257,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             enablePagination: false,
             enablePaginationControls: false,
             enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
-            enableVerticalScrollbar: uiGridConstants.scrollbars.WHEN_NEEDED,
+            enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
             columnDefs: [
                 {
                     name: 'id',

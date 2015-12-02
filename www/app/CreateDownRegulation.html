@@ -3,7 +3,6 @@
         <label for="template" class="control-label col-xs-3">
             {{ 'PRESELECTION.USEFROMTEMPLATE' | translate }}
         </label>
-
         <div class="col-xs-3">
             <select class="form-control" id="template" name="template"
                     data-ng-options="c.name for c in templates track by c.id"
@@ -49,7 +48,7 @@
         <label class="control-label col-xs-3">
             Ersatzwertverfahren *
         </label>
-        <div class="col-xs-4">
+        <div class="col-xs-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">bei ungültig gemessener Wirkleistung für Fernwirkanlagen</h3>
@@ -114,7 +113,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-4">
+        <div class="col-xs-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">bei ungültig gemessener Wirkleistung für EFR</h3>
@@ -233,18 +232,19 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-12">
-            <button class="btn btn-default btn-sm" ui-sref="state1">
-                {{ 'CANCEL' | translate }}
-            </button>
-            <div class="btn-group pull-right" role="group">
-                <button data-ng-click="openModal(preselectionForm)"
-                        data-ng-disabled="!preselectionForm.$valid"
-                        class="btn btn-primary btn-sm">
-                    {{ 'PRESELECTION.SAVETEMPLATEAS' | translate }}
+        <div class="col-xs-3">
+            <div class=" pull-right">
+                <button class="btn btn-default" ui-sref="state1">
+                    {{ 'CANCEL' | translate }}
                 </button>
-                <button class="btn btn-primary btn-sm"
-                        ng-click="gotoSettings(preselectionForm)">
+            </div>
+        </div>
+        <div class="col-xs-5">
+            <button data-ng-click="openModal(preselectionForm)" data-ng-disabled="!preselectionForm.$valid" class="btn btn-primary">
+                {{ 'PRESELECTION.SAVETEMPLATEAS' | translate }}
+            </button>
+            <div class="pull-right">
+                <button class="btn btn-primary" ng-click="gotoSettings(preselectionForm)">
                     {{ 'NEXT' | translate }}
                 </button>
             </div>
