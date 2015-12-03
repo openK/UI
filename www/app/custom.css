@@ -193,7 +193,7 @@ body {
 
     .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
         border-top: 1px solid #ddd;
-        padding: 6px;
+        padding: 4px;
         vertical-align: top;
       
     }
@@ -202,11 +202,6 @@ body {
         padding: 6px 0px 35px 6px;
     }
     
-.table {
-border-top:0px;
-}
-
-
 
 @media screen and (max-width: 767px) {
     .row-offcanvas {
@@ -332,5 +327,30 @@ input.goto{
 span.paging{
     display:inline-block;
     margin: 0px 10px 0px 10px;
+}
+
+.cursor{
+    cursor:pointer;
+    
+}
+
+.align-right{
+    text-align: right;
+}
+
+table.table.tree-grid th{
+    
+    border: solid 1px #ddd;
+}
+
+table.table.tree-grid{
+    
+    border-top: solid 1px #ddd;
+}
+
+.ui-grid-cell.ng-scope.ui-grid-disable-selection{
+    
+    border-bottom: solid 1px #ddd;
+    
 }
 
