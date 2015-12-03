@@ -117,12 +117,21 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             }
 
             modalService.open($scope, '/app/partials/editfinishdate.html', callback);
+        }
 
-
-
-
-
-
+        var callPageObject = function () {
+            activityService.loadParentActivities(
+                $scope.currentpage,
+                $scope.searchOptions.pageSize,
+                (new KDate()).getTime(),
+                $scope.searchOptions.sort ? $scope.searchOptions.sortColumn + "," + $scope.searchOptions.sort : '',
+                $scope.searchOptions.filter.filter ? $scope.searchOptions.filter.filter : ''
+            ).then(function (result) {
+                $scope.overview.data = result.data.content;
+                $scope.data.totalPages = $scope.parentActivities.totalPages;
+                $scope.data.currentpage = $scope.currentpage + 1;
+                $scope.navigateToDetails(result.data.content[0].id);
+            });
         }
 
         $scope.gotoPageNumber = function () {
@@ -133,21 +142,6 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             callPageObject();
         }
 
-        var callPageObject = function () {
-            $response = activityService.loadParentActivities(
-                    $scope.currentpage,
-                    $scope.searchOptions.pageSize,
-                    (new KDate()).getTime(),
-                    $scope.searchOptions.sort ? $scope.searchOptions.sortColumn + "," + $scope.searchOptions.sort : '',
-                    $scope.searchOptions.filter.filter ? $scope.searchOptions.filter.filter : ''
-                    );
-            $response.success(function (data) {
-                $scope.overview.data = data.content;
-                $scope.data.totalPages = $scope.parentActivities.totalPages;
-                $scope.data.currentpage = $scope.currentpage + 1;
-                $scope.navigateToDetails(data.content[0].id);
-            })
-        }
 
         $scope.getFirstPage = function () {
             $scope.currentpage = 0;
@@ -180,8 +174,6 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
         $scope.navigateToDetails = function (activityId) {
             activityService.currentParentActivityId(activityId);
             $scope.data.count = $scope.overview.data.length;
-
-
             for (var i = 0; i < $scope.data.count; i++) {
 
                 if ($scope.overview.data[i].id === activityId) {
