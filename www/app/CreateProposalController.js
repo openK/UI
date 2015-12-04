@@ -156,6 +156,7 @@ app.controller('CreateProposalController', ['$scope', '$http', '$timeout', '$tra
                 enableFiltering: false,
                 cellTemplate: '<div class="ui-grid-cell-contents" title="TOOLTIP"><div class="input-group input-group-sm"><select id="regulationSteps" ng-model="row.entity.subStationRegSteps" style="padding-top:2px;" class="form-control" ng-change="grid.appScope.changeSynchronousMachine(grid,row)"><option ng-repeat="item in row.entity.reductionSettingJpaList">{{item.setting.value}}</option></select></div></div>'
             },
+            
             {
                 name: 'delete',
                 displayName: 'SUBSTATIONSGRID.DELETE',
@@ -163,6 +164,7 @@ app.controller('CreateProposalController', ['$scope', '$http', '$timeout', '$tra
                 enableFiltering: false,
                 cellTemplate: '<div class="ui-grid-cell-contents" title="TOOLTIP"><button type="button" class="btn btn-default btn-xs" aria-label="Left Align" ng-click="grid.appScope.removeSubStation(grid,row)"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div>'
             }
+            
         ],
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;

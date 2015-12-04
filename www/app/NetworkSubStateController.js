@@ -1,4 +1,4 @@
-﻿/********************************************************************************
+/********************************************************************************
  * Copyright (c) 2015 BTC AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,7 +19,7 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
             '</div>' +
             '</div>';
     }
-
+    console.log('NetworkSubStateController');
     $scope.activity = activityService.activity();
 
     $rootScope.$on('loadSubstations', function (event, branch) {
@@ -82,10 +82,10 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
         showGridFooter: false,
         showColumnFooter: true,
         paginationPageSizes: [25, 50, 75],
-        paginationPageSize: 25,
+        paginationPageSize: 125,
         enablePagingControls: true,
         enableHorizontalScrollbar: 0,
-        enableVerticalScrollbar: 2, // 0: never, 1: always, 2: when needed
+        enableVerticalScrollbar: 0, // 0: never, 1: always, 2: when needed
         data: "substationList",
         rowTemplate: rowTemplate(),
         columnDefs: [
@@ -100,7 +100,7 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
                 cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.maxU.value | number : 2}} {{row.entity.maxU.multiplier}}{{row.entity.maxU.unit}}</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.NETAREA',
-                width: '8%'
+              //  width: '8%'
             },
             {
                 name: 'communicationTypeJpa',
@@ -154,12 +154,16 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
                 aggregationType: uiGridConstants.aggregationTypes.sum,
                 footerCellTemplate: '<div class="ui-grid-cell-contents">∑ {{col.getAggregationValue() | number : 2}} MW</div>',
                 width: '9%'
-            },
+            }
+ /*           
             {
                 name: 'edit',
                 enableFiltering: false,
                 cellTemplate: '<div class="ui-grid-cell-contents" title="TOOLTIP"><div class="input-group input-group-sm"><select id="regulationSteps" ng-disabled="grid.appScope.isInUse(row)" required ng-model="row.entity.subStationRegSteps" style="padding-top:2px;" class="form-control" ng-change="grid.appScope.addSubStation(grid,row)"><option ng-repeat="item in row.entity.reductionSettingJpaList">{{item.setting.value}}</option></select></div> <button type="button" class="btn btn-default btn-xs" aria-label="Left Align" ng-click="grid.appScope.addSubStation(grid,row)"></button></div>'
             }
+            
+*/        
+            
         ],
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;

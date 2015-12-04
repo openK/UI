@@ -169,9 +169,11 @@ label[for="_58_captchaText"] {
     left: 10px;
 }
 
+/*
 #proposalTree, #proposalStats {
     height: 440px;
 }
+*/
 
 .label-required {
     color: #a94442;
