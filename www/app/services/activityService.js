@@ -86,9 +86,10 @@ app.factory('activityService', ['$http', '$q', '$log', function ($http, $q, $log
         ]);
     }
 
-    function initActivity() {
-        $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + '/openk-eisman-portlet/rest/activity/latestusersettings/' + currentParentActivityId).then(function (result) {
-            configData.activity = result.data;
+    var newActivity = null;
+    function createActivity() {
+        return $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + '/openk-eisman-portlet/rest/activity/latestusersettings/' + currentParentActivityId).then(function (result) {
+            newActivity = result.data;
         });
     }
 
@@ -153,7 +154,7 @@ app.factory('activityService', ['$http', '$q', '$log', function ($http, $q, $log
             console.log(filterExpression);
             params.filter = filterExpression;
         }
-        return $http.get("http://192.168.1.2:8080/openk-eisman-portlet/rest/findprocessoverviewlist", { "params": params }).success(function(data) {
+        return $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/findprocessoverviewlist", { "params": params }).success(function (data) {
             //$log.info("Success loading /openk-eisman-portlet/rest/findparentactivitylist");
             //$scope.overview.data = $filter('orderBy')(data.content, "id", true);
             parentActivities = data;
@@ -163,6 +164,7 @@ app.factory('activityService', ['$http', '$q', '$log', function ($http, $q, $log
     };
 
     var currentParentActivityId;
+    var currentParentActivity;
     return {
         pageSize: pageSize,
         resetActivity: resetActivity,
@@ -175,7 +177,10 @@ app.factory('activityService', ['$http', '$q', '$log', function ($http, $q, $log
         activityConfigData: function() {
             return configData;
         },
-        initActivity: initActivity,
+        createActivity: createActivity,
+        newActivity: function() {
+            return newActivity;
+        },
         loadParentActivities: loadParentActivities,
         loadConfiguration: loadConfiguration,
         loadTaskConfiguration: loadTaskConfiguration,
@@ -183,14 +188,20 @@ app.factory('activityService', ['$http', '$q', '$log', function ($http, $q, $log
         currentParentActivityId: function (id) {
             if (id) {
                 currentParentActivityId = id;
-                //parentActivities.childrenActivityJpaList.forEach(function(activity) {
-                //});
+                parentActivities.content.forEach(function(activity) {
+                    if (activity.id === id) {
+                        currentParentActivity = activity;
+                    }
+                });
             }
 
             return currentParentActivityId;
         },
         getParentActivities: function () {
             return parentActivities;
+        },
+        currentParentActivity: function () {
+            return currentParentActivity;
         }
     };
 

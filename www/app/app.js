@@ -106,16 +106,16 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
             }).state('ChangeRegulation.ChangeDownRegulation', {
                 url: '/ChangeDownRegulation',
                 templateUrl: "app/ChangeDownRegulation.html",
-                controller: 'ChangeDownRegulationController'
+                controller: 'ChangeDownRegulationController',
+                resolve: {
+                    createActivity: function (activityService) {
+                        return activityService.createActivity();
+                    }
+                }
             }).state('ChangeRegulation.ChangeSettings', {
                 url: '/ChangeSettings',
                 templateUrl: "app/ChangeSettings.html",
                 controller: 'ChangeSettingsController',
-                resolve: {
-                    initActivity: function (activityService) {
-                        activityService.initActivity();
-                    }
-                }
             }).state('ChangeRegulation.ChangeProposal', {
                 url: '/ChangeProposal',
                 templateUrl: "app/ChangeProposal.html",

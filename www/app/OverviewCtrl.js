@@ -426,7 +426,8 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             onRegisterApi: function (gridApi) {
                 $scope.childGridApi = gridApi;
                 $scope.childGridApi.cellNav.on.navigate($scope, function (newRowCol, oldRowCol) {
-                    $scope.childGridApi.selection.selectRow(newRowCol.row.entity);
+                    var activity = newRowCol.row.entity;
+                    $scope.childGridApi.selection.selectRow(activity);
                 });
             }
         };
@@ -442,7 +443,8 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                 $scope.gridApi.selection.selectRow($scope.overview.data[0]);
             }
             if ($scope.childGridApi.selection.selectRow) {
-                $scope.childGridApi.selection.selectRow($scope.childActivities.data[$scope.childActivities.data.length - 1]);
+                var activity = $scope.childActivities.data[$scope.childActivities.data.length - 1];
+                $scope.childGridApi.selection.selectRow(activity);
             }
 
             if ($scope.firstcall) {

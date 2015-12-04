@@ -1,5 +1,6 @@
 app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', function ($scope, $state, $stateParams, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService) {
 
+    //$scope.activity = activityService.newActivity();
     $scope.activity = activityService.activity();
     // get current time as date...
     var now = new Date($.now());
@@ -216,7 +217,7 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
                 }
             };
 
-            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/createreductionadvice", data).success(function (data) {
+            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/createreductionadviceforaction", data).success(function (data) {
 
                 var advice;
                 if (data.id && data.parentActivityJpaId) {

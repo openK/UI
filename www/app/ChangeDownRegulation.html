@@ -4,7 +4,7 @@
             {{ 'PRESELECTION.REGULATIONSTEPS' | translate }} *
         </label>
 
-        <div ng-repeat="n in regulationSteps">
+        <div ng-repeat="n in activityConfigData.task.regulationSteps">
             <div class="col-xs-1" data-ng-class="{'has-error': preselectionForm.regulationsteps.$invalid}">
                 <label class="radio-inline">
                     <input type="radio" data-ng-required="true" name="regulationsteps" value="{{n}}"

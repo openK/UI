@@ -12,21 +12,10 @@
 app.controller('ChangeDownRegulationController', ['$scope', '$state', '$rootScope', '$http', '$modal', '$log', 'activityService', function ($scope, $state, $rootScope, $http, $modal, $log, activityService) {
 
     $scope.activityConfigData = activityService.activityConfigData();
-
-    /*
-    * Preselection Data
-    */
-    $rootScope.templates = $scope.activityConfigData.task.templates;
-    $scope.regulationSteps = $scope.activityConfigData.task.regulationSteps;
-
-    $scope.activity = activityService.activity();
-
-    if ($scope.parentActivityId) {
-
-        $scope.activity.parentActivityJpaId = $scope.parentActivityId;
-    }
-
+    $scope.activity = activityService.newActivity();
+    $scope.parentActivityId = activityService.currentParentActivity();
     $scope.preselectionFormSubmitted = false;
+
     $scope.gotoSettings = function (preselectionForm) {
         if (preselectionForm.$valid) {
             $state.go('ChangeRegulation.ChangeSettings');

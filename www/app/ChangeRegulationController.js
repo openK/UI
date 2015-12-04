@@ -11,7 +11,6 @@
  *******************************************************************************/
 
 app.controller('ChangeRegulationController', ['$scope', '$state', '$rootScope', 'activityService', function ($scope, $state, $rootScope, activityService) {
-    $rootScope.parentActivityId = activityService.currentParentActivityId();
     $rootScope.previousState = {};
     $rootScope.goToRegulationState = function () {
         if ($rootScope.currentState.name === 'Regulation.NetworkState.Main') {
