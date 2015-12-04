@@ -201,11 +201,11 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
 
         var mRid = myRow.entity.mRid;
         var row = {};
+       
 
         $scope.activity.substationProposalList.forEach(function (value, key) {
 
             if (value.mRid === mRid) {
-
                 row = $scope.activity.substationProposalList[key];
                 $scope.activity.substationProposalList.splice(key, 1);
             }

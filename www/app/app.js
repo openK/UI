@@ -70,13 +70,17 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
             }).state('Regulation.CreateProposal.Main', {
                 url: '/Main',
                 views: {
+                    "SelectedNetworkSubStations":{
+                        templateUrl: "app/SelectedNetworkSubStation.html",
+                        controller:  "SelectedNetworkSubStationController"
+                    },
                     "NetworkMainState": {
                         templateUrl: "app/NetworkMainState.html",
                         controller: 'NetworkMainStateController'
                     },
                     "NetworkSubState": {
                         templateUrl: "app/NetworkSubState.html",
-                        controller: 'SelectedNetworkSubStationController'
+                        controller:  "NetworkSubStateController"
                     }
                 }
             }).state('Regulation.CreateProposalConfirmation', {
@@ -91,7 +95,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
 
 
 
-            // neue Maßnahme hinzufuegen...
+            // neue Maï¿½nahme hinzufuegen...
             .state('ChangeRegulation', {
                 url: "/Change",
                 templateUrl: "app/ChangeRegulation.html",
