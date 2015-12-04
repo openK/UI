@@ -18,6 +18,7 @@
            ui-sref="Regulation.CreateDownRegulation">{{ 'CREATE' | translate }}</a>
         <a name="buttonNavigateToCreateChildActivity"
            class="btn btn-primary btn-sm"
+           ng-disabled="addActivityPermitted()"
            ui-sref="ChangeRegulation.ChangeDownRegulation">{{ 'CREATECHILDACTIVITY' | translate }}</a>
         <a name="buttonNavigateToCreateChildActivity"
            ng-disabled="!isDeletable()"
@@ -63,14 +64,14 @@
             <div style="margin: -10px 10px 10px 0px;">
                 <a class="btn btn-primary btn-sm" ng-click="getFirstPage()"><span aria-hidden="true" class="glyphicon glyphicon-fast-backward"></span></a>    
                 <a class="btn btn-primary btn-sm" ng-click="getPreviousPage()"><span aria-hidden="true" class="glyphicon glyphicon-step-backward"></span></a>
-                <span class="paging">{{"PAGING.PAGE" | translate}} {{data.currentpage}} {{"PAGING.OF" | translate}} {{data.totalPages }}</span>
+                <span class="paging">{{"PAGING.PAGE"| translate}} {{data.currentpage}} {{"PAGING.OF"| translate}} {{data.totalPages}}</span>
                 <a class="btn btn-primary btn-sm" ng-click="getNextPage()"><span aria-hidden="true" class="glyphicon glyphicon-step-forward"></span></a>
                 <a class="btn btn-primary btn-sm" ng-click="getLastPage()"><span aria-hidden="true" class="glyphicon glyphicon-fast-forward"></span></a>
-                <span class="paging">{{"PAGING.GOTO" | translate}}</span>
+                <span class="paging">{{"PAGING.GOTO"| translate}}</span>
                 <input type="text" class="goto" ng-model="data.currentpage" value="{{data.currentpage}}"   placeholder="{{data.currentpage}}"  />
                 <a class="btn btn-primary btn-sm" ng-click="gotoPageNumber()"><span aria-hidden="true" class="glyphicon glyphicon-play"></span></a>
-                
-                
+
+
             </div>
         </div>
         <div class="row">
@@ -86,7 +87,12 @@
                                     <td>{{item.key| translate}}</td>
                                     <td>{{item.value| translate | date: DATE.PATTERN | translate}}</td>
                                 </tr>
+                                <tr ng-repeat="item in data.injectionList">
+                                    <td>{{'injectionType'| translate}}</td>
+                                    <td>{{item| translate}}</td>
+                                </tr>
                             </table>
+
                         </div>
                     </div>
                 </div>

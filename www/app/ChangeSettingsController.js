@@ -22,6 +22,8 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
     }
 
     $scope.startDateEdit = newStartDate;
+    var newDateFinished = new Date(newStartDate.getTime());
+    newDateFinished = new Date(newDateFinished.setMinutes(newDateFinished.getMinutes() + 30, 0, 0));
     $('#datestarted').daterangepicker({
         singleDatePicker: true,
         timePicker12Hour: false,
@@ -38,7 +40,23 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
         }
     });
     
-   
+    $('#datefinished').daterangepicker({
+        singleDatePicker: true,
+        timePicker12Hour: false,
+        timePicker: true,
+        timePickerIncrement: 15,
+        startDate: newDateFinished,
+        minDate: $.now(),
+        locale: {
+            format: 'DD.MM.YYYY HH:mm',
+            applyLabel: '&Uuml;bernehmen',
+            daysOfWeek: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+            monthNames: ['Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+            firstDay: 1
+        }
+    });
+
+
     $scope.activity.dateStarted = $filter('date')(new Date(newStartDate), 'dd.MM.yyyy HH:mm');
     $scope.activity.dateFinished = $filter('date')(new Date($scope.activity.dateFinished), 'dd.MM.yyyy HH:mm');
     $scope.activityConfigData = activityService.activityConfigData().activity;
@@ -173,7 +191,32 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
 
             $scope.activity.dateDiff = dateService.getDateDiff($scope.activity.dateStarted, $scope.activity.dateFinished);
 
-            $http.post(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/activity/createreductionadvice", $scope.getPostData()).success(function (data) {
+            var data = {
+                "id": null,
+                "parentActivityJpaId": activityService.currentParentActivityId(),
+                "dateStarted": dateStarted,
+                "dateFinished": dateFinished,
+                "reductionValue": $scope.activity.settings.requiredReductionPower,
+                "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
+                "practise": $scope.activity.settings.practise,
+                "pointOfInjectionType": $scope.activity.settings.useWholeArea ? 0 : 1,
+                "pointOfInjectionList": pointOfInjectionList,
+                "description": $scope.activity.settings.description,
+                "preselectionConfigurationDto": {
+                    "reductionSetting": $scope.activity.preselection.reductionSetting,
+                    "discriminationCoefficientEnabled": $scope.activity.preselection.discriminationCoefficientEnabled,
+                    "characteristicForMissingMeasurementFwt": $scope.activity.preselection.characteristicForMissingMeasurementFwt,
+                    "characteristicForMissingMeasurementEfr": $scope.activity.preselection.characteristicForMissingMeasurementEfr,
+                    "substituteValueWindFwt": $scope.activity.preselection.substituteValueWindFwt,
+                    "substituteValuePhotovoltaicFwt": $scope.activity.preselection.substituteValuePhotovoltaicFwt,
+                    "substituteValueBiogasFwt": $scope.activity.preselection.substituteValueBiogasFwt,
+                    'substituteValueWindEfr': $scope.activity.preselection.substituteValueWindEfr,
+                    'substituteValuePhotovoltaicEfr': $scope.activity.preselection.substituteValuePhotovoltaicEfr,
+                    'substituteValueBiogasEfr': $scope.activity.preselection.substituteValueBiogasEfr
+                }
+            };
+
+            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/createreductionadvice", data).success(function (data) {
 
                 var advice;
                 if (data.id && data.parentActivityJpaId) {

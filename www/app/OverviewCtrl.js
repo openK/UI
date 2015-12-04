@@ -45,18 +45,25 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
         }
 
         $scope.isValidDateFinish = function () {
-
             var dateStarted = new KDate($scope.currentItem.dateStarted);
             var dateFinished = new KDate($scope.currentItem.dateFinished);
             var now = new KDate();
             if (now.getTime() <= dateStarted.getTime() || now.getTime() <= dateFinished.getTime()) {
-
                 return true;
             } else {
                 return false;
             }
+        }
 
-
+        $scope.addActivityPermitted = function(){
+            var dateStarted = new KDate($scope.currentItem.dateStarted);
+            var dateFinished = new KDate($scope.currentItem.dateFinished);
+            var now = new KDate();
+            if (now.getTime() >= dateStarted.getTime() || now.getTime() <= dateFinished.getTime()) {
+                return true;
+            } else {
+                return false;
+        }
         }
 
         $scope.deleteProcess = function () {
@@ -97,7 +104,6 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                 }
 
             };
-
             var callback = function () {
                 $('#editdatefinished').daterangepicker({
                     singleDatePicker: true,
@@ -115,7 +121,6 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     }
                 });
             }
-
             modalService.open($scope, '/app/partials/editfinishdate.html', callback);
         }
 
@@ -199,6 +204,8 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                                 value = {key: detailsToBeDisplayed[j], value: $scope.overview.data[i][detailsToBeDisplayed[j]]};
                         }
                         $scope.data.details[detailsToBeDisplayed[j]] = value;
+                        $scope.data.injectionList = $scope.overview.data[i].pointOfInjectionList;
+                        $scope.data.injectionType = $scope.overview.data[i].pointOfInjectionType;
 
 
                     }
@@ -255,6 +262,13 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     name: 'id',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.ID',
+                    width: '4%'
+                },
+                {
+                    name: 'dateCreated',
+                    headerCellFilter: 'translate',
+                    displayName: 'GRID.CREATED',
+                    cellFilter: "date : 'dd.MM.yyyy HH:mm'",
                     width: '8%'
                 },
                 {
@@ -272,11 +286,11 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     width: '8%'
                 },
                 {
-                    name: 'activePowerJpaToBeReduced.value',
-                    cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.activePowerJpaToBeReduced.value | number : 2}} MW</div>',
+                    name: 'reductionValue',
+                    cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.reductionValue | number : 2}} MW</div>',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.POWERTOBEREDUCED',
-                    width: '15%'
+                    width: '11%'
                 },
                 {
                     name: 'reasonOfReduction',
@@ -374,9 +388,10 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
             columnDefs: [
                 {
-                    field: 'id',
+                    field: 'seqNum',
+                    headerCellFilter: 'translate',
                     width: '10%',
-                    displayName: 'ID'
+                    displayName: 'GRID.SEQNUM'
                 },
                 {
                     field: 'dateStarted',
@@ -393,8 +408,9 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     cellFilter: "date : 'dd.MM.yyyy HH:mm'",
                 },
                 {
-                    field: 'activePowerJpaToBeReduced.value',
+                    field: 'reductionValue',
                     headerCellFilter: 'translate',
+                    cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.reductionValue | number : 2}} MW</div>',
                     displayName: 'GRID.POWERTOBEREDUCED',
                     width: '20%',
                     cellClass: 'col-numbers',

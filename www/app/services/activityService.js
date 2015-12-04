@@ -59,8 +59,8 @@ app.factory('activityService', ['$http', '$q', '$log', function ($http, $q, $log
             practise: "false"
         };
         activity.substationProposalList = [];
-        }
-        ;
+    }
+    ;
 
     /*
      Daten laden
@@ -84,6 +84,12 @@ app.factory('activityService', ['$http', '$q', '$log', function ($http, $q, $log
                  configData.task.timerTick = result.data;
              }),
         ]);
+    }
+
+    function initActivity() {
+        $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + '/openk-eisman-portlet/rest/activity/latestusersettings/' + currentParentActivityId).then(function (result) {
+            configData.activity = result.data;
+        });
     }
 
     function loadActivityConfiguration() {
@@ -132,25 +138,25 @@ app.factory('activityService', ['$http', '$q', '$log', function ($http, $q, $log
         return $q.all([loadTaskConfiguration(), loadActivityConfiguration()]);
     }
     var parentActivities;
-        var pageSize = 5;
+    var pageSize = 5;
     var loadParentActivities = function (page, size, time, sortExpression, filterExpression) {
         var params = {
             page: page || 0,
-                size: size || pageSize,
+            size: size || pageSize,
             t: time || new Date().getTime()
         };
         if (sortExpression) {
-                params.sort = sortExpression;
+            params.sort = sortExpression;
         }
 
-            console.log(filterExpression); 
         if (filterExpression) {
-                params.filter = filterExpression;
+            console.log(filterExpression);
+            params.filter = filterExpression;
         }
-            return $http.get("http://192.168.1.2:8080/openk-eisman-portlet/rest/findprocessoverviewlist", {"params": params}).success(function (data) {
+        return $http.get("http://192.168.1.2:8080/openk-eisman-portlet/rest/findprocessoverviewlist" /*, { "params": params }*/).success(function(data) {
             //$log.info("Success loading /openk-eisman-portlet/rest/findparentactivitylist");
             //$scope.overview.data = $filter('orderBy')(data.content, "id", true);
-                parentActivities = data;
+            parentActivities = data;
         }).error(function (data, status, headers, config) {
             $log.error('Cannot load /openk-eisman-portlet/rest/findprocessoverviewlist/');
         });
@@ -158,22 +164,23 @@ app.factory('activityService', ['$http', '$q', '$log', function ($http, $q, $log
 
     var currentParentActivityId;
     return {
-            pageSize: pageSize,
+        pageSize: pageSize,
         resetActivity: resetActivity,
-        activity: function (act) {
+        activity: function(act) {
             if (act) {
                 activity = act;
             }
             return activity;
         },
-        activityConfigData: function () {
+        activityConfigData: function() {
             return configData;
         },
-            loadParentActivities: loadParentActivities,
+        initActivity: initActivity,
+        loadParentActivities: loadParentActivities,
         loadConfiguration: loadConfiguration,
         loadTaskConfiguration: loadTaskConfiguration,
         loadActivityConfiguration: loadActivityConfiguration,
-            currentParentActivityId: function (id) {
+        currentParentActivityId: function (id) {
             if (id) {
                 currentParentActivityId = id;
                 //parentActivities.childrenActivityJpaList.forEach(function(activity) {
@@ -182,7 +189,7 @@ app.factory('activityService', ['$http', '$q', '$log', function ($http, $q, $log
 
             return currentParentActivityId;
         },
-            getParentActivities: function () {
+        getParentActivities: function () {
             return parentActivities;
         }
     };

@@ -1,7 +1,7 @@
 <form name="settingsForm" class="form-horizontal" data-toggle="validator">
     <div class="form-group">
         <label for="datestarted" class="control-label col-xs-3">{{'SETTINGS.DATESTARTED'| translate}} *</label>
-        <div class="controls col-xs-3" data-ng-class="{'has-error' settingsForm.datestarted.$invalid}">
+        <div class="controls col-xs-3" data-ng-class="{'has-error': settingsForm.datestarted.$invalid}">
             <input type="text" required value="" startrange
                     data-ng-model="activity.settings.dateStarted" class="form-control"
                     id="datestarted" name="datestarted">
@@ -10,7 +10,7 @@
     <div class="form-group">
         <label for="datefinished" class="control-label col-xs-3">{{'SETTINGS.DATEFINISHED' | translate}} *</label>
 
-        <div class="controls col-xs-3" data-ng-class="{'has-error' settingsForm.datefinished.$invalid}">
+        <div class="controls col-xs-3" data-ng-class="{'has-error': settingsForm.datefinished.$invalid}">
             <input type="text" required value="" data-ng-model="activity.settings.dateFinished" endrange
                     class="form-control" id="datefinished" name="datefinished">
         </div>
@@ -18,7 +18,7 @@
     <div class="form-group">
         <label for="reasonofreduction" class="control-label col-xs-3">{{'SETTINGS.REASONOFREDUCTION'| translate}} *</label>
 
-        <div class="col-xs-3" data-ng-class="{'has-error' activity.settings.reasonOfReduction == ''}">
+        <div class="col-xs-3" data-ng-class="{'has-error': activity.settings.reasonOfReduction == ''}">
             <select id="reasonofreduction" required data-ng-model="activity.settings.reasonOfReduction"
                     data-ng-options="c for c in activityConfigData.regulationReasons track by c" class="form-control">
             </select>
@@ -26,12 +26,12 @@
     </div>
     <div class="form-group">
         <label for="requiredReductionPower"
-                data-ng-class="{'has-error' settingsForm.requiredReductionPower.$invalid}"
+                data-ng-class="{'has-error': settingsForm.requiredReductionPower.$invalid}"
                 class="control-label col-xs-3">{{'SETTINGS.REQUIREDREDUCTION' | translate}} *</label>
 
         <div class="col-xs-3">
             <div class="input-group input-group-sm"
-                    data-ng-class="{'has-error' activity.settings.requiredReductionPower == ''}">
+                    data-ng-class="{'has-error': activity.settings.requiredReductionPower == ''}">
                 <input type="number" required data-ng-model="activity.settings.requiredReductionPower"
                         data-area-describedby="requiredreductionaddon"
                         name="requiredReductionPower" id="requiredReductionPower"
@@ -79,7 +79,7 @@
     <div class="form-group">
         <label for="description" class="control-label col-xs-3">{{'SETTINGS.DESCRIPTION' | translate}} *</label>
 
-        <div class="col-xs-3" data-ng-class="{'has-error' activity.settings.description == ''}">
+        <div class="col-xs-3" data-ng-class="{'has-error': activity.settings.description == ''}">
             <textarea id="description" required data-ng-model="activity.settings.description" rows="3"
                         class="form-control"></textarea>
         </div>
@@ -184,5 +184,4 @@
             </div>
         </div>
     </div>
-    <script src="app/libs/eismandaterangepicker.js"></script>
 </form>

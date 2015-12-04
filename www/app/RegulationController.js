@@ -25,7 +25,7 @@ app.controller('RegulationController', ['$scope', '$state', '$rootScope', functi
         if (toState.name === 'Regulation.CreateSettings') {
             $scope.CanNavigateToCreateSettings = true;
         }
-        if (toState.name === 'Regulation.CreateProposal') {
+        if (toState.name.indexOf('Regulation.CreateProposal') === 0) {
             $scope.CanNavigateToCreateProposal = true;
         }
         if (toState.name === 'Regulation.CreateProposalConfirmation') {

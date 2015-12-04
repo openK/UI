@@ -1,4 +1,4 @@
-angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGrid', 'isteven-multi-select', 'ui.grid', 'ui.bootstrap', 'ngResource', 'ui.grid.selection', 'ui.grid.pagination','ui.grid.cellNav'])
+angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGrid', 'isteven-multi-select', 'ui.grid', 'ui.bootstrap', 'ngResource', 'ui.grid.selection', 'ui.grid.pagination', 'ui.grid.cellNav'])
     .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', function ($stateProvider, $urlRouterProvider, $translateProvider) {
 
         $translateProvider.preferredLanguage('de');
@@ -32,7 +32,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 controller: 'RegulationController',
                 abstract: true,
                 resolve: {
-                    activity: function(activityService) {
+                    activity: function (activityService) {
                         activityService.resetActivity();
                         return activityService.loadConfiguration();
                     }
@@ -61,7 +61,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
             }).state('Regulation.CreateSettings', {
                 url: '/CreateSettings',
                 templateUrl: "app/CreateSettings.html",
-                controller: 'CreateSettingsController'
+                controller: 'CreateSettingsController',
             }).state('Regulation.CreateProposal', {
                 url: '/CreateProposal',
                 templateUrl: "app/CreateProposal.html",
@@ -110,7 +110,12 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
             }).state('ChangeRegulation.ChangeSettings', {
                 url: '/ChangeSettings',
                 templateUrl: "app/ChangeSettings.html",
-                controller: 'ChangeSettingsController'
+                controller: 'ChangeSettingsController',
+                resolve: {
+                    initActivity: function (activityService) {
+                        activityService.initActivity();
+                    }
+                }
             }).state('ChangeRegulation.ChangeProposal', {
                 url: '/ChangeProposal',
                 templateUrl: "app/ChangeProposal.html",

@@ -1,10 +1,60 @@
 app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', function ($scope, $state, $stateParams, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService) {
 
     $scope.activity = activityService.activity();
+
+    // configure the new startDate and finsheDate...
+    var now = new Date($.now());
+    var quarters = parseInt(now.getMinutes() / 15);
+    var minutes = quarters * 15 + 30;
+    var hours = parseInt(minutes / 60);
+    var newStartDate = now;
+    var newDateFinished = now;
+    if (hours) {
+        newStartDate = new Date(newStartDate.setHours(newStartDate.getHours() + 1));
+        minutes = minutes % 60;
+        newStartDate = new Date(newStartDate.setMinutes(minutes, 0, 0));
+    } else {
+        newStartDate = new Date(newStartDate.setMinutes(minutes, 0, 0));
+    }
+    newDateFinished = new Date(newStartDate.getTime());
+    newDateFinished = new Date(newDateFinished.setMinutes(newDateFinished.getMinutes() + 30, 0, 0));
+
+    $('#datestarted').daterangepicker({
+        singleDatePicker: true,
+        timePicker12Hour: false,
+        timePicker: true,
+        timePickerIncrement: 15,
+        startDate: newStartDate,
+        minDate: $.now(),
+        locale: {
+            format: 'DD.MM.YYYY HH:mm',
+            applyLabel: '&Uuml;bernehmen',
+            daysOfWeek: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+            monthNames: ['Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+            firstDay: 1
+        }
+    });
+
+    $('#datefinished').daterangepicker({
+        singleDatePicker: true,
+        timePicker12Hour: false,
+        timePicker: true,
+        timePickerIncrement: 15,
+        startDate: newDateFinished,
+        minDate: $.now(),
+        locale: {
+            format: 'DD.MM.YYYY HH:mm',
+            applyLabel: '&Uuml;bernehmen',
+            daysOfWeek: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+            monthNames: ['Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+            firstDay: 1
+        }
+    });
+
     $scope.activityConfigData = activityService.activityConfigData().activity;
     if ($stateParams.taskId) {
 
-        $scope.data.forEach(function(a) {
+        $scope.data.forEach(function (a) {
             if (a.id == $stateParams.taskId)
                 $scope.currentParentActivity = a;
         });
@@ -50,7 +100,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
 
         if (postData.parentActivityJpaId && postData.activityId) {
 
-            $http.put(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
+            $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
 
                 $state.go('state1');
 
@@ -60,7 +110,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
 
         } else {
 
-            $http.post(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
+            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
 
                 $state.go('state1');
 
@@ -78,21 +128,21 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
         var dateStarted = dateService.formatDateForBackend($scope.activity.settings.dateStarted);
         var dateFinished = dateService.formatDateForBackend($scope.activity.settings.dateFinished);
         var data = {
-            "id": $scope.activityId,
-            "dateStarted": dateStarted,
-            "dateFinished": dateFinished,
-            //"parentActivityJpaId": $scope.activity.parentActivityJpaId,
-            "description": $scope.activity.settings.description,
+            "userSettingsJpa": {
+                "dateStarted": dateStarted,
+                "dateFinished": dateFinished,
+                "geographicalRegion": $scope.activity.settings.useWholeArea,
+                "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
+                "practise": $scope.activity.settings.practise,
+                "description": $scope.activity.settings.description
+            },
             "activePowerJpaToBeReduced": {
                 "value": $scope.activity.settings.requiredReductionPower,
                 "multiplier": "M",
                 "unit": "W"
             },
-            "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
             "subGeographicalRegionJpaList": $scope.activity.settings.subGeographicalRegions,
             "substationJpaList": $scope.activity.settings.transformerStations,
-            "practise": $scope.activity.settings.practise,
-            'geographicalRegion': $scope.activity.settings.useWholeArea,
             "preselectionName": "",
             "preselectionConfigurationJpa": {
                 "reductionSetting": $scope.activity.preselection.reductionSetting,
@@ -106,7 +156,6 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
                 'substituteValuePhotovoltaicEfr': $scope.activity.preselection.substituteValuePhotovoltaicEfr,
                 'substituteValueBiogasEfr': $scope.activity.preselection.substituteValueBiogasEfr
             },
-            "timeout": 30000
         };
 
         return data;
@@ -130,7 +179,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
 
             $scope.activity.dateDiff = dateService.getDateDiff($scope.activity.settings.dateStarted, $scope.activity.settings.dateFinished);
 
-            $http.post(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/activity/createreductionadvice", $scope.getPostData()).success(function (data) {
+            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/createreductionadvice", $scope.getPostData()).success(function (data) {
 
                 var advice;
                 if (data.id && data.parentActivityJpaId) {
