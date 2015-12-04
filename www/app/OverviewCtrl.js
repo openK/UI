@@ -59,7 +59,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             var dateStarted = new KDate($scope.currentItem.dateStarted);
             var dateFinished = new KDate($scope.currentItem.dateFinished);
             var now = new KDate();
-            if (now.getTime() >= dateStarted.getTime() || now.getTime() <= dateFinished.getTime()) {
+            if (now.getTime() >= dateStarted.getTime() && now.getTime() <= dateFinished.getTime()) {
                 return true;
             } else {
                 return false;
