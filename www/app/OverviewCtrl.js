@@ -55,7 +55,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             }
         }
 
-        $scope.addActivityPermitted = function(){
+        $scope.addActivityPermitted = function () {
             var dateStarted = new KDate($scope.currentItem.dateStarted);
             var dateFinished = new KDate($scope.currentItem.dateFinished);
             var now = new KDate();
@@ -63,7 +63,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                 return true;
             } else {
                 return false;
-        }
+            }
         }
 
         $scope.deleteProcess = function () {
@@ -126,14 +126,15 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
 
         var callPageObject = function () {
             activityService.loadParentActivities(
-                $scope.currentpage,
-                $scope.searchOptions.pageSize,
-                (new KDate()).getTime(),
-                $scope.searchOptions.sort ? $scope.searchOptions.sortColumn + "," + $scope.searchOptions.sort : '',
-                $scope.searchOptions.filter.filter ? $scope.searchOptions.filter.filter : ''
-            ).then(function (result) {
+                    $scope.currentpage,
+                    $scope.searchOptions.pageSize,
+                    (new KDate()).getTime(),
+                    $scope.searchOptions.sort ? $scope.searchOptions.sortColumn + "," + $scope.searchOptions.sort : '',
+                    $scope.searchOptions.filter.filter ? $scope.searchOptions.filter.filter : ''
+                    ).then(function (result) {
                 $scope.overview.data = result.data.content;
-                $scope.data.totalPages = $scope.parentActivities.totalPages;
+                console.log($scope.overview.data);
+                $scope.data.totalPages = 5;// $scope.parentActivities.totalPages
                 $scope.data.currentpage = $scope.currentpage + 1;
                 $scope.navigateToDetails(result.data.content[0].id);
             });
@@ -435,7 +436,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
 
         $scope.parentActivities = activityService.getParentActivities();
         $scope.overview.data = $scope.parentActivities.content;
-        $scope.data.totalPages = $scope.parentActivities.totalPages;
+        $scope.data.totalPages = 5; // $scope.parentActivities.totalPages;
 
 
         $timeout(function () {
@@ -455,10 +456,5 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
 
         });
         $scope.navigateToDetails($scope.overview.data[0].id);
-
-
-
-
-
 
     }]);
