@@ -455,6 +455,8 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             }
 
         });
-        $scope.navigateToDetails($scope.overview.data[0].id);
+        if ($scope.overview.data.length > 0) {
+            $scope.navigateToDetails($scope.overview.data[0].id);
+        }
 
     }]);
