@@ -46,8 +46,8 @@
                        class="control-label col-xs-4">Änderung der Abregelleistung um *</label>
                 <div class="col-xs-4">
                     <div class="input-group input-group-sm" 
-                         data-ng-class="{'has-error': activity.activePowerJpaToBeReduced.additionalReductionPowerValue.value < 0 || !activity.activePowerJpaToBeReduced.additionalReductionPowerValue.value }">
-                        <input type="number" data-ng-required="true" data-ng-model="activity.activePowerJpaToBeReduced.additionalReductionPowerValue.value"
+                         data-ng-class="{'has-error': activity.reductionValue < 0 || !activity.reductionValue }">
+                        <input type="number" data-ng-required="true" data-ng-model="activity.reductionValue"
                                min="1" name="requiredAdditionalReductionPower" id="requiredAdditionalReductionPower"
                                class="form-control">
                         <span id="requiredreductionaddon" class="input-group-addon">MW</span>
@@ -58,14 +58,14 @@
                         <div class="col-xs-6">
                             <label class="radio-inline">
                                 <input type="radio" ng-value="true" name="test1"
-                                       data-ng-model="activity.activePowerJpaToBeReduced.additionalReductionPowerValue.positiv">
+                                       data-ng-model="activity.positiv">
                                 Erhöhung
                             </label>
                         </div>
                         <div class="col-xs-6">
                             <label class="radio-inline">
                                 <input type="radio" ng-value="false" name="test1"
-                                       data-ng-model="activity.activePowerJpaToBeReduced.additionalReductionPowerValue.positiv">
+                                       data-ng-model="activity.positiv">
                                 Reduzierung
                             </label>
                         </div>

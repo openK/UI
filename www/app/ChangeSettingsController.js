@@ -1,7 +1,7 @@
 app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', function ($scope, $state, $stateParams, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService) {
 
-    //$scope.activity = activityService.newActivity();
-    $scope.activity = activityService.activity();
+    $scope.activity = activityService.newActivity();
+    //$scope.activity = activityService.activity();
     // get current time as date...
     var now = new Date($.now());
     // get activity start date as date...
@@ -16,9 +16,9 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
         if (hours) {
             newStartDate = new Date(newStartDate.setHours(newStartDate.getHours() + 1));
             minutes = minutes % 60;
-            newStartDate = newStartDate.setMinutes(minutes-1, 0, 0);
+            newStartDate = new Date(newStartDate.setMinutes(minutes-1, 0, 0));
         } else {
-            newStartDate = newStartDate.setMinutes(minutes-1, 0, 0);
+            newStartDate = new Date(newStartDate.setMinutes(minutes-1, 0, 0));
         }
     }
 
@@ -61,7 +61,6 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
     $scope.activity.dateStarted = $filter('date')(new Date(newStartDate), 'dd.MM.yyyy HH:mm');
     $scope.activity.dateFinished = $filter('date')(new Date($scope.activity.dateFinished), 'dd.MM.yyyy HH:mm');
     $scope.activityConfigData = activityService.activityConfigData().activity;
-    $scope.activity.activePowerJpaToBeReduced.additionalReductionPowerValue = { positiv: true, value: 0 };
 
     if ($stateParams.taskId) {
 
@@ -82,28 +81,23 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
             "dateStarted": dateStarted,
             "dateFinished": dateFinished,
             "description": $scope.activity.settings.description,
-            "activePowerJpaToBeReduced": {
-                "value": $scope.activity.settings.requiredReductionPower,
-                "multiplier": "M",
-                "unit": "W"
-            },
-            "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
-            "subGeographicalRegionJpaList": $scope.activity.settings.subGeographicalRegions,
-            "substationJpaList": $scope.activity.settings.transformerStations,
-            "practise": $scope.activity.settings.practise,
-            'geographicalRegion': $scope.activity.settings.useWholeArea,
+            "reasonOfReduction": $scope.activity.reasonOfReduction,
+            "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
+            "substationJpaList": $scope.activity.transformerStations,
+            "practise": $scope.activity.practise,
+            'geographicalRegion': $scope.activity.useWholeArea,
             "preselectionName": "",
             "preselectionConfigurationJpa": {
-                "reductionSetting": $scope.activity.preselection.reductionSetting,
-                "discriminationCoefficientEnabled": $scope.activity.preselection.discriminationCoefficientEnabled,
-                "characteristicForMissingMeasurementFwt": $scope.activity.preselection.characteristicForMissingMeasurementFwt,
-                "characteristicForMissingMeasurementEfr": $scope.activity.preselection.characteristicForMissingMeasurementEfr,
-                "substituteValueWindFwt": $scope.activity.preselection.substituteValueWindFwt,
-                "substituteValuePhotovoltaicFwt": $scope.activity.preselection.substituteValuePhotovoltaicFwt,
-                "substituteValueBiogasFwt": $scope.activity.preselection.substituteValueBiogasFwt,
-                'substituteValueWindEfr': $scope.activity.preselection.substituteValueWindEfr,
-                'substituteValuePhotovoltaicEfr': $scope.activity.preselection.substituteValuePhotovoltaicEfr,
-                'substituteValueBiogasEfr': $scope.activity.preselection.substituteValueBiogasEfr
+                "reductionSetting": $scope.activity.preselectionConfigurationDto.reductionSetting,
+                "discriminationCoefficientEnabled": $scope.activity.preselectionConfigurationDto.discriminationCoefficientEnabled,
+                "characteristicForMissingMeasurementFwt": $scope.activity.preselectionConfigurationDto.characteristicForMissingMeasurementFwt,
+                "characteristicForMissingMeasurementEfr": $scope.activity.preselectionConfigurationDto.characteristicForMissingMeasurementEfr,
+                "substituteValueWindFwt": $scope.activity.preselectionConfigurationDto.substituteValueWindFwt,
+                "substituteValuePhotovoltaicFwt": $scope.activity.preselectionConfigurationDto.substituteValuePhotovoltaicFwt,
+                "substituteValueBiogasFwt": $scope.activity.preselectionConfigurationDto.substituteValueBiogasFwt,
+                'substituteValueWindEfr': $scope.activity.preselectionConfigurationDto.substituteValueWindEfr,
+                'substituteValuePhotovoltaicEfr': $scope.activity.preselectionConfigurationDto.substituteValuePhotovoltaicEfr,
+                'substituteValueBiogasEfr': $scope.activity.preselectionConfigurationDto.substituteValueBiogasEfr
             },
             'synchronousMachineJpaReducedList': $scope.activity.substationProposalList,
             "timeout": 30000
@@ -131,58 +125,13 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
         }
     };
 
-    /*
-     * Usersettings Functions
-     */
-    $scope.getPostData = function () {
-        //var startDateEdit = $('#datestarted').data('daterangepicker').startDate.toISOString();
-        //var startDateEdit = $('#datefinished').data('daterangepicker').startDate.toISOString();
-        var dateStarted = dateService.formatDateForBackend($scope.activity.dateStarted);
-        var dateFinished = dateService.formatDateForBackend($scope.activity.dateFinished);
-        var data = {
-            "id": $scope.activityId,
-            "dateStarted": dateStarted,
-            "dateFinished": dateFinished,
-            //"parentActivityJpaId": $scope.activity.parentActivityJpaId,
-            "description": $scope.activity.description,
-            "activePowerJpaToBeReduced": {
-                "value": $scope.activity.requiredReductionPower,
-                "multiplier": "M",
-                "unit": "W"
-            },
-            "reasonOfReduction": $scope.activity.reasonOfReduction,
-            "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
-            "substationJpaList": $scope.activity.transformerStations,
-            "practise": $scope.activity.practise,
-            'geographicalRegion': $scope.activity.useWholeArea,
-            "preselectionName": "",
-            "preselectionConfigurationJpa": {
-                "reductionSetting": $scope.activity.preselection.reductionSetting,
-                "discriminationCoefficientEnabled": $scope.activity.preselection.discriminationCoefficientEnabled,
-                "characteristicForMissingMeasurementFwt": $scope.activity.preselection.characteristicForMissingMeasurementFwt,
-                "characteristicForMissingMeasurementEfr": $scope.activity.preselection.characteristicForMissingMeasurementEfr,
-                "substituteValueWindFwt": $scope.activity.preselection.substituteValueWindFwt,
-                "substituteValuePhotovoltaicFwt": $scope.activity.preselection.substituteValuePhotovoltaicFwt,
-                "substituteValueBiogasFwt": $scope.activity.preselection.substituteValueBiogasFwt,
-                'substituteValueWindEfr': $scope.activity.preselection.substituteValueWindEfr,
-                'substituteValuePhotovoltaicEfr': $scope.activity.preselection.substituteValuePhotovoltaicEfr,
-                'substituteValueBiogasEfr': $scope.activity.preselection.substituteValueBiogasEfr
-            },
-            "timeout": 30000
-        };
-
-        return data;
-    };
-
     $scope.isValidTimeInterval = function (dateStarted, dateFinished) {
         return dateService.isDateBehind(dateStarted, dateFinished);
     };
 
     $scope.isNoAreaDefined = function () {
-
-        return !$scope.activity.useWholeArea &&
-            $scope.activity.transformerStations.length === 0 &&
-            $scope.activity.subGeographicalRegions.length === 0;
+        return $scope.activity.pointOfInjectionType === 1 ||
+            $scope.activity.pointOfInjectionList.length > 0;
     };
 
 
@@ -190,30 +139,30 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
 
         if (settingsForm.$valid && $scope.isValidTimeInterval($scope.activity.dateStarted, $scope.activity.dateFinished)) {
 
-            $scope.activity.dateDiff = dateService.getDateDiff($scope.activity.dateStarted, $scope.activity.dateFinished);
-
+            var dateStarted = dateService.formatDateForBackend($scope.activity.dateStarted);
+            var dateFinished = dateService.formatDateForBackend($scope.activity.dateFinished);
             var data = {
                 "id": null,
                 "parentActivityJpaId": activityService.currentParentActivityId(),
                 "dateStarted": dateStarted,
                 "dateFinished": dateFinished,
-                "reductionValue": $scope.activity.settings.requiredReductionPower,
-                "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
-                "practise": $scope.activity.settings.practise,
-                "pointOfInjectionType": $scope.activity.settings.useWholeArea ? 0 : 1,
-                "pointOfInjectionList": pointOfInjectionList,
-                "description": $scope.activity.settings.description,
+                "reductionValue": $scope.activity.reductionValue,
+                "reasonOfReduction": $scope.activity.reasonOfReduction,
+                "practise": $scope.activity.practise,
+                "pointOfInjectionType": $scope.activity.pointOfInjectionType,
+                "pointOfInjectionList": $scope.activity.pointOfInjectionList,
+                "description": $scope.activity.description,
                 "preselectionConfigurationDto": {
-                    "reductionSetting": $scope.activity.preselection.reductionSetting,
-                    "discriminationCoefficientEnabled": $scope.activity.preselection.discriminationCoefficientEnabled,
-                    "characteristicForMissingMeasurementFwt": $scope.activity.preselection.characteristicForMissingMeasurementFwt,
-                    "characteristicForMissingMeasurementEfr": $scope.activity.preselection.characteristicForMissingMeasurementEfr,
-                    "substituteValueWindFwt": $scope.activity.preselection.substituteValueWindFwt,
-                    "substituteValuePhotovoltaicFwt": $scope.activity.preselection.substituteValuePhotovoltaicFwt,
-                    "substituteValueBiogasFwt": $scope.activity.preselection.substituteValueBiogasFwt,
-                    'substituteValueWindEfr': $scope.activity.preselection.substituteValueWindEfr,
-                    'substituteValuePhotovoltaicEfr': $scope.activity.preselection.substituteValuePhotovoltaicEfr,
-                    'substituteValueBiogasEfr': $scope.activity.preselection.substituteValueBiogasEfr
+                    "reductionSetting": $scope.activity.preselectionConfigurationDto.reductionSetting,
+                    "discriminationCoefficientEnabled": $scope.activity.preselectionConfigurationDto.discriminationCoefficientEnabled,
+                    "characteristicForMissingMeasurementFwt": $scope.activity.preselectionConfigurationDto.characteristicForMissingMeasurementFwt,
+                    "characteristicForMissingMeasurementEfr": $scope.activity.preselectionConfigurationDto.characteristicForMissingMeasurementEfr,
+                    "substituteValueWindFwt": $scope.activity.preselectionConfigurationDto.substituteValueWindFwt,
+                    "substituteValuePhotovoltaicFwt": $scope.activity.preselectionConfigurationDto.substituteValuePhotovoltaicFwt,
+                    "substituteValueBiogasFwt": $scope.activity.preselectionConfigurationDto.substituteValueBiogasFwt,
+                    'substituteValueWindEfr': $scope.activity.preselectionConfigurationDto.substituteValueWindEfr,
+                    'substituteValuePhotovoltaicEfr': $scope.activity.preselectionConfigurationDto.substituteValuePhotovoltaicEfr,
+                    'substituteValueBiogasEfr': $scope.activity.preselectionConfigurationDto.substituteValueBiogasEfr
                 }
             };
 
