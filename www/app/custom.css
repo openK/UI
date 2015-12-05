@@ -359,3 +359,14 @@ a i.indented.tree-icon.glyphicon.glyphicon-arrow-right{
     margin-left: 30px;
 }
 
+table.tree-grid tr.tree-grid-row.ng-scope.level-3.active td{
+    
+    background-color: #ffffff ! important;
+    
+}
+
+table.tree-grid tr.tree-grid-row.ng-scope.level-3:hover{
+    
+    background-color: #eeeeee! important;
+}
+
