@@ -11,109 +11,91 @@
 * Jan Kruger - implementation
 *******************************************************************************/
 -->
-<div class="toolbar">
-    <div class="col-xs-12 col-sm-12 mtdefault">
-        <a name="buttonNavigateToCreate"
-           class="btn btn-primary btn-sm"
-           ui-sref="Regulation.CreateDownRegulation">{{ 'CREATE' | translate }}</a>
-        <a name="buttonNavigateToCreateChildActivity"
-           class="btn btn-primary btn-sm"
-           ng-disabled="addActivityPermitted()"
-           ui-sref="ChangeRegulation.ChangeDownRegulation">{{ 'CREATECHILDACTIVITY' | translate }}</a>
-        <a name="buttonNavigateToCreateChildActivity"
-           ng-disabled="!isDeletable()"
-           ng-click="deleteProcess()"
-           class="btn btn-primary btn-sm">
-            {{ 'DELETE.PROCESS' | translate }}
-        </a>
-        <a name="buttonNavigateToCreateChildActivity"
-           ng-disabled="!isValidDateFinish()"
-           ng-click="editFinishDate()"
-           class="btn btn-primary btn-sm">
-            {{ 'PROCESS.FINISHDATE.EDIT' | translate }}
-        </a>
-    </div>
-</div>
-<h2>EISMAN</h2>
 <div class="row maincontent">
-    <div class="feature" >
-        <div class="row">
-            <div class="col-xs-6">
-                <ol class="breadcrumb">
-                    <li>{{'OPENK.ABBREVIATION'| translate}}</li>
-                    <li class="active">{{'EISMANAPP'| translate}}</li>
-                    <li>Vorgang {{data.id}} </li>
-                </ol>
-            </div>
+    <div class="toolbar">
+        <div class="col-xs-12 col-sm-12">
+            <a name="buttonNavigateToCreate"
+               class="btn btn-primary btn-sm"
+               ui-sref="Regulation.CreateDownRegulation">{{ 'CREATE' | translate }}</a>
+            <a name="buttonNavigateToCreateChildActivity"
+               class="btn btn-primary btn-sm"
+               ng-disabled="addActivityPermitted()"
+               ui-sref="ChangeRegulation.ChangeDownRegulation">{{ 'CREATECHILDACTIVITY' | translate }}</a>
+            <a name="buttonNavigateToCreateChildActivity"
+               ng-disabled="!isDeletable()"
+               ng-click="deleteProcess()"
+               class="btn btn-primary btn-sm">
+                {{ 'DELETE.PROCESS' | translate }}
+            </a>
+            <a name="buttonNavigateToCreateChildActivity"
+               ng-disabled="!isValidDateFinish()"
+               ng-click="editFinishDate()"
+               class="btn btn-primary btn-sm">
+                {{ 'PROCESS.FINISHDATE.EDIT' | translate }}
+            </a>
         </div>
-        <div class="feature-heading">
-            <i class="fa fa-4x fa-certificate"></i>
-            <h4 class="feature-heading"></h4>
-        </div>
+    </div>
+    <div class="col-sm-12">
+        <h2>EISMAN</h2>
+        <h3>Vorgänge</h3>
+        <div ui-grid-selection
+             ui-grid-cellNav
+             class="grid table"
+             data-ui-grid="overview"
+             data-ui-grid-resize-columns></div>
+
+        <div style="margin: -10px 10px 10px 0px;">
+            <a class="btn btn-primary btn-sm" ng-click="getFirstPage()"><span aria-hidden="true" class="glyphicon glyphicon-fast-backward"></span></a>
+            <a class="btn btn-primary btn-sm" ng-click="getPreviousPage()"><span aria-hidden="true" class="glyphicon glyphicon-step-backward"></span></a>
+            <span class="paging">{{"PAGING.PAGE"| translate}} {{data.currentpage}} {{"PAGING.OF"| translate}} {{data.totalPages}}</span>
+            <a class="btn btn-primary btn-sm" ng-click="getNextPage()"><span aria-hidden="true" class="glyphicon glyphicon-step-forward"></span></a>
+            <a class="btn btn-primary btn-sm" ng-click="getLastPage()"><span aria-hidden="true" class="glyphicon glyphicon-fast-forward"></span></a>
+            <span class="paging">{{"PAGING.GOTO"| translate}}</span>
+            <input type="text" class="goto" ng-model="data.currentpage" value="{{data.currentpage}}" placeholder="{{data.currentpage}}" />
+            <a class="btn btn-primary btn-sm" ng-click="gotoPageNumber()"><span aria-hidden="true" class="glyphicon glyphicon-play"></span></a>
 
 
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-12">
-            <h3>Vorgänge</h3>
-            <div 
-                ui-grid-selection
-                ui-grid-cellNav
-                class="grid table"
-                data-ui-grid="overview"
-                data-ui-grid-resize-columns></div>
+            <div class="col-lg-6">
+                <div class="panel panel-default panel-details">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Details zum Vorgang {{data.id}}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table>
+                            <tr ng-repeat="item in data.details">
+                                <td>{{item.key| translate}}</td>
+                                <td>{{item.value| translate | date: DATE.PATTERN | translate}}</td>
+                            </tr>
+                            <tr ng-repeat="item in data.injectionList">
+                                <td>{{'injectionType'| translate}}</td>
+                                <td>{{item| translate}}</td>
+                            </tr>
+                        </table>
 
-            <div style="margin: -10px 10px 10px 0px;">
-                <a class="btn btn-primary btn-sm" ng-click="getFirstPage()"><span aria-hidden="true" class="glyphicon glyphicon-fast-backward"></span></a>    
-                <a class="btn btn-primary btn-sm" ng-click="getPreviousPage()"><span aria-hidden="true" class="glyphicon glyphicon-step-backward"></span></a>
-                <span class="paging">{{"PAGING.PAGE"| translate}} {{data.currentpage}} {{"PAGING.OF"| translate}} {{data.totalPages}}</span>
-                <a class="btn btn-primary btn-sm" ng-click="getNextPage()"><span aria-hidden="true" class="glyphicon glyphicon-step-forward"></span></a>
-                <a class="btn btn-primary btn-sm" ng-click="getLastPage()"><span aria-hidden="true" class="glyphicon glyphicon-fast-forward"></span></a>
-                <span class="paging">{{"PAGING.GOTO"| translate}}</span>
-                <input type="text" class="goto" ng-model="data.currentpage" value="{{data.currentpage}}"   placeholder="{{data.currentpage}}"  />
-                <a class="btn btn-primary btn-sm" ng-click="gotoPageNumber()"><span aria-hidden="true" class="glyphicon glyphicon-play"></span></a>
-
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="col-lg-6">
-                    <div class="panel panel-default panel-details">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Details zum Vorgang {{data.id}}</h3>
-                        </div>
-                        <div class="panel-body">
-                            <table>
-                                <tr ng-repeat="item in data.details">
-                                    <td>{{item.key| translate}}</td>
-                                    <td>{{item.value| translate | date: DATE.PATTERN | translate}}</td>
-                                </tr>
-                                <tr ng-repeat="item in data.injectionList">
-                                    <td>{{'injectionType'| translate}}</td>
-                                    <td>{{item| translate}}</td>
-                                </tr>
-                            </table>
-
-                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-lg-6">   
-                    <div class="panel panel-default panel-activities">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Maßnahmen</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div ui-grid="childActivities" 
-                                 ui-grid-selection
-                                 ui-grid-cellNav></div>
-                        </div>
+            <div class="col-lg-6">
+                <div class="panel panel-default panel-activities">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Maßnahmen</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div ui-grid="childActivities"
+                             ui-grid-selection
+                             ui-grid-cellNav></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div style="float:right">
-            V.0.9.0.7
-        </div>
+    </div>
+    <div style="float:right">
+        V.0.9.0.7
     </div>
 </div>
 

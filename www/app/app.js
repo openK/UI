@@ -95,7 +95,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
 
 
 
-            // neue Ma�nahme hinzufuegen...
+            // neue Maßnahme hinzufuegen...
             .state('ChangeRegulation', {
                 url: "/Change",
                 templateUrl: "app/ChangeRegulation.html",

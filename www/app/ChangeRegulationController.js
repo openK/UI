@@ -9,20 +9,28 @@
  * Stefan Brockmann - initial API and implementation
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
-
-app.controller('ChangeRegulationController', ['$scope', '$state', '$rootScope', 'activityService', function ($scope, $state, $rootScope, activityService) {
-    $rootScope.previousState = {};
-    $rootScope.goToRegulationState = function () {
-        if ($rootScope.currentState.name === 'Regulation.NetworkState.Main') {
+app.controller('ChangeRegulationController', ['$scope', '$state', '$rootScope', function ($scope, $state, $rootScope) {
+    $scope.previousState = {};
+    $scope.goToRegulationState = function () {
+        if ($scope.currentState.name === 'Regulation.NetworkState.Main') {
             $state.go($rootScope.previousState.name);
         } else {
             $state.go($rootScope.currentState.name);
         }
     };
     
-    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-        $rootScope.previousState = fromState;
-        $rootScope.currentState = toState;
+    $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+        $scope.previousState = fromState;
+        $scope.currentState = toState;
+        if (toState.name === 'ChangeRegulation.ChangeSettings') {
+            $scope.CanNavigateToChangeSettings = true;
+        }
+        if (toState.name.indexOf('ChangeRegulation.ChangeProposal') === 0) {
+            $scope.CanNavigateToChangeProposal = true;
+        }
+        if (toState.name === 'ChangeRegulation.ChangeProposalConfirmation') {
+            $scope.CanNavigateToChangeProposalConfirmation = true;
+        }
     });
     $scope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
         console.log(unfoundState.to); 

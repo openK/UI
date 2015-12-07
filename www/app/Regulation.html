@@ -10,70 +10,67 @@
 * Stefan Brockmann - initial API and implementation
 *******************************************************************************/
 -->
-
-<h3>{{'CREATE.ACTIVITY' | translate}}</h3>
-
-<div id="tabs">
-    <!--<div class="row">
-        <div class="col-xs-6">
-            <ol class="breadcrumb">
-                <li>{{'OPENK.ABBREVIATION' | translate}}</li>
-                <li>{{'EISMANAPP' | translate}}</li>
-                <li>{{'CREATE.ACTIVITY' | translate}}</li>
-                <li class="active" data-ng-show="selectedStep == 'preselection'">{{'WORKFLOW.SETTINGS' |
-                    translate}}
-                </li>
-                <li class="active" data-ng-show="selectedStep == 'settings'">{{'WORKFLOW.DATA' | translate}}</li>
-                <li class="active" data-ng-show="selectedStep == 'proposal'">{{'WORKFLOW.REDUCTIONADVICE' |
-                    translate}}
-                </li>
-                <li class="active" data-ng-show="selectedStep == 'confirm'">{{'WORKFLOW.CONFIRM' | translate}}</li>
-            </ol>
-        </div>
-    </div>-->
-    <!--<div class="loading-display" style="" data-loading>
-        <div class="filter"></div>
-        <div class="center"></div>
-    </div>-->
-    <div class="row">
-        <div class="col-xs-12">
-            <button class="btn btn-arrow-right" ui-sref="Regulation.CreateDownRegulation"
-                    data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.CreateDownRegulation') != 0, 
+<!--<div class="row">
+    <div class="col-xs-6">
+        <ol class="breadcrumb">
+            <li>{{'OPENK.ABBREVIATION' | translate}}</li>
+            <li>{{'EISMANAPP' | translate}}</li>
+            <li>{{'CREATE.ACTIVITY' | translate}}</li>
+            <li class="active" data-ng-show="selectedStep == 'preselection'">{{'WORKFLOW.SETTINGS' |
+                translate}}
+            </li>
+            <li class="active" data-ng-show="selectedStep == 'settings'">{{'WORKFLOW.DATA' | translate}}</li>
+            <li class="active" data-ng-show="selectedStep == 'proposal'">{{'WORKFLOW.REDUCTIONADVICE' |
+                translate}}
+            </li>
+            <li class="active" data-ng-show="selectedStep == 'confirm'">{{'WORKFLOW.CONFIRM' | translate}}</li>
+        </ol>
+    </div>
+</div>-->
+<!--<div class="loading-display" style="" data-loading>
+    <div class="filter"></div>
+    <div class="center"></div>
+</div>-->
+<div class="row maincontent">
+    <div class="col-xs-12 col-sm-12">
+        <h2>EISMAN</h2>
+        <h3>{{'CREATE.ACTIVITY' | translate}}:</h3>
+        <button class="btn btn-arrow-right" ui-sref="Regulation.CreateDownRegulation"
+                data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.CreateDownRegulation') != 0,
                                      'btn-success' : currentState.name.indexOf('Regulation.CreateDownRegulation') == 0 }">
-                {{'WORKFLOW.SETTINGS' | translate}}
-            </button>
-            <button class="btn btn-arrow-right" ui-sref="Regulation.CreateSettings" data-ng-disabled="!CanNavigateToCreateSettings"
-                    data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.CreateSettings') != 0, 
+            {{'WORKFLOW.SETTINGS' | translate}}
+        </button>
+        <button class="btn btn-arrow-right" ui-sref="Regulation.CreateSettings" data-ng-disabled="!CanNavigateToCreateSettings"
+                data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.CreateSettings') != 0,
                                      'btn-success' : currentState.name.indexOf('Regulation.CreateSettings') == 0 }">
-                {{'WORKFLOW.DATA' | translate}}
-            </button>
-            <button class="btn btn-arrow-right" ui-sref="Regulation.CreateProposal" data-ng-disabled="!CanNavigateToCreateProposal"
-                    data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.CreateProposal') != 0, 
+            {{'WORKFLOW.DATA' | translate}}
+        </button>
+        <button class="btn btn-arrow-right" ui-sref="Regulation.CreateProposal" data-ng-disabled="!CanNavigateToCreateProposal"
+                data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.CreateProposal') != 0,
                                      'btn-success' : currentState.name.indexOf('Regulation.CreateProposal') == 0 }">
-                {{'WORKFLOW.REDUCTIONADVICE' | translate}}
-            </button>
-            <button class="btn btn-arrow-right" ui-sref="Regulation.CreateProposalConfirmation" data-ng-disabled="!CanNavigateToCreateProposalConfirmation"
-                    data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.CreateProposalConfirmation') != 0, 
+            {{'WORKFLOW.REDUCTIONADVICE' | translate}}
+        </button>
+        <button class="btn btn-arrow-right" ui-sref="Regulation.CreateProposalConfirmation" data-ng-disabled="!CanNavigateToCreateProposalConfirmation"
+                data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.CreateProposalConfirmation') != 0,
                                      'btn-success' : currentState.name.indexOf('Regulation.CreateProposalConfirmation') == 0 }">
-                {{'WORKFLOW.CONFIRM' | translate}}
-            </button>
-            <div class="col-xs-5 zeit" data-ng-show="selectedStep == 'proposal' || selectedStep == 'confirm'">
-                <div role="alert" ng-class="timeElapsed" ng-click="activeButton()">
-                    <span aria-hidden="true"
-                          class="glyphicon glyphicon-time"></span>
-                    {{'TIMER.START' | translate}}
-                    <timer countdown="1800" max-time-unit="'minute'" interval="1000">
-                        {{mminutes}}:{{sseconds}}
-                    </timer>
-                    {{'TIMER.END' | translate}}
-                </div>
+            {{'WORKFLOW.CONFIRM' | translate}}
+        </button>
+        <div class="col-xs-5 zeit" data-ng-show="selectedStep == 'proposal' || selectedStep == 'confirm'">
+            <div role="alert" ng-class="timeElapsed" ng-click="activeButton()">
+                <span aria-hidden="true"
+                      class="glyphicon glyphicon-time"></span>
+                {{'TIMER.START' | translate}}
+                <timer countdown="1800" max-time-unit="'minute'" interval="1000">
+                    {{mminutes}}:{{sseconds}}
+                </timer>
+                {{'TIMER.END' | translate}}
             </div>
-            <ul class="nav nav-tabs voffset nav-tabs-maincontent">
-                <li ng-class="{active: currentState.name !== 'Regulation.NetworkState.Main'}" ng-click="goToRegulationState()"><a href="">Abregelung</a></li>
-                <li ng-class="{active: currentState.name === 'Regulation.NetworkState.Main'}"><a ui-sref="Regulation.NetworkState.Main">Netzzustand</a></li>
-            </ul>
-            <div ui-view></div>
         </div>
+        <ul class="nav nav-tabs voffset nav-tabs-maincontent">
+            <li ng-class="{active: currentState.name !== 'Regulation.NetworkState.Main'}" ng-click="goToRegulationState()"><a href="">Abregelung</a></li>
+            <li ng-class="{active: currentState.name === 'Regulation.NetworkState.Main'}"><a ui-sref="Regulation.NetworkState.Main">Netzzustand</a></li>
+        </ul>
+        <div ui-view></div>
     </div>
 </div>
 
