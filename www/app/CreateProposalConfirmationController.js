@@ -120,7 +120,7 @@ app.controller('CreateProposalConfirmationController', ['$scope', '$state', '$ht
 
     $scope.saveActivity = function () {
         var postData = {
-            "id": $scope.activityId
+            "id": $scope.activity.id
         };
 
         $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/confirmactivity/", postData).success(function (data) {

@@ -60,30 +60,35 @@ app.controller('CreateProposalConfirmationModalController', ['$scope', '$state',
             "parentActivityJpaId": $scope.activity.parentActivityJpaId,
             "dateCreated": dateCreated,
             "createdBy": $scope.activity.createdBy || 'openk',
-            "dateStarted": dateStarted,
-            "dateFinished": dateFinished,
-            "description": $scope.activity.settings.reason,
+            "userSettingsJpa": {
+                "dateStarted": dateStarted,
+                "dateFinished": dateFinished,
+                "geographicalRegion": $scope.activity.settings.useWholeArea,
+                "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
+                "practise": $scope.activity.settings.practise,
+                "description": $scope.activity.settings.description
+            },
             "activePowerJpaToBeReduced": {
                 "value": $scope.activity.settings.requiredReductionPower,
                 "multiplier": "M",
                 "unit": "W"
             },
-            "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
             "subGeographicalRegionJpaList": $scope.activity.settings.subGeographicalRegions,
             "substationJpaList": $scope.activity.settings.transformerStations,
-            "practice": $scope.activity.settings.training,
-            'geographicalRegion': $scope.activity.settings.useWholeArea,
             "preselectionName": "",
             "preselectionConfigurationJpa": {
                 "reductionSetting": $scope.activity.preselection.reductionSetting,
                 "discriminationCoefficientEnabled": $scope.activity.preselection.discriminationCoefficientEnabled,
                 "characteristicForMissingMeasurementFwt": $scope.activity.preselection.characteristicForMissingMeasurementFwt,
+                "characteristicForMissingMeasurementEfr": $scope.activity.preselection.characteristicForMissingMeasurementEfr,
                 "substituteValueWindFwt": $scope.activity.preselection.substituteValueWindFwt,
                 "substituteValuePhotovoltaicFwt": $scope.activity.preselection.substituteValuePhotovoltaicFwt,
-                "substituteValueBiogasFwt": $scope.activity.preselection.substituteValueBiogasFwt
+                "substituteValueBiogasFwt": $scope.activity.preselection.substituteValueBiogasFwt,
+                'substituteValueWindEfr': $scope.activity.preselection.substituteValueWindEfr,
+                'substituteValuePhotovoltaicEfr': $scope.activity.preselection.substituteValuePhotovoltaicEfr,
+                'substituteValueBiogasEfr': $scope.activity.preselection.substituteValueBiogasEfr
             },
             'synchronousMachineJpaReducedList': $scope.activity.substationProposalList,
-            "timeout": 30000
         };
 
         $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
