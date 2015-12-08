@@ -74,6 +74,7 @@
     "PRESELECTION.TEMPLATEDESCRIPTION": "Bezeichnung",
     "PRESELECTION.SAVEOK": "Die Vorlage wurde erfolgreich gespeichert",
     "PROCESS.FINISHDATE.EDIT": "Vorgangsende bearbeiten",
+    "PROCESS.FINISHDATE.CONFIRM": "Möchten Sie wirklich das Enddatum des Vorgangs ändern?",
     "WIND": "Wind",
     "GPV": "PV",
     "BIO": "Bio",

@@ -14,6 +14,7 @@ app.factory('modalService', [
                     callback();
                 });
             }
+            return modalInstance.result;
         };
 
         self.close = function () {

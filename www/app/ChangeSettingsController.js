@@ -166,31 +166,31 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
                 }
             };
 
-            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/createreductionadviceforaction", data).success(function (data) {
+            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/createreductionadviceforaction", data).then(function (result) {
 
                 var advice;
-                if (data.id && data.parentActivityJpaId) {
+                if (result.data.id && result.data.parentActivityJpaId) {
 
-                    advice = data.synchronousMachineJpaReducedList;
-                    $scope.activity.id = data.id;
-                    $scope.activity.parentActivityJpaId = data.parentActivityJpaId;
-                    $scope.activity.substationProposalList = data.synchronousMachineJpaReducedList;
+                    advice = result.data.synchronousMachineJpaReducedList;
+                    $scope.activity.id = result.data.id;
+                    $scope.activity.parentActivityJpaId = result.data.parentActivityJpaId;
+                    $scope.activity.substationProposalList = result.data.synchronousMachineJpaReducedList;
 
                 } else {
-                    advice = data.childrenActivityJpaList[0].synchronousMachineJpaReducedList;
-                    data.childrenActivityJpaList[0].parentActivityJpaId = data.activityId;
-                    $scope.activity.id = data.childrenActivityJpaList[0].id;
-                    $scope.activity.parentActivityJpaId = data.id;
-                    $scope.activity.substationProposalList = data.childrenActivityJpaList[0].synchronousMachineJpaReducedList;
+                    advice = result.data.childrenActivityJpaList[0].synchronousMachineJpaReducedList;
+                    result.data.childrenActivityJpaList[0].parentActivityJpaId = result.data.activityId;
+                    $scope.activity.id = result.data.childrenActivityJpaList[0].id;
+                    $scope.activity.parentActivityJpaId = result.data.id;
+                    $scope.activity.substationProposalList = result.data.childrenActivityJpaList[0].synchronousMachineJpaReducedList;
                 }
                 advice.forEach(function (value) {
                     value.getCalculatedPower = parseInt(value.generatorVoltageMeasured.value - (value.reductionAdvice / 100 * value.generatingUnitJpa.maxOperatingP.value));
                 });
 
-                $scope.activity.calculatedReductionAdvice = data;
+                $scope.activity.calculatedReductionAdvice = result.data;
 
                 $state.go('Regulation.CreateProposal.Main');
-            }).error(function (data, status, headers, config) {
+            }, function (data, status, headers, config) {
                 $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
                 $log.error('Can not load /openk-eisman-portlet/rest/activity/createreductionadvice/');
             });
