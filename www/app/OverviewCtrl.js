@@ -77,6 +77,11 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     modalService.close();
                 },
                 "ok": function () {
+                    $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/deleteprocess", $scope.currentItem.id).then(function (result) {
+                        
+                    }, function(error) {
+                        console.log(JSON.stringify(error));
+                    });
                     modalService.close();
                 }
             };
@@ -96,6 +101,11 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                 "actionButtonText": $filter('translate')('PROCESS.EDIT.CONFIRM'),
                 "closeButtonText": $filter('translate')('PROCESS.EDIT.CANCEL'),
                 "close": function () {
+                    $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/modifydatefinished", { id: $scope.currentItem.id, endDate: $scope.currentItem.dateFinished }).then(function (result) {
+
+                    }, function (error) {
+                        console.log(JSON.stringify(error));
+                    });
                     modalService.close();
                 },
                 "ok": function () {
