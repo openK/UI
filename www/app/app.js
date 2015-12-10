@@ -127,14 +127,19 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 abstract: true
             }).state('ChangeRegulation.ChangeProposal.Main', {
                 url: '/Main',
+                cache: false,
                 views: {
+                    "SelectedNetworkSubStations": {
+                        templateUrl: "app/SelectedNetworkSubStation.html",
+                        controller: "SelectedNetworkSubStationController"
+                    },
                     "NetworkMainState": {
                         templateUrl: "app/NetworkMainState.html",
                         controller: 'NetworkMainStateController'
                     },
                     "NetworkSubState": {
                         templateUrl: "app/NetworkSubState.html",
-                        controller: 'SelectedNetworkSubStationController'
+                        controller: "NetworkSubStateController"
                     }
                 }
             }).state('ChangeRegulation.ChangeProposalConfirmation', {

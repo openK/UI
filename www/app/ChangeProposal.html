@@ -1,4 +1,6 @@
 <div class="row maincontent">
+ 
+    
     <div id="proposalList" class="col-xs-12 voffset table-responsive voffset">
         <div>
             <h4> {{'WORKFLOW.REDUCTIONADVICE' | translate}}</h4>
@@ -6,9 +8,16 @@
         <div ui-view="SelectedNetworkSubStations"></div>
     </div>
     
+    
+    
+    
+    
+    
     <div id="proposalTree" class="col-xs-3 col-sm-3 col-md-4 table-responsive">
         <div ui-view="NetworkMainState"></div>
     </div>
+    
+    
     
     <div id="proposalStats" class="col-xs-9 col-sm-9 col-md-8 table-responsive">
         <div>
@@ -16,11 +25,16 @@
         </div>
         <div ui-view="NetworkSubState"></div>
     </div>
+    
+    
+    
+    
 
     <div class="col-xs-12 voffset">
         <div class="form-group">
             <div class="col-xs-12">
-                <a class="btn btn-default btn-sm" ui-sref="ChangeReduction.ChangeSettings">{{'BACK' | translate}}</a>
+                <a class="btn btn-default btn-sm" data-ng-click="menueJumpTo(2,'settings')">{{'BACK' |
+                    translate}}</a>
                 <a class="btn btn-primary btn-sm pull-right" data-ng-click="openModalConfirmProposal()">{{'NEXT'
                     | translate}}</a>
             </div>

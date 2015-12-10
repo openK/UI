@@ -12,7 +12,7 @@
 app.controller('ChangeDownRegulationController', ['$scope', '$state', '$rootScope', '$http', '$modal', '$log', 'activityService', function ($scope, $state, $rootScope, $http, $modal, $log, activityService) {
 
     $scope.activityConfigData = activityService.activityConfigData();
-    $scope.activity = activityService.newActivity();
+    $scope.activity = activityService.activity();
     $scope.parentActivityId = activityService.currentParentActivity();
     $scope.preselectionFormSubmitted = false;
 

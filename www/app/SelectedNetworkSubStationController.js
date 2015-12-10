@@ -10,27 +10,21 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService) {
+app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', '$modal', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, $modal) {
 
     $scope.activity = activityService.activity();
-
     $rootScope.$on('showSubstationProposalGrid', function (event, row, job, subStationRegStep) {
 
-        $scope.activity = activityService.activity();
-
         $log.info('showSubstationProposalGrid ' + job);
-
         if (job === 'add') {
 
             var add = true;
-
             $scope.activity.substationProposalList.forEach(function (value, key) {
 
                 if (value.mRid === row.entity.mRid) {
                     add = false;
                 }
             });
-
             if (add) {
 
                 row.entity.reductionAdvice = row.entity.subStationRegSteps;
@@ -39,12 +33,10 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
                     multiplier: "M",
                     unit: "W"
                 };
-
                 $scope.activity.substationProposalList.push(row.entity);
             }
         }
     });
-
     $scope.searchOptions = {
         pageNumber: 1,
         pageSize: 25,
@@ -54,7 +46,6 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
             filter: []
         }
     };
-
     $scope.substations = {
         enableFiltering: true,
         enableRowSelection: true,
@@ -97,7 +88,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
                 displayName: 'SUBSTATIONSGRID.ZIP',
                 width: '4%'
             },
-            {name: 'name', headerCellFilter: 'translate', displayName: 'SUBSTATIONSGRID.STATIONNAME', width: '18%'},
+            { name: 'name', headerCellFilter: 'translate', displayName: 'SUBSTATIONSGRID.STATIONNAME', width: '18%' },
             {
                 name: 'feedInRanking',
                 headerCellFilter: 'translate',
@@ -168,52 +159,42 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
                 enableFiltering: false,
                 cellTemplate: '<div class="ui-grid-cell-contents" title="TOOLTIP"><button type="button" class="btn btn-default btn-xs" aria-label="Left Align" ng-click="grid.appScope.removeSubStation(grid,row)"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div>'
             }
+
         ],
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
         }
     };
-
     $timeout(function () {
         if ($scope.activity.substationProposalList) {
 
             var entity = $scope.activity.substationProposalList[0];
-
             $scope.activity.substationProposalList.push(entity);
-
             $timeout(function () {
 
                 $scope.activity.substationProposalList.splice(-1, 1);
-
             }, 250);
         }
     }, 250);
-
     /**
      * removes a Substation from the proposalList
      * @param grid
      * @param myRow
      */
-        // todo: re-name removeSynchronousMachine
+    // todo: re-name removeSynchronousMachine
     $scope.removeSubStation = function (grid, myRow) {
 
         $log.info('removeSubStation');
-
         var mRid = myRow.entity.mRid;
-        var row = {};
-       
-
         $scope.activity.substationProposalList.forEach(function (value, key) {
 
             if (value.mRid === mRid) {
-                row = $scope.activity.substationProposalList[key];
+                var row = $scope.activity.substationProposalList[key];
                 $scope.activity.substationProposalList.splice(key, 1);
+                $rootScope.$broadcast('showSubstationGrid', row, $scope.activity.substationProposalList, 'remove');
             }
         });
-
-        $rootScope.$broadcast('showSubstationGrid', row, $scope.activity.substationProposalList, 'remove');
     };
-
     $scope.changeSynchronousMachine = function (grid, row) {
 
         row.entity.reductionAdvice = row.entity.subStationRegSteps;
@@ -224,97 +205,17 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
         };
         $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.ALL);
     };
+    $scope.openModalConfirmProposal = function () {
 
-    $scope.getPostData = function () {
-
-        var dateStarted = $filter('date')($scope.activity.settings.dateStarted, 'yyyy-MM-ddTHH:mm:ss.sssZ');
-        var dateFinished = $filter('date')($scope.activity.settings.dateFinished, 'yyyy-MM-ddTHH:mm:ss.sssZ');
-        var dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
-        var data = {
-            "id": $scope.activity.id,
-            "parentActivityJpaId": $scope.activity.parentActivityJpaId,
-            "dateStarted": dateStarted,
-            "dateFinished": dateFinished,
-            "description": $scope.activity.settings.reason,
-            "activePowerJpaToBeReduced": {
-                "value": $scope.activity.settings.requiredReductionPower,
-                "multiplier": "M",
-                "unit": "W"
-            },
-            "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
-            "subGeographicalRegionJpaList": $scope.activity.settings.subGeographicalRegions,
-            "substationJpaList": $scope.activity.settings.transformerStations,
-            "practice": $scope.activity.settings.training,
-            'geographicalRegion': $scope.activity.settings.useWholeArea,
-            "preselectionName": "",
-            "preselectionConfigurationJpa": {
-                "reductionSetting": $scope.activity.preselection.reductionSetting,
-                "discriminationCoefficientEnabled": $scope.activity.preselection.discriminationCoefficientEnabled,
-                "characteristicForMissingMeasurementFwt": $scope.activity.preselection.characteristicForMissingMeasurementFwt,
-                "characteristicForMissingMeasurementEfr": $scope.activity.preselection.characteristicForMissingMeasurementEfr,
-                "substituteValueWindFwt": $scope.activity.preselection.substituteValueWindFwt,
-                "substituteValuePhotovoltaicFwt": $scope.activity.preselection.substituteValuePhotovoltaicFwt,
-                "substituteValueBiogasFwt": $scope.activity.preselection.substituteValueBiogasFwt,
-                'substituteValueWindEfr': $scope.activity.preselection.substituteValueWindEfr,
-                'substituteValuePhotovoltaicEfr': $scope.activity.preselection.substituteValuePhotovoltaicEfr,
-                'substituteValueBiogasEfr': $scope.activity.preselection.substituteValueBiogasEfr
-            },
-            "timeout": 30000
-        };
-
-        return data;
-    };
-
-    if (typeof $scope.activityId === "undefined") {
-
-        $scope.activityId = null;
-    }
-
-    $rootScope.deregisterOnGoToConfirm = $rootScope.$on('gotoConfirm', function (event, args) {
-
-        var dateStarted = $filter('date')($scope.activity.settings.dateStarted, 'yyyy-MM-ddTHH:mm:ss.sssZ');
-        var dateFinished = $filter('date')($scope.activity.settings.dateFinished, 'yyyy-MM-ddTHH:mm:ss.sssZ');
-        var dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
-        var postData = {
-            "id": $scope.activity.id,
-            "parentActivityJpaId": $scope.activity.parentActivityJpaId,
-            "dateCreated": dateCreated,
-            "createdBy": $scope.activity.createdBy,
-            "dateStarted": dateStarted,
-            "dateFinished": dateFinished,
-            "description": $scope.activity.settings.reason,
-            "activePowerJpaToBeReduced": {
-                "value": $scope.activity.settings.requiredReductionPower,
-                "multiplier": "M",
-                "unit": "W"
-            },
-            "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
-            "subGeographicalRegionJpaList": $scope.activity.settings.subGeographicalRegions,
-            "substationJpaList": $scope.activity.settings.transformerStations,
-            "practice": $scope.activity.settings.training,
-            'geographicalRegion': $scope.activity.settings.useWholeArea,
-            "preselectionName": "",
-            "preselectionConfigurationJpa": {
-                "reductionSetting": $scope.activity.preselection.reductionSetting,
-                "discriminationCoefficientEnabled": $scope.activity.preselection.discriminationCoefficientEnabled,
-                "characteristicForMissingMeasurementFwt": $scope.activity.preselection.characteristicForMissingMeasurementFwt,
-                "substituteValueWindFwt": $scope.activity.preselection.substituteValueWindFwt,
-                "substituteValuePhotovoltaicFwt": $scope.activity.preselection.substituteValuePhotovoltaicFwt,
-                "substituteValueBiogasFwt": $scope.activity.preselection.substituteValueBiogasFwt
-            },
-            'synchronousMachineJpaReducedList': $scope.activity.substationProposalList,
-            "timeout": 30000
-        };
-
-        $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
-
-            $scope.gotoConfirm();
-
-        }).error(function (data, status, headers, config) {
-
-            $scope.$broadcast('displayError', ['Es gab einen Fehler bei der Datenabfrage.']);
-            $log.error('Can not load /openk-eisman-portlet/rest/activity/');
-
+        $modal.open({
+            animation: true,
+            templateUrl: 'app/CreateProposalConfirmationModal.html',
+            controller: 'CreateProposalConfirmationModalController',
+            resolve: {
+                items: function () {
+                    return [$scope.activity];
+                }
+            }
         });
-    });
+    };
 }]);

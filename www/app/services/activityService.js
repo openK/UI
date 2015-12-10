@@ -86,10 +86,9 @@ app.factory('activityService', ['$http', '$q', '$log', function ($http, $q, $log
         ]);
     }
 
-    var newActivity = null;
     function createActivity() {
         return $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + '/openk-eisman-portlet/rest/activity/latestusersettings/' + currentParentActivityId).then(function (result) {
-            newActivity = result.data;
+            activity = result.data;
         });
     }
 
@@ -178,9 +177,6 @@ app.factory('activityService', ['$http', '$q', '$log', function ($http, $q, $log
             return configData;
         },
         createActivity: createActivity,
-        newActivity: function() {
-            return newActivity;
-        },
         loadParentActivities: loadParentActivities,
         loadConfiguration: loadConfiguration,
         loadTaskConfiguration: loadTaskConfiguration,

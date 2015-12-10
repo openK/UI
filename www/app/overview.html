@@ -17,8 +17,7 @@
             <a name="buttonNavigateToCreate"
                class="btn btn-primary btn-sm"
                ui-sref="Regulation.CreateDownRegulation">{{ 'CREATE' | translate }}</a>
-            <a name="buttonNavigateToCreateChildActivity"
-               class="btn btn-primary btn-sm"
+            <a class="btn btn-primary btn-sm"
                ng-disabled="addActivityPermitted()"
                ui-sref="ChangeRegulation.ChangeDownRegulation">{{ 'CREATECHILDACTIVITY' | translate }}</a>
             <a name="buttonNavigateToCreateChildActivity"
@@ -27,11 +26,15 @@
                class="btn btn-primary btn-sm">
                 {{ 'DELETE.PROCESS' | translate }}
             </a>
-            <a name="buttonNavigateToCreateChildActivity"
-               ng-disabled="!isValidDateFinish()"
+            <a ng-disabled="!isValidDateFinish()"
                ng-click="editFinishDate()"
                class="btn btn-primary btn-sm">
                 {{ 'PROCESS.FINISHDATE.EDIT' | translate }}
+            </a>
+            <a ng-disabled="!addActivityPermitted()"
+               ng-click="stopProcess()"
+               class="btn btn-primary btn-sm">
+                {{ 'PROCESS.STOP' | translate }}
             </a>
         </div>
     </div>

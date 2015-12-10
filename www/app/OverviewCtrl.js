@@ -44,8 +44,8 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
     }
 
     $scope.isValidDateFinish = function () {
-        var dateStarted = new KDate($scope.currentItem.dateStarted);
-        var dateFinished = new KDate($scope.currentItem.dateFinished);
+        var dateStarted = new Date($scope.currentItem.dateStarted);
+        var dateFinished = new Date($scope.currentItem.dateFinished);
         var now = new KDate();
         if (now.getTime() <= dateStarted.getTime() || now.getTime() <= dateFinished.getTime()) {
             return true;
@@ -55,8 +55,8 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
     }
 
     $scope.addActivityPermitted = function () {
-        var dateStarted = new KDate($scope.currentItem.dateStarted);
-        var dateFinished = new KDate($scope.currentItem.dateFinished);
+        var dateStarted = new Date($scope.currentItem.dateStarted);
+        var dateFinished = new Date($scope.currentItem.dateFinished);
         var now = new KDate();
         if (now.getTime() >= dateStarted.getTime() && now.getTime() <= dateFinished.getTime()) {
             return true;
@@ -82,6 +82,33 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                     console.log(JSON.stringify(error));
                 });
                 modalService.close();
+            }
+        };
+        modalService.open($scope, '/app/partials/confirm.html');
+    }
+
+    $scope.stopProcess = function () {
+        $scope.modalOptions = {
+            "headline": $filter('translate')('PROCESS.STOP'),
+            "id": $scope.currentItem.id,
+            "bodyText": $filter('translate')('PROCESS.STOP.CONFIRM'),
+            "actionButtonText": $filter('translate')('PROCESS.STOP'),
+            "closeButtonText": $filter('translate')('PROCESS.EDIT.CANCEL'),
+            "close": function () {
+                modalService.close();
+            },
+            "ok": function () {
+                var originalProcessFinishDate = new Date($scope.currentItem.dateFinished);
+                var distance = originalProcessFinishDate.getTime() - $.now();
+                if (distance > 0) {
+                    var endDate = '"' + $filter('date')(new Date($.now() + 10000), 'yyyy-MM-ddTHH:mm:ss.sssZ') + '"';
+                    return $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/modifydatefinished/" + $scope.currentItem.id, endDate).then(function (result) {
+                    }, function (error) {
+                        console.log(JSON.stringify(error));
+                    }).finally(function () {
+                        modalService.close();
+                    });
+                }
             }
         };
         modalService.open($scope, '/app/partials/confirm.html');

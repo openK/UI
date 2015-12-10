@@ -1,6 +1,6 @@
 app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', function ($scope, $state, $stateParams, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService) {
 
-    $scope.activity = activityService.newActivity();
+    $scope.activity = activityService.activity();
     //$scope.activity = activityService.activity();
     // get current time as date...
     var now = new Date($.now());
@@ -169,17 +169,18 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
             $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/createreductionadviceforaction", data).then(function (result) {
 
                 var advice;
-                if (result.data.id && result.data.parentActivityJpaId) {
+                //if (result.data.id && result.data.parentActivityJpaId) {
+                if (result.data.parentActivityJpaId) {
 
                     advice = result.data.synchronousMachineJpaReducedList;
-                    $scope.activity.id = result.data.id;
+                    //$scope.activity.id = result.data.id;
                     $scope.activity.parentActivityJpaId = result.data.parentActivityJpaId;
                     $scope.activity.substationProposalList = result.data.synchronousMachineJpaReducedList;
 
                 } else {
                     advice = result.data.childrenActivityJpaList[0].synchronousMachineJpaReducedList;
                     result.data.childrenActivityJpaList[0].parentActivityJpaId = result.data.activityId;
-                    $scope.activity.id = result.data.childrenActivityJpaList[0].id;
+                    //$scope.activity.id = result.data.childrenActivityJpaList[0].id;
                     $scope.activity.parentActivityJpaId = result.data.id;
                     $scope.activity.substationProposalList = result.data.childrenActivityJpaList[0].synchronousMachineJpaReducedList;
                 }
@@ -189,7 +190,7 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
 
                 $scope.activity.calculatedReductionAdvice = result.data;
 
-                $state.go('Regulation.CreateProposal.Main');
+                $state.go('ChangeRegulation.ChangeProposal.Main');
             }, function (data, status, headers, config) {
                 $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
                 $log.error('Can not load /openk-eisman-portlet/rest/activity/createreductionadvice/');
