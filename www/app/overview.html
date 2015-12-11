@@ -14,36 +14,47 @@
 <div class="row maincontent">
     <div class="toolbar">
         <div class="col-xs-12 col-sm-12">
-            <a name="buttonNavigateToCreate"
-               class="btn btn-primary btn-sm"
-               ui-sref="Regulation.CreateDownRegulation">{{ 'CREATE' | translate }}</a>
-            <a class="btn btn-primary btn-sm"
-               ng-disabled="addActivityPermitted()"
-               ui-sref="ChangeRegulation.ChangeDownRegulation">{{ 'CREATECHILDACTIVITY' | translate }}</a>
-            <a name="buttonNavigateToCreateChildActivity"
+            <button name="buttonNavigateToCreate"
+               class="btn btn-primary"
+               ui-sref="Regulation.CreateDownRegulation">{{ 'CREATE' | translate }}</button>
+            <button name="buttonNavigateToEdit"
+                    class="btn btn-primary"
+                    ng-disabled ="!isEditable()"
+                    ui-sref="EditRegulation.EditDownRegulation">
+                {{ 'EDIT.ACTIVITY' | translate }}
+            </button>
+            <button class="btn btn-primary"
+               ng-disabled="!canAddActivity()"
+               ui-sref="ChangeRegulation.ChangeDownRegulation">{{ 'CREATECHILDACTIVITY' | translate }}</button>
+            <button name="buttonNavigateToCreateChildActivity"
                ng-disabled="!isDeletable()"
                ng-click="deleteProcess()"
-               class="btn btn-primary btn-sm">
+               class="btn btn-primary">
                 {{ 'DELETE.PROCESS' | translate }}
-            </a>
-            <a ng-disabled="!isValidDateFinish()"
+            </button>
+            <button ng-disabled="!canEditFinishDate()"
                ng-click="editFinishDate()"
-               class="btn btn-primary btn-sm">
+               class="btn btn-primary">
                 {{ 'PROCESS.FINISHDATE.EDIT' | translate }}
-            </a>
-            <a ng-disabled="!addActivityPermitted()"
+            </button>
+            <button ng-disabled="!isActivityActive()"
                ng-click="stopProcess()"
-               class="btn btn-primary btn-sm">
+               class="btn btn-primary">
                 {{ 'PROCESS.STOP' | translate }}
-            </a>
+            </button>
         </div>
     </div>
     <div class="col-sm-12">
         <h2>EISMAN</h2>
         <h3>Vorgänge</h3>
+        <ul class="nav nav-tabs voffset nav-tabs-maincontent">
+            <li ng-class="{ active: !includeDeleted }" ><a href="#/">Vorgänge</a></li>
+            <li ng-class="{ active: includeDeleted }" ><a href="#/includeDeleted=true">Gelöschte Vorgänge</a></li>
+        </ul>
         <div ui-grid-selection
              ui-grid-cellNav
              class="grid table"
+             style="margin-top: 20px"
              data-ui-grid="overview"
              data-ui-grid-resize-columns></div>
 
@@ -101,5 +112,4 @@
         V.0.9.0.7
     </div>
 </div>
-
 

@@ -68,19 +68,21 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
             "createdBy": $scope.activity.createdBy,
             "id": $scope.activity.activityId,
             "parentActivityJpaId": $scope.parentActivityId,
-            "dateStarted": dateStarted,
-            "dateFinished": dateFinished,
-            "description": $scope.activity.settings.description,
+            "userSettingsJpa": {
+                "dateStarted": dateStarted,
+                "dateFinished": dateFinished,
+                "geographicalRegion": $scope.activity.settings.useWholeArea,
+                "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
+                "practise": $scope.activity.settings.practise,
+                "description": $scope.activity.settings.description
+            },
             "activePowerJpaToBeReduced": {
                 "value": $scope.activity.settings.requiredReductionPower,
                 "multiplier": "M",
                 "unit": "W"
             },
-            "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
             "subGeographicalRegionJpaList": $scope.activity.settings.subGeographicalRegions,
             "substationJpaList": $scope.activity.settings.transformerStations,
-            "practise": $scope.activity.settings.practise,
-            'geographicalRegion': $scope.activity.settings.useWholeArea,
             "preselectionName": "",
             "preselectionConfigurationJpa": {
                 "reductionSetting": $scope.activity.preselection.reductionSetting,

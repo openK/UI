@@ -1,0 +1,186 @@
+﻿<form name="settingsForm" class="form-horizontal" data-toggle="validator">
+    <div class="form-group">
+        <label for="datestarted" class="control-label col-xs-3">{{'SETTINGS.DATESTARTED'| translate}} *</label>
+        <div class="controls col-xs-3" data-ng-class="{'has-error': settingsForm.datestarted.$invalid}">
+            <input type="text" required value="" startrange
+                   data-ng-model="activity.dateStarted" class="form-control"
+                   id="datestarted" name="datestarted">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="datefinished" class="control-label col-xs-3">{{'SETTINGS.DATEFINISHED' | translate}} *</label>
+
+        <div class="controls col-xs-3" data-ng-class="{'has-error': settingsForm.datefinished.$invalid}">
+            <input type="text" required value="" data-ng-model="activity.dateFinished" endrange
+                   class="form-control" id="datefinished" name="datefinished">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="reasonofreduction" class="control-label col-xs-3">{{'SETTINGS.REASONOFREDUCTION'| translate}} *</label>
+
+        <div class="col-xs-3" data-ng-class="{'has-error': activity.reasonOfReduction == ''}">
+            <select id="reasonofreduction" required data-ng-model="activity.reasonOfReduction"
+                    data-ng-options="c for c in activityConfigData.regulationReasons track by c" class="form-control"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="requiredReductionPower"
+               data-ng-class="{'has-error': settingsForm.requiredReductionPower.$invalid}"
+               class="control-label col-xs-3">{{'SETTINGS.REQUIREDREDUCTION' | translate}}*</label>
+
+        <div class="col-xs-3">
+            <div class="input-group input-group-sm"
+                 data-ng-class="{'has-error': activity.requiredReductionPower == ''}">
+                <input type="number" required data-ng-model="activity.reductionValue"
+                       data-area-describedby="requiredreductionaddon"
+                       name="requiredReductionPower" id="requiredReductionPower"
+                       class="form-control">
+                <span id="requiredreductionaddon" class="input-group-addon">MW</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="geographicalregion" class="control-label col-xs-3">{{'SETTINGS.WHOLEAREA' | translate}} *</label>
+
+        <div class="col-xs-3">
+            <label class="checkbox-inline">
+                <input type="checkbox" value="1" data-ng-required="checkForWholeAreaRequired()"
+                       data-ng-disabled="checkForWholeAreaDisabling()"
+                       data-ng-model="activity.useWholeArea" id="geographicalregion"
+                       name="geographicalregion">
+            </label>
+        </div>
+    </div>
+    <div class="form-group selection">
+        <label for="subgeographicalregion" class="control-label col-xs-3">{{'SETTINGS.SUBGEOGRAPHICALREGION' | translate}} *</label>
+
+        <div class="col-xs-3">
+            <div id="subgeographicalregion" isteven-multi-select input-model="activityConfigData.subGeographicalRegions"
+                 output-model="activity.subGeographicalRegions" button-label="icon name"
+                 item-label="icon name maker" tick-property="ticked"
+                 is-disabled="checkForSubGeographicalRegionsDisabling()"
+                 data-ng-required="checkSubGeographicalRegionsRequired()">
+            </div>
+        </div>
+    </div>
+    <div class="form-group selection">
+        <label for="transformerstation" class="control-label col-xs-3">{{'SETTINGS.TRANSFORMERSTATIONS' | translate}} *</label>
+
+        <div class="col-xs-3">
+            <div id="transformerstation" isteven-multi-select input-model="activityConfigData.transformerStations"
+                 output-model="activity.transformerStations" button-label="icon name"
+                 item-label="icon name maker"
+                 tick-property="ticked" is-disabled="checkForTransformerStationsDisabling()"
+                 data-ng-required="checkForTransformerStationsRequired()">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="description" class="control-label col-xs-3">{{'SETTINGS.DESCRIPTION' | translate}} *</label>
+
+        <div class="col-xs-3" data-ng-class="{'has-error': activity.description == ''}">
+            <textarea id="description" required data-ng-model="activity.description" rows="3"
+                      class="form-control"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-3">{{'SETTINGS.PRACTICE' | translate}} *</label>
+
+        <div class="col-xs-2">
+            <label class="radio-inline">
+                <input type="radio" required data-ng-model="activity.practise" value="true"
+                       name="practise"> {{'YES' | translate}}
+            </label>
+        </div>
+        <div class="col-xs-2">
+            <label class="radio-inline">
+                <input type="radio" required value="false" data-ng-model="activity.practise"
+                       name="practise"> {{'NO' | translate}}
+            </label>
+        </div>
+    </div>
+    <div class="col-xs-1">
+        *{{'MANDATORY' | translate}}
+    </div>
+    <div class="col-xs-12">
+        <div class="alert alert-warning"
+             data-ng-show="settingsFormSubmitted &&
+                (settingsForm.datestarted.$error.required || settingsForm.datefinished.$error.required
+                || isNoValidTimeInterval(activity.dateStarted, activity.dateFinished)
+                || activity.reasonOfReduction == ''
+                || settingsForm.requiredReductionPower.$invalid
+                || settingsFormSubmitted && isNoAreaDefined()
+                || activity.description == '' || activity.practise == '')">
+            <div>
+                <normal class="warning"
+                        data-ng-show="settingsFormSubmitted && settingsForm.datestarted.$error.required">
+                    {{'SETTINGS.DATESTARTED.ERROR' | translate}}
+                </normal>
+            </div>
+            <div>
+                <normal class="warning"
+                        data-ng-show="settingsFormSubmitted && settingsForm.datefinished.$error.required">
+                    {{'SETTINGS.DATEFINISHED.ERROR' | translate}}
+                </normal>
+            </div>
+            <div>
+                <normal class="warning"
+                        data-ng-show="settingsFormSubmitted && isNoValidTimeInterval(activity.dateStarted, activity.dateFinished)">
+                    {{'SETTINGS.DATEINTERVAL.ERROR' | translate}}
+                </normal>
+            </div>
+            <div>
+                <normal class="warning"
+                        data-ng-show="settingsFormSubmitted && activity.reasonOfReduction == ''">
+                    {{'SETTINGS.REASONOFREDUCTION.ERROR' | translate}}
+                </normal>
+            </div>
+            <div>
+                <normal class="warning"
+                        data-ng-show="settingsFormSubmitted && settingsForm.requiredReductionPower.$invalid">
+                    {{'SETTINGS.REQUIREDREDUCTION.ERROR' | translate}}
+                </normal>
+            </div>
+            <div>
+                <normal class="warning"
+                        data-ng-show="settingsFormSubmitted && isNoAreaDefined()">
+                    {{'SETTINGS.AREA.ERROR' | translate}}
+                </normal>
+            </div>
+            <div>
+                <normal class="warning"
+                        data-ng-show="settingsFormSubmitted && activity.description == ''">
+                    {{'SETTINGS.DESCRIPTION.ERROR' | translate}}
+                </normal>
+            </div>
+            <div>
+                <normal class="warning"
+                        data-ng-show="settingsFormSubmitted && activity.practise == ''">
+                    {{'SETTINGS.PRACTICE.ERROR' | translate}}
+                </normal>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class=" pull-right">
+                <button class="btn btn-default" ui-sref="Regulation.CreateDownRegulation">
+                    {{'BACK' | translate}}
+                </button>
+                <button class="btn btn-default" ui-sref="state1">
+                    {{ 'CANCEL' | translate }}
+                </button>
+            </div>
+        </div>
+        <div class="col-xs-5">
+            <button data-ng-click="saveAndReturn()" data-ng-disabled="!settingsForm.$valid" class="btn btn-primary">
+                {{'SETTINGS.SAVEACTIVITYANDRETURN' | translate}}
+            </button>
+            <div class="pull-right">
+                <button class="btn btn-primary" data-ng-click="gotoStationList(settingsForm)">
+                    {{'SETTINGS.CREATEADVICE'| translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

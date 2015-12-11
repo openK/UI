@@ -9,7 +9,7 @@
  * Stefan Brockmann - initial API and implementation
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
-angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout', '$http', '$filter', '$translate', '$state', 'uiGridConstants', 'i18nService', 'activityService', 'modalService', 'dateService', '$uibModal', function ($scope, $log, $timeout, $http, $filter, $translate, $state, uiGridConstants, i18nService, activityService, modalService, dateService, $uibModal) {
+angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout', '$http', '$filter', '$translate', '$state', '$stateParams', 'uiGridConstants', 'i18nService', 'activityService', 'modalService', 'dateService', '$uibModal', function ($scope, $log, $timeout, $http, $filter, $translate, $state, $stateParams, uiGridConstants, i18nService, activityService, modalService, dateService, $uibModal) {
     $scope.data = {};
     $scope.data.count = 0;
     $scope.data.details = {};
@@ -36,29 +36,48 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
 
     $scope.isDeletable = function () {
 
-        if ($scope.currentItem.processStatus !== "Beended") {
+        if ($scope.currentItem.processStatus !== "Beended" && $scope.currentItem.processStatus !== "Aktiv") {
             return true;
         } else {
             return false;
         }
     }
 
-    $scope.isValidDateFinish = function () {
-        var dateStarted = new Date($scope.currentItem.dateStarted);
-        var dateFinished = new Date($scope.currentItem.dateFinished);
-        var now = new KDate();
-        if (now.getTime() <= dateStarted.getTime() || now.getTime() <= dateFinished.getTime()) {
+    $scope.isEditable = function () {
+        if ($scope.currentItem.processStatus === "Ohne Abregelung") {
             return true;
         } else {
             return false;
         }
     }
 
-    $scope.addActivityPermitted = function () {
+    $scope.canEditFinishDate = function () {
         var dateStarted = new Date($scope.currentItem.dateStarted);
         var dateFinished = new Date($scope.currentItem.dateFinished);
-        var now = new KDate();
-        if (now.getTime() >= dateStarted.getTime() && now.getTime() <= dateFinished.getTime()) {
+        var now = new Date($.now());
+        if ($scope.currentItem.processStatus !== "Ohne Abregelung" && (now.getTime() <= dateStarted.getTime() || now.getTime() <= dateFinished.getTime())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    $scope.canAddActivity = function () {
+        var dateStarted = new Date($scope.currentItem.dateStarted);
+        var dateFinished = new Date($scope.currentItem.dateFinished);
+        var now = $.now();
+        if ( $scope.currentItem.processStatus === "Aktiv" && now.getTime() >= dateStarted.getTime() && now.getTime() <= dateFinished.getTime()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    $scope.isActivityActive = function () {
+        var dateStarted = new Date($scope.currentItem.dateStarted);
+        var dateFinished = new Date($scope.currentItem.dateFinished);
+        var now = $.now();
+        if ($scope.currentItem.processStatus === "Aktiv" && now.getTime() >= dateStarted.getTime() && now.getTime() <= dateFinished.getTime()) {
             return true;
         } else {
             return false;
@@ -77,7 +96,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
             },
             "ok": function () {
                 $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/deleteprocess", $scope.currentItem.id).then(function (result) {
-
+                    $state.forceReload();
                 }, function (error) {
                     console.log(JSON.stringify(error));
                 });
@@ -116,7 +135,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
 
     $scope.editFinishDate = function () {
 
-        var fd = $filter('date')(new KDate($scope.currentItem.dateFinished), 'dd.MM.yyyy HH:mm');
+        var fd = $filter('date')(new Date($scope.currentItem.dateFinished), 'dd.MM.yyyy HH:mm');
         $scope.activity.dateFinished = fd;
 
         $scope.modalOptions = {
@@ -143,9 +162,10 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
                         },
                         "ok": function () {
                             return $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/modifydatefinished/" + $scope.currentItem.id, endDate).then(function (result) {
+                                $state.forceReload();
                             }, function (error) {
                                 console.log(JSON.stringify(error));
-                            }).finally(function() {
+                            }).finally(function () {
                                 modalService.close();
                             });
                         }
@@ -179,7 +199,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
         activityService.loadParentActivities(
                 $scope.currentpage,
                 $scope.searchOptions.pageSize,
-                (new KDate()).getTime(),
+                (new Date()).getTime(),
                 $scope.searchOptions.sort ? $scope.searchOptions.sortColumn + "," + $scope.searchOptions.sort : '',
                 $scope.searchOptions.filter.filter ? $scope.searchOptions.filter.filter : ''
                 ).then(function (result) {

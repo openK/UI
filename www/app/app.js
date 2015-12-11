@@ -1,5 +1,19 @@
 angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGrid', 'isteven-multi-select', 'ui.grid', 'ui.bootstrap', 'ngResource', 'ui.grid.selection', 'ui.grid.pagination', 'ui.grid.cellNav'])
-    .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', function ($stateProvider, $urlRouterProvider, $translateProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$provide', function ($stateProvider, $urlRouterProvider, $translateProvider, $provide) {
+
+        $provide.decorator('$state', ["$delegate", "$stateParams", '$timeout', function ($delegate, $stateParams, $timeout) {
+            $delegate.forceReload = function () {
+                var reload = function () {
+                    $delegate.transitionTo($delegate.current, angular.copy($stateParams), {
+                        reload: true,
+                        inherit: true,
+                        notify: true
+                    });
+                };
+                $timeout(reload, 100);
+            };
+            return $delegate;
+        }]);
 
         $translateProvider.preferredLanguage('de');
 
@@ -11,12 +25,13 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
         // Now set up the states
         $stateProvider
             .state('state1', {
-                url: "/",
+                url: "/:includeDeleted",
                 templateUrl: "app/Overview.html",
                 controller: 'OverviewCtrl',
                 resolve: {
-                    parentActivities: function (activityService) {
-                        return activityService.loadParentActivities();
+                    parentActivities: function (activityService, $stateParams, $rootScope) {
+                        $rootScope.includeDeleted = $stateParams.includeDeleted;
+                        return activityService.loadParentActivities($stateParams.includeDeleted);
                     }
                 }
             })
@@ -70,9 +85,9 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
             }).state('Regulation.CreateProposal.Main', {
                 url: '/Main',
                 views: {
-                    "SelectedNetworkSubStations":{
+                    "SelectedNetworkSubStations": {
                         templateUrl: "app/SelectedNetworkSubStation.html",
-                        controller:  "SelectedNetworkSubStationController"
+                        controller: "SelectedNetworkSubStationController"
                     },
                     "NetworkMainState": {
                         templateUrl: "app/NetworkMainState.html",
@@ -80,7 +95,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     },
                     "NetworkSubState": {
                         templateUrl: "app/NetworkSubState.html",
-                        controller:  "NetworkSubStateController"
+                        controller: "NetworkSubStateController"
                     }
                 }
             }).state('Regulation.CreateProposalConfirmation', {
@@ -146,6 +161,64 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 url: '/ChangeProposalConfirmation/',
                 templateUrl: "app/ChangeProposalConfirmation.html",
                 controller: 'ChangeProposalConfirmationController',
+            })
+
+
+
+
+
+
+            // neue Maßnahme bearbeiten...
+            .state('EditRegulation', {
+                url: "/Edit",
+                templateUrl: "app/EditRegulation.html",
+                controller: 'EditRegulationController',
+                abstract: true,
+                resolve: {
+                    activity: function (activityService) {
+                        return activityService.loadConfiguration();
+                    }
+
+                }
+            }).state('EditRegulation.EditDownRegulation', {
+                url: '/EditDownRegulation',
+                templateUrl: "app/EditDownRegulation.html",
+                controller: 'EditDownRegulationController',
+                resolve: {
+                    createActivity: function (activityService) {
+                        return activityService.createActivity();
+                    }
+                }
+            }).state('EditRegulation.EditSettings', {
+                url: '/EditSettings',
+                templateUrl: "app/EditSettings.html",
+                controller: 'EditSettingsController',
+            }).state('EditRegulation.EditProposal', {
+                url: '/EditProposal',
+                templateUrl: "app/EditProposal.html",
+                controller: 'EditProposalController',
+                abstract: true
+            }).state('EditRegulation.EditProposal.Main', {
+                url: '/Main',
+                cache: false,
+                views: {
+                    "SelectedNetworkSubStations": {
+                        templateUrl: "app/SelectedNetworkSubStation.html",
+                        controller: "SelectedNetworkSubStationController"
+                    },
+                    "NetworkMainState": {
+                        templateUrl: "app/NetworkMainState.html",
+                        controller: 'NetworkMainStateController'
+                    },
+                    "NetworkSubState": {
+                        templateUrl: "app/NetworkSubState.html",
+                        controller: "NetworkSubStateController"
+                    }
+                }
+            }).state('EditRegulation.EditProposalConfirmation', {
+                url: '/EditProposalConfirmation/',
+                templateUrl: "app/CreateProposalConfirmation.html",
+                controller: 'CreateProposalConfirmationController',
             });
         // For any unmatched url, redirect to /state1
         $urlRouterProvider.otherwise("/");

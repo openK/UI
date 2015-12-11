@@ -9,7 +9,7 @@
  * Stefan Brockmann - initial API and implementation
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
-app.controller('ChangeProposalConfirmationModalController', ['$scope', '$state', '$rootScope', '$modalInstance', '$http', '$filter', 'activityService', 'dateService', function ($scope, $state, $rootScope, $modalInstance, $http, $filter, activityService, dateService) {
+app.controller('EditProposalConfirmationModalController', ['$scope', '$state', '$rootScope', '$modalInstance', '$http', '$filter', 'activityService', 'dateService', function ($scope, $state, $rootScope, $modalInstance, $http, $filter, activityService, dateService) {
 
     $scope.activity = activityService.activity();
 
@@ -18,7 +18,6 @@ app.controller('ChangeProposalConfirmationModalController', ['$scope', '$state',
     $scope.activity.proposal.modal = {};
     $scope.activity.proposal.modal.sumRequiredReductionPower = 0;
     $scope.activity.proposal.modal.diffReductionPower = 0;
-    //$scope.activity.proposal.modal.requiredReductionPowerWithSaving = 0;
     $scope.activity.proposal.modal.requiredReductionPower = 0;
 
     $scope.activity.substationProposalList.forEach(function (value, key) {
@@ -39,11 +38,8 @@ app.controller('ChangeProposalConfirmationModalController', ['$scope', '$state',
         $scope.enough = "red";
     }
 
-    //$scope.activity.proposal.modal.requiredReductionPowerWithSaving = $scope.activity.settings.requiredReductionPower + $scope.activity.settings.requiredReductionPower * ($scope.activity.preselection.securityFactorForReduction / 100);
-
-    //$scope.activity.proposal.modal.requiredReductionPowerWithSaving = $filter('number')($scope.activity.proposal.modal.requiredReductionPowerWithSaving, 2);
     $scope.activity.proposal.modal.diffReductionPower = $filter('number')($scope.activity.proposal.modal.diffReductionPower, 2);
-    $scope.activity.proposal.modal.requiredReductionPower = $filter('number')($scope.activity.requiredReductionPower, 2);
+    $scope.activity.proposal.modal.requiredReductionPower = $filter('number')($scope.activity.reductionValue, 2);
     $scope.activity.proposal.modal.sumRequiredReductionPower = $filter('number')($scope.activity.proposal.modal.sumRequiredReductionPower, 2);
 
     $scope.cancel = function () {
@@ -63,13 +59,13 @@ app.controller('ChangeProposalConfirmationModalController', ['$scope', '$state',
             "userSettingsJpa": {
                 "dateStarted": dateStarted,
                 "dateFinished": dateFinished,
-                "geographicalRegion": $scope.activity.pointOfInjectionType,
+                "geographicalRegion": $scope.activity.useWholeArea,
                 "reasonOfReduction": $scope.activity.reasonOfReduction,
                 "practise": $scope.activity.practise,
                 "description": $scope.activity.description
             },
             "activePowerJpaToBeReduced": {
-                "value": $scope.activity.reductionValue,
+                "value": $scope.activity.requiredReductionPower,
                 "multiplier": "M",
                 "unit": "W"
             },
@@ -93,7 +89,7 @@ app.controller('ChangeProposalConfirmationModalController', ['$scope', '$state',
 
         $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
 
-            $state.go('Regulation.CreateProposalConfirmation');
+            $state.go('EditRegulation.EditProposalConfirmation');
 
         }).error(function (data, status, headers, config) {
 

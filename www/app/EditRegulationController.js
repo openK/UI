@@ -9,29 +9,27 @@
  * Stefan Brockmann - initial API and implementation
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
-app.controller('RegulationController', ['$scope', '$state', '$rootScope', function ($scope, $state, $rootScope) {
+app.controller('EditRegulationController', ['$scope', '$state', '$rootScope', function ($scope, $state, $rootScope) {
     $scope.previousState = {};
     $scope.goToRegulationState = function () {
         if ($scope.currentState.name === 'Regulation.NetworkState.Main') {
-            $state.go($scope.previousState.name);
+            $state.go($rootScope.previousState.name);
         } else {
-            $state.go($scope.currentState.name);
+            $state.go($rootScope.currentState.name);
         }
     };
     
     $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         $scope.previousState = fromState;
         $scope.currentState = toState;
-        $scope.toParams = toParams;
-        $scope.fromParams = fromParams;
-        if (toState.name === 'Regulation.CreateSettings') {
-            $scope.CanNavigateToCreateSettings = true;
+        if (toState.name === 'EditRegulation.EditSettings') {
+            $scope.CanNavigateToEditSettings = true;
         }
-        if (toState.name.indexOf('Regulation.CreateProposal') === 0) {
-            $scope.CanNavigateToCreateProposal = true;
+        if (toState.name.indexOf('EditRegulation.EditProposal') === 0) {
+            $scope.CanNavigateToEditProposal = true;
         }
-        if (toState.name === 'Regulation.CreateProposalConfirmation') {
-            $scope.CanNavigateToCreateProposalConfirmation = true;
+        if (toState.name === 'EditRegulationEditProposalConfirmation') {
+            $scope.CanNavigateToEditProposalConfirmation = true;
         }
     });
     $scope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {

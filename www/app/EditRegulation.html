@@ -34,25 +34,25 @@
 <div class="row maincontent">
     <div class="col-xs-12 col-sm-12">
         <h2>EISMAN</h2>
-        <h3>{{'CREATE.ACTIVITY' | translate}}:</h3>
-        <button class="btn btn-arrow-right" ui-sref="Regulation.CreateDownRegulation"
-                data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.CreateDownRegulation') != 0,
-                                     'btn-success' : currentState.name.indexOf('Regulation.CreateDownRegulation') == 0 }">
+        <h3>{{'EDIT.ACTIVITY' | translate}}:</h3>
+        <button class="btn btn-arrow-right" ui-sref="EditRegulation.EditDownRegulation"
+                data-ng-class="{ 'btn-default' : currentState.name.indexOf('EditRegulation.EditDownRegulation') != 0,
+                                     'btn-success' : currentState.name.indexOf('EditRegulation.EditDownRegulation') == 0 }">
             {{'WORKFLOW.SETTINGS' | translate}}
         </button>
-        <button class="btn btn-arrow-right" ui-sref="Regulation.CreateSettings" data-ng-disabled="!CanNavigateToCreateSettings"
-                data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.CreateSettings') != 0,
-                                     'btn-success' : currentState.name.indexOf('Regulation.CreateSettings') == 0 }">
+        <button class="btn btn-arrow-right" ui-sref="EditRegulation.EditSettings" data-ng-disabled="!CanNavigateToEditSettings"
+                data-ng-class="{ 'btn-default' : currentState.name.indexOf('EditRegulation.EditSettings') != 0,
+                                     'btn-success' : currentState.name.indexOf('EditRegulation.EditSettings') == 0 }">
             {{'WORKFLOW.DATA' | translate}}
         </button>
-        <button class="btn btn-arrow-right" ui-sref="Regulation.CreateProposal" data-ng-disabled="!CanNavigateToCreateProposal"
-                data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.CreateProposal') != 0,
-                                     'btn-success' : currentState.name.indexOf('Regulation.CreateProposal') == 0 }">
+        <button class="btn btn-arrow-right" ui-sref="EditRegulation.EditProposal" data-ng-disabled="!CanNavigateToEditProposal"
+                data-ng-class="{ 'btn-default' : currentState.name.indexOf('EditRegulation.EditProposal') != 0,
+                                     'btn-success' : currentState.name.indexOf('EditRegulation.EditProposal') == 0 }">
             {{'WORKFLOW.REDUCTIONADVICE' | translate}}
         </button>
-        <button class="btn btn-arrow-right" ui-sref="Regulation.CreateProposalConfirmation" data-ng-disabled="!CanNavigateToCreateProposalConfirmation"
-                data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.CreateProposalConfirmation') != 0,
-                                     'btn-success' : currentState.name.indexOf('Regulation.CreateProposalConfirmation') == 0 }">
+        <button class="btn btn-arrow-right" ui-sref="EditRegulation.EditProposalConfirmation" data-ng-disabled="!CanNavigateToEditProposalConfirmation"
+                data-ng-class="{ 'btn-default' : currentState.name.indexOf('EditRegulation.EditProposalConfirmation') != 0,
+                                     'btn-success' : currentState.name.indexOf('EditRegulation.EditProposalConfirmation') == 0 }">
             {{'WORKFLOW.CONFIRM' | translate}}
         </button>
         <div class="col-xs-5 zeit" data-ng-show="selectedStep == 'proposal' || selectedStep == 'confirm'">
