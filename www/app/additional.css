@@ -196,3 +196,20 @@ input[type="checkbox"] {
     padding: 0px 0px 0px 5px;
     text-align:right;
 }
+
+a {
+   outline: 0 ! important;
+}
+
+.infobar .panel.panel-default:first-child{
+    margin-left:0px;
+}
+table.settings td.tlabel{
+    display: table-cell ! important;
+    font-weight:bold;
+    padding-right: 10px ! important;
+}
+table.settings td{
+    padding-right: 20px;
+}
+

@@ -66,11 +66,11 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 views: {
                     "NetworkMainState": {
                         templateUrl: "app/NetworkMainState.html",
-                        controller: 'NetworkMainStateController'
+                        controller: 'NetworkMainStateInfoController'
                     },
                     "NetworkSubState": {
                         templateUrl: "app/NetworkSubState.html",
-                        controller: 'NetworkSubStateController'
+                        controller: 'NetworkSubStateInfoController'
                     }
                 }
             }).state('Regulation.CreateSettings', {
