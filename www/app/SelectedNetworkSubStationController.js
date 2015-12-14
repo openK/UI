@@ -29,7 +29,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
 
                 row.entity.reductionAdvice = row.entity.subStationRegSteps;
                 row.entity.activePowerJpaToBeReduced = {
-                    value: row.entity.generatorVoltageMeasured.value - (row.entity.reductionAdvice / 100 * row.entity.generatingUnitJpa.maxOperatingP.value),
+                    value: row.entity.generatorPowerMeasured.value - (row.entity.reductionAdvice / 100 * row.entity.generatingUnitJpa.maxOperatingP.value),
                     multiplier: "M",
                     unit: "W"
                 };
@@ -121,8 +121,8 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
             },
             // Aktuelle Wirkleistung
             {
-                name: 'generatorVoltageMeasured.value',
-                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.generatorVoltageMeasured.value | number : 2}} {{row.entity.generatorVoltageMeasured.multiplier}}{{row.entity.generatorVoltageMeasured.unit}}</div>',
+                name: 'generatorPowerMeasured.value',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.generatorPowerMeasured.value | number : 2}} {{row.entity.generatorPowerMeasured.multiplier}}{{row.entity.generatorPowerMeasured.unit}}</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.GENERATORVOLTAGE.MEASURED.ABBREVIATION',
                 aggregationType: uiGridConstants.aggregationTypes.sum,
@@ -199,7 +199,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
 
         row.entity.reductionAdvice = row.entity.subStationRegSteps;
         row.entity.activePowerJpaToBeReduced = {
-            value: row.entity.generatorVoltageMeasured.value - (row.entity.reductionAdvice / 100 * row.entity.generatingUnitJpa.maxOperatingP.value),
+            value: row.entity.generatorPowerMeasured.value - (row.entity.reductionAdvice / 100 * row.entity.generatingUnitJpa.maxOperatingP.value),
             multiplier: "M",
             unit: "W"
         };

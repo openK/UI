@@ -6,11 +6,14 @@
         <div ui-view="SelectedNetworkSubStations"></div>
     </div>
     
-    <div id="proposalTree" class="col-xs-3 col-sm-3 col-md-4 table-responsive">
+    <div id="proposalTree" class="col-xs-3 col-sm-3 col-md-5 table-responsive">
+        <div>
+            <h4> {{'GRID.SUBSTATIONLIST' | translate}} </h4>
+        </div>
         <div ui-view="NetworkMainState"></div>
     </div>
     
-    <div id="proposalStats" class="col-xs-9 col-sm-9 col-md-8 table-responsive">
+    <div id="proposalStats" class="col-xs-9 col-sm-9 col-md-7 table-responsive">
         <div>
             <h4> {{'DETAILS' | translate}} {{substationname}}</h4>
         </div>

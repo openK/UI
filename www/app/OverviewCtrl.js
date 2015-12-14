@@ -204,8 +204,8 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                 $scope.searchOptions.filter.filter ? $scope.searchOptions.filter.filter : ''
                 ).then(function (result) {
                     $scope.overview.data = result.data.content;
-                    console.log($scope.overview.data);
-                    $scope.data.totalPages = 5;// $scope.parentActivities.totalPages
+                    $log.log($scope.parentActivities.totalPages);
+                    $scope.data.totalPages = $scope.parentActivities.totalPages;
                     $scope.data.currentpage = $scope.currentpage + 1;
                     $scope.navigateToDetails(result.data.content[0].id);
                 });
@@ -507,7 +507,9 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
 
     $scope.parentActivities = activityService.getParentActivities();
     $scope.overview.data = $scope.parentActivities.content;
-    $scope.data.totalPages = 5; // $scope.parentActivities.totalPages;
+    $scope.data.totalPages = $scope.parentActivities.totalPages;
+    $log.log($scope.parentActivities.totalPages);
+    $log.debug($scope.parentActivities);
 
 
     $timeout(function () {
