@@ -202,12 +202,12 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                 (new Date()).getTime(),
                 $scope.searchOptions.sort ? $scope.searchOptions.sortColumn + "," + $scope.searchOptions.sort : '',
                 $scope.searchOptions.filter.filter ? $scope.searchOptions.filter.filter : ''
-                ).then(function (result) {
-                    $scope.overview.data = result.data.content;
+                ).then(function (data) {
+                    $scope.overview.data = data.content;
                     $log.log($scope.parentActivities.totalPages);
                     $scope.data.totalPages = $scope.parentActivities.totalPages;
                     $scope.data.currentpage = $scope.currentpage + 1;
-                    $scope.navigateToDetails(result.data.content[0].id);
+                    $scope.navigateToDetails(data.content[0].id);
                 });
     }
 

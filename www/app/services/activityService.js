@@ -159,7 +159,6 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
             //$log.info("Success loading /openk-eisman-portlet/rest/findparentactivitylist");
             parentActivities = result.data;
             parentActivities.content = $filter('filter')(result.data.content, function (value, index, array) {
-                var dateFinished = new Date(value.dateFinished);
                 if (show === 'Beended') {
                     if (value.processStatus === "Beended") {
                         return true;
@@ -175,7 +174,7 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
                     }
                 }
             });
-            parentActivities.content = $filter('orderBy')(parentActivities.content, "id", true);
+            return parentActivities;
         }, function (error) {
             $log.error('Cannot load /openk-eisman-portlet/rest/findprocessoverviewlist/');
         });
