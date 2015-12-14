@@ -161,17 +161,17 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
             parentActivities.content = $filter('filter')(result.data.content, function (value, index, array) {
                 var dateFinished = new Date(value.dateFinished);
                 if (show === 'Beended') {
-                    if (dateFinished.getTime() < $.now()) {
+                    if (value.processStatus === "Beended") {
                         return true;
                     } else {
                         return false;
                     }
                 }
                 if (show === 'Aktiv') {
-                    if (dateFinished.getTime() < $.now()) {
-                        return false;
-                    } else {
+                    if (value.processStatus === "Aktiv" || value.processStatus === "Ohne Abregelung" ) {
                         return true;
+                    } else {
+                        return false;
                     }
                 }
             });

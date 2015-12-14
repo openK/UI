@@ -36,7 +36,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
 
     $scope.isDeletable = function () {
 
-        if ($scope.currentItem.processStatus !== "Beended" && $scope.currentItem.processStatus !== "Aktiv") {
+        if ($scope.currentItem.id && $scope.currentItem.processStatus !== "Beended" && $scope.currentItem.processStatus !== "Aktiv") {
             return true;
         } else {
             return false;
@@ -66,7 +66,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
         var dateStarted = new Date($scope.currentItem.dateStarted);
         var dateFinished = new Date($scope.currentItem.dateFinished);
         var now = $.now();
-        if ( $scope.currentItem.processStatus === "Aktiv" && now >= dateStarted.getTime() && now <= dateFinished.getTime()) {
+        if ($scope.currentItem.processStatus === "Aktiv" /*&& now >= dateStarted.getTime() && now <= dateFinished.getTime()*/) {
             return true;
         } else {
             return false;
