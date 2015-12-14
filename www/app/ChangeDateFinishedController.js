@@ -148,7 +148,7 @@ app.controller('ChangeDateFinishedController', ['$scope', '$state', '$stateParam
                     $scope.activity.substationProposalList = data.childrenActivityJpaList[0].synchronousMachineJpaReducedList;
                 }
                 advice.forEach(function (value) {
-                    value.getCalculatedPower = parseInt(value.generatorVoltageMeasured.value - (value.reductionAdvice / 100 * value.generatingUnitJpa.maxOperatingP.value));
+                    value.getCalculatedPower = parseInt(value.generatorPowerMeasured.value - (value.reductionAdvice / 100 * value.generatingUnitJpa.maxOperatingP.value));
                 });
 
                 $scope.activity.calculatedReductionAdvice = data;

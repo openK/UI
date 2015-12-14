@@ -9,7 +9,7 @@
  * Stefan Brockmann - initial API and implementation
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
-angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout', '$http', '$filter', '$translate', '$state', '$stateParams', 'uiGridConstants', 'i18nService', 'activityService', 'modalService', 'dateService', '$uibModal', function ($scope, $log, $timeout, $http, $filter, $translate, $state, $stateParams, uiGridConstants, i18nService, activityService, modalService, dateService, $uibModal) {
+angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$log', '$timeout', '$http', '$filter', '$translate', '$state', '$stateParams', 'uiGridConstants', 'i18nService', 'activityService', 'modalService', 'dateService', '$uibModal', function ($scope, $rootScope, $log, $timeout, $http, $filter, $translate, $state, $stateParams, uiGridConstants, i18nService, activityService, modalService, dateService, $uibModal) {
     $scope.data = {};
     $scope.data.count = 0;
     $scope.data.details = {};
@@ -55,7 +55,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
         var dateStarted = new Date($scope.currentItem.dateStarted);
         var dateFinished = new Date($scope.currentItem.dateFinished);
         var now = new Date($.now());
-        if ($scope.currentItem.processStatus !== "Ohne Abregelung" && (now.getTime() <= dateStarted.getTime() || now.getTime() <= dateFinished.getTime())) {
+        if ($scope.currentItem.processStatus !== "Ohne Abregelung" && (now <= dateStarted.getTime() || now <= dateFinished.getTime())) {
             return true;
         } else {
             return false;
@@ -66,7 +66,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
         var dateStarted = new Date($scope.currentItem.dateStarted);
         var dateFinished = new Date($scope.currentItem.dateFinished);
         var now = $.now();
-        if ( $scope.currentItem.processStatus === "Aktiv" && now.getTime() >= dateStarted.getTime() && now.getTime() <= dateFinished.getTime()) {
+        if ( $scope.currentItem.processStatus === "Aktiv" && now >= dateStarted.getTime() && now <= dateFinished.getTime()) {
             return true;
         } else {
             return false;
@@ -77,7 +77,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$log', '$timeout'
         var dateStarted = new Date($scope.currentItem.dateStarted);
         var dateFinished = new Date($scope.currentItem.dateFinished);
         var now = $.now();
-        if ($scope.currentItem.processStatus === "Aktiv" && now.getTime() >= dateStarted.getTime() && now.getTime() <= dateFinished.getTime()) {
+        if ($scope.currentItem.processStatus === "Aktiv" && now >= dateStarted.getTime() && now <= dateFinished.getTime()) {
             return true;
         } else {
             return false;

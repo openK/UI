@@ -185,7 +185,7 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
                     $scope.activity.substationProposalList = result.data.childrenActivityJpaList[0].synchronousMachineJpaReducedList;
                 }
                 advice.forEach(function (value) {
-                    value.getCalculatedPower = parseInt(value.generatorVoltageMeasured.value - (value.reductionAdvice / 100 * value.generatingUnitJpa.maxOperatingP.value));
+                    value.getCalculatedPower = parseInt(value.generatorPowerMeasured.value - (value.reductionAdvice / 100 * value.generatingUnitJpa.maxOperatingP.value));
                 });
 
                 $scope.activity.calculatedReductionAdvice = result.data;

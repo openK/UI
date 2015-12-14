@@ -25,13 +25,13 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
         // Now set up the states
         $stateProvider
             .state('state1', {
-                url: "/:includeDeleted",
+                url: "/:show",
                 templateUrl: "app/Overview.html",
                 controller: 'OverviewCtrl',
                 resolve: {
                     parentActivities: function (activityService, $stateParams, $rootScope) {
-                        $rootScope.includeDeleted = $stateParams.includeDeleted;
-                        return activityService.loadParentActivities($stateParams.includeDeleted);
+                        $rootScope.show = $stateParams.show;
+                        return activityService.loadParentActivities(0, 5, null, null, null, $stateParams.show);
                     }
                 }
             })
@@ -221,7 +221,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 controller: 'CreateProposalConfirmationController',
             });
         // For any unmatched url, redirect to /state1
-        $urlRouterProvider.otherwise("/");
+        $urlRouterProvider.otherwise("/Aktiv");
 
     }]).run(['$log', function ($log) {
     }]);
