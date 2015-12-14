@@ -180,8 +180,8 @@ app.controller('SubStationController', ['$scope', '$http', '$timeout', '$transla
             },
             // Aktuelle Wirkleistung
             {
-                name: 'generatorVoltageMeasured.value',
-                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.generatorVoltageMeasured.value | number : 2}} {{row.entity.generatorVoltageMeasured.multiplier}}{{row.entity.generatorVoltageMeasured.unit}}</div>',
+                name: 'generatorPowerMeasured.value',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.generatorPowerMeasured.value | number : 2}} {{row.entity.generatorPowerMeasured.multiplier}}{{row.entity.generatorPowerMeasured.unit}}</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.GENERATORVOLTAGE.MEASURED.ABBREVIATION',
                 aggregationType: uiGridConstants.aggregationTypes.sum,
