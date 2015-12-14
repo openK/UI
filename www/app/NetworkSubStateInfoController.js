@@ -10,7 +10,7 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', 'dateService', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, dateService) {
+app.controller('NetworkSubStateInfoController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', 'dateService', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, dateService) {
 
     function rowTemplate() {
         return '<div ng-class="{ \'hideRowSelectedSubStation\': grid.appScope.isInUse( row )  }">' +
@@ -19,10 +19,12 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
             '</div>' +
             '</div>';
     }
-    console.log('NetworkSubStateController');
-    $scope.$parent.activity = activityService.activity();
+    $scope.activity = activityService.activity();
+    $log.log('NetworkSubStateInfoController');
+    $log.log($scope.activity);
+    $scope.activity = activityService.activity();
 
-    $rootScope.$on('loadSubstations', function (event, branch) {
+    $rootScope.$on('loadSubstationsInfo', function (event, branch) {
         $scope.activity = activityService.activity();
         var oid = parseInt(branch.oid);
         $scope.$parent.substationname = branch.name;
@@ -118,8 +120,8 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
             {
                 name: 'feedInRanking',
                 headerCellFilter: 'translate',
-                displayName: 'SUBSTATIONSGRID.RANKORDER.ABBREVIATION',
-                width: '6%'
+                displayName: 'SUBSTATIONSGRID.RANKORDER.ABBREVIATION'
+               
             },
             {
                 name: 'feedInPriority',
@@ -147,19 +149,13 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
             },
             // Aktuelle Wirkleistung
             {
-                name: 'generatorPowerMeasured.value',
-                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.generatorPowerMeasured.value | number : 2}} {{row.entity.generatorPowerMeasured.multiplier}}{{row.entity.generatorPowerMeasured.unit}}</div>',
+                name: 'generatorVoltageMeasured.value',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.generatorVoltageMeasured.value | number : 2}} {{row.entity.generatorVoltageMeasured.multiplier}}{{row.entity.generatorVoltageMeasured.unit}}</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.GENERATORVOLTAGE.MEASURED.ABBREVIATION',
                 aggregationType: uiGridConstants.aggregationTypes.sum,
                 footerCellTemplate: '<div class="ui-grid-cell-contents">∑ {{col.getAggregationValue() | number : 2}} MW</div>',
                 width: '9%'
-            },
-           
-            {
-                name: 'edit',
-                enableFiltering: false,
-                cellTemplate: '<div class="ui-grid-cell-contents" title="TOOLTIP"><div class="input-group input-group-sm"><select id="regulationSteps" ng-disabled="grid.appScope.isInUse(row)" required ng-model="row.entity.subStationRegSteps" style="padding-top:2px;" class="form-control" ng-change="grid.appScope.addSubStation(grid,row)"><option ng-repeat="item in row.entity.reductionSettingJpaList">{{item.setting.value}}</option></select></div> <button type="button" class="btn btn-default btn-xs" aria-label="Left Align" ng-click="grid.appScope.addSubStation(grid,row)"></button></div>'
             }
             
       

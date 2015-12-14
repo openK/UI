@@ -10,10 +10,10 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 app.controller('RegulationController', ['$scope', '$state', '$rootScope', function ($scope, $state, $rootScope) {
-    $scope.previousState = {};
+    $scope.previousState = {}; 
     $scope.goToRegulationState = function () {
         if ($scope.currentState.name === 'Regulation.NetworkState.Main') {
-            $state.go($scope.previousState.name);
+            $state.go('Regulation.CreateProposal.Main');
         } else {
             $state.go($scope.currentState.name);
         }

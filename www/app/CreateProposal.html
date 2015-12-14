@@ -1,31 +1,85 @@
 <div class="row maincontent">
-    <div id="proposalList" class="col-xs-12 voffset table-responsive voffset">
+
+    <div id="proposalList" class="col-xs-12 voffset table-responsive">
         <div>
-            <h4> {{'WORKFLOW.REDUCTIONADVICE' | translate}}</h4>
+            <h4> {{'WORKFLOW.REDUCTIONADVICE'| translate}}</h4>
         </div>
-        <div ui-view="SelectedNetworkSubStations"></div>
+        <div data-ui-view="SelectedNetworkSubStations"></div>
+
     </div>
-    
+
+    <div class="col-xs-12 infobar">
+        <div class="panel panel-default confirmContentBox">
+            <div class="panel-heading">
+                <h3 class="panel-title ng-binding">{{'requiredReductionPower'| translate}}: {{ activity.settings.requiredReductionPower}} MW</h3>
+            </div>
+            <div class="panel-body ng-binding">
+
+                <div class="col-md-4">
+                    <table class="settings">
+                        <tr>
+                            <td class="tlabel">{{'dateStarted'| translate  }}:</td>
+                            <td>{{activity.settings.dateStarted}}</td>
+                        </tr>
+                        <tr>
+                            <td class="tlabel">{{'dateFinished'| translate  }}:</td>
+                            <td>{{activity.settings.dateFinished}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-4">
+                    <table class="settings">
+                        <tr>
+                            <td class="tlabel">{{'reasonOfReduction'| translate  }}:</td>
+                            <td>{{activity.settings.reasonOfReduction}}</td>
+                        </tr>
+                        <tr>
+                            <td class="tlabel">{{'description'| translate  }}:</td>
+                            <td>{{activity.settings.description}}</td>
+                        </tr>
+
+                    </table>
+                </div>
+                <div class="col-md-4">
+                    <div data-ng-if="activity.settings.useWholeArea">Gesamtes Netzgebiet</div>
+                    <div data-ng-if="activity.settings.subGeographicalRegions.length > 0">
+                        <div><strong>{{'subGeographicalRegions' | translate}}</strong></div>
+                        <div data-ng-repeat="(key,val) in activity.settings.subGeographicalRegions">{{val.name}}</div>
+                    </div>
+                    <div data-ng-if="activity.settings.transformerStations.length > 0">
+                        <div><strong>{{'transformerStations' | translate}}</strong></div>
+                        <div data-ng-repeat="(key,val) in activity.settings.transformerStations">{{val.name}}</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
     <div id="proposalTree" class="col-xs-3 col-sm-3 col-md-5 table-responsive">
         <div>
-            <h4> {{'GRID.SUBSTATIONLIST' | translate}} </h4>
+            <h4> {{'GRID.SUBSTATIONLIST'| translate}} </h4>
         </div>
         <div ui-view="NetworkMainState"></div>
     </div>
-    
+
     <div id="proposalStats" class="col-xs-9 col-sm-9 col-md-7 table-responsive">
         <div>
-            <h4> {{'DETAILS' | translate}} {{substationname}}</h4>
+            <h4> {{substationname}} &nbsp;</h4>
         </div>
         <div ui-view="NetworkSubState"></div>
     </div>
 
+
+
+
     <div class="col-xs-12 voffset">
         <div class="form-group">
             <div class="col-xs-12">
-                <a class="btn btn-default btn-sm" ui-sref="ChangeReduction.ChangeSettings">{{'BACK' | translate}}</a>
+                <a class="btn btn-default btn-sm" ui-sref="ChangeReduction.ChangeSettings">{{'BACK'| translate}}</a>
                 <a class="btn btn-primary btn-sm pull-right" data-ng-click="openModalConfirmProposal()">{{'NEXT'
-                    | translate}}</a>
+                                    | translate}}</a>
             </div>
         </div>
     </div>
