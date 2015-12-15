@@ -36,7 +36,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
 
     $scope.isDeletable = function () {
 
-        if ($scope.currentItem.id && $scope.currentItem.processStatus === "Pending" || $scope.currentItem.processStatus === "WithoutShedule") {
+        if ($scope.currentItem.id && $scope.currentItem.processStatus === "Pending" || $scope.currentItem.processStatus === "WithoutSchedule") {
             return true;
         } else {
             return false;
@@ -44,7 +44,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
     }
 
     $scope.isEditable = function () {
-        if ($scope.currentItem.id && $scope.currentItem.processStatus === "Pending" || $scope.currentItem.processStatus === "WithoutShedule") {
+        if ($scope.currentItem.id && $scope.currentItem.processStatus === "Pending" || $scope.currentItem.processStatus === "WithoutSchedule") {
             return true;
         } else {
             return false;
@@ -52,7 +52,10 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
     }
 
     $scope.canEditFinishDate = function () {
-        if ($scope.currentItem.id && $scope.currentItem.processStatus !== "Pending" || ($scope.currentItem.processStatus === "Live" && (now >= dateStarted.getTime() && now <= dateFinished.getTime()))) {
+        var dateStarted = new Date($scope.currentItem.dateStarted);
+        var dateFinished = new Date($scope.currentItem.dateFinished);
+        var now = $.now();
+        if ($scope.currentItem.id && $scope.currentItem.processStatus === "Pending" || ($scope.currentItem.processStatus === "Live" && (now >= dateStarted.getTime() && now <= dateFinished.getTime()))) {
             return true;
         } else {
             return false;
