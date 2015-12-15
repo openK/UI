@@ -174,7 +174,7 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
                 if (result.data.parentActivityJpaId) {
 
                     advice = result.data.synchronousMachineJpaReducedList;
-                    //$scope.activity.id = result.data.id;
+                    $scope.activity.id = result.data.id;
                     $scope.activity.parentActivityJpaId = result.data.parentActivityJpaId;
                     $scope.activity.substationProposalList = result.data.synchronousMachineJpaReducedList;
 
