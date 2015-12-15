@@ -152,7 +152,7 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
         params.filter = filterExpression || {};
 
         if (show === 'Deleted') {
-            params.filter.dateDeactivated = null;
+            params.filter.dateDeactivated = defined;
         }
         console.log('filter:' + params.filter);
 
