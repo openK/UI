@@ -26,7 +26,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
         $stateProvider
             .state('state1', {
                 url: "/:show",
-                templateUrl: "app/Overview.html",
+                templateUrl: "app/overview.html",
                 controller: 'OverviewCtrl',
                 resolve: {
                     parentActivities: function (activityService, $stateParams, $rootScope) {
