@@ -1,0 +1,62 @@
+<div class="col-sm-12 col-xs-12" >
+    <div class="col-sm-3 panel panel-default confirmContentBox">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{'SETTINGS.REASONOFREDUCTION' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+            {{activity.reasonOfReduction}} &nbsp;
+        </div>
+    </div>
+    <div class="col-sm-3 panel panel-default confirmContentBox">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{'SETTINGS.REQUIREDREDUCTION' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+            {{activity.reductionValue}} MW
+        </div>
+    </div>
+    <div class="col-sm-3 panel panel-default confirmContentBox">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{'CONFIRM.AUTOR' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+            {{'CONFIRM.AUTOR' | translate}}: {{activity.createdBy}}
+        </div>
+    </div>
+    <div class="col-sm-3 panel panel-default confirmContentBox">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{'SETTINGS.DATESTARTED' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+            {{activity.dateStarted}} &nbsp;
+        </div>
+    </div>
+    <div class="col-sm-3 panel panel-default confirmContentBox">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{'SETTINGS.DATEFINISHED' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+            {{activity.dateFinished}} &nbsp;
+        </div>
+    </div>
+    <div class="col-sm-3 panel panel-default confirmContentBox">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{'CONFIRM.DURATION' | translate}}</h3>
+        </div>
+        <div class="panel-body">
+            {{activity.dateDiff}}
+        </div>
+    </div>
+    <div id="proposalListConfirm" class="col-xs-12 voffset table-responsive voffset">
+        <div class="grid table" data-ui-grid="substations" data-ui-grid-pagination data-ui-grid-selection></div>
+    </div>
+    <div class="col-xs-12">
+        <!-- Button trigger modal -->
+        <button ui-sref="Regulation.CreateProposal.Main" class="btn btn-default btn-sm">{{'BACK'
+            | translate}}
+        </button>
+        <button data-ng-click="saveActivity()" class="btn btn-primary btn-sm pull-right">
+            {{'CONFIRM' | translate}}
+        </button>
+    </div>
+</div>

@@ -89,7 +89,7 @@ app.controller('ChangeProposalConfirmationModalController', ['$scope', '$state',
 
         $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
 
-            $state.go('Regulation.CreateProposalConfirmation');
+            $state.go('ChangeRegulation.ChangeProposalConfirmation');
 
         }).error(function (data, status, headers, config) {
 
