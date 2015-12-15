@@ -149,7 +149,7 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
 
         params.sort = sortExpression || defaultSortExpression;
 
-        params.filter = filterExpression || {};
+        params.filter = filterExpression;
 
         if (show === 'Deleted') {
             params.filter.isDeleted = true;
@@ -163,21 +163,18 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
             parentActivities = result.data;
             parentActivities.content = $filter('filter')(result.data.content, function (value, index, array) {
                 if (show === 'Beended') {
-                    if (value.processStatus === "Terminated") {
+                    if (value.processStatus === "Matured") {
                         return true;
                     } else {
                         return false;
                     }
                 }
                 if (show === 'Aktiv') {
-                    if (value.processStatus === "Live" || value.processStatus === "WithoutSchedule" || value.processStatus === "Pending") {
+                    if (value.processStatus === "Live" || value.processStatus === "WithoutShedule" || value.processStatus === "Pending") {
                         return true;
                     } else {
                         return false;
                     }
-                }
-                if (show === 'Deleted') {
-                    return true;
                 }
             });
             return parentActivities;
