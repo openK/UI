@@ -48,7 +48,7 @@
         <h2>EISMAN</h2>
         <h3>Vorgänge</h3>
         <ul class="nav nav-tabs voffset nav-tabs-maincontent">
-            <li ng-class="{ active: show==='Aktiv' }" ><a ui-sref="state1({show: 'Aktiv' })">Aktive u. geplante Vorgänge</a></li>
+            <li ng-class="{ active: show==='Aktiv' ||  show===''}" ><a ui-sref="state1({show: 'Aktiv' })">Aktive u. geplante Vorgänge</a></li>
             <li ng-class="{ active: show==='Beended' }" ><a ui-sref="state1({show: 'Beended' })">Beendete Vorgänge</a></li>
             <li ng-class="{ active: show==='Deleted' }"><a ui-sref="state1({show: 'Deleted' })">Gelöschte Vorgänge</a></li>
         </ul>
@@ -85,12 +85,11 @@
                                 <td>{{item.key| translate}}</td>
                                 <td>{{item.value| translate | date: DATE.PATTERN | translate}}</td>
                             </tr>
-                            <tr ng-repeat="item in data.injectionList">
+                            <tr ng-repeat="item in data.injectionList" data-ng-show="data.injectionList.length > 0">
                                 <td>{{'injectionType'| translate}}</td>
                                 <td>{{item| translate}}</td>
                             </tr>
                         </table>
-
                     </div>
                 </div>
             </div>
