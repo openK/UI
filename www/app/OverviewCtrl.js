@@ -370,6 +370,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
             {
                 name: 'processStatus',
                 headerCellFilter: 'translate',
+                cellFilter:'translate',
                 displayName: 'STATE.STATE'
 
             },
