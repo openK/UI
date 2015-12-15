@@ -163,14 +163,14 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
             parentActivities = result.data;
             parentActivities.content = $filter('filter')(result.data.content, function (value, index, array) {
                 if (show === 'Beended') {
-                    if (value.processStatus === "Matured") {
+                    if (value.processStatus === "Terminated") {
                         return true;
                     } else {
                         return false;
                     }
                 }
                 if (show === 'Aktiv') {
-                    if (value.processStatus === "Live" || value.processStatus === "WithoutShedule" || value.processStatus === "Pending") {
+                    if (value.processStatus === "Live" || value.processStatus === "WithoutSchedule" || value.processStatus === "Pending") {
                         return true;
                     } else {
                         return false;
