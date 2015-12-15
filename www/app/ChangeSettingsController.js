@@ -1,6 +1,7 @@
 app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', function ($scope, $state, $stateParams, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService) {
 
     $scope.activity = activityService.activity();
+    $scope.activity.reductionPositive = true;
     //$scope.activity = activityService.activity();
     // get current time as date...
     var now = new Date($.now());
