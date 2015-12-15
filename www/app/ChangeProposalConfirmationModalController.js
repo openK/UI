@@ -65,7 +65,7 @@ app.controller('ChangeProposalConfirmationModalController', ['$scope', '$state',
                 "description": $scope.activity.description
             },
             "activePowerJpaToBeReduced": {
-                "value": $scope.activity.requiredReductionPower,
+                "value": $scope.activity.activePowerJpaToBeReduced.value,
                 "multiplier": "M",
                 "unit": "W"
             },

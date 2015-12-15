@@ -17,9 +17,9 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
         if (hours) {
             newStartDate = new Date(newStartDate.setHours(newStartDate.getHours() + 1));
             minutes = minutes % 60;
-            newStartDate = new Date(newStartDate.setMinutes(minutes-1, 0, 0));
+            newStartDate = new Date(newStartDate.setMinutes(minutes - 1, 0, 0));
         } else {
-            newStartDate = new Date(newStartDate.setMinutes(minutes-1, 0, 0));
+            newStartDate = new Date(newStartDate.setMinutes(minutes - 1, 0, 0));
         }
     }
 
@@ -41,7 +41,7 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
             firstDay: 1
         }
     });
-    
+
     $('#datefinished').daterangepicker({
         singleDatePicker: true,
         timePicker12Hour: false,
@@ -65,7 +65,7 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
 
     if ($stateParams.taskId) {
 
-        $scope.data.forEach(function(a) {
+        $scope.data.forEach(function (a) {
             if (a.id == $stateParams.taskId)
                 $scope.currentParentActivity = a;
         });
@@ -106,7 +106,7 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
 
         if (postData.parentActivityJpaId && postData.activityId) {
 
-            $http.put(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
+            $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
 
                 $state.go('state1');
 
@@ -116,7 +116,7 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
 
         } else {
 
-            $http.post(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
+            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
 
                 $state.go('state1');
 
@@ -176,6 +176,7 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
                     advice = result.data.synchronousMachineJpaReducedList;
                     $scope.activity.id = result.data.id;
                     $scope.activity.parentActivityJpaId = result.data.parentActivityJpaId;
+                    $scope.activity.activePowerJpaToBeReduced = { value: result.data.activePowerJpaToBeReduced.value };
                     $scope.activity.substationProposalList = result.data.synchronousMachineJpaReducedList;
 
                 } else {
