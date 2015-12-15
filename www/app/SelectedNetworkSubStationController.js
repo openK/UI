@@ -57,8 +57,8 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
         showGridFooter: false,
         showColumnFooter: true,
         paginationPageSizes: [25, 50, 75],
-        paginationPageSize: 25,
-        enablePagingControls: true,
+        paginationPageSize: 10,
+        enablePaginationControls: false,
         enableHorizontalScrollbar: 0,
         enableVerticalScrollbar: 2, // 0: never, 1: always, 2: when needed
         data: "activity.substationProposalList",
@@ -162,7 +162,8 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
 
         ],
         onRegisterApi: function (gridApi) {
-            $scope.gridApi = gridApi;
+            $scope.currentPage = 1;
+            $scope.gridApi2 = gridApi;
         }
     };
     $timeout(function () {
