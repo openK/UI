@@ -149,7 +149,7 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
 
         params.sort = sortExpression || defaultSortExpression;
 
-        params.filter = filterExpression;
+        params.filter = filterExpression || {};
 
         if (show === 'Deleted') {
             params.filter.isDeleted = true;
