@@ -176,6 +176,9 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
                         return false;
                     }
                 }
+                if (show === 'Deleted') {
+                    return true;
+                }
             });
             return parentActivities;
         }, function (error) {
