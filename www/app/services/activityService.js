@@ -149,8 +149,11 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
 
         params.sort = sortExpression || defaultSortExpression;
 
-        params.filter = filterExpression;
+        params.filter = filterExpression || {};
 
+        if (show === 'Deleted') {
+            params.filter.dateDeactivated = null;
+        }
         console.log('filter:' + params.filter);
 
         show = show || 'Aktiv';
@@ -172,6 +175,9 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
                     } else {
                         return false;
                     }
+                }
+                if (show === 'Deleted') {
+                    return true;
                 }
             });
             return parentActivities;
