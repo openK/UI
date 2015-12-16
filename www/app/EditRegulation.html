@@ -67,8 +67,8 @@
             </div>
         </div>
         <ul class="nav nav-tabs voffset nav-tabs-maincontent">
-            <li ng-class="{active: currentState.name !== 'Regulation.NetworkState.Main'}" ng-click="goToRegulationState()"><a href="">Abregelung</a></li>
-            <li ng-class="{active: currentState.name === 'Regulation.NetworkState.Main'}"><a ui-sref="Regulation.NetworkState.Main">Netzzustand</a></li>
+            <li ng-class="{active: currentState.name !== 'EditRegulation.NetworkState.Main'}"><a ui-sref="EditRegulation.EditDownRegulation">Abregelung</a></li>
+            <li ng-class="{active: currentState.name === 'EditRegulation.NetworkState.Main'}"><a ui-sref="EditRegulation.NetworkState.Main">Netzzustand</a></li>
         </ul>
         <div style="padding-top: 10px" ui-view></div>
     </div>

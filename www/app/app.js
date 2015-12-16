@@ -131,6 +131,22 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                         return activityService.createActivity();
                     }
                 }
+            }).state('ChangeRegulation.NetworkState', {
+                url: '/NetworkState',
+                templateUrl: "app/NetworkState.html",
+                abstract: true
+            }).state('ChangeRegulation.NetworkState.Main', {
+                url: '/Main',
+                views: {
+                    "NetworkMainState": {
+                        templateUrl: "app/NetworkMainState.html",
+                        controller: 'NetworkMainStateInfoController'
+                    },
+                    "NetworkSubState": {
+                        templateUrl: "app/NetworkSubState.html",
+                        controller: 'NetworkSubStateInfoController'
+                    }
+                }
             }).state('ChangeRegulation.ChangeSettings', {
                 url: '/ChangeSettings',
                 templateUrl: "app/ChangeSettings.html",
@@ -187,6 +203,22 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 resolve: {
                     createActivity: function (activityService) {
                         return activityService.createActivity();
+                    }
+                }
+            }).state('EditRegulation.NetworkState', {
+                url: '/NetworkState',
+                templateUrl: "app/NetworkState.html",
+                abstract: true
+            }).state('EditRegulation.NetworkState.Main', {
+                url: '/Main',
+                views: {
+                    "NetworkMainState": {
+                        templateUrl: "app/NetworkMainState.html",
+                        controller: 'NetworkMainStateInfoController'
+                    },
+                    "NetworkSubState": {
+                        templateUrl: "app/NetworkSubState.html",
+                        controller: 'NetworkSubStateInfoController'
                     }
                 }
             }).state('EditRegulation.EditSettings', {

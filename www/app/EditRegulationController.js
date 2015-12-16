@@ -10,15 +10,6 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 app.controller('EditRegulationController', ['$scope', '$state', '$rootScope', function ($scope, $state, $rootScope) {
-    $scope.previousState = {};
-    $scope.goToRegulationState = function () {
-        if ($scope.currentState.name === 'Regulation.NetworkState.Main') {
-            $state.go($rootScope.previousState.name);
-        } else {
-            $state.go($rootScope.currentState.name);
-        }
-    };
-    
     $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         $scope.previousState = fromState;
         $scope.currentState = toState;
