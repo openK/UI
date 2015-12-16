@@ -103,7 +103,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                 modalService.close();
             }
         };
-        modalService.open($scope, '/app/partials/confirm.html');
+        modalService.open($scope, 'app/partials/confirm.html');
     }
 
     $scope.stopProcess = function () {
@@ -130,7 +130,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                 }
             }
         };
-        modalService.open($scope, '/app/partials/confirm.html');
+        modalService.open($scope, 'app/partials/confirm.html');
     }
 
     $scope.editFinishDate = function () {
@@ -170,7 +170,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                             });
                         }
                     }
-                    modalService.open($scope, '/app/partials/confirm.html');
+                    modalService.open($scope, 'app/partials/confirm.html');
                 }, 100);
             }
 
@@ -192,7 +192,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                 }
             });
         }
-        modalService.open($scope, '/app/partials/editfinishdate.html', callback);
+        modalService.open($scope, 'app/partials/editfinishdate.html', callback);
     }
 
     var callPageObject = function () {
