@@ -85,7 +85,7 @@ app.controller('NetworkSubStateInfoController', ['$scope', '$http', '$timeout', 
         showColumnFooter: true,
         paginationPageSizes: [10],
         paginationPageSize: 10,
-        enablePagingControls: true,
+        enablePaginationControls: false,
         enableHorizontalScrollbar: 0,
         enableVerticalScrollbar: 0, // 0: never, 1: always, 2: when needed
         data: "substationList",
