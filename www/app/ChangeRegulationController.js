@@ -10,22 +10,4 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 app.controller('ChangeRegulationController', ['$scope', '$state', '$rootScope', function ($scope, $state, $rootScope) {
-    $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-        $scope.previousState = fromState;
-        $scope.currentState = toState;
-        if (toState.name === 'ChangeRegulation.ChangeSettings') {
-            $scope.CanNavigateToChangeSettings = true;
-        }
-        if (toState.name.indexOf('ChangeRegulation.ChangeProposal') === 0) {
-            $scope.CanNavigateToChangeProposal = true;
-        }
-        if (toState.name === 'ChangeRegulation.ChangeProposalConfirmation') {
-            $scope.CanNavigateToChangeProposalConfirmation = true;
-        }
-    });
-    $scope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
-        console.log(unfoundState.to); 
-        console.log(unfoundState.toParams); 
-        console.log(unfoundState.options);
-    });
 }]);

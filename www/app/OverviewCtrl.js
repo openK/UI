@@ -44,7 +44,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
     }
 
     $scope.isEditable = function () {
-        if ($scope.currentItem.id && $scope.currentItem.processStatus === "Pending" || $scope.currentItem.processStatus === "WithoutSchedule") {
+        if ($scope.currentItem.id && $scope.currentItem.processStatus === "WithoutSchedule") {
             return true;
         } else {
             return false;

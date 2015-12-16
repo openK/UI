@@ -10,22 +10,4 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 app.controller('EditRegulationController', ['$scope', '$state', '$rootScope', function ($scope, $state, $rootScope) {
-    $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-        $scope.previousState = fromState;
-        $scope.currentState = toState;
-        if (toState.name === 'EditRegulation.EditSettings') {
-            $scope.CanNavigateToEditSettings = true;
-        }
-        if (toState.name.indexOf('EditRegulation.EditProposal') === 0) {
-            $scope.CanNavigateToEditProposal = true;
-        }
-        if (toState.name === 'EditRegulationEditProposalConfirmation') {
-            $scope.CanNavigateToEditProposalConfirmation = true;
-        }
-    });
-    $scope.$on('$stateNotFound', function(event, unfoundState, fromState, fromParams) {
-        console.log(unfoundState.to); 
-        console.log(unfoundState.toParams); 
-        console.log(unfoundState.options);
-    });
 }]);

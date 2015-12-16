@@ -70,61 +70,6 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
                 $scope.currentParentActivity = a;
         });
     }
-    $scope.saveAndReturn = function () {
-        var dateStarted = dateService.formatDateForBackend($scope.activity.settings.dateStarted);
-        var dateFinished = dateService.formatDateForBackend($scope.activity.settings.dateFinished);
-        var dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
-        var postData = {
-            "dateCreated": dateCreated,
-            "createdBy": $scope.activity.createdBy,
-            "id": $scope.activity.activityId,
-            "parentActivityJpaId": $scope.parentActivityId,
-            "dateStarted": dateStarted,
-            "dateFinished": dateFinished,
-            "description": $scope.activity.settings.description,
-            "reasonOfReduction": $scope.activity.reasonOfReduction,
-            "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
-            "substationJpaList": $scope.activity.transformerStations,
-            "practise": $scope.activity.practise,
-            'geographicalRegion': $scope.activity.useWholeArea,
-            "preselectionName": "",
-            "preselectionConfigurationJpa": {
-                "reductionSetting": $scope.activity.preselectionConfigurationDto.reductionSetting,
-                "discriminationCoefficientEnabled": $scope.activity.preselectionConfigurationDto.discriminationCoefficientEnabled,
-                "characteristicForMissingMeasurementFwt": $scope.activity.preselectionConfigurationDto.characteristicForMissingMeasurementFwt,
-                "characteristicForMissingMeasurementEfr": $scope.activity.preselectionConfigurationDto.characteristicForMissingMeasurementEfr,
-                "substituteValueWindFwt": $scope.activity.preselectionConfigurationDto.substituteValueWindFwt,
-                "substituteValuePhotovoltaicFwt": $scope.activity.preselectionConfigurationDto.substituteValuePhotovoltaicFwt,
-                "substituteValueBiogasFwt": $scope.activity.preselectionConfigurationDto.substituteValueBiogasFwt,
-                'substituteValueWindEfr': $scope.activity.preselectionConfigurationDto.substituteValueWindEfr,
-                'substituteValuePhotovoltaicEfr': $scope.activity.preselectionConfigurationDto.substituteValuePhotovoltaicEfr,
-                'substituteValueBiogasEfr': $scope.activity.preselectionConfigurationDto.substituteValueBiogasEfr
-            },
-            'synchronousMachineJpaReducedList': $scope.activity.substationProposalList,
-            "timeout": 30000
-        };
-
-        if (postData.parentActivityJpaId && postData.activityId) {
-
-            $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
-
-                $state.go('state1', {show: 'Aktiv'});
-
-            }).error(function (data, status, headers, config) {
-                $log.error('openk-eisman-portlet/rest/activity/');
-            });
-
-        } else {
-
-            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
-
-                $state.go('state1', {show: 'Aktiv'});
-
-            }).error(function (data, status, headers, config) {
-                $log.error('openk-eisman-portlet/rest/activity/');
-            });
-        }
-    };
 
     $scope.isValidTimeInterval = function (dateStarted, dateFinished) {
         return dateService.isDateBehind(dateStarted, dateFinished);
