@@ -19,11 +19,12 @@ app.controller('SynchronousMachineListByProcessIdCtrl', ['$scope', '$state', '$r
             noUnselect: true,
             showGridFooter: false,
             showColumnFooter: true,
+            minRowsToShow: 11,
             paginationPageSizes: [10],
             paginationPageSize: 10,
             enablePaginationControls: false,
             enableHorizontalScrollbar: 0,
-            enableVerticalScrollbar: 2, // 0: never, 1: always, 2: when needed
+            enableVerticalScrollbar: 0, // 0: never, 1: always, 2: when needed
             data: mock,
             columnDefs: [
                 {
@@ -107,21 +108,8 @@ app.controller('SynchronousMachineListByProcessIdCtrl', ['$scope', '$state', '$r
                     displayName: 'SUBSTATIONSGRID.REDUCEDPOWER',
                     aggregationType: uiGridConstants.aggregationTypes.sum,
                     footerCellTemplate: '<div class="ui-grid-cell-contents">∑ {{col.getAggregationValue() | number : 2}} MW</div>'
-                },
-                {
-                    name: 'change',
-                    displayName: 'SUBSTATIONSGRID.CHANGE',
-                    headerCellFilter: 'translate',
-                    enableFiltering: false,
-                    cellTemplate: '<div class="ui-grid-cell-contents" title="TOOLTIP"><div class="input-group input-group-sm"><select id="regulationSteps" ng-model="row.entity.subStationRegSteps" style="padding-top:2px;" class="form-control" ng-change="grid.appScope.changeSynchronousMachine(grid,row)"><option ng-repeat="item in row.entity.reductionSettingJpaList">{{item.setting.value}}</option></select></div></div>'
-                },
-                {
-                    name: 'delete',
-                    displayName: 'SUBSTATIONSGRID.DELETE',
-                    headerCellFilter: 'translate',
-                    enableFiltering: false,
-                    cellTemplate: '<div class="ui-grid-cell-contents" title="TOOLTIP"><button type="button" class="btn btn-default btn-xs" aria-label="Left Align" ng-click="grid.appScope.removeSubStation(grid,row)"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div>'
                 }
+
 
             ],
             onRegisterApi: function (gridApi) {
