@@ -219,4 +219,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
             }
         });
     };
+    $scope.gotoPageNumber = function(){
+        return parseInt($scope.currentPage);
+    };
 }]);
