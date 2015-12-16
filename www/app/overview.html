@@ -50,6 +50,11 @@
                         class="btn btn-primary">
                     {{ 'PROCESS.STOP' | translate }}
                 </button>
+                <button ng-disabled="!hasReductions()"
+                        ng-click="showEngines()"
+                        class="btn btn-primary">
+                    {{ 'PROCESS.ENGINES.SHOW' | translate }}
+                </button>
             </div>
         </div>
     </div>

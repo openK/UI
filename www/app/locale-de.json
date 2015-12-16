@@ -79,6 +79,7 @@
   "PROCESS.FINISHDATE.CONFIRM": "Möchten Sie wirklich das Enddatum des Vorgangs ändern?",
   "PROCESS.STOP": "Vorgangs sofort beenden",
   "PROCESS.STOP.CONFIRM": "Möchten Sie den Vorgangs wirklich sofort beenden?",
+  "PROCESS.ENGINES.SHOW": "Anlagen anzeigen",
   "WIND": "Wind",
   "GPV": "PV",
   "BIO": "Bio",
