@@ -83,8 +83,8 @@ app.controller('NetworkSubStateInfoController', ['$scope', '$http', '$timeout', 
         noUnselect: true,
         showGridFooter: false,
         showColumnFooter: true,
-        paginationPageSizes: [25, 50, 75],
-        paginationPageSize: 125,
+        paginationPageSizes: [10],
+        paginationPageSize: 10,
         enablePagingControls: true,
         enableHorizontalScrollbar: 0,
         enableVerticalScrollbar: 0, // 0: never, 1: always, 2: when needed
@@ -162,7 +162,7 @@ app.controller('NetworkSubStateInfoController', ['$scope', '$http', '$timeout', 
             
         ],
         onRegisterApi: function (gridApi) {
-            $scope.gridApi = gridApi;
+            $scope.gridApi2 = gridApi;
         }
     };
 
