@@ -182,7 +182,7 @@
   "description": "Beschreibung",
   "WithoutSchedule": "ohne Abregelung",
   "Terminated": "beendet",
-  "Live": "Aktiv",
+  "Live": "aktiv",
   "Deleted": "gelöscht",
   "Pending": "geplant",
   "subGeographicalRegions": "Netzgebiete",
