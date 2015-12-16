@@ -52,7 +52,7 @@ app.controller('ChangeDateFinishedController', ['$scope', '$state', '$stateParam
 
             $http.put(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
 
-                $state.go('state1');
+                $state.go('state1', {show: 'Aktiv'});
 
             }).error(function (data, status, headers, config) {
                 $log.error('openk-eisman-portlet/rest/activity/');
