@@ -31,7 +31,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
             }
         }
 
-        var detailsToBeDisplayed = ['dateCreated', 'createdBy', 'dateUpdated', 'updatedBy'];
+        var detailsToBeDisplayed = ['dateCreated', 'createdBy', 'dateUpdated', 'updatedBy','description'];
         i18nService.setCurrentLang('de');
 
         $scope.isDeletable = function () {
@@ -134,9 +134,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
         }
 
         $scope.hasReductions = function () {
-
-            return $scope.currentItem.processStatus !== 'WithoutSchedule';
-
+           return $scope.currentItem.processStatus !== 'WithoutSchedule';
         };
 
         $scope.showEngines = function () {

@@ -49,7 +49,9 @@
     </div>
     <div id="proposalListConfirm" class="col-xs-12 voffset table-responsive voffset">
         <div class="grid table" data-ui-grid="substations" data-ui-grid-pagination data-ui-grid-selection></div>
+        <div ng-include="'app/partials/custompaging.html'"></div>
     </div>
+    
     <div class="col-xs-12">
         <!-- Button trigger modal -->
         <button ui-sref="Regulation.CreateProposal.Main" class="btn btn-default btn-sm">{{'BACK'| translate}}
