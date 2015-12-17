@@ -89,53 +89,17 @@ app.controller('SynchronousMachineListByProcessIdCtrl', ['$scope', '$state', '$r
                     displayName: 'SUBSTATIONSGRID.PRIORITYFACTOR.ABBREVIATION',
                     width: '4%'
                 },
-                // Aktuelle Regelstufe
-                /*
-                {
-                    name: 'reducedPower',
-                    cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.reducedPower | number : 2}} %</div>',
-                    headerCellFilter: 'translate',
-                    displayName: 'SUBSTATIONSGRID.REDUCTIONSETTING.MEASURED.ABBREVIATION',
-                    width: '9%'
-                },
-                */
                 // Installierte Leistung
                 {
                     name: 'maxOperatingPower',
-                    cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.maxOperatingPower | number : 2}} {{row.entity.generatingUnitJpa.maxOperatingP.multiplier}}{{row.entity.generatingUnitJpa.maxOperatingP.unit}}</div>',
+                    cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.maxOperatingPower | number : 2}} MW</div>',
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.INSTALLEDPOWER.ABBREVIATION',
                     aggregationType: uiGridConstants.aggregationTypes.sum,
                     footerCellTemplate: '<div class="ui-grid-cell-contents">∑ {{col.getAggregationValue() | number : 2}} MW</div>',
                     width: '9%'
                 },
-                // Aktuelle Wirkleistung
-                /*
-                {
-                    name: 'generatorPowerMeasured.value', 
-                    cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.generatorPowerMeasured.value | number : 2}} {{row.entity.generatorPowerMeasured.multiplier}}{{row.entity.generatorPowerMeasured.unit}}</div>',
-                    headerCellFilter: 'translate',
-                    displayName: 'SUBSTATIONSGRID.GENERATORVOLTAGE.MEASURED.ABBREVIATION',
-                    aggregationType: uiGridConstants.aggregationTypes.sum,
-                    footerCellTemplate: '<div class="ui-grid-cell-contents">∑ {{col.getAggregationValue() | number : 2}} MW</div>',
-                    width: '9%'
-                },
-                
-                */
-                // abregeln auf
-                
-                /*
-                
-                {
-                    name: 'reductionAdvice',
-                    cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.reductionAdvice | number : 2}} %</div>',
-                    headerCellFilter: 'translate',
-                    displayName: 'SUBSTATIONSGRID.REDUCTIONSETTING.TO.SET'
-                },
-                */
                 // abgeregelte Leistung
-                
-              
                 {
                     name: 'reducedPower',
                     cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.reducedPower | number : 2}} MW</div>',
@@ -145,10 +109,6 @@ app.controller('SynchronousMachineListByProcessIdCtrl', ['$scope', '$state', '$r
                     footerCellTemplate: '<div class="ui-grid-cell-contents">∑ {{col.getAggregationValue() | number : 2}} MW</div>',
                     width: '10%'
                 }
-                
-                
-                
-
 
             ],
             onRegisterApi: function (gridApi) {
