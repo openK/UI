@@ -1,12 +1,2 @@
 <div class="grid table" data-ui-grid="substations" data-ui-grid-pagination data-ui-grid-selection></div>
-
-<div style="margin: -10px 10px 10px 0px;">
-    <a ng-click="gridApi2.pagination.seek(1)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>
-    <a ng-click="gridApi2.pagination.previousPage()" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a>
-    <span class="paging ng-binding">Seite {{ gridApi2.pagination.getPage() }} von {{ gridApi2.pagination.getTotalPages() }}</span>
-    <a ng-click="gridApi2.pagination.nextPage()" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></a>
-    <a ng-click="gridApi2.pagination.seek(gridApi2.pagination.getTotalPages())" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></a>
-    <span class="paging ng-binding">gehe zu Seite</span>
-    <input type="text" placeholder="1" ng-model="currentPage" id="currentPage" class="goto ng-pristine ng-untouched ng-valid">
-    <a ng-click="gridApi2.pagination.seek(gotoPageNumber());" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
-</div>
+<div ng-include="'app/partials/custompaging.html'"></div>
