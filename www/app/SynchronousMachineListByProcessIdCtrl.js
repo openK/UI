@@ -28,6 +28,24 @@ app.controller('SynchronousMachineListByProcessIdCtrl', ['$scope', '$state', '$r
             data: mock,
             columnDefs: [
                 {
+                    name: 'a',
+                    headerCellFilter: 'translate',
+                    displayName: 'Maßnahme',
+                    width: '14%'
+                },
+                {
+                    name: 'b',
+                    headerCellFilter: 'translate',
+                    displayName: 'von',
+                    width: '8%'
+                },
+                {
+                    name: 'c',
+                    headerCellFilter: 'translate',
+                    displayName: 'bis',
+                    width: '8%'
+                },
+                {
                     name: 'generatingUnitJpa.registeredGeneratorJpa.unitTypeJpa',
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.TECHNICALTYPE.ABBREVIATION',
@@ -84,6 +102,7 @@ app.controller('SynchronousMachineListByProcessIdCtrl', ['$scope', '$state', '$r
                     width: '9%'
                 },
                 // Aktuelle Wirkleistung
+                /*
                 {
                     name: 'generatorPowerMeasured.value',
                     cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.generatorPowerMeasured.value | number : 2}} {{row.entity.generatorPowerMeasured.multiplier}}{{row.entity.generatorPowerMeasured.unit}}</div>',
@@ -93,6 +112,8 @@ app.controller('SynchronousMachineListByProcessIdCtrl', ['$scope', '$state', '$r
                     footerCellTemplate: '<div class="ui-grid-cell-contents">∑ {{col.getAggregationValue() | number : 2}} MW</div>',
                     width: '9%'
                 },
+                
+                */
                 // abregeln auf
                 {
                     name: 'reductionAdvice',
@@ -101,6 +122,8 @@ app.controller('SynchronousMachineListByProcessIdCtrl', ['$scope', '$state', '$r
                     displayName: 'SUBSTATIONSGRID.REDUCTIONSETTING.TO.SET'
                 },
                 // abgeregelte Leistung
+                
+                /*
                 {
                     name: 'activePowerJpaToBeReduced.value',
                     cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.activePowerJpaToBeReduced.value | number : 2}} MW</div>',
@@ -109,6 +132,9 @@ app.controller('SynchronousMachineListByProcessIdCtrl', ['$scope', '$state', '$r
                     aggregationType: uiGridConstants.aggregationTypes.sum,
                     footerCellTemplate: '<div class="ui-grid-cell-contents">∑ {{col.getAggregationValue() | number : 2}} MW</div>'
                 }
+                */
+                
+                
 
 
             ],
