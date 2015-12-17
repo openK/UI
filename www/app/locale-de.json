@@ -190,7 +190,7 @@
   "transformerStations": "Umspannwerk für Abregelung",
   "requiredReductionPower": "Abzuregelnde Wirkleistug",
   "PROCESS.EDIT.FINISHDATE": "Vorgangsende bearbeiten",
-  "PROCESS.EDIT.CANCEL": "Abbbruch",
+  "PROCESS.EDIT.CANCEL": "Abbruch",
   "PROCESS.EDIT.CONFIRM": "Neues Enddatum speichern",
   "PROCESS.EDIT.RECENTDATE": "Aktuelles Enddatum: ",
   "DATE.PATTERN": "dd.MM.yyyy HH:mm",
