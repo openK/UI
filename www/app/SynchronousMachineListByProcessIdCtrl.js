@@ -76,7 +76,11 @@ app.controller('SynchronousMachineListByProcessIdCtrl', ['$scope', '$state', '$r
                     displayName: 'SUBSTATIONSGRID.ZIP',
                     width: '4%'
                 },
-                {name: 'name', headerCellFilter: 'translate', displayName: 'SUBSTATIONSGRID.STATIONNAME'},
+                {
+                    name: 'name', 
+                    headerCellFilter: 'translate', 
+                    displayName: 'SUBSTATIONSGRID.STATIONNAME'
+                },
                 {
                     name: 'bdew',
                     headerCellFilter: 'translate',
