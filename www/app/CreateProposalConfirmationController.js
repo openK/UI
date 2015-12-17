@@ -26,7 +26,7 @@ app.controller('CreateProposalConfirmationController', ['$scope', '$state', '$ht
         showColumnFooter: true,
         paginationPageSizes: [25, 50, 75],
         paginationPageSize: 25,
-        enablePagingControls: true,
+        enablePaginationControls: false,
         enableHorizontalScrollbar: 0,
         enableVerticalScrollbar: 2, // 0: never, 1: always, 2: when needed
         data: "activity.substationProposalList",
@@ -114,7 +114,7 @@ app.controller('CreateProposalConfirmationController', ['$scope', '$state', '$ht
             }
         ],
         onRegisterApi: function (gridApi) {
-            $scope.gridApi = gridApi;
+            $scope.gridApi2 = gridApi;
         }
     };
 
