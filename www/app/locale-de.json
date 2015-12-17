@@ -188,7 +188,7 @@
   "Pending": "geplant",
   "subGeographicalRegions": "Netzgebiete",
   "transformerStations": "Umspannwerk für Abregelung",
-  "requiredReductionPower": "Abzuregelnde Wirkleistug",
+  "requiredReductionPower": "abzuregelnde Wirkleistung",
   "PROCESS.EDIT.FINISHDATE": "Vorgangsende bearbeiten",
   "PROCESS.EDIT.CANCEL": "Abbruch",
   "PROCESS.EDIT.CONFIRM": "Neues Enddatum speichern",

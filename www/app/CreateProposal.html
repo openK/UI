@@ -5,53 +5,7 @@
         <h4> {{'WORKFLOW.REDUCTIONADVICE'| translate}}</h4>
     </div>
 
-    <div class="col-xs-12 infobar">
-        <div class="panel panel-default confirmContentBox">
-            <div class="panel-heading">
-                <h3 class="panel-title ng-binding">{{'requiredReductionPower'| translate}}: {{ activity.settings.requiredReductionPower}} MW</h3>
-            </div>
-            <div class="panel-body ng-binding">
-
-                <div class="col-md-4">
-                    <table class="settings">
-                        <tr>
-                            <td class="tlabel">{{'dateStarted'| translate  }}:</td>
-                            <td>{{activity.settings.dateStarted}}</td>
-                        </tr>
-                        <tr>
-                            <td class="tlabel">{{'dateFinished'| translate  }}:</td>
-                            <td>{{activity.settings.dateFinished}}</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-md-4">
-                    <table class="settings">
-                        <tr>
-                            <td class="tlabel">{{'reasonOfReduction'| translate  }}:</td>
-                            <td>{{activity.settings.reasonOfReduction}}</td>
-                        </tr>
-                        <tr>
-                            <td class="tlabel">{{'description'| translate  }}:</td>
-                            <td>{{activity.settings.description}}</td>
-                        </tr>
-
-                    </table>
-                </div>
-                <div class="col-md-4">
-                    <div data-ng-if="activity.settings.useWholeArea">Gesamtes Netzgebiet</div>
-                    <div data-ng-if="activity.settings.subGeographicalRegions.length > 0">
-                        <div><strong>{{'subGeographicalRegions'| translate}}</strong></div>
-                        <div data-ng-repeat="(key,val) in activity.settings.subGeographicalRegions">{{val.name}}</div>
-                    </div>
-                    <div data-ng-if="activity.settings.transformerStations.length > 0">
-                        <div><strong>{{'transformerStations'| translate}}</strong></div>
-                        <div data-ng-repeat="(key,val) in activity.settings.transformerStations">{{val.name}}</div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
+    <div data-ng-include="'app/partials/activitydetails.html'"></div> 
 
 
     <div id="proposalList" class="col-xs-12 voffset table-responsive">
