@@ -4,14 +4,14 @@
             <div class="form-group">
                 <label for="datestarted" class="control-label col-xs-4">{{'SETTINGS.DATESTARTED'| translate}} *</label>
                 <div class="controls col-xs-8" data-ng-class="{'has-error': settingsForm.datestarted.$invalid}">
-                    <input type="text" placeholder="erforderlich" data-ng-required="true" value="" startrange data-ng-model="activity.dateStarted" class="form-control" id="datestarted" name="datestarted">
+                    <input type="text" placeholder="erforderlich" data-ng-required="true" value="" startrange data-ng-model="dateStarted" class="form-control" id="datestarted" name="datestarted">
                 </div>
             </div>
             <div class="form-group">
                 <label for="datefinished" class="control-label col-xs-4">{{'SETTINGS.DATEFINISHED' | translate}} *</label>
 
                 <div class="controls col-xs-8" data-ng-class="{'has-error': settingsForm.datefinished.$invalid}">
-                    <input type="text" data-ng-required="true" value="" data-ng-model="activity.dateFinished" endrange class="form-control" id="datefinished" name="datefinished">
+                    <input type="text" data-ng-required="true" value="" data-ng-model="dateFinished" endrange class="form-control" id="datefinished" name="datefinished">
                 </div>
             </div>
             <div class="form-group">
@@ -45,7 +45,7 @@
                        data-ng-class="{'has-error': settingsForm.requiredAdditionalReductionPower.$invalid}"
                        class="control-label col-xs-4">Änderung der Abregelleistung um *</label>
                 <div class="col-xs-4">
-                    <div class="input-group input-group-sm" 
+                    <div class="input-group input-group-sm"
                          data-ng-class="{'has-error': activity.reductionValue < 0 || !activity.reductionValue }">
                         <input type="number" data-ng-required="true" data-ng-model="activity.reductionValue"
                                min="1" name="requiredAdditionalReductionPower" id="requiredAdditionalReductionPower"
@@ -57,14 +57,14 @@
                     <div class="row">
                         <div class="col-xs-6">
                             <label class="radio-inline">
-                                <input type="radio" ng-value="true" name="reductionPositive" data-ng-required="true" 
+                                <input type="radio" ng-value="true" name="reductionPositive" data-ng-required="true"
                                        data-ng-model="activity.reductionPositive">
                                 Erhöhung
                             </label>
                         </div>
                         <div class="col-xs-6">
                             <label class="radio-inline">
-                                <input type="radio" ng-value="false" name="reductionPositive" data-ng-required="true" 
+                                <input type="radio" ng-value="false" name="reductionPositive" data-ng-required="true"
                                        data-ng-model="activity.reductionPositive">
                                 Reduzierung
                             </label>

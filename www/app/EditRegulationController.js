@@ -10,7 +10,7 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 app.controller('EditRegulationController', ['$scope', '$state', '$rootScope', function ($scope, $state, $rootScope) {
-    $scope.$on('$stateEditSuccess', function (event, toState, toParams, fromState, fromParams) {
+    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         if (toState.name === 'EditRegulation.EditSettings') {
             $scope.CanNavigateToEditSettings = true;
         }

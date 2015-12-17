@@ -72,7 +72,7 @@ app.controller('EditProposalConfirmationModalController', ['$scope', '$state', '
             "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
             "substationJpaList": $scope.activity.transformerStations,
             "preselectionName": "",
-            "preselectionConfigurationDto": {
+            "preselectionConfigurationJpa": {
                 "reductionSetting": $scope.activity.preselectionConfigurationDto.reductionSetting,
                 "discriminationCoefficientEnabled": $scope.activity.preselectionConfigurationDto.discriminationCoefficientEnabled,
                 "characteristicForMissingMeasurementFwt": $scope.activity.preselectionConfigurationDto.characteristicForMissingMeasurementFwt,

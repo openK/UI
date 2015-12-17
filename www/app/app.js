@@ -130,7 +130,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     controller: 'ChangeDownRegulationController',
                     resolve: {
                         createActivity: function (activityService) {
-                            return activityService.createActivity();
+                            return activityService.loadActivity();
                         }
                     }
                 }).state('ChangeRegulation.NetworkState', {
@@ -199,8 +199,8 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     templateUrl: "app/EditDownRegulation.html",
                     controller: 'EditDownRegulationController',
                     resolve: {
-                        createActivity: function (activityService) {
-                            return activityService.createActivity();
+                        loadActivity: function (activityService) {
+                            return activityService.loadActivity();
                         }
                     }
                 }).state('EditRegulation.NetworkState', {

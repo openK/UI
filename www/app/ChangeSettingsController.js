@@ -1,6 +1,9 @@
 app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', function ($scope, $state, $stateParams, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService) {
 
     $scope.activity = activityService.activity();
+    if ($scope.activity.pointOfInjectionType === 0) {
+        $scope.activity.useWholeArea = true;
+    }
     $scope.activity.reductionPositive = true;
     //$scope.activity = activityService.activity();
     // get current time as date...
@@ -59,8 +62,8 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
     });
 
 
-    $scope.activity.dateStarted = $filter('date')(new Date(newStartDate), 'dd.MM.yyyy HH:mm');
-    $scope.activity.dateFinished = $filter('date')(new Date($scope.activity.dateFinished), 'dd.MM.yyyy HH:mm');
+    $scope.dateStarted = $filter('date')(new Date(newStartDate), 'dd.MM.yyyy HH:mm');
+    $scope.dateFinished = $filter('date')(new Date(newDateFinished), 'dd.MM.yyyy HH:mm');
     $scope.activityConfigData = activityService.activityConfigData().activity;
 
     if ($stateParams.taskId) {
@@ -83,15 +86,15 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
 
     $scope.gotoStationList = function (settingsForm) {
 
-        if (settingsForm.$valid && $scope.isValidTimeInterval($scope.activity.dateStarted, $scope.activity.dateFinished)) {
+        if (settingsForm.$valid && $scope.isValidTimeInterval($scope.dateStarted, $scope.dateFinished)) {
 
-            var dateStarted = dateService.formatDateForBackend($scope.activity.dateStarted);
-            var dateFinished = dateService.formatDateForBackend($scope.activity.dateFinished);
+            $scope.activity.dateStarted = dateService.formatDateForBackend($scope.dateStarted);
+            $scope.activity.dateFinished = dateService.formatDateForBackend($scope.dateFinished);
             var data = {
                 "id": null,
                 "parentActivityJpaId": activityService.currentParentActivityId(),
-                "dateStarted": dateStarted,
-                "dateFinished": dateFinished,
+                "dateStarted": $scope.activity.dateStarted,
+                "dateFinished": $scope.activity.dateFinished,
                 "reductionValue": $scope.activity.reductionValue,
                 "reasonOfReduction": $scope.activity.reasonOfReduction,
                 "practise": $scope.activity.practise,

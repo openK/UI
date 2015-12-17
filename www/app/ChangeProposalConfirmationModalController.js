@@ -48,8 +48,6 @@ app.controller('ChangeProposalConfirmationModalController', ['$scope', '$state',
     };
 
     $scope.ok = function () {
-        var dateStarted = dateService.formatDateForBackend($scope.activity.dateStarted);
-        var dateFinished = dateService.formatDateForBackend($scope.activity.dateFinished);
         var dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
         var postData = {
             "id": $scope.activity.id,
@@ -57,8 +55,8 @@ app.controller('ChangeProposalConfirmationModalController', ['$scope', '$state',
             "dateCreated": dateCreated,
             "createdBy": $scope.activity.createdBy || 'openk',
             "userSettingsJpa": {
-                "dateStarted": dateStarted,
-                "dateFinished": dateFinished,
+                "dateStarted": $scope.activity.dateStarted,
+                "dateFinished": $scope.activity.dateFinished,
                 "geographicalRegion": $scope.activity.useWholeArea,
                 "reasonOfReduction": $scope.activity.reasonOfReduction,
                 "practise": $scope.activity.practise,
@@ -72,7 +70,7 @@ app.controller('ChangeProposalConfirmationModalController', ['$scope', '$state',
             "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
             "substationJpaList": $scope.activity.transformerStations,
             "preselectionName": "",
-            "preselectionConfigurationDto": {
+            "preselectionConfigurationJpa": {
                 "reductionSetting": $scope.activity.preselectionConfigurationDto.reductionSetting,
                 "discriminationCoefficientEnabled": $scope.activity.preselectionConfigurationDto.discriminationCoefficientEnabled,
                 "characteristicForMissingMeasurementFwt": $scope.activity.preselectionConfigurationDto.characteristicForMissingMeasurementFwt,

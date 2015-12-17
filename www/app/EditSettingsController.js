@@ -58,8 +58,8 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
     });
 
 
-    $scope.activity.dateStarted = $filter('date')(new Date(newStartDate), 'dd.MM.yyyy HH:mm');
-    $scope.activity.dateFinished = $filter('date')(new Date($scope.activity.dateFinished), 'dd.MM.yyyy HH:mm');
+    $scope.dateStarted = $filter('date')(new Date(newStartDate), 'dd.MM.yyyy HH:mm');
+    $scope.dateFinished = $filter('date')(new Date(newDateFinished), 'dd.MM.yyyy HH:mm');
     $scope.activityConfigData = activityService.activityConfigData().activity;
 
     if ($stateParams.taskId) {
@@ -71,8 +71,8 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
     }
 
     $scope.saveAndReturn = function () {
-        var dateStarted = dateService.formatDateForBackend($scope.activity.dateStarted);
-        var dateFinished = dateService.formatDateForBackend($scope.activity.dateFinished);
+        $scope.activity.dateStarted = dateService.formatDateForBackend($scope.dateStarted);
+        $scope.activity.dateFinished = dateService.formatDateForBackend($scope.dateFinished);
         var dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
         var postData = {
             "dateCreated": dateCreated,
@@ -80,8 +80,8 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
             "id": $scope.activity.activityId,
             "parentActivityJpaId": $scope.parentActivityId,
             "userSettingsJpa": {
-                "dateStarted": dateStarted,
-                "dateFinished": dateFinished,
+                "dateStarted": $scope.activity.dateStarted,
+                "dateFinished": $scope.activity.dateFinished,
                 "geographicalRegion": $scope.activity.useWholeArea,
                 "reasonOfReduction": $scope.activity.reasonOfReduction,
                 "practise": $scope.activity.practise,
@@ -130,12 +130,12 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
 
     $scope.getPostData = function () {
 
-        var dateStarted = dateService.formatDateForBackend($scope.activity.dateStarted);
-        var dateFinished = dateService.formatDateForBackend($scope.activity.dateFinished);
+        $scope.activity.dateStarted = dateService.formatDateForBackend($scope.dateStarted);
+        $scope.activity.dateFinished = dateService.formatDateForBackend($scope.dateFinished);
         var data = {
             "userSettingsJpa": {
-                "dateStarted": dateStarted,
-                "dateFinished": dateFinished,
+                "dateStarted": $scope.activity.dateStarted,
+                "dateFinished": $scope.activity.dateFinished,
                 "geographicalRegion": $scope.activity.useWholeArea,
                 "reasonOfReduction": $scope.activity.reasonOfReduction,
                 "practise": $scope.activity.practise,
@@ -178,7 +178,7 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
 
     $scope.gotoStationList = function (settingsForm) {
 
-        if (settingsForm.$valid && $scope.isValidTimeInterval($scope.activity.dateStarted, $scope.activity.dateFinished)) {
+        if (settingsForm.$valid && $scope.isValidTimeInterval($scope.dateStarted, $scope.dateFinished)) {
 
             $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/createreductionadvice", $scope.getPostData()).success(function (data) {
 
