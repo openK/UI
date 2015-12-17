@@ -62,7 +62,7 @@
   "PRESELECTION.REGULATIONSTEPS.ERROR": "Bitte geben Sie einen Wert für abregeln auf an.",
   "PRESELECTION.DISCRIMINATIONFACTOR": "Diskriminierungsfaktor berücksichtigen",
   "PRESELECTION.MISSINGMEASUREMENTFWT": "Ersatzwertverfahren bei ungültig gemessener Wirkleistung (Fernwirkanlagen)",
-  "PRESELECTION.MISSINGMEASUREMENTFWT.ERROR": "Bitte geben Sie einen Wert für Ersatzwert Fernwirktechnik an.",
+  "PRESELECTION.MISSINGMEASUREMENTFWT.ERROR": "Bitte geben Sie einen Wert für Ersatzwert Fernwirkanlagen an.",
   "PRESELECTION.MISSINGMEASUREMENTEFR": "Ersatzwertverfahren bei ungültig gemessener Wirkleistung (EFR)",
   "PRESELECTION.MISSINGMEASUREMENTEFR.ERROR": "Bitte geben Sie einen Wert für Ersatzwert EFR an.",
   "PRESELECTION.NOTINCLUDED": "Anlage im Abregelvorschlag nicht berücksichtigen",

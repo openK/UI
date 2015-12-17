@@ -129,6 +129,11 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
 
         var dateStarted = dateService.formatDateForBackend($scope.activity.settings.dateStarted);
         var dateFinished = dateService.formatDateForBackend($scope.activity.settings.dateFinished);
+        if ($scope.activity.settings.practise) {
+            $scope.activity.settings.practise = true;
+        } else {
+            $scope.activity.settings.practise = false;
+        }
         var data = {
             "userSettingsJpa": {
                 "dateStarted": dateStarted,
