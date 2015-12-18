@@ -1,26 +1,22 @@
 <div class="modal-header">
-    <button class="close" aria-label="Close" data-ng-click="close()"><span
-            aria-hidden="true">&times;</span></button>
+    <button class="close" aria-label="Close" data-ng-click="close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
     <h4 id="saveTemplateLabel" class="modal-title">{{ 'PRESELECTION.SAVETEMPLATE' | translate}}</h4>
 </div>
 <div class="modal-body">
     <div class="input-group input-group-sm" data-ng-class="{'has-error': templateName == ''}">
-        <span id="bezeichnung"
-                class="input-group-addon">{{ 'PRESELECTION.TEMPLATEDESCRIPTION' | translate}}</span>
+        <span id="bezeichnung" class="input-group-addon">{{ 'PRESELECTION.TEMPLATEDESCRIPTION' | translate}}</span>
         <input type="text" data-ng-model="templateName" name="templateName" required data-ng-disabled='saveOk'
                 placeholder="Name der Vorlage" class="form-control">
     </div>
     <div class="alert alert-success" data-ng-show='saveOk'>{{ 'PRESELECTION.SAVEOK' | translate}}</div>
 </div>
 <div class="modal-footer">
-    <button data-dismiss="modal" class="btn btn-default" data-ng-disabled="saveOk" data-ng-click="cancel()">{{
-        'CANCEL' |
-        translate}}
+    <button data-dismiss="modal" class="btn btn-default" data-ng-click="close()">
+        {{closeButtonText}}
     </button>
-    <button class="btn btn-primary" data-ng-disabled="!templateName || saveOk" data-ng-click="ok()">{{
-        'SAVE' | translate}}
-    </button>
-    <button data-dismiss="modal" class="btn btn-default" data-ng-click="close()">{{ 'CLOSE' |
-        translate}}
+    <button class="btn btn-primary" data-ng-disabled="!templateName || saveOk" data-ng-click="ok()">
+        {{'SAVE' | translate}}
     </button>
 </div>

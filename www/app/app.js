@@ -49,6 +49,10 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     templateUrl: "app/Regulation.html",
                     controller: 'RegulationController',
                     abstract: true,
+                }).state('Regulation.CreateDownRegulation', {
+                    url: '/CreateDownRegulation',
+                    templateUrl: "app/CreateDownRegulation.html",
+                    controller: 'CreateDownRegulationController',
                     resolve: {
                         activity: function (activityService) {
                             activityService.resetActivity();
@@ -56,10 +60,6 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                         }
 
                     }
-                }).state('Regulation.CreateDownRegulation', {
-                    url: '/CreateDownRegulation',
-                    templateUrl: "app/CreateDownRegulation.html",
-                    controller: 'CreateDownRegulationController'
                 }).state('Regulation.NetworkState', {
                     url: '/NetworkState',
                     templateUrl: "app/NetworkState.html",
@@ -269,5 +269,11 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
         $rootScope.goBack = function () {
             $state.go($rootScope.previousState, $rootScope.previousParams);
         }
-
+        $rootScope.multiSelectTranslation = {
+            selectAll: "alles ausgewählen",
+            selectNone: "nichts auswählen",
+            reset: "zurücksetzen",
+            search: "suchen...",
+            nothingSelected: "keine Auswahl"
+        }
     }]);

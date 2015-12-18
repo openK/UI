@@ -5,7 +5,7 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
         id: null,
         preselection: {
             reductionSetting: '',
-            discriminationCoefficientEnabled: "false",
+            discriminationCoefficientEnabled: false,
             characteristicForMissingMeasurementJpaFwt: '',
             substituteValuePhotovoltaicFwt: null,
             substituteValueWindFwt: null,
@@ -20,11 +20,11 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
             dateFinished: '',
             reasonOfReduction: '',
             requiredReductionPower: '',
-            useWholeArea: false,
+            useWholeArea: true,
             subGeographicalRegions: {},
             transformerStations: {},
             description: '',
-            practise: "false"
+            practise: false
         },
         substationProposalList: []
     };
@@ -36,13 +36,13 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
         activity.dateCreated = null;
         activity.id = null;
         activity.preselection = {
-            reductionSetting: '',
-            discriminationCoefficientEnabled: "false",
-            characteristicForMissingMeasurementJpaFwt: '',
+            reductionSetting: 60,
+            discriminationCoefficientEnabled: false,
+            characteristicForMissingMeasurementFwt: 'NotIncluded',
             substituteValuePhotovoltaicFwt: null,
             substituteValueWindFwt: null,
             substituteValueBiogasFwt: null,
-            characteristicForMissingMeasurementJpaEfr: '',
+            characteristicForMissingMeasurementEfr: 'NotIncluded',
             substituteValuePhotovoltaicEfr: null,
             substituteValueWindEfr: null,
             substituteValueBiogasEfr: null
@@ -52,11 +52,11 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
             dateFinished: '',
             reasonOfReduction: '',
             requiredReductionPower: '',
-            useWholeArea: false,
+            useWholeArea: true,
             subGeographicalRegions: {},
             transformerStations: {},
             description: '',
-            practise: "false"
+            practise: false
         };
         activity.substationProposalList = [];
     }

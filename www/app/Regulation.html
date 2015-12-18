@@ -35,24 +35,21 @@
     <div class="col-xs-12 col-sm-12">
         <h2>EISMAN</h2>
         <h3>{{'CREATE.ACTIVITY' | translate}}:</h3>
-        <button class="btn btn-arrow-right" ui-sref="Regulation.CreateDownRegulation"
-                data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.CreateDownRegulation') != 0,
-                                     'btn-success' : currentState.name.indexOf('Regulation.CreateDownRegulation') == 0 }">
+        <button class="btn btn-arrow-right" ui-sref="Regulation.CreateDownRegulation" 
+                data-ng-class="{ 'btn-success' : currentWizardStep === 'CreateDownRegulation', 'btn-default' : currentWizardStep !== 'CreateDownRegulation'}">
             {{'WORKFLOW.SETTINGS' | translate}}
         </button>
         <button class="btn btn-arrow-right" ui-sref="Regulation.CreateSettings" data-ng-disabled="!CanNavigateToCreateSettings"
-                data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.CreateSettings') != 0,
-                                     'btn-success' : currentState.name.indexOf('Regulation.CreateSettings') == 0 }">
+                data-ng-class="{ 'btn-success' : currentWizardStep === 'CreateSettings', 'btn-default' : currentWizardStep !== 'CreateSettings'}"
+                >
             {{'WORKFLOW.DATA' | translate}}
         </button>
         <button class="btn btn-arrow-right" ui-sref="Regulation.CreateProposal" data-ng-disabled="!CanNavigateToCreateProposal"
-                data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.CreateProposal') != 0,
-                                     'btn-success' : currentState.name.indexOf('Regulation.CreateProposal') == 0 }">
+                data-ng-class="{ 'btn-success' : currentWizardStep == 'CreateProposal', 'btn-default' : currentWizardStep !== 'CreateProposal'}">
             {{'WORKFLOW.REDUCTIONADVICE' | translate}}
         </button>
         <button class="btn btn-arrow-right" ui-sref="Regulation.CreateProposalConfirmation" data-ng-disabled="!CanNavigateToCreateProposalConfirmation"
-                data-ng-class="{ 'btn-default' : currentState.name.indexOf('Regulation.CreateProposalConfirmation') != 0,
-                                     'btn-success' : currentState.name.indexOf('Regulation.CreateProposalConfirmation') == 0 }">
+                data-ng-class="{ 'btn-success' : currentWizardStep == 'CreateProposalConfirmation', 'btn-default' : currentWizardStep !== 'CreateProposalConfirmation'}">
             {{'WORKFLOW.CONFIRM' | translate}}
         </button>
         <div class="col-xs-5 zeit" data-ng-show="selectedStep == 'proposal' || selectedStep == 'confirm'">
@@ -67,7 +64,7 @@
             </div>
         </div>
         <ul class="nav nav-tabs voffset nav-tabs-maincontent">
-            <li ng-class="{active: currentState.name !== 'Regulation.NetworkState.Main'}"><a ui-sref="Regulation.CreateDownRegulation">Abregelung</a></li>
+            <li ng-class="{active: currentState.name !== 'Regulation.NetworkState.Main'}"><a ng-click="goBack()" href="">Abregelung</a></li>
             <li ng-class="{active: currentState.name === 'Regulation.NetworkState.Main'}"><a ui-sref="Regulation.NetworkState.Main">Netzzustand</a></li>
         </ul>
         <div style="padding-top: 10px" ui-view></div>
