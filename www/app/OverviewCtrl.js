@@ -22,15 +22,6 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
         $scope.data.currentpage = 1;
         $scope.activity = activityService.activity();
 
-        var KDate = function (c) {
-            if (typeof c === 'undefined') {
-                return new Date();
-            } else {
-                c = c.split('+');
-                return new Date(c[0]);
-            }
-        }
-
         var detailsToBeDisplayed = ['dateCreated', 'createdBy', 'dateUpdated', 'updatedBy','description'];
         i18nService.setCurrentLang('de');
 
@@ -41,7 +32,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
             } else {
                 return false;
             }
-        }
+        };
 
         $scope.isEditable = function () {
             if ($scope.currentItem.id && $scope.currentItem.processStatus === "WithoutSchedule") {
@@ -49,7 +40,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
             } else {
                 return false;
             }
-        }
+        };
 
         $scope.canEditFinishDate = function () {
             var dateStarted = new Date($scope.currentItem.dateStarted);
@@ -60,7 +51,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
             } else {
                 return false;
             }
-        }
+        };
 
         $scope.canAddActivity = function () {
             var dateStarted = new Date($scope.currentItem.dateStarted);
@@ -71,7 +62,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
             } else {
                 return false;
             }
-        }
+        };
 
         $scope.isActivityActive = function () {
             var dateStarted = new Date($scope.currentItem.dateStarted);
@@ -82,7 +73,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
             } else {
                 return false;
             }
-        }
+        };
 
         $scope.deleteProcess = function () {
             $scope.modalOptions = {
@@ -104,7 +95,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                 }
             };
             modalService.open($scope, 'app/partials/confirm.html');
-        }
+        };
 
         $scope.stopProcess = function () {
             $scope.modalOptions = {
@@ -131,7 +122,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                 }
             };
             modalService.open($scope, 'app/partials/confirm.html');
-        }
+        };
 
         $scope.hasReductions = function () {
            return $scope.currentItem.processStatus !== 'WithoutSchedule';
@@ -189,7 +180,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                                     modalService.close();
                                 });
                             }
-                        }
+                        };
                         modalService.open($scope, 'app/partials/confirm.html');
                     }, 100);
                 }
@@ -211,17 +202,17 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                         firstDay: 1
                     }
                 });
-            }
+            };
             modalService.open($scope, 'app/partials/editfinishdate.html', callback);
-        }
+        };
 
         var callPageObject = function () {
             var tab;
-            if(self.location.toString().indexOf('Terminated') > -1){
+            if(location.toString().indexOf('Terminated') > -1){
                 tab = 'Terminated';
             }
             else
-            if(self.location.toString().indexOf('Deleted') > -1){
+            if(location.toString().indexOf('Deleted') > -1){
                 tab = 'Deleted';
             }
             activityService.loadParentActivities(
@@ -237,7 +228,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                 $scope.data.currentpage = $scope.currentpage + 1;
                 $scope.navigateToDetails(data.content[0].id);
             });
-        }
+        };
 
         $scope.gotoPageNumber = function () {
             if ($scope.data.currentpage >= $scope.data.totalPages) {
@@ -245,18 +236,18 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
             }
             $scope.currentpage = $scope.data.currentpage - 1;
             callPageObject();
-        }
+        };
 
 
         $scope.getFirstPage = function () {
             $scope.currentpage = 0;
             callPageObject();
-        }
+        };
 
         $scope.getLastPage = function () {
             $scope.currentpage = $scope.data.totalPages - 1;
             callPageObject();
-        }
+        };
 
         $scope.getNextPage = function () {
             $scope.currentpage++;
@@ -265,7 +256,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
             } else {
                 $scope.currentpage = $scope.data.totalPages - 1;
             }
-        }
+        };
 
         $scope.getPreviousPage = function () {
             $scope.currentpage--;
@@ -274,7 +265,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
             } else {
                 $scope.currentpage = 0;
             }
-        }
+        };
 
         $scope.navigateToDetails = function (activityId) {
             activityService.currentParentActivityId(activityId);
@@ -314,9 +305,6 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
 
                 }
             }
-
-
-
         };
 
         $scope.navigateToCreate = function (id) {
@@ -510,14 +498,14 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                     headerCellFilter: 'translate',
                     displayName: 'GRID.STARTDATE',
                     cellFilter: "date : 'dd.MM.yyyy HH:mm'",
-                    width: '20%',
+                    width: '20%'
                 },
                 {
                     field: 'dateFinished',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.ENDDATE',
                     width: '20%',
-                    cellFilter: "date : 'dd.MM.yyyy HH:mm'",
+                    cellFilter: "date : 'dd.MM.yyyy HH:mm'"
                 },
                 {
                     field: 'reductionValue',
@@ -532,8 +520,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                     field: 'description',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.DESCRIPTION'
-
-                },
+                }
             ],
             onRegisterApi: function (gridApi) {
                 $scope.childGridApi = gridApi;
@@ -544,13 +531,11 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
             }
         };
 
-
         $scope.parentActivities = activityService.getParentActivities();
         $scope.overview.data = $scope.parentActivities.content;
         $scope.data.totalPages = $scope.parentActivities.totalPages;
         $log.log($scope.parentActivities.totalPages);
         $log.debug($scope.parentActivities);
-
 
         $timeout(function () {
             if ($scope.gridApi.selection.selectRow) {
