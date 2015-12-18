@@ -216,16 +216,24 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
         }
 
         var callPageObject = function () {
+            var tab;
+            if(self.location.toString().indexOf('Terminated') > -1){
+                tab = 'Terminated';
+            }
+            else
+            if(self.location.toString().indexOf('Deleted') > -1){
+                tab = 'Deleted';
+            }
             activityService.loadParentActivities(
                     $scope.currentpage,
                     $scope.searchOptions.pageSize,
                     (new Date()).getTime(),
                     $scope.searchOptions.sort ? $scope.searchOptions.sortColumn + "," + $scope.searchOptions.sort : '',
-                    $scope.searchOptions.filter.filter ? $scope.searchOptions.filter.filter : ''
+                    $scope.searchOptions.filter.filter ? $scope.searchOptions.filter.filter : '',
+                    tab
                     ).then(function (data) {
                 $scope.overview.data = data.content;
-                $log.log($scope.parentActivities.totalPages);
-                $scope.data.totalPages = $scope.parentActivities.totalPages;
+                $scope.data.totalPages = data.totalPages;
                 $scope.data.currentpage = $scope.currentpage + 1;
                 $scope.navigateToDetails(data.content[0].id);
             });
@@ -331,7 +339,12 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
             sort: null,
             sortColumn: '',
             filter: {
-                filter: []
+                filter: {
+                    
+                    'isDeleted' :  'true',
+                    'isTerminated': 'false'
+                    
+                }
             }
         };
         $scope.overview = {
@@ -427,6 +440,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                 $scope.gridApi.core.on.filterChanged($scope, function () {
 
                     var grid = this.grid;
+                    $scope.currentpage = 0;
 
                     if (angular.isDefined($scope.filterTimeout)) {
                         $timeout.cancel($scope.filterTimeout);
@@ -434,7 +448,12 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                     $scope.filterTimeout = $timeout(function () {
 
                         var filter = {
-                            filter: {}
+                            filter: {
+                                
+                                'isDeleted' : 'true',
+                                'isTerminated': 'false'
+                                
+                            }
                         };
 
                         grid.columns.forEach(function (column) {
@@ -445,7 +464,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                             }
                         });
 
-                        $scope.searchOptions.filter = filter;
+                        $scope.searchOptions.filter = filter; 
                         callPageObject();
                     }, 250);
                 });
