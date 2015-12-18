@@ -36,23 +36,19 @@
         <h2>EISMAN</h2>
         <h3>{{'EDIT.ACTIVITY' | translate}}:</h3>
         <button class="btn btn-arrow-right" ui-sref="EditRegulation.EditDownRegulation"
-                data-ng-class="{ 'btn-default' : currentState.name.indexOf('EditRegulation.EditDownRegulation') != 0,
-                                     'btn-success' : currentState.name.indexOf('EditRegulation.EditDownRegulation') == 0 }">
+                data-ng-class="{ 'btn-success' : currentWizardStep === 'EditDownRegulation', 'btn-default' : currentWizardStep !== 'EditDownRegulation'}">
             {{'WORKFLOW.SETTINGS' | translate}}
         </button>
         <button class="btn btn-arrow-right" ui-sref="EditRegulation.EditSettings" data-ng-disabled="!CanNavigateToEditSettings"
-                data-ng-class="{ 'btn-default' : currentState.name.indexOf('EditRegulation.EditSettings') != 0,
-                                     'btn-success' : currentState.name.indexOf('EditRegulation.EditSettings') == 0 }">
+                data-ng-class="{ 'btn-success' : currentWizardStep === 'EditSettings', 'btn-default' : currentWizardStep !== 'EditSettings'}">
             {{'WORKFLOW.DATA' | translate}}
         </button>
         <button class="btn btn-arrow-right" ui-sref="EditRegulation.EditProposal" data-ng-disabled="!CanNavigateToEditProposal"
-                data-ng-class="{ 'btn-default' : currentState.name.indexOf('EditRegulation.EditProposal') != 0,
-                                     'btn-success' : currentState.name.indexOf('EditRegulation.EditProposal') == 0 }">
+                data-ng-class="{ 'btn-success' : currentWizardStep == 'EditProposal', 'btn-default' : currentWizardStep !== 'EditProposal'}">
             {{'WORKFLOW.REDUCTIONADVICE' | translate}}
         </button>
         <button class="btn btn-arrow-right" ui-sref="EditRegulation.EditProposalConfirmation" data-ng-disabled="!CanNavigateToEditProposalConfirmation"
-                data-ng-class="{ 'btn-default' : currentState.name.indexOf('EditRegulation.EditProposalConfirmation') != 0,
-                                     'btn-success' : currentState.name.indexOf('EditRegulation.EditProposalConfirmation') == 0 }">
+                data-ng-class="{ 'btn-success' : currentWizardStep == 'EditProposalConfirmation', 'btn-default' : currentWizardStep !== 'EditProposalConfirmation'}">
             {{'WORKFLOW.CONFIRM' | translate}}
         </button>
         <div class="col-xs-5 zeit" data-ng-show="selectedStep == 'proposal' || selectedStep == 'confirm'">
@@ -67,7 +63,7 @@
             </div>
         </div>
         <ul class="nav nav-tabs voffset nav-tabs-maincontent">
-            <li ui-sref-active="active"><a ui-sref="EditRegulation.ChangeDownRegulation">Abregelung</a></li>
+            <li ng-class="{active: currentState.name !== 'EditRegulation.NetworkState.Main'}"><a ng-click="goBack()" href="">Abregelung</a></li>
             <li ui-sref-active="active"><a ui-sref="EditRegulation.NetworkState.Main">Netzzustand</a></li>
         </ul>
         <div style="padding-top: 10px" ui-view></div>

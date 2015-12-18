@@ -11,14 +11,26 @@
  *******************************************************************************/
 app.controller('ChangeRegulationController', ['$scope', '$state', '$rootScope', function ($scope, $state, $rootScope) {
 
-    $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+    $rootScope.currentWizardStep = 'ChangeDownRegulation';
+
+    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+        if (toState.name === 'state1') {
+            $rootScope.currentWizardStep = "ChangeDownRegulation";
+            $scope.CanNavigateToChangeSettings = false;
+            $scope.CanNavigateToChangeProposal = false;
+            $scope.CanNavigateToChangeProposalConfirmation = false;
+            $rootScope.selectedTemplate = null;
+        }
         if (toState.name === 'ChangeRegulation.ChangeSettings') {
+            $rootScope.currentWizardStep = "ChangeSettings";
             $scope.CanNavigateToChangeSettings = true;
         }
         if (toState.name.indexOf('ChangeRegulation.ChangeProposal') === 0) {
+            $rootScope.currentWizardStep = "ChangeProposal";
             $scope.CanNavigateToChangeProposal = true;
         }
         if (toState.name === 'ChangeRegulation.ChangeProposalConfirmation') {
+            $rootScope.currentWizardStep = "ChangeProposalConfirmation";
             $scope.CanNavigateToChangeProposalConfirmation = true;
         }
     });

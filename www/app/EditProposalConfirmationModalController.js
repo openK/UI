@@ -47,9 +47,10 @@ app.controller('EditProposalConfirmationModalController', ['$scope', '$state', '
         $modalInstance.dismiss('cancel');
     };
 
+    $scope.dateStarted = $filter('date')(new Date($scope.activity.dateStarted), 'dd.MM.yyyy HH:mm');
+    $scope.dateFinished = $filter('date')(new Date($scope.activity.dateFinished), 'dd.MM.yyyy HH:mm');
+
     $scope.ok = function () {
-        var dateStarted = dateService.formatDateForBackend($scope.activity.dateStarted);
-        var dateFinished = dateService.formatDateForBackend($scope.activity.dateFinished);
         var dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
         var postData = {
             "id": $scope.activity.id,
@@ -57,8 +58,8 @@ app.controller('EditProposalConfirmationModalController', ['$scope', '$state', '
             "dateCreated": dateCreated,
             "createdBy": $scope.activity.createdBy || 'openk',
             "userSettingsJpa": {
-                "dateStarted": dateStarted,
-                "dateFinished": dateFinished,
+                "dateStarted": $scope.activity.dateStarted,
+                "dateFinished": $scope.activity.dateFinished,
                 "geographicalRegion": $scope.activity.useWholeArea,
                 "reasonOfReduction": $scope.activity.reasonOfReduction,
                 "practise": $scope.activity.practise,
