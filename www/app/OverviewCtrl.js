@@ -66,8 +66,8 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
             var dateStarted = new Date($scope.currentItem.dateStarted);
             var dateFinished = new Date($scope.currentItem.dateFinished);
             var now = $.now();
-            if ($scope.currentItem.id && ($scope.currentItem.processStatus === "Live" && (now >= dateStarted.getTime() && now <= dateFinished.getTime())) || $scope.currentItem.processStatus === "Pending") {
-                return true;
+            if ($scope.currentItem.id && ($scope.currentItem.processStatus === "Live" && (now >= dateStarted.getTime() && now <= dateFinished.getTime()))) { // || $scope.currentItem.processStatus === "Pending" ???
+                return true; 
             } else {
                 return false;
             }
