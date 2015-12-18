@@ -1,6 +1,9 @@
 app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', function ($scope, $state, $stateParams, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService) {
 
     $scope.activity = activityService.activity();
+    if ($scope.activity.pointOfInjectionType === 'GEOGRAPHICALREGION') {
+        $scope.activity.useWholeArea = true;
+    }
     //$scope.activity = activityService.activity();
     // get current time as date...
     var now = new Date($.now());

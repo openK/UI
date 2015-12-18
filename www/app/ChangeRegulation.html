@@ -36,23 +36,19 @@
         <h2>EISMAN</h2>
         <h3>{{'CREATECHILDACTIVITY' | translate}}:</h3>
         <button class="btn btn-arrow-right" ui-sref="ChangeRegulation.ChangeDownRegulation"
-                data-ng-class="{ 'btn-default' : currentState.name.indexOf('ChangeRegulation.ChangeDownRegulation') != 0,
-                                     'btn-success' : currentState.name.indexOf('ChangeRegulation.ChangeDownRegulation') == 0 }">
+                data-ng-class="{ 'btn-success' : currentWizardStep === 'ChangeDownRegulation', 'btn-default' : currentWizardStep !== 'ChangeDownRegulation'}">
             {{'WORKFLOW.SETTINGS' | translate}}
         </button>
         <button class="btn btn-arrow-right" ui-sref="ChangeRegulation.ChangeSettings" data-ng-disabled="!CanNavigateToChangeSettings"
-                data-ng-class="{ 'btn-default' : currentState.name.indexOf('ChangeRegulation.ChangeSettings') != 0,
-                                     'btn-success' : currentState.name.indexOf('ChangeRegulation.ChangeSettings') == 0 }">
+                data-ng-class="{ 'btn-success' : currentWizardStep === 'ChangeSettings', 'btn-default' : currentWizardStep !== 'ChangeSettings'}">
             {{'WORKFLOW.DATA' | translate}}
         </button>
         <button class="btn btn-arrow-right" ui-sref="ChangeRegulation.ChangeProposal" data-ng-disabled="!CanNavigateToChangeProposal"
-                data-ng-class="{ 'btn-default' : currentState.name.indexOf('ChangeRegulation.ChangeProposal') != 0,
-                                     'btn-success' : currentState.name.indexOf('ChangeRegulation.ChangeProposal') == 0 }">
+                data-ng-class="{ 'btn-success' : currentWizardStep == 'ChangeProposal', 'btn-default' : currentWizardStep !== 'ChangeProposal'}">
             {{'WORKFLOW.REDUCTIONADVICE' | translate}}
         </button>
         <button class="btn btn-arrow-right" ui-sref="ChangeRegulation.ChangeProposalConfirmation" data-ng-disabled="!CanNavigateToChangeProposalConfirmation"
-                data-ng-class="{ 'btn-default' : currentState.name.indexOf('ChangeRegulation.ChangeProposalConfirmation') != 0,
-                                     'btn-success' : currentState.name.indexOf('ChangeRegulation.ChangeProposalConfirmation') == 0 }">
+                data-ng-class="{ 'btn-success' : currentWizardStep == 'ChangeProposalConfirmation', 'btn-default' : currentWizardStep !== 'ChangeProposalConfirmation'}">
             {{'WORKFLOW.CONFIRM' | translate}}
         </button>
         <div class="col-xs-5 zeit" data-ng-show="selectedStep == 'proposal' || selectedStep == 'confirm'">

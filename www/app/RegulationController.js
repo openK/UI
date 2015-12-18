@@ -19,7 +19,7 @@ app.controller('RegulationController', ['$scope', '$state', '$rootScope', functi
             $rootScope.currentWizardStep = "CreateDownRegulation";
             $scope.CanNavigateToCreateSettings = false;
             $scope.CanNavigateToCreateProposal = false;
-            $scope.CanNavigateToCreateProposalConfirmation = true;
+            $scope.CanNavigateToCreateProposalConfirmation = false;
             $rootScope.selectedTemplate = null;
         }
         if (toState.name === 'Regulation.CreateDownRegulation') {

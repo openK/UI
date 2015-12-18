@@ -20,7 +20,7 @@ app.controller('EditDownRegulationController', ['$scope', '$state', '$rootScope'
         if (preselectionForm.$valid) {
             $state.go('EditRegulation.EditSettings');
         } else {
-
+            $rootScope.CanNavigateToEditSettings = false;
             $scope.preselectionFormSubmitted = true;
         }
         return false;
