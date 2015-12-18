@@ -1,7 +1,7 @@
 app.controller('ChangeProposalConfirmationController', ['$scope', '$state', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', 'activityService', function ($scope, $state, $http, $timeout, $translate, uiGridConstants, $log, activityService) {
 
     $scope.activity = activityService.activity();
-
+    $log.debug($scope.activity);
 
     $scope.searchOptions = {
         pageNumber: 1,
@@ -24,9 +24,9 @@ app.controller('ChangeProposalConfirmationController', ['$scope', '$state', '$ht
         noUnselect: true,
         showGridFooter: false,
         showColumnFooter: true,
-        paginationPageSizes: [25, 50, 75],
-        paginationPageSize: 25,
-        enablePagingControls: true,
+        paginationPageSizes: [10],
+        paginationPageSize: 10,
+        enablePaginationControls: false,
         enableHorizontalScrollbar: 0,
         enableVerticalScrollbar: 2, // 0: never, 1: always, 2: when needed
         data: "activity.substationProposalList",
@@ -114,7 +114,7 @@ app.controller('ChangeProposalConfirmationController', ['$scope', '$state', '$ht
             }
         ],
         onRegisterApi: function (gridApi) {
-            $scope.gridApi = gridApi;
+            $scope.gridApi2 = gridApi;
         }
     };
 

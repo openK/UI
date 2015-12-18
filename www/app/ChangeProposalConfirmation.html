@@ -1,4 +1,6 @@
 <div class="col-sm-12 col-xs-12" >
+    
+    
     <div class="col-sm-3 panel panel-default confirmContentBox">
         <div class="panel-heading">
             <h3 class="panel-title">{{'SETTINGS.REASONOFREDUCTION' | translate}}</h3>
@@ -47,8 +49,12 @@
             {{activity.dateDiff}}
         </div>
     </div>
+    
+    
+    
     <div id="proposalListConfirm" class="col-xs-12 voffset table-responsive voffset">
         <div class="grid table" data-ui-grid="substations" data-ui-grid-pagination data-ui-grid-selection></div>
+        <div data-ng-include="'app/partials/custompaging.html'"></div>
     </div>
     <div class="col-xs-12">
         <!-- Button trigger modal -->
