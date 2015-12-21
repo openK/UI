@@ -26,7 +26,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
         i18nService.setCurrentLang('de');
 
         $scope.isDeletable = function () {
-            if ($scope.currentItem.id && $scope.currentItem.processStatus === "Pending" /*|| $scope.currentItem.processStatus === "WithoutSchedule"*/) {
+            if ($scope.currentItem.id && $scope.currentItem.processStatus === "Pending" || $scope.currentItem.processStatus === "WithoutSchedule") {
                 return true;
             } else {
                 return false;
@@ -125,10 +125,10 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
 
         $scope.hasReductions = function () {
 
-            if (typeof $scope.currentItem.processStatus !== 'undefined') {
-                return $scope.currentItem.processStatus !== 'WithoutSchedule';
-            } else {
+            if ($scope.currentItem.processStatus === 'WithoutSchedule' || $scope.currentItem.processStatus === 'WithoutScheduleDeleted') {
                 return false;
+            } else {
+                return true;
             }
         };
 

@@ -183,6 +183,7 @@
   "injectionType": "Speisepunkttyp",
   "description": "Beschreibung",
   "WithoutSchedule": "ohne Abregelung",
+  "WithoutScheduleDeleted": "ohne Abregelung",
   "Terminated": "beendet",
   "Live": "aktiv",
   "Deleted": "gelöscht",
