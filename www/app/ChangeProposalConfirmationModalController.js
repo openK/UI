@@ -12,7 +12,7 @@
 app.controller('ChangeProposalConfirmationModalController', ['$scope', '$state', '$rootScope', '$modalInstance', '$http', '$filter', 'activityService', 'dateService', '$log', function ($scope, $state, $rootScope, $modalInstance, $http, $filter, activityService, dateService, $log) {
 
     $scope.activity = activityService.activity();
-    var hysteresis = activityService.activityConfigData().hysteresis || 5;
+    var hysteresis = activityService.activityConfigData().activity.hysteresis || 5;
 
     $scope.enough = "";
     $scope.activity.proposal = {};
@@ -48,6 +48,8 @@ app.controller('ChangeProposalConfirmationModalController', ['$scope', '$state',
         $modalInstance.dismiss('cancel');
     };
 
+    $scope.dateStarted = $filter('date') (new Date($scope.activity.dateStarted), 'dd.MM.yyyy HH:mm');
+    $scope.dateFinished = $filter('date') (new Date($scope.activity.dateFinished), 'dd.MM.yyyy HH:mm');
     $scope.ok = function () {
         var dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
         var postData = {
@@ -64,7 +66,7 @@ app.controller('ChangeProposalConfirmationModalController', ['$scope', '$state',
                 "description": $scope.activity.description
             },
             "activePowerJpaToBeReduced": {
-                "value": $scope.activity.activePowerJpaToBeReduced.value,
+                "value": $scope.activity.reductionValue,
                 "multiplier": "M",
                 "unit": "W"
             },
