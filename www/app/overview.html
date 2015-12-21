@@ -20,38 +20,38 @@
             <div class="pull-right">
                 <button name="buttonNavigateToCreate"
                         class="btn btn-primary"
-                        ui-sref="Regulation.CreateDownRegulation">
+                        data-ui-sref="Regulation.CreateDownRegulation">
                     {{ 'CREATE' | translate }}
                 </button>
                 <button name="buttonNavigateToEdit"
                         class="btn btn-primary"
-                        ng-disabled="!isEditable()"
+                        data-ng-disabled="!isEditable()"
                         ui-sref="EditRegulation.EditDownRegulation">
                     {{ 'EDIT.ACTIVITY' | translate }}
                 </button>
                 <button class="btn btn-primary"
-                        ng-disabled="!canAddActivity()"
-                        ui-sref="ChangeRegulation.ChangeDownRegulation">
+                        data-ng-disabled="!canAddActivity()"
+                        data-ui-sref="ChangeRegulation.ChangeDownRegulation">
                     {{ 'CREATECHILDACTIVITY' | translate }}
                 </button>
                 <button name="buttonNavigateToCreateChildActivity"
-                        ng-disabled="!isDeletable()"
-                        ng-click="deleteProcess()"
+                        data-ng-disabled="!isDeletable()"
+                        data-ng-click="deleteProcess()"
                         class="btn btn-primary">
                     {{ 'DELETE.PROCESS' | translate }}
                 </button>
                 <button ng-disabled="!canEditFinishDate()"
-                        ng-click="editFinishDate()"
+                        data-ng-click="editFinishDate()"
                         class="btn btn-primary">
                     {{ 'PROCESS.FINISHDATE.EDIT' | translate }}
                 </button>
                 <button ng-disabled="!isActivityActive()"
-                        ng-click="stopProcess()"
+                        data-ng-click="stopProcess()"
                         class="btn btn-primary">
                     {{ 'PROCESS.STOP' | translate }}
                 </button>
                 <button ng-disabled="!hasReductions()"
-                        ng-click="showEngines()"
+                        data-ng-click="showEngines()"
                         class="btn btn-primary">
                     {{ 'PROCESS.ENGINES.SHOW' | translate }}
                 </button>
@@ -65,16 +65,16 @@
     </div>
     <div class="col-sm-12">
         <ul class="nav nav-tabs voffset nav-tabs-maincontent">
-            <li ng-class="{ active: show==='Aktiv'  }"><a ui-sref="state1({show: 'Aktiv'   })">aktive u. geplante Vorgänge</a></li>
-            <li ng-class="{ active: show==='Terminated'}"><a ui-sref="state1({show: 'Terminated' })">beendete Vorgänge</a></li>
-            <li ng-class="{ active: show==='Deleted'}"><a ui-sref="state1({show: 'Deleted' })">gelöschte Vorgänge</a></li>
+            <li ng-class="{ active: show==='Aktiv'  }"><a data-ui-sref="state1({show: 'Aktiv'   })">aktive u. geplante Vorgänge</a></li>
+            <li ng-class="{ active: show==='Terminated'}"><a data-ui-sref="state1({show: 'Terminated' })">beendete Vorgänge</a></li>
+            <li ng-class="{ active: show==='Deleted'}"><a data-ui-sref="state1({show: 'Deleted' })">gelöschte Vorgänge</a></li>
         </ul>
-        <div ui-grid-selection
-             ui-grid-cellNav
+        <div data-ui-grid-selection
+             data-ui-grid-cellNav
              class="grid table"
              style="margin-top: 20px"
-             data-ui-grid="overview"
-             data-ui-grid-resize-columns></div>
+             data-data-ui-grid="overview"
+             data-data-ui-grid-resize-columns></div>
 
         <div style="margin: -10px 10px 10px 0px;">
             <a class="btn btn-primary btn-sm" ng-click="getFirstPage()"><span aria-hidden="true" class="glyphicon glyphicon-fast-backward"></span></a>
@@ -118,9 +118,9 @@
                         <h3 class="panel-title">Maßnahmen</h3>
                     </div>
                     <div class="panel-body">
-                        <div ui-grid="childActivities"
-                             ui-grid-selection
-                             ui-grid-cellNav></div>
+                        <div data-ui-grid="childActivities"
+                             data-ui-grid-selection
+                             data-ui-grid-cellNav></div>
                     </div>
                 </div>
             </div>
