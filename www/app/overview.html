@@ -26,7 +26,7 @@
                 <button name="buttonNavigateToEdit"
                         class="btn btn-primary"
                         data-ng-disabled="!isEditable()"
-                        ui-sref="EditRegulation.EditDownRegulation">
+                        data-ui-sref="EditRegulation.EditDownRegulation">
                     {{ 'EDIT.ACTIVITY' | translate }}
                 </button>
                 <button class="btn btn-primary"
@@ -40,18 +40,18 @@
                         class="btn btn-primary">
                     {{ 'DELETE.PROCESS' | translate }}
                 </button>
-                <button ng-disabled="!canEditFinishDate()"
+                <button data-ng-disabled="!canEditFinishDate()"
                         data-ng-click="editFinishDate()"
                         class="btn btn-primary">
                     {{ 'PROCESS.FINISHDATE.EDIT' | translate }}
                 </button>
-                <button ng-disabled="!isActivityActive()"
+                <button data-ng-disabled="!isActivityActive()"
                         data-ng-click="stopProcess()"
                         class="btn btn-primary">
                     {{ 'PROCESS.STOP' | translate }}
                 </button>
-                <button ng-disabled="!hasReductions()"
-                        data-ng-click="showEngines()"
+                <button data-ng-disabled="!hasReductions()"
+                        ng-click="showEngines()"
                         class="btn btn-primary">
                     {{ 'PROCESS.ENGINES.SHOW' | translate }}
                 </button>
@@ -65,16 +65,16 @@
     </div>
     <div class="col-sm-12">
         <ul class="nav nav-tabs voffset nav-tabs-maincontent">
-            <li ng-class="{ active: show==='Aktiv'  }"><a data-ui-sref="state1({show: 'Aktiv'   })">aktive u. geplante Vorgänge</a></li>
-            <li ng-class="{ active: show==='Terminated'}"><a data-ui-sref="state1({show: 'Terminated' })">beendete Vorgänge</a></li>
-            <li ng-class="{ active: show==='Deleted'}"><a data-ui-sref="state1({show: 'Deleted' })">gelöschte Vorgänge</a></li>
+            <li data-ng-class="{ active: show==='Aktiv'  }"><a data-ui-sref="state1({show: 'Aktiv'   })">aktive u. geplante Vorgänge</a></li>
+            <li data-ng-class="{ active: show==='Terminated'}"><a data-ui-sref="state1({show: 'Terminated' })">beendete Vorgänge</a></li>
+            <li data-ng-class="{ active: show==='Deleted'}"><a data-ui-sref="state1({show: 'Deleted' })">gelöschte Vorgänge</a></li>
         </ul>
         <div data-ui-grid-selection
              data-ui-grid-cellNav
              class="grid table"
              style="margin-top: 20px"
-             data-data-ui-grid="overview"
-             data-data-ui-grid-resize-columns></div>
+             data-ui-grid="overview"
+             data-ui-grid-resize-columns></div>
 
         <div style="margin: -10px 10px 10px 0px;">
             <a class="btn btn-primary btn-sm" ng-click="getFirstPage()"><span aria-hidden="true" class="glyphicon glyphicon-fast-backward"></span></a>
