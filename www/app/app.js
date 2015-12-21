@@ -130,7 +130,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     controller: 'ChangeDownRegulationController',
                     resolve: {
                         createActivity: function (activityService) {
-                            return activityService.loadActivity();
+                            return activityService.loadChildActivity();
                         }
                     }
                 }).state('ChangeRegulation.NetworkState', {

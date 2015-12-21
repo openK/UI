@@ -1,108 +1,100 @@
 ﻿<form name="settingsForm" class="form-horizontal" data-toggle="validator" novalidate>
     <div class="row">
-        <div class="col-xs-7">
-            <div class="form-group">
-                <label for="datestarted" class="control-label col-xs-4">{{'SETTINGS.DATESTARTED'| translate}} *</label>
-                <div class="controls col-xs-8" data-ng-class="{'has-error': settingsForm.datestarted.$invalid}">
-                    <input type="text" placeholder="erforderlich" data-ng-required="true" value="" startrange data-ng-model="dateStarted" class="form-control" id="datestarted" name="datestarted">
-                </div>
+        <div class="form-group">
+            <label for="datestarted" class="control-label col-xs-2">{{'SETTINGS.DATESTARTED'| translate}} *</label>
+            <div class="controls col-xs-4" data-ng-class="{'has-error': settingsForm.datestarted.$invalid}">
+                <input type="text" placeholder="erforderlich" data-ng-required="true" value="" startrange data-ng-model="dateStarted" class="form-control" id="datestarted" name="datestarted">
             </div>
-            <div class="form-group">
-                <label for="datefinished" class="control-label col-xs-4">{{'SETTINGS.DATEFINISHED' | translate}} *</label>
+        </div>
+        <div class="form-group">
+            <label for="datefinished" class="control-label col-xs-2">{{'SETTINGS.DATEFINISHED' | translate}} *</label>
 
-                <div class="controls col-xs-8" data-ng-class="{'has-error': settingsForm.datefinished.$invalid}">
-                    <input type="text" data-ng-required="true" value="" data-ng-model="dateFinished" endrange class="form-control" id="datefinished" name="datefinished">
+            <div class="controls col-xs-4" data-ng-class="{'has-error': settingsForm.datefinished.$invalid}">
+                <input type="text" placeholder="erforderlich" data-ng-required="true" value="" endrange data-ng-model="dateFinished" class="form-control" id="datefinished" name="datefinished">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="reasonofreduction" class="control-label col-xs-2">{{'SETTINGS.REASONOFREDUCTION'| translate}}</label>
+            <div class="col-xs-4">
+                <input id="reasonofreduction" type="text" data-ng-model="activity.reasonOfReduction" class="form-control" readonly>
+            </div>
+        </div>
+        <!--<div class="form-group">
+            <label for="currentReductionPower" class="control-label col-xs-4">bisher geforderte Abregelleistung</label>
+            <div class="col-xs-8">
+                <div class="input-group input-group-sm">
+                    <input id="currentReductionPower" type="number" readonly data-ng-model="activity.activePowerJpaToBeReduced.value"
+                           data-area-describedby="requiredreductionaddon" class="form-control">
+                    <span class="input-group-addon">MW</span>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="reasonofreduction" class="control-label col-xs-4">{{'SETTINGS.REASONOFREDUCTION'| translate}}</label>
-                <div class="col-xs-8">
-                    <input id="reasonofreduction" type="text" data-ng-model="activity.reasonOfReduction" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+            <label for="currentReductionPower" class="control-label col-xs-4">bisherige Abregelleistung</label>
+            <div class="col-xs-8">
+                <div class="input-group input-group-sm">
+                    <input id="currentReductionPower" type="number" readonly data-ng-model="activity.activePowerJpaToBeReduced.value"
+                           data-area-describedby="requiredreductionaddon" class="form-control">
+                    <span class="input-group-addon">MW</span>
                 </div>
             </div>
-            <!--<div class="form-group">
-                <label for="currentReductionPower" class="control-label col-xs-4">bisher geforderte Abregelleistung</label>
-                <div class="col-xs-8">
-                    <div class="input-group input-group-sm">
-                        <input id="currentReductionPower" type="number" readonly data-ng-model="activity.activePowerJpaToBeReduced.value"
-                               data-area-describedby="requiredreductionaddon" class="form-control">
-                        <span class="input-group-addon">MW</span>
+        </div>-->
+        <div class="form-group">
+            <label for="requiredAdditionalReductionPower"
+                   data-ng-class="{'has-error': settingsForm.requiredAdditionalReductionPower.$invalid}"
+                   class="control-label col-xs-2">Änderung der Abregelleistung um *</label>
+            <div class="col-xs-2">
+                <div class="input-group input-group-sm"
+                     data-ng-class="{'has-error': activity.reductionValue < 0 || !activity.reductionValue }">
+                    <input type="number" data-ng-required="true" data-ng-model="activity.reductionValue"
+                           min="1" name="requiredAdditionalReductionPower" id="requiredAdditionalReductionPower"
+                           class="form-control">
+                    <span id="requiredreductionaddon" class="input-group-addon">MW</span>
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <label class="radio-inline">
+                            <input type="radio" ng-value="true" name="reductionPositive" data-ng-required="true"
+                                   data-ng-model="activity.reductionPositive">
+                            Erhöhung
+                        </label>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="radio-inline">
+                            <input type="radio" ng-value="false" name="reductionPositive" data-ng-required="true"
+                                   data-ng-model="activity.reductionPositive">
+                            Reduzierung
+                        </label>
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="currentReductionPower" class="control-label col-xs-4">bisherige Abregelleistung</label>
-                <div class="col-xs-8">
-                    <div class="input-group input-group-sm">
-                        <input id="currentReductionPower" type="number" readonly data-ng-model="activity.activePowerJpaToBeReduced.value"
-                               data-area-describedby="requiredreductionaddon" class="form-control">
-                        <span class="input-group-addon">MW</span>
-                    </div>
-                </div>
-            </div>-->
-            <div class="form-group">
-                <label for="requiredAdditionalReductionPower"
-                       data-ng-class="{'has-error': settingsForm.requiredAdditionalReductionPower.$invalid}"
-                       class="control-label col-xs-4">Änderung der Abregelleistung um *</label>
-                <div class="col-xs-4">
-                    <div class="input-group input-group-sm"
-                         data-ng-class="{'has-error': activity.reductionValue < 0 || !activity.reductionValue }">
-                        <input type="number" data-ng-required="true" data-ng-model="activity.reductionValue"
-                               min="1" name="requiredAdditionalReductionPower" id="requiredAdditionalReductionPower"
-                               class="form-control">
-                        <span id="requiredreductionaddon" class="input-group-addon">MW</span>
-                    </div>
-                </div>
-                <div class="col-xs-4">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <label class="radio-inline">
-                                <input type="radio" ng-value="true" name="reductionPositive" data-ng-required="true"
-                                       data-ng-model="activity.reductionPositive">
-                                Erhöhung
-                            </label>
-                        </div>
-                        <div class="col-xs-6">
-                            <label class="radio-inline">
-                                <input type="radio" ng-value="false" name="reductionPositive" data-ng-required="true"
-                                       data-ng-model="activity.reductionPositive">
-                                Reduzierung
-                            </label>
-                        </div>
-                    </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2">Speisepunkttyp</label>
+            <div class="col-xs-4">
+                <input type="text" data-ng-model="activity.pointOfInjectionTypeString" class="form-control" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2">Speisepunkte</label>
+            <div class="col-xs-4">
+                <div class="list-group">
+                    <a href="" class="list-group-item">
+                        <p ng-repeat="ip in activity.pointOfInjectionList" class="list-group-item-text">
+                            {{ip}}
+                        </p>
+                    </a>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="control-label col-xs-4">Speisepunkttyp</label>
-                <div class="col-xs-8">
-                    <input type="text" value="Gesamtnetz" class="form-control" readonly>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-xs-4">Speisepunkte</label>
-                <div class="col-xs-8">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item">
-                            <p class="list-group-item-text">
-                                Netzgebiet 1
-                            </p>
-                            <p class="list-group-item-text">
-                                Netzgebiet 2
-                            </p>
-                            <p class="list-group-item-text">
-                                Netzgebiet 3
-                            </p>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="description" class="control-label col-xs-4">{{'SETTINGS.DESCRIPTION' | translate}} *</label>
+        </div>
+        <div class="form-group">
+            <label for="description" class="control-label col-xs-2">{{'SETTINGS.DESCRIPTION' | translate}} *</label>
 
-                <div class="col-xs-8" data-ng-class="{'has-error': activity.description == ''}">
-                    <textarea id="description" data-ng-required="true" data-ng-model="activity.description" rows="3"
-                              class="form-control"></textarea>
-                </div>
+            <div class="col-xs-4" data-ng-class="{'has-error': activity.description == ''}">
+                <textarea id="description" data-ng-required="true" data-ng-model="activity.description" rows="3"
+                          class="form-control"></textarea>
             </div>
         </div>
     </div>
@@ -169,25 +161,17 @@
                 </normal>
             </div>
         </div>
-        <div class="col-xs-12 voffset">
-            <div class="form-group">
-                <div class="col-xs-12">
-                    <div class="btn-group" role="group">
-                        <button class="btn btn-default btn-sm"
-                                ui-sref="ChangeRegulation.ChangeDownRegulation">
-                            {{'BACK' | translate}}
-                        </button>
-                        <button class="btn btn-default btn-sm" ui-sref="state1({show: 'Aktiv'})">
-                            {{'CANCEL' | translate}}
-                        </button>
-                    </div>
-                    <div class="btn-group pull-right" role="group">
-                        <button class="btn btn-primary btn-sm"
-                                data-ng-click="gotoStationList(settingsForm)">
-                            Abregelvorschlag erstellen
-                        </button>
-                    </div>
-                </div>
+        <div class="row">
+            <div class="col-xs-offset-2 col-xs-4">
+                <button class="btn btn-default" ui-sref="state1({show: 'Aktiv'})">
+                    {{ 'CANCEL' | translate }}
+                </button>
+                <button class="btn btn-default" ui-sref="ChangeRegulation.ChangeDownRegulation">
+                    {{'BACK' | translate}}
+                </button>
+                <button class="btn btn-primary pull-right" data-ng-click="gotoStationList(settingsForm)">
+                    Abregelvorschlag erstellen
+                </button>
             </div>
         </div>
     </div>

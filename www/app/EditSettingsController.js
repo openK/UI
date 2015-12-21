@@ -4,6 +4,8 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
     if ($scope.activity.pointOfInjectionType === 'GEOGRAPHICALREGION') {
         $scope.activity.useWholeArea = true;
     }
+
+    $scope.parentActivityId = activityService.currentParentActivityId();
     //$scope.activity = activityService.activity();
     // get current time as date...
     var now = new Date($.now());
@@ -151,6 +153,7 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
             },
             "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
             "substationJpaList": $scope.activity.transformerStations,
+            "parentActivityJpaId": $scope.parentActivityId,
             "preselectionName": "",
             "preselectionConfigurationJpa": {
                 "reductionSetting": $scope.activity.preselectionConfigurationDto.reductionSetting,

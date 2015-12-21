@@ -1,6 +1,6 @@
 ﻿<form name="preselectionForm" class="form-horizontal" data-toggle="validator">
     <div class="form-group">
-        <label class="control-label col-xs-3">
+        <label class="control-label col-xs-2">
             {{ 'PRESELECTION.REGULATIONSTEPS' | translate }} *
         </label>
 
@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-xs-3">
+        <label class="control-label col-xs-2">
             {{ 'PRESELECTION.DISCRIMINATIONFACTOR' | translate }} *
         </label>
 
@@ -36,10 +36,10 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-xs-3">
+        <label class="control-label col-xs-2">
             Ersatzwertverfahren *
         </label>
-        <div class="col-xs-4">
+        <div class="col-xs-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">bei ungültig gemessener Wirkleistung für Fernwirkanlagen</h3>
@@ -104,7 +104,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-4">
+        <div class="col-xs-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">bei ungültig gemessener Wirkleistung für EFR</h3>
@@ -171,12 +171,12 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-xs-3">
+        <label class="control-label col-xs-2">
             {{ 'PRESELECTION.HYSTERESIS' | translate }}
         </label>
         <div class="col-xs-1">
             <div class="input-group">
-                <p data-ng-model="hysteresis" class="form-control" />
+                <input type="number" readonly data-ng-model="activityConfigData.activity.hysteresis" class="form-control" />
                 <div class="input-group-addon">%</div>
             </div>
         </div>
@@ -223,7 +223,7 @@
         </div>
     </div>
     <div class="row">
-        <div class=" col-xs-offset-3 col-xs-8">
+        <div class=" col-xs-offset-2 col-xs-6">
             <button class="btn btn-default" ui-sref="state1({show: 'Aktiv'})">
                 {{ 'CANCEL' | translate }}
             </button>

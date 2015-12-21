@@ -26,8 +26,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
         i18nService.setCurrentLang('de');
 
         $scope.isDeletable = function () {
-
-            if ($scope.currentItem.id && $scope.currentItem.processStatus === "Pending" || $scope.currentItem.processStatus === "WithoutSchedule") {
+            if ($scope.currentItem.id && $scope.currentItem.processStatus === "Pending" /*|| $scope.currentItem.processStatus === "WithoutSchedule"*/) {
                 return true;
             } else {
                 return false;
@@ -35,7 +34,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
         };
 
         $scope.isEditable = function () {
-            if ($scope.currentItem.id && $scope.currentItem.processStatus === "WithoutSchedule") {
+            if ($scope.currentItem.id && ($scope.currentItem.processStatus === "WithoutSchedule" || $scope.currentItem.processStatus === "Pending")) {
                 return true;
             } else {
                 return false;
@@ -198,7 +197,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                     timePicker: true,
                     timePickerIncrement: 15,
                     startDate: fd,
-                    minDate: $.now(),
+                    minDate: new Date($.now()),
                     locale: {
                         format: 'DD.MM.YYYY HH:mm',
                         applyLabel: '&Uuml;bernehmen',

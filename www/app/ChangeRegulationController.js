@@ -21,6 +21,9 @@ app.controller('ChangeRegulationController', ['$scope', '$state', '$rootScope', 
             $scope.CanNavigateToChangeProposalConfirmation = false;
             $rootScope.selectedTemplate = null;
         }
+        if (toState.name === 'ChangeRegulation.ChangeDownRegulation') {
+            $rootScope.currentWizardStep = "ChangeDownRegulation";
+        }
         if (toState.name === 'ChangeRegulation.ChangeSettings') {
             $rootScope.currentWizardStep = "ChangeSettings";
             $scope.CanNavigateToChangeSettings = true;
