@@ -140,7 +140,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                 "id": $scope.currentItem.id,
                 "startDate": $scope.currentItem.dateStarted,
                 "endDate": $scope.currentItem.dateFinished,
-                "closeButtonText": "OK",
+                "closeButtonText": $filter('translate')('CLOSE'),
                 "close": function () {
                     modalService.close();
                 }
@@ -492,7 +492,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                 {
                     field: 'seqNum',
                     headerCellFilter: 'translate',
-                    width: '10%',
+                    width: '8%',
                     displayName: 'GRID.SEQNUM'
                 },
                 {
@@ -500,13 +500,13 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                     headerCellFilter: 'translate',
                     displayName: 'GRID.STARTDATE',
                     cellFilter: "date : 'dd.MM.yyyy HH:mm'",
-                    width: '20%'
+                    width: '16%'
                 },
                 {
                     field: 'dateFinished',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.ENDDATE',
-                    width: '20%',
+                    width: '16%',
                     cellFilter: "date : 'dd.MM.yyyy HH:mm'"
                 },
                 {
@@ -514,7 +514,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                     headerCellFilter: 'translate',
                     cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.reductionValue | number : 2}} MW</div>',
                     displayName: 'GRID.POWERTOBEREDUCED',
-                    width: '20%',
+                    width: '28%',
                     cellClass: 'col-numbers',
                     filter: uiGridConstants.filter.GREATER_THAN_OR_EQUAL
                 },
