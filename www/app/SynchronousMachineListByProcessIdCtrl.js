@@ -11,7 +11,7 @@ app.controller('SynchronousMachineListByProcessIdCtrl', ['$scope', '$state', '$r
             enableColumnMenus: false,
             noUnselect: true,
             showGridFooter: false,
-            showColumnFooter: true,
+            showColumnFooter: false,
             minRowsToShow: 11,
             paginationPageSizes: [10],
             paginationPageSize: 10,
@@ -21,7 +21,7 @@ app.controller('SynchronousMachineListByProcessIdCtrl', ['$scope', '$state', '$r
             data: mock,
             columnDefs: [
                 {
-                    name: 'id',
+                    name: 'seqNum',
                     headerCellFilter: 'translate',
                     displayName: 'Maßnahme',
                     width: '8%'
@@ -88,7 +88,7 @@ app.controller('SynchronousMachineListByProcessIdCtrl', ['$scope', '$state', '$r
                     cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.maxOperatingPower.value | number : 2}} {{row.entity.maxOperatingPower.multiplier}}{{row.entity.maxOperatingPower.unit}}</div>',
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.INSTALLEDPOWER.ABBREVIATION',
-                    aggregationType: uiGridConstants.aggregationTypes.sum,
+                    // aggregationType: uiGridConstants.aggregationTypes.sum,
                     footerCellTemplate: '<div class="ui-grid-cell-contents">∑ {{col.getAggregationValue() | number : 2}} MW</div>',
                     width: '9%'
                 },
@@ -98,7 +98,7 @@ app.controller('SynchronousMachineListByProcessIdCtrl', ['$scope', '$state', '$r
                     cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.reducedPower.value | number : 2}} {{row.entity.reducedPower.multiplier }}{{row.entity.reducedPower.unit }}</div>',
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.REDUCEDPOWER',
-                    aggregationType: uiGridConstants.aggregationTypes.sum,
+                    // aggregationType: uiGridConstants.aggregationTypes.sum,
                     footerCellTemplate: '<div class="ui-grid-cell-contents">∑ {{col.getAggregationValue() | number : 2}} MW</div>',
                     width: '10%'
                 }

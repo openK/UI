@@ -20,37 +20,37 @@
             <div class="pull-right">
                 <button name="buttonNavigateToCreate"
                         class="btn btn-primary"
-                        ui-sref="Regulation.CreateDownRegulation">
+                        data-ui-sref="Regulation.CreateDownRegulation">
                     {{ 'CREATE' | translate }}
                 </button>
                 <button name="buttonNavigateToEdit"
                         class="btn btn-primary"
-                        ng-disabled="!isEditable()"
-                        ui-sref="EditRegulation.EditDownRegulation">
+                        data-ng-disabled="!isEditable()"
+                        data-ui-sref="EditRegulation.EditDownRegulation">
                     {{ 'EDIT.ACTIVITY' | translate }}
                 </button>
                 <button class="btn btn-primary"
-                        ng-disabled="!canAddActivity()"
-                        ui-sref="ChangeRegulation.ChangeDownRegulation">
+                        data-ng-disabled="!canAddActivity()"
+                        data-ui-sref="ChangeRegulation.ChangeDownRegulation">
                     {{ 'CREATECHILDACTIVITY' | translate }}
                 </button>
                 <button name="buttonNavigateToCreateChildActivity"
-                        ng-disabled="!isDeletable()"
-                        ng-click="deleteProcess()"
+                        data-ng-disabled="!isDeletable()"
+                        data-ng-click="deleteProcess()"
                         class="btn btn-primary">
                     {{ 'DELETE.PROCESS' | translate }}
                 </button>
-                <button ng-disabled="!canEditFinishDate()"
-                        ng-click="editFinishDate()"
+                <button data-ng-disabled="!canEditFinishDate()"
+                        data-ng-click="editFinishDate()"
                         class="btn btn-primary">
                     {{ 'PROCESS.FINISHDATE.EDIT' | translate }}
                 </button>
-                <button ng-disabled="!isActivityActive()"
-                        ng-click="stopProcess()"
+                <button data-ng-disabled="!isActivityActive()"
+                        data-ng-click="stopProcess()"
                         class="btn btn-primary">
                     {{ 'PROCESS.STOP' | translate }}
                 </button>
-                <button ng-disabled="!hasReductions()"
+                <button data-ng-disabled="!hasReductions()"
                         ng-click="showEngines()"
                         class="btn btn-primary">
                     {{ 'PROCESS.ENGINES.SHOW' | translate }}
@@ -65,18 +65,18 @@
     </div>
     <div class="col-sm-12">
         <ul class="nav nav-tabs voffset nav-tabs-maincontent">
-            <li ng-class="{ active: show==='Aktiv'  }"><a ui-sref="state1({show: 'Aktiv'   })">aktive u. geplante Vorgänge</a></li>
-            <li ng-class="{ active: show==='Terminated'}"><a ui-sref="state1({show: 'Terminated' })">beendete Vorgänge</a></li>
-            <li ng-class="{ active: show==='Deleted'}"><a ui-sref="state1({show: 'Deleted' })">gelöschte Vorgänge</a></li>
+            <li data-ng-class="{ active: show==='Aktiv'  }"><a data-ui-sref="state1({show: 'Aktiv'   })">aktiv und geplant</a></li>
+            <li data-ng-class="{ active: show==='Terminated'}"><a data-ui-sref="state1({show: 'Terminated' })">beendet</a></li>
+            <li data-ng-class="{ active: show==='Deleted'}"><a data-ui-sref="state1({show: 'Deleted' })">gelöscht</a></li>
         </ul>
-        <div ui-grid-selection
-             ui-grid-cellNav
+        <div data-ui-grid-selection
+             data-ui-grid-cellNav
              class="grid table"
              style="margin-top: 20px"
              data-ui-grid="overview"
              data-ui-grid-resize-columns></div>
 
-        <div style="margin: -10px 10px 10px 0px;">
+        <div style="margin: -10px 10px 10px 0px;" data-ng-show="data.totalPages">
             <a class="btn btn-primary btn-sm" ng-click="getFirstPage()"><span aria-hidden="true" class="glyphicon glyphicon-fast-backward"></span></a>
             <a class="btn btn-primary btn-sm" ng-click="getPreviousPage()"><span aria-hidden="true" class="glyphicon glyphicon-step-backward"></span></a>
             <span class="paging">{{"PAGING.PAGE"| translate}} {{data.currentpage}} {{"PAGING.OF"| translate}} {{data.totalPages}}</span>
@@ -98,14 +98,20 @@
                     </div>
                     <div class="panel-body">
                         <table>
-                            <tr ng-repeat="item in data.details">
+                            <tr data-ng-repeat="item in data.details">
                                 <td>{{item.key| translate}}</td>
                                 <td>{{item.value| translate | date: DATE.PATTERN | translate}}</td>
                             </tr>
-                            <tr ng-repeat="item in data.injectionList">
-                                <td>{{'injectionType'| translate}}</td>
-                                <td>{{item| translate}}</td>
+                            <tr >
+                                <td>{{data.injectionType| translate}}</td>
+                                <td>
+                                    <ul class="regionlist">
+                                    <li data-ng-repeat="item in data.injectionList">{{item}}</li>
+                                    </ul>
+                                </td>
                             </tr>
+
+                            
                         </table>
 
                     </div>
@@ -118,9 +124,9 @@
                         <h3 class="panel-title">Maßnahmen</h3>
                     </div>
                     <div class="panel-body">
-                        <div ui-grid="childActivities"
-                             ui-grid-selection
-                             ui-grid-cellNav></div>
+                        <div data-ui-grid="childActivities"
+                             data-ui-grid-selection
+                             data-ui-grid-cellNav></div>
                     </div>
                 </div>
             </div>
