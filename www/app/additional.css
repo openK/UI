@@ -224,3 +224,7 @@ ul.regionlist{
     list-style: none;
 }
 
+select.ampmselect{
+    display:none;
+}
+
