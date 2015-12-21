@@ -32,7 +32,7 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
     newDateFinished = new Date(newDateFinished.setMinutes(newDateFinished.getMinutes() + 30, 0, 0));
     $('#datestarted').daterangepicker({
         singleDatePicker: true,
-        timePicker12Hour: false,
+        timePicker24Hour: true,
         timePicker: true,
         timePickerIncrement: 15,
         startDate: newStartDate,
@@ -63,7 +63,7 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
             }
             $('#datefinished').daterangepicker({
                 singleDatePicker: true,
-                timePicker12Hour: false,
+                timePicker24Hour: true,
                 timePicker: true,
                 timePickerIncrement: 15,
                 startDate: newEnd,
@@ -82,7 +82,7 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
 
     $('#datefinished').daterangepicker({
         singleDatePicker: true,
-        timePicker12Hour: false,
+        timePicker24Hour: true,
         timePicker: true,
         timePickerIncrement: 15,
         startDate: newDateFinished,

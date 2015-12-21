@@ -27,7 +27,7 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
 
     $('#datestarted').daterangepicker({
         singleDatePicker: true,
-        timePicker12Hour: false,
+        timePicker24Hour: true,
         timePicker: true,
         timePickerIncrement: 15,
         startDate: newStartDate,
@@ -59,7 +59,7 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
             }
             $('#datefinished').daterangepicker({
                 singleDatePicker: true,
-                timePicker12Hour: false,
+                timePicker24Hour: true,
                 timePicker: true,
                 timePickerIncrement: 15,
                 startDate: newEnd,
@@ -78,7 +78,7 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
 
     $('#datefinished').daterangepicker({
         singleDatePicker: true,
-        timePicker12Hour: false,
+        timePicker24Hour: true,
         timePicker: true,
         timePickerIncrement: 15,
         startDate: newDateFinished,

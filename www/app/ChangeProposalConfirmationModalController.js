@@ -12,6 +12,7 @@
 app.controller('ChangeProposalConfirmationModalController', ['$scope', '$state', '$rootScope', '$modalInstance', '$http', '$filter', 'activityService', 'dateService', '$log', function ($scope, $state, $rootScope, $modalInstance, $http, $filter, activityService, dateService, $log) {
 
     $scope.activity = activityService.activity();
+    var hysteresis = activityService.activityConfigData().hysteresis || 5;
 
     $scope.enough = "";
     $scope.activity.proposal = {};
@@ -27,8 +28,8 @@ app.controller('ChangeProposalConfirmationModalController', ['$scope', '$state',
     });
 
     $scope.activity.proposal.modal.diffReductionPower = $scope.activity.reductionValue - $scope.activity.proposal.modal.sumRequiredReductionPower;
-
-    if ($scope.activity.proposal.modal.diffReductionPower < 0) {
+    var green = $scope.activity.reductionValue * hysteresis / 100;
+    if ($scope.activity.proposal.modal.diffReductionPower < green) {
 
         $scope.enough = "green";
         $scope.activity.proposal.modal.diffReductionPower *= -1;
