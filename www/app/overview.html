@@ -98,14 +98,20 @@
                     </div>
                     <div class="panel-body">
                         <table>
-                            <tr ng-repeat="item in data.details">
+                            <tr data-ng-repeat="item in data.details">
                                 <td>{{item.key| translate}}</td>
                                 <td>{{item.value| translate | date: DATE.PATTERN | translate}}</td>
                             </tr>
-                            <tr ng-repeat="item in data.injectionList">
-                                <td>{{'injectionType'| translate}}</td>
-                                <td>{{item| translate}}</td>
+                            <tr >
+                                <td>{{data.injectionType| translate}}</td>
+                                <td>
+                                    <ul class="regionlist">
+                                    <li data-ng-repeat="item in data.injectionList">{{item}}</li>
+                                    </ul>
+                                </td>
                             </tr>
+
+                            
                         </table>
 
                     </div>

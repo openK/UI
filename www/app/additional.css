@@ -218,3 +218,9 @@ table.settings td{
     width:90% ! important;
 }
 
+ul.regionlist{
+    margin:0px;
+    padding:0px;
+    list-style: none;
+}
+

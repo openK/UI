@@ -196,5 +196,7 @@
   "DATE.PATTERN": "dd.MM.yyyy HH:mm",
   "PAGING.PAGE": "Seite",
   "PAGING.OF": "von",
-  "PAGING.GOTO": "gehe zu Seite"
+  "PAGING.GOTO": "gehe zu Seite",
+  "SUBGEOGRAPHICALREGION": "Netzgebiete",
+  "SUBSTATION": "Umspannwerke"
 }

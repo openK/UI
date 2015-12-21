@@ -136,7 +136,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
         $scope.showEngines = function () {
 
             $scope.modalOptions = {
-                "headline": "VorgangsID",
+                "headline": "Vorgangs-ID",
                 "id": $scope.currentItem.id,
                 "startDate": $scope.currentItem.dateStarted,
                 "endDate": $scope.currentItem.dateFinished,
