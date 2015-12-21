@@ -80,13 +80,13 @@
         <label class="control-label col-xs-2">{{'SETTINGS.PRACTICE' | translate}} *</label>
         <div class="col-xs-2">
             <label class="radio-inline">
-                <input type="radio" required data-ng-model="activity.settings.practise" value="1"
+                <input type="radio" required data-ng-model="activity.settings.practise" ng-value="true"
                        name="practise"> {{'YES' | translate}}
             </label>
         </div>
         <div class="col-xs-2">
             <label class="radio-inline">
-                <input type="radio" required value="0" data-ng-model="activity.settings.practise"
+                <input type="radio" required ng-value="false" data-ng-model="activity.settings.practise"
                        name="practise"> {{'NO' | translate}}
             </label>
         </div>

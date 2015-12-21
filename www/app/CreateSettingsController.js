@@ -1,6 +1,7 @@
 app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', function ($scope, $state, $stateParams, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService) {
 
     $scope.activity = activityService.activity();
+    $scope.activity.reductionPositive = true;
 
     // configure the new startDate and finsheDate...
     var now = new Date($.now());
@@ -33,6 +34,40 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
             daysOfWeek: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
             monthNames: ['Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
             firstDay: 1
+        }
+    });
+
+    $('#datestarted').on('apply.daterangepicker', function (ev, picker) {
+        var start = new Date(picker.startDate);
+        var end = new Date($('#datefinished').data('daterangepicker').startDate);
+        if (start >= end) {
+            var quarters = parseInt(start.getMinutes() / 15);
+            var minutes = quarters * 15 + 30;
+            var hours = parseInt(minutes / 60);
+            var newEnd = start;
+            if (hours) {
+                newEnd = new Date(newEnd.setHours(newStartDate.getHours() + 1));
+                minutes = minutes % 60;
+                newEnd = new Date(newEnd.setMinutes(minutes, 0, 0));
+            } else {
+                newEnd = new Date(newEnd.setMinutes(minutes, 0, 0));
+            }
+            $('#datefinished').daterangepicker({
+                singleDatePicker: true,
+                timePicker12Hour: false,
+                timePicker: true,
+                timePickerIncrement: 15,
+                startDate: newEnd,
+                minDate: start,
+                locale: {
+                    format: 'DD.MM.YYYY HH:mm',
+                    applyLabel: '&Uuml;bernehmen',
+                    cancelLabel: 'Abbrechen',
+                    daysOfWeek: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+                    monthNames: ['Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+                    firstDay: 1
+                }
+            });
         }
     });
 
@@ -131,11 +166,6 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
 
         var dateStarted = dateService.formatDateForBackend($scope.activity.settings.dateStarted);
         var dateFinished = dateService.formatDateForBackend($scope.activity.settings.dateFinished);
-        if ($scope.activity.settings.practise) {
-            $scope.activity.settings.practise = true;
-        } else {
-            $scope.activity.settings.practise = false;
-        }
         var data = {
             "userSettingsJpa": {
                 "dateStarted": dateStarted,
