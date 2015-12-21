@@ -79,7 +79,7 @@
                                 <div class="input-group input-group-sm"
                                      data-ng-class="{'has-error': preselectionForm.substituteValueWindFwt.$invalid}">
                                     <span id="wind" class="input-group-addon">{{'WIND' | translate}}</span>
-                                    <input type="number" min="0" name="substituteValueWindFwt" max="100"
+                                    <input type="text" min="0" name="substituteValueWindFwt" max="100"
                                            data-ng-required="activity.preselection.characteristicForMissingMeasurementFwt == 'SubstituteWithInputFactor'"
                                            data-ng-disabled="activity.preselection.characteristicForMissingMeasurementFwt != 'SubstituteWithInputFactor'"
                                            data-ng-model="activity.preselection.substituteValueWindFwt"
@@ -90,7 +90,7 @@
                                 <div class="input-group input-group-sm"
                                      data-ng-class="{'has-error': preselectionForm.substituteValuePhotovoltaicFwt.$invalid}">
                                     <span id="pv" class="input-group-addon">{{'PV' | translate}}</span>
-                                    <input type="number" min="0" max="100" name="substituteValuePhotovoltaicFwt"
+                                    <input type="text" min="0" max="100" name="substituteValuePhotovoltaicFwt"
                                            data-ng-required="activity.preselection.characteristicForMissingMeasurementFwt == 'SubstituteWithInputFactor'"
                                            data-ng-disabled="activity.preselection.characteristicForMissingMeasurementFwt != 'SubstituteWithInputFactor'"
                                            data-ng-model="activity.preselection.substituteValuePhotovoltaicFwt"
@@ -100,7 +100,7 @@
                                 <div class="input-group input-group-sm"
                                      data-ng-class="{'has-error': preselectionForm.substituteValueBiogasFwt.$invalid}">
                                     <span id="bio" class="input-group-addon">{{'BIO' | translate}}</span>
-                                    <input type="number" name="substituteValueBiogasFwt" min="0" max="100"
+                                    <input type="text" name="substituteValueBiogasFwt" min="0" max="100"
                                            data-ng-required="activity.preselection.characteristicForMissingMeasurementFwt == 'SubstituteWithInputFactor'"
                                            data-ng-disabled="activity.preselection.characteristicForMissingMeasurementFwt != 'SubstituteWithInputFactor'"
                                            data-ng-model="activity.preselection.substituteValueBiogasFwt"
@@ -144,7 +144,7 @@
                                 <div class="input-group input-group-sm"
                                      data-ng-class="{'has-error': preselectionForm.substituteValueWindEfr.$invalid}">
                                     <span id="wind" class="input-group-addon">{{'WIND'| translate}}</span>
-                                    <input type="number" min="0" name="substituteValueWindEfr" max="100"
+                                    <input type="text" min="0" name="substituteValueWindEfr" max="100"
                                            data-ng-required="activity.preselection.characteristicForMissingMeasurementEfr == 'SubstituteWithInputFactor'"
                                            data-ng-disabled="activity.preselection.characteristicForMissingMeasurementEfr != 'SubstituteWithInputFactor'"
                                            data-ng-model="activity.preselection.substituteValueWindEfr"
@@ -155,7 +155,7 @@
                                 <div class="input-group input-group-sm"
                                      data-ng-class="{'has-error': preselectionForm.substituteValuePhotovoltaicEfr.$invalid}">
                                     <span id="pv" class="input-group-addon">{{'PV'| translate}}</span>
-                                    <input type="number" min="0" max="100" name="substituteValuePhotovoltaicEfr"
+                                    <input type="text" min="0" max="100" name="substituteValuePhotovoltaicEfr"
                                            data-ng-required="activity.preselection.characteristicForMissingMeasurementEfr == 'SubstituteWithInputFactor'"
                                            data-ng-disabled="activity.preselection.characteristicForMissingMeasurementEfr != 'SubstituteWithInputFactor'"
                                            data-ng-model="activity.preselection.substituteValuePhotovoltaicEfr"
@@ -165,7 +165,7 @@
                                 <div class="input-group input-group-sm"
                                      data-ng-class="{'has-error': preselectionForm.substituteValueBiogasEfr.$invalid}">
                                     <span id="bio" class="input-group-addon">{{'BIO'| translate}}</span>
-                                    <input type="number" name="substituteValueBiogasEfr" min="0" max="100"
+                                    <input type="text" name="substituteValueBiogasEfr" min="0" max="100"
                                            data-ng-required="activity.preselection.characteristicForMissingMeasurementEfr == 'SubstituteWithInputFactor'"
                                            data-ng-disabled="activity.preselection.characteristicForMissingMeasurementEfr != 'SubstituteWithInputFactor'"
                                            data-ng-model="activity.preselection.substituteValueBiogasEfr"
@@ -185,7 +185,7 @@
         </label>
         <div class="col-xs-1">
             <div class="input-group">
-                <input type="number" readonly data-ng-model="activityConfigData.activity.hysteresis" class="form-control" />
+                <input type="text" readonly data-ng-model="activityConfigData.activity.hysteresis" class="form-control" />
                 <div class="input-group-addon">%</div>
             </div>
         </div>
