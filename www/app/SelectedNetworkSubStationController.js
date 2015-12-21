@@ -57,7 +57,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
         showGridFooter: false,
         showColumnFooter: true,
         paginationPageSizes: [25, 50, 75],
-        paginationPageSize: 10,
+        paginationPageSize: $scope.activity.substationProposalList.length,
         enablePaginationControls: false,
         enableHorizontalScrollbar: 0,
         enableVerticalScrollbar: 2, // 0: never, 1: always, 2: when needed
@@ -204,7 +204,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
             multiplier: "M",
             unit: "W"
         };
-        $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.ALL);
+        $scope.gridApi2.core.notifyDataChange(uiGridConstants.dataChange.ALL);
     };
     $scope.openModalConfirmProposal = function () {
 
