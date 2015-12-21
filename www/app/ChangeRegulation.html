@@ -43,7 +43,7 @@
                 data-ng-class="{ 'btn-success' : currentWizardStep === 'ChangeSettings', 'btn-default' : currentWizardStep !== 'ChangeSettings'}">
             {{'WORKFLOW.DATA' | translate}}
         </button>
-        <button class="btn btn-arrow-right" ui-sref="ChangeRegulation.ChangeProposal" data-ng-disabled="!CanNavigateToChangeProposal"
+        <button class="btn btn-arrow-right" ui-sref="ChangeRegulation.ChangeProposal.Main" data-ng-disabled="!CanNavigateToChangeProposal"
                 data-ng-class="{ 'btn-success' : currentWizardStep == 'ChangeProposal', 'btn-default' : currentWizardStep !== 'ChangeProposal'}">
             {{'WORKFLOW.REDUCTIONADVICE' | translate}}
         </button>
@@ -63,7 +63,7 @@
             </div>
         </div>
         <ul class="nav nav-tabs voffset nav-tabs-maincontent">
-            <li ui-sref-active="active"><a ui-sref="ChangeRegulation.ChangeDownRegulation">Abregelung</a></li>
+            <li ng-class="{active: currentState.name !== 'ChangeRegulation.NetworkState.Main'}"><a ng-click="goBack()" href="">Abregelung</a></li>
             <li ui-sref-active="active"><a ui-sref="ChangeRegulation.NetworkState.Main">Netzzustand</a></li>
         </ul>
         <div style="padding-top: 10px" ui-view></div>

@@ -1,9 +1,12 @@
 app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', function ($scope, $state, $stateParams, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService) {
 
     $scope.activity = activityService.activity();
-    if ($scope.activity.pointOfInjectionType === 0) {
+    if ($scope.activity.pointOfInjectionType === 'GEOGRAPHICALREGION') {
         $scope.activity.useWholeArea = true;
     }
+    if ($scope.activity.pointOfInjectionType && $scope.activity.pointOfInjectionType.length > 0)
+        $scope.activity.pointOfInjectionTypeString = $translate.instant($scope.activity.pointOfInjectionType);
+
     $scope.activity.reductionPositive = true;
     //$scope.activity = activityService.activity();
     // get current time as date...

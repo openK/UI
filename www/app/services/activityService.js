@@ -70,20 +70,19 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
             return $q.resolve(configData.task);
         }
         configData.task = {};
-        return $q.all([
-            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/preselection/").then(function (result) {
-                configData.task.templates = result.data;
-            }),
-            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/reductionsettinglist/").then(function (result) {
-                configData.task.regulationSteps = result.data;
-            }),
-            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/reasonofreductions/").then(function (result) {
-                configData.task.regulationReasons = result.data;
-            }),
-             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/timeintervaldataexpired").then(function (result) {
-                 configData.task.timerTick = result.data;
-             }),
-        ]);
+        return $q.all([ $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/preselection/").then(function (result) {
+                            configData.task.templates = result.data;
+                        }),
+                        $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/reductionsettinglist/").then(function (result) {
+                            configData.task.regulationSteps = result.data;
+                        }),
+                        $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/reasonofreductions/").then(function (result) {
+                            configData.task.regulationReasons = result.data;
+                        }),
+                        $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/timeintervaldataexpired").then(function (result) {
+                            configData.task.timerTick = result.data;
+                        }),
+                    ]);
     }
 
     function createActivity() {
@@ -92,6 +91,12 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
 
     function loadActivity() {
         return $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + '/openk-eisman-portlet/rest/activity/latestusersettings/' + currentParentActivityId).then(function (result) {
+            activity = result.data;
+        });
+    }
+
+    function loadChildActivity() {
+        return $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + '/openk-eisman-portlet/rest/activity/latestusersettings/' + activity.id).then(function (result) {
             activity = result.data;
         });
     }
@@ -214,6 +219,7 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
         },
         createActivity: createActivity,
         loadActivity: loadActivity,
+        loadChildActivity: loadChildActivity,
         loadParentActivities: loadParentActivities,
         loadConfiguration: loadConfiguration,
         loadTaskConfiguration: loadTaskConfiguration,
