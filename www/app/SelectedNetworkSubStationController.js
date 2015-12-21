@@ -57,7 +57,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
         showGridFooter: false,
         showColumnFooter: true,
         paginationPageSizes: [25, 50, 75],
-        paginationPageSize: $scope.activity.substationProposalList.length,
+        paginationPageSize: 100,
         enablePaginationControls: false,
         enableHorizontalScrollbar: 0,
         enableVerticalScrollbar: 2, // 0: never, 1: always, 2: when needed

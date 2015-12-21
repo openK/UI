@@ -82,7 +82,7 @@ app.controller('NetworkSubStateInfoController', ['$scope', '$http', '$timeout', 
         modifierKeysToMultiSelect: false,
         noUnselect: true,
         showGridFooter: false,
-        showColumnFooter: true,
+        showColumnFooter: false,
         paginationPageSizes: [10],
         paginationPageSize: 10,
         enablePaginationControls: false,
@@ -149,14 +149,14 @@ app.controller('NetworkSubStateInfoController', ['$scope', '$http', '$timeout', 
             },
             // Aktuelle Wirkleistung
             {
-                name: 'generatorVoltageMeasured.value',
-                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.generatorVoltageMeasured.value | number : 2}} {{row.entity.generatorVoltageMeasured.multiplier}}{{row.entity.generatorVoltageMeasured.unit}}</div>',
+                name: 'generatorPowerMeasured.value',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.generatorPowerMeasured.value | number : 2}} {{row.entity.generatorPowerMeasured.multiplier}}{{row.entity.generatorPowerMeasured.unit}}</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.GENERATORVOLTAGE.MEASURED.ABBREVIATION',
                 aggregationType: uiGridConstants.aggregationTypes.sum,
                 footerCellTemplate: '<div class="ui-grid-cell-contents">∑ {{col.getAggregationValue() | number : 2}} MW</div>',
                 width: '9%'
-            }
+            },
             
       
             
