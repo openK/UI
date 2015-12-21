@@ -1,4 +1,4 @@
-<div style="margin: -10px 10px 10px 0px;">
+<div style="margin: -10px 10px 10px 0px;" data-ng-show="gridApi2.pagination.getTotalPages()">
     <a ng-click="gridApi2.pagination.seek(1)" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>
     <a ng-click="gridApi2.pagination.previousPage()" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a>
     <span class="paging ng-binding">Seite {{ gridApi2.pagination.getPage() }} von {{ gridApi2.pagination.getTotalPages() }}</span>

@@ -76,7 +76,7 @@
              data-ui-grid="overview"
              data-ui-grid-resize-columns></div>
 
-        <div style="margin: -10px 10px 10px 0px;">
+        <div style="margin: -10px 10px 10px 0px;" data-ng-show="data.totalPages">
             <a class="btn btn-primary btn-sm" ng-click="getFirstPage()"><span aria-hidden="true" class="glyphicon glyphicon-fast-backward"></span></a>
             <a class="btn btn-primary btn-sm" ng-click="getPreviousPage()"><span aria-hidden="true" class="glyphicon glyphicon-step-backward"></span></a>
             <span class="paging">{{"PAGING.PAGE"| translate}} {{data.currentpage}} {{"PAGING.OF"| translate}} {{data.totalPages}}</span>

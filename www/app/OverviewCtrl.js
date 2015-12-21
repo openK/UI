@@ -22,7 +22,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
         $scope.data.currentpage = 1;
         $scope.activity = activityService.activity();
 
-        var detailsToBeDisplayed = ['dateCreated', 'createdBy', 'dateUpdated', 'updatedBy','description'];
+        var detailsToBeDisplayed = ['dateCreated', 'createdBy', 'dateUpdated', 'updatedBy', 'description'];
         i18nService.setCurrentLang('de');
 
         $scope.isDeletable = function () {
@@ -58,7 +58,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
             var dateFinished = new Date($scope.currentItem.dateFinished);
             var now = $.now();
             if ($scope.currentItem.id && ($scope.currentItem.processStatus === "Live" && (now >= dateStarted.getTime() && now <= dateFinished.getTime()))) { // || $scope.currentItem.processStatus === "Pending" ???
-                return true; 
+                return true;
             } else {
                 return false;
             }
@@ -125,7 +125,12 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
         };
 
         $scope.hasReductions = function () {
-           return $scope.currentItem.processStatus !== 'WithoutSchedule';
+
+            if (typeof $scope.currentItem.processStatus !== 'undefined') {
+                return $scope.currentItem.processStatus !== 'WithoutSchedule';
+            } else {
+                return false;
+            }
         };
 
         $scope.showEngines = function () {
@@ -141,7 +146,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                 }
 
             };
-            modalService.open($scope, 'app/partials/enginelist.html', false, 'SynchronousMachineListByProcessIdCtrl' , '90p');
+            modalService.open($scope, 'app/partials/enginelist.html', false, 'SynchronousMachineListByProcessIdCtrl', '90p');
         };
 
         $scope.editFinishDate = function () {
@@ -208,11 +213,10 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
 
         var callPageObject = function () {
             var tab;
-            if(location.toString().indexOf('Terminated') > -1){
+            if (location.toString().indexOf('Terminated') > -1) {
                 tab = 'Terminated';
-            }
-            else
-            if(location.toString().indexOf('Deleted') > -1){
+            } else
+            if (location.toString().indexOf('Deleted') > -1) {
                 tab = 'Deleted';
             }
             activityService.loadParentActivities(
@@ -328,10 +332,9 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
             sortColumn: '',
             filter: {
                 filter: {
-                    
-                    'isDeleted' :  'true',
+                    'isDeleted': 'true',
                     'isTerminated': 'false'
-                    
+
                 }
             }
         };
@@ -437,10 +440,9 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
 
                         var filter = {
                             filter: {
-                                
-                                'isDeleted' : 'true',
+                                'isDeleted': 'true',
                                 'isTerminated': 'false'
-                                
+
                             }
                         };
 
@@ -452,7 +454,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                             }
                         });
 
-                        $scope.searchOptions.filter = filter; 
+                        $scope.searchOptions.filter = filter;
                         callPageObject();
                     }, 250);
                 });
