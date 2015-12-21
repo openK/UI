@@ -8,43 +8,71 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
         $scope.activity.pointOfInjectionTypeString = $translate.instant($scope.activity.pointOfInjectionType);
 
     $scope.activity.reductionPositive = true;
-    //$scope.activity = activityService.activity();
-    // get current time as date...
-    var now = new Date($.now());
-    // get activity start date as date...
-    var newStartDate = new Date($scope.activity.dateStarted);
-    // check the time gap between now and activity startDateTime...
-    var distance = newStartDate.getTime() - now.getTime();
-    // if the time gap is less than 15 minutes set the gap to more than 15 minutes but less or equal to 30 minutes...
-    if (distance > 0 && new Date(distance).getMinutes() < 15) {
-        var quaters = parseInt(now.getMinutes() / 15);
-        var minutes = quaters * 15 + 30;
-        var hours = parseInt(minutes / 60);
-        if (hours) {
-            newStartDate = new Date(newStartDate.setHours(newStartDate.getHours() + 1));
-            minutes = minutes % 60;
-            newStartDate = new Date(newStartDate.setMinutes(minutes - 1, 0, 0));
-        } else {
-            newStartDate = new Date(newStartDate.setMinutes(minutes - 1, 0, 0));
-        }
-    }
 
-    $scope.startDateEdit = newStartDate;
-    var newDateFinished = new Date(newStartDate.getTime());
+    var now = new Date($.now());
+    var quarters = parseInt(now.getMinutes() / 15);
+    var minutes = quarters * 15 + 30;
+    var hours = parseInt(minutes / 60);
+    var newStartDate = now;
+    var newDateFinished = now;
+    if (hours) {
+        newStartDate = new Date(newStartDate.setHours(newStartDate.getHours() + 1));
+        minutes = minutes % 60;
+        newStartDate = new Date(newStartDate.setMinutes(minutes, 0, 0));
+    } else {
+        newStartDate = new Date(newStartDate.setMinutes(minutes, 0, 0));
+    }
+    newDateFinished = new Date(newStartDate.getTime());
     newDateFinished = new Date(newDateFinished.setMinutes(newDateFinished.getMinutes() + 30, 0, 0));
+
     $('#datestarted').daterangepicker({
         singleDatePicker: true,
         timePicker12Hour: false,
         timePicker: true,
         timePickerIncrement: 15,
         startDate: newStartDate,
-        minDate: $.now(),
+        minDate: new Date($.now()),
         locale: {
             format: 'DD.MM.YYYY HH:mm',
             applyLabel: '&Uuml;bernehmen',
+            cancelLabel: 'Abbrechen',
             daysOfWeek: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
             monthNames: ['Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
             firstDay: 1
+        }
+    });
+
+    $('#datestarted').on('apply.daterangepicker', function (ev, picker) {
+        var start = new Date(picker.startDate);
+        var end = new Date($('#datefinished').data('daterangepicker').startDate);
+        if (start >= end) {
+            var quarters = parseInt(start.getMinutes() / 15);
+            var minutes = quarters * 15 + 30;
+            var hours = parseInt(minutes / 60);
+            var newEnd = start;
+            if (hours) {
+                newEnd = new Date(newEnd.setHours(newStartDate.getHours() + 1));
+                minutes = minutes % 60;
+                newEnd = new Date(newEnd.setMinutes(minutes, 0, 0));
+            } else {
+                newEnd = new Date(newEnd.setMinutes(minutes, 0, 0));
+            }
+            $('#datefinished').daterangepicker({
+                singleDatePicker: true,
+                timePicker12Hour: false,
+                timePicker: true,
+                timePickerIncrement: 15,
+                startDate: newEnd,
+                minDate: start,
+                locale: {
+                    format: 'DD.MM.YYYY HH:mm',
+                    applyLabel: '&Uuml;bernehmen',
+                    cancelLabel: 'Abbrechen',
+                    daysOfWeek: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+                    monthNames: ['Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+                    firstDay: 1
+                }
+            });
         }
     });
 
@@ -54,10 +82,11 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
         timePicker: true,
         timePickerIncrement: 15,
         startDate: newDateFinished,
-        minDate: $.now(),
+        minDate: newDateFinished,
         locale: {
             format: 'DD.MM.YYYY HH:mm',
             applyLabel: '&Uuml;bernehmen',
+            cancelLabel: 'Abbrechen',
             daysOfWeek: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
             monthNames: ['Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
             firstDay: 1

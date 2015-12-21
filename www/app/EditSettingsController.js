@@ -46,6 +46,40 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
         }
     });
 
+    $('#datestarted').on('apply.daterangepicker', function (ev, picker) {
+        var start = new Date(picker.startDate);
+        var end = new Date($('#datefinished').data('daterangepicker').startDate);
+        if (start >= end) {
+            var quarters = parseInt(start.getMinutes() / 15);
+            var minutes = quarters * 15 + 30;
+            var hours = parseInt(minutes / 60);
+            var newEnd = start;
+            if (hours) {
+                newEnd = new Date(newEnd.setHours(newStartDate.getHours() + 1));
+                minutes = minutes % 60;
+                newEnd = new Date(newEnd.setMinutes(minutes, 0, 0));
+            } else {
+                newEnd = new Date(newEnd.setMinutes(minutes, 0, 0));
+            }
+            $('#datefinished').daterangepicker({
+                singleDatePicker: true,
+                timePicker12Hour: false,
+                timePicker: true,
+                timePickerIncrement: 15,
+                startDate: newEnd,
+                minDate: start,
+                locale: {
+                    format: 'DD.MM.YYYY HH:mm',
+                    applyLabel: '&Uuml;bernehmen',
+                    cancelLabel: 'Abbrechen',
+                    daysOfWeek: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+                    monthNames: ['Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+                    firstDay: 1
+                }
+            });
+        }
+    });
+
     $('#datefinished').daterangepicker({
         singleDatePicker: true,
         timePicker12Hour: false,
