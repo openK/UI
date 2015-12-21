@@ -29,22 +29,20 @@
             {{ 'PRESELECTION.DISCRIMINATIONFACTOR' | translate }} *
         </label>
 
-        <div class="col-xs-1">
             <div class="col-xs-1" data-ng-class="{'has-error': preselectionForm.discrimination.$invalid}">
                 <label class="radio-inline">
                     <input type="radio" data-ng-value="true" data-ng-required="true" data-ng-model="activity.preselection.discriminationCoefficientEnabled" name="discrimination" >
                     {{ 'YES' | translate }}
                 </label>
             </div>
-        </div>
-        <div class="col-xs-1">
+
             <div class="col-xs-1" data-ng-class="{'has-error': preselectionForm.discrimination.$invalid}">
                 <label class="radio-inline">
                     <input type="radio" data-ng-value="false" data-ng-required="true" data-ng-model="activity.preselection.discriminationCoefficientEnabled" name="discrimination" >
                     {{ 'NO' | translate }}
                 </label>
             </div>
-        </div>
+
     </div>
     <div class="form-group">
         <label class="control-label col-xs-3">
