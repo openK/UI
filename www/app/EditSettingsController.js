@@ -34,7 +34,7 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
         singleDatePicker: true,
         timePicker24Hour: true,
         timePicker: true,
-        timePickerIncrement: 15,
+        timePickerIncrement: 1,
         startDate: newStartDate,
         minDate: newStartDate,
         locale: {
@@ -65,7 +65,7 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
                 singleDatePicker: true,
                 timePicker24Hour: true,
                 timePicker: true,
-                timePickerIncrement: 15,
+                timePickerIncrement: 1,
                 startDate: newEnd,
                 minDate: start,
                 locale: {
@@ -84,7 +84,7 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
         singleDatePicker: true,
         timePicker24Hour: true,
         timePicker: true,
-        timePickerIncrement: 15,
+        timePickerIncrement: 1,
         startDate: newFinishedDate,
         minDate: newStartDate,
         locale: {

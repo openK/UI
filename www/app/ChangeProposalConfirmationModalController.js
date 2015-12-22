@@ -28,13 +28,9 @@ app.controller('ChangeProposalConfirmationModalController', ['$scope', '$state',
     });
 
     $scope.activity.proposal.modal.diffReductionPower = $scope.activity.proposal.modal.sumRequiredReductionPower - $scope.activity.reductionValue;
-    if ($scope.activity.proposal.modal.diffReductionPower < 0) {
-        $scope.activity.proposal.modal.diffReductionPower *= -1;
+    var red = $scope.activity.reductionValue * hysteresis / 100;
+    if ($scope.activity.proposal.modal.diffReductionPower < 0 || $scope.activity.proposal.modal.diffReductionPower > red) {
         $scope.enough = "red";
-    }
-    var green = $scope.activity.reductionValue * hysteresis / 100;
-    if (green > $scope.activity.proposal.modal.diffReductionPower) {
-        $scope.enough = "green";
     }
 
     $scope.activity.proposal.modal.diffReductionPower = $filter('number')($scope.activity.proposal.modal.diffReductionPower, 2);
