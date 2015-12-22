@@ -47,6 +47,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
         }
     };
     $scope.substations = {
+        enablePagination: false,
         enableFiltering: true,
         enableRowSelection: true,
         enableRowHeaderSelection: false,

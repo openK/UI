@@ -103,7 +103,8 @@ var Liferay = {
             return "en-US";
         },
         getCDNBaseURL: function () {
-            return "http://192.168.1.2:8080";
+            return "http://10.10.10.1:8080/";
+            //return "http://92.51.146.154/";
         },
         getCDNDynamicResourcesHost: function () {
             return "";
