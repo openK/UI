@@ -72,6 +72,7 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
     $scope.regulationSteps = $scope.$parent.regulationSteps;
 
     $scope.substations = {
+        enablePagination: true,
         enableFiltering: true,
         enableRowSelection: true,
         enableRowHeaderSelection: false,
@@ -80,8 +81,8 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
         modifierKeysToMultiSelect: false,
         noUnselect: true,
         showGridFooter: false,
-        showColumnFooter: true,
-        paginationPageSizes: [105],
+        showColumnFooter: false,
+        paginationPageSizes: [10],
         paginationPageSize: 10,
         enablePaginationControls: false,
         enableHorizontalScrollbar: 0,

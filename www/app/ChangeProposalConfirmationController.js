@@ -16,6 +16,7 @@ app.controller('ChangeProposalConfirmationController', ['$scope', '$state', '$ht
     $scope.regulationSteps = $scope.$parent.regulationSteps;
 
     $scope.substations = {
+        enablePagination: false,
         enableFiltering: true,
         enableRowSelection: true,
         enableRowHeaderSelection: false,
