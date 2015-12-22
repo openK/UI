@@ -97,7 +97,9 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
 
     function loadChildActivity() {
         return $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + '/openk-eisman-portlet/rest/activity/latestusersettings/' + activity.id).then(function (result) {
+            var id = activity.id;
             activity = result.data;
+            activity.id = id;
         });
     }
 

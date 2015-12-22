@@ -21,10 +21,9 @@
     <div class="col-xs-12 voffset">
         <div class="form-group">
             <div class="col-xs-12">
-                <a class="btn btn-default btn-sm" data-ng-click="menueJumpTo(2, 'settings')">{{'BACK'|
-                    translate}}</a>
-                <a class="btn btn-primary btn-sm pull-right" data-ng-click="openModalConfirmProposal()">{{'NEXT'
-                                    | translate}}</a>
+                <a class="btn btn-default" ui-sref="state1({show: 'active'})">{{'CANCEL'| translate}}</a>
+                <a class="btn btn-default" ui-sref="ChangeRegulation.ChangeSettings">{{'BACK'| translate}}</a>
+                <a class="btn btn-primary pull-right" data-ng-click="openModalConfirmProposal()">{{'NEXT' | translate}}</a>
             </div>
         </div>
     </div>
