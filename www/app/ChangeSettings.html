@@ -111,7 +111,7 @@
                 || activity.reasonOfReduction == ''
                 || settingsForm.requiredReductionPower.$invalid
                 || settingsFormSubmitted && isNoAreaDefined()
-                || activity.description == '' || activity.practise == '')">
+                || activity.description == '' )">
             <div>
                 <normal class="warning"
                         data-ng-show="settingsFormSubmitted && settingsForm.datestarted.$error.required">
@@ -152,12 +152,6 @@
                 <normal class="warning"
                         data-ng-show="settingsFormSubmitted && activity.description == ''">
                     {{'SETTINGS.DESCRIPTION.ERROR' | translate}}
-                </normal>
-            </div>
-            <div>
-                <normal class="warning"
-                        data-ng-show="settingsFormSubmitted && activity.practise == ''">
-                    {{'SETTINGS.PRACTICE.ERROR' | translate}}
                 </normal>
             </div>
         </div>
