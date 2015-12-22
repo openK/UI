@@ -247,7 +247,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     }
                 }).state('EditRegulation.EditProposalConfirmation', {
                     url: '/EditProposalConfirmation/',
-                    templateUrl: "app/CreateProposalConfirmation.html",
+                    templateUrl: "app/EditProposalConfirmation.html",
                     controller: 'CreateProposalConfirmationController',
                 });
             // For any unmatched url, redirect to /state1
