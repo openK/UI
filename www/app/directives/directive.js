@@ -1,7 +1,29 @@
 /*
  Directives
  */
-app.directive('customPopover', function ($translate) {
+
+angular.module('myApp').directive('myDirective', ['$filter', '$timeout', function ($filter, $timeout) {
+    return {
+        require: 'ngModel',
+        link: function(scope, element, attrs, ngModelController) {
+            ngModelController.$parsers.push(function (data) {
+                var number = data;
+                if (data) {
+                    //convert data from view format to model format
+                    number = $filter('number')(data, 2);
+                    element.val(number);
+                }
+                return number; //converted
+            });
+            ngModelController.$formatters.push(function(data) {
+                //convert data from model format to view format
+                var number = $filter('number')(data, 2);
+                return number; //converted
+            });
+        }
+    }
+}]);
+angular.module('myApp').directive('customPopover', function ($translate) {
     return {
         restrict: 'A',
         template: '<div><a class="btn btn-xs ng-scope" style="margin:5px;display:{{display}};" ><img src="/openk-theme/img/info.png"></a>{{label}}</div>',
@@ -48,7 +70,7 @@ app.directive('customPopover', function ($translate) {
     };
 });
 
-app.directive('loading', ['$http', function ($http) {
+angular.module('myApp').directive('loading', ['$http', function ($http) {
     return {
         restrict: 'A',
         link: function (scope, elm, attrs) {
@@ -68,7 +90,7 @@ app.directive('loading', ['$http', function ($http) {
 
 }]);
 
-app.directive('startrange', ['dateService', function (dateService) {
+angular.module('myApp').directive('startrange', ['dateService', function (dateService) {
     return {
         require: 'ngModel',
 
@@ -84,7 +106,7 @@ app.directive('startrange', ['dateService', function (dateService) {
     };
 }]);
 
-app.directive('endrange', ['dateService', function (dateService) {
+angular.module('myApp').directive('endrange', ['dateService', function (dateService) {
     return {
         require: 'ngModel',
 

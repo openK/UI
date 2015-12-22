@@ -6,37 +6,37 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
     }
 
     $scope.parentActivityId = activityService.currentParentActivityId();
-    //$scope.activity = activityService.activity();
-    // get current time as date...
     var now = new Date($.now());
-    // get activity start date as date...
+    var quarters = parseInt(now.getMinutes() / 15);
+    var minutes = quarters * 15 + 30;
+    var hours = parseInt(minutes / 60);
+    var newDateStart = now;
+    if (hours) {
+        newDateStart = new Date(newDateStart.setHours(newDateStart.getHours() + 1));
+        minutes = minutes % 60;
+        newDateStart = new Date(newDateStart.setMinutes(minutes, 0, 0));
+    } else {
+        newDateStart = new Date(newDateStart.setMinutes(minutes, 0, 0));
+    }
+    var newDateFinished = new Date(newDateStart.getTime());
+    newDateFinished = new Date(newDateFinished.setMinutes(newDateFinished.getMinutes() + 30, 0, 0));
+
     var newStartDate = new Date($scope.activity.dateStarted);
-    // check the time gap between now and activity startDateTime...
-    var distance = newStartDate.getTime() - now.getTime();
-    // if the time gap is less than 15 minutes set the gap to more than 15 minutes but less or equal to 30 minutes...
-    if (distance > 0 && new Date(distance).getMinutes() < 15) {
-        var quaters = parseInt(now.getMinutes() / 15);
-        var minutes = quaters * 15 + 30;
-        var hours = parseInt(minutes / 60);
-        if (hours) {
-            newStartDate = new Date(newStartDate.setHours(newStartDate.getHours() + 1));
-            minutes = minutes % 60;
-            newStartDate = new Date(newStartDate.setMinutes(minutes - 1, 0, 0));
-        } else {
-            newStartDate = new Date(newStartDate.setMinutes(minutes - 1, 0, 0));
-        }
+    if (newStartDate < now) {
+        newStartDate = newDateStart;
+    }
+    var newFinishedDate = new Date($scope.activity.dateFinished);
+    if (newFinishedDate < newStartDate) {
+        newFinishedDate = newDateFinished;
     }
 
-    $scope.startDateEdit = newStartDate;
-    var newDateFinished = new Date(newStartDate.getTime());
-    newDateFinished = new Date(newDateFinished.setMinutes(newDateFinished.getMinutes() + 30, 0, 0));
     $('#datestarted').daterangepicker({
         singleDatePicker: true,
         timePicker24Hour: true,
         timePicker: true,
         timePickerIncrement: 15,
         startDate: newStartDate,
-        minDate: $.now(),
+        minDate: newStartDate,
         locale: {
             format: 'DD.MM.YYYY HH:mm',
             applyLabel: '&Uuml;bernehmen',
@@ -55,7 +55,7 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
             var hours = parseInt(minutes / 60);
             var newEnd = start;
             if (hours) {
-                newEnd = new Date(newEnd.setHours(newStartDate.getHours() + 1));
+                newEnd = new Date(newEnd.setHours(newEnd.getHours() + 1));
                 minutes = minutes % 60;
                 newEnd = new Date(newEnd.setMinutes(minutes, 0, 0));
             } else {
@@ -85,8 +85,8 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
         timePicker24Hour: true,
         timePicker: true,
         timePickerIncrement: 15,
-        startDate: newDateFinished,
-        minDate: $.now(),
+        startDate: newFinishedDate,
+        minDate: newStartDate,
         locale: {
             format: 'DD.MM.YYYY HH:mm',
             applyLabel: '&Uuml;bernehmen',
@@ -95,7 +95,6 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
             firstDay: 1
         }
     });
-
 
     $scope.dateStarted = $filter('date')(new Date(newStartDate), 'dd.MM.yyyy HH:mm');
     $scope.dateFinished = $filter('date')(new Date(newDateFinished), 'dd.MM.yyyy HH:mm');
