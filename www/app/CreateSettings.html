@@ -28,7 +28,7 @@
         <div class="col-xs-3">
             <div class="input-group input-group-sm"
                  data-ng-class="{'has-error': activity.settings.requiredReductionPower < 0 || !activity.settings.requiredReductionPower }">
-                <input type="number" min="0.01" step="any" my-directive required data-ng-model="activity.settings.requiredReductionPower"
+                <input type="number" min="0.01" step="any" required data-ng-model="activity.settings.requiredReductionPower"
                        data-area-describedby="requiredreductionaddon" name="requiredReductionPower" id="requiredReductionPower"
                        class="form-control">
                 <span id="requiredreductionaddon" class="input-group-addon">MW</span>

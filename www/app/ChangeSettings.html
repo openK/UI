@@ -47,7 +47,7 @@
                 <div class="input-group input-group-sm"
                      data-ng-class="{'has-error': activity.reductionValue < 0 || !activity.reductionValue }">
                     <input type="number" data-ng-required="true" data-ng-model="activity.reductionValue"
-                           min="1" name="requiredAdditionalReductionPower" id="requiredAdditionalReductionPower"
+                           min="0.01" step="any" name="requiredAdditionalReductionPower" id="requiredAdditionalReductionPower"
                            class="form-control">
                     <span id="requiredreductionaddon" class="input-group-addon">MW</span>
                 </div>

@@ -31,7 +31,7 @@
         <div class="col-xs-3">
             <div class="input-group input-group-sm"
                  data-ng-class="{'has-error': activity.requiredReductionPower == ''}">
-                <input type="number" required data-ng-model="activity.reductionValue"
+                <input type="number" min="0.01" step="any"  required data-ng-model="activity.reductionValue"
                        data-area-describedby="requiredreductionaddon"
                        name="requiredReductionPower" id="requiredReductionPower"
                        class="form-control">
