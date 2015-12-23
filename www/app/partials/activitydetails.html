@@ -9,11 +9,11 @@
                     <table class="settings">
                         <tr>
                             <td class="tlabel">{{'dateStarted'| translate  }}:</td>
-                            <td>{{activity.settings.dateStarted | date : format: "dd.mm.YYYY HH:MM"}}</td>
+                            <td>{{activity.settings.dateStarted | date:'dd.MM.yyyy, HH:mm'}}</td>
                         </tr>
                         <tr>
                             <td class="tlabel">{{'dateFinished'| translate  }}:</td>
-                            <td>{{activity.settings.dateFinished | date : format: "dd.mm.YYYY HH:MM"}}</td>
+                            <td>{{activity.settings.dateFinished | date:'dd.MM.yyyy, HH:mm'}}</td>
                         </tr>
                     </table>
                 </div>
