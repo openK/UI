@@ -46,6 +46,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
             filter: []
         }
     };
+
     $scope.substations = {
         enablePagination: false,
         enableFiltering: true,
@@ -72,7 +73,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
             },
             {
                 name: 'maxU.value',
-                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.maxU.value | number : 2}} {{row.entity.maxU.multiplier}}{{row.entity.maxU.unit}}</div>',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.maxU.value | kv}} {{row.entity.maxU.multiplier}}{{row.entity.maxU.unit}}</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.NETAREA',
                 width: '5%'

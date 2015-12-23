@@ -109,6 +109,16 @@ app.filter('status', function () {
         
         
         return value[0];
+    };
+});
+
+app.filter('kv', function () {
+
+    var kvdata = ['0,4','10','20','30','60','110','220','380'];
+    return function (value) {
+        
+            return kvdata[value];
     }
 });
+
 

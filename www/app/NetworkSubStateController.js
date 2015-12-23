@@ -98,7 +98,7 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
             },
             {
                 name: 'maxU.value',
-                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.maxU.value | number : 2}} {{row.entity.maxU.multiplier}}{{row.entity.maxU.unit}}</div>',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.maxU.value | kv}} {{row.entity.maxU.multiplier}}{{row.entity.maxU.unit}}</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.NETAREA',
               //  width: '8%'
