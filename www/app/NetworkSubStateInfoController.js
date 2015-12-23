@@ -132,7 +132,7 @@ app.controller('NetworkSubStateInfoController', ['$scope', '$http', '$timeout', 
             // Aktuelle Regelstufe
             {
                 name: 'reductionSettingMeasured.value',
-                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.reductionSettingMeasured.value | number : 2}} %</div>',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.reductionSettingMeasured.value | number : 0}} %</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.REDUCTIONSETTING.MEASURED.ABBREVIATION',
                 width: '9%'

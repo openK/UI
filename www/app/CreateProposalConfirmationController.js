@@ -72,7 +72,7 @@ app.controller('CreateProposalConfirmationController', ['$scope', '$state', '$ht
             // Aktuelle Regelstufe
             {
                 name: 'reductionSettingMeasured.value',
-                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.reductionSettingMeasured.value | number : 2}} %</div>',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.reductionSettingMeasured.value | number : 0}} %</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.REDUCTIONSETTING.MEASURED.ABBREVIATION',
                 width: '9%'
@@ -100,7 +100,7 @@ app.controller('CreateProposalConfirmationController', ['$scope', '$state', '$ht
             // abregeln auf
             {
                 name: 'reductionAdvice',
-                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.reductionAdvice | number : 2}} %</div>',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.reductionAdvice | number : 0}} %</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.REDUCTIONSETTING.TO.SET'
             },
