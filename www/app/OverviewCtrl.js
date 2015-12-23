@@ -125,10 +125,15 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
 
         $scope.hasReductions = function () {
 
-            if ($scope.currentItem.processStatus === 'WithoutSchedule' || $scope.currentItem.processStatus === 'WithoutScheduleDeleted') {
+            if(typeof $scope.currentItem.processStatus === 'undefined') {
                 return false;
-            } else {
-                return true;
+            }
+            else{
+                if ($scope.currentItem.processStatus === 'WithoutSchedule' || $scope.currentItem.processStatus === 'WithoutScheduleDeleted') {
+                    return false;
+                } else {
+                    return true;
+                }
             }
         };
 
