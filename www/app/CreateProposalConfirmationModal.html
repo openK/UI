@@ -7,6 +7,16 @@
 <div class="modal-body">
     <form name="dummyForm" class="form-horizontal">
         <div class="form-group">
+            <label for="datecreatedmodal" class="control-label col-xs-4">
+                {{ 'DATECALCULATED' | translate }}:
+            </label>
+            <div class="controls col-xs-8">
+                <input disabled="disabled" type="text"
+                       data-ng-model="dateCreated" class="form-control"
+                       id="datecreatedmodal">
+            </div>
+            <div class="form-group">
+            </div>
             <label for="datestartedmodal" class="control-label col-xs-4">
                 {{ 'SETTINGS.DATESTARTED' | translate }}:
             </label>

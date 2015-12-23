@@ -28,15 +28,9 @@ app.controller('CreateProposalConfirmationModalController', ['$scope', '$state',
         $scope.activity.proposal.modal.sumRequiredReductionPower += parseFloat(value.activePowerJpaToBeReduced.value);
     });
 
-    $scope.activity.proposal.modal.diffReductionPower = $scope.activity.settings.requiredReductionPower - $scope.activity.proposal.modal.sumRequiredReductionPower;
-    var green = $scope.activity.reductionValue * hysteresis / 100;
-    if ($scope.activity.proposal.modal.diffReductionPower < green) {
-
-        $scope.enough = "green";
-        $scope.activity.proposal.modal.diffReductionPower *= -1;
-
-    } else {
-
+    $scope.activity.proposal.modal.diffReductionPower = $scope.activity.proposal.modal.sumRequiredReductionPower - $scope.activity.settings.requiredReductionPower;
+    var red = $scope.activity.settings.requiredReductionPower * hysteresis / 100;
+    if ($scope.activity.proposal.modal.diffReductionPower < 0 || $scope.activity.proposal.modal.diffReductionPower > red) {
         $scope.enough = "red";
     }
 
@@ -51,15 +45,16 @@ app.controller('CreateProposalConfirmationModalController', ['$scope', '$state',
 
         $modalInstance.dismiss('cancel');
     };
+    $scope.activity.dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
+    $scope.dateCreated = $filter('date')(new Date($scope.activity.dateCreated), 'dd.MM.yyyy HH:mm');
 
     $scope.ok = function () {
         var dateStarted = dateService.formatDateForBackend($scope.activity.settings.dateStarted);
         var dateFinished = dateService.formatDateForBackend($scope.activity.settings.dateFinished);
-        var dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
         var postData = {
             "id": $scope.activity.id,
             "parentActivityJpaId": $scope.activity.parentActivityJpaId,
-            "dateCreated": dateCreated,
+            "dateCreated": $scope.activity.dateCreated,
             "createdBy": $scope.activity.createdBy || 'openk',
             "userSettingsJpa": {
                 "dateStarted": dateStarted,
