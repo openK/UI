@@ -204,12 +204,12 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
  
         var calculatedvalue = row.entity.generatorPowerMeasured.value - ((row.entity.reductionAdvice / 100) * row.entity.generatingUnitJpa.maxOperatingP.value);
 
-//      ToDo: Null Berechnung evtl. erforderlich
-/*
-        if((calculatedvalue < 0 )|| (row.entity.generatingUnitJpa.maxOperatingP.value < row.entity.generatorPowerMeasured.value)){
+        // || (row.entity.generatingUnitJpa.maxOperatingP.value < row.entity.generatorPowerMeasured.value)
+
+        if((calculatedvalue < 0 )){
             calculatedvalue = 0;
         }
-*/        
+       
         row.entity.activePowerJpaToBeReduced = {
             value: calculatedvalue,
             multiplier: "M",
