@@ -21,7 +21,7 @@ app.controller('SubStationController', ['$scope', '$http', '$timeout', '$transla
             '</div>';
     }
 
-    $rootScope.$on('loadSubstations', function (event, branch) {
+    $scope.parent.$on('loadSubstations', function (event, branch) {
 
         var oid = parseInt(branch.oid);
         $scope.substationname = branch.name;

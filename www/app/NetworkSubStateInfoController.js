@@ -24,11 +24,11 @@ app.controller('NetworkSubStateInfoController', ['$scope', '$http', '$timeout', 
     $log.log($scope.activity);
     $scope.activity = activityService.activity();
 
-    $rootScope.$on('loadSubstationsInfo', function (event, branch) {
+    $scope.$parent.$on('loadSubstationsInfo', function (event, branch) {
         $scope.activity = activityService.activity();
         var oid = parseInt(branch.oid);
         $scope.$parent.substationname = branch.name;
-        console.log('loadSubstations');
+        $log.debug('loadSubstationsInfo');
 
         if ($scope.activity.dateCreated) {
             var timestamp = dateService.formatDateForRestRequest($scope.activity.dateCreated);

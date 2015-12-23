@@ -19,14 +19,14 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
             '</div>' +
             '</div>';
     }
-    console.log('NetworkSubStateController');
+    $log.debug('NetworkSubStateController');
     $scope.$parent.activity = activityService.activity();
 
-    $rootScope.$on('loadSubstations', function (event, branch) {
+    $scope.$parent.$on('loadSubstations', function (event, branch) {
         $scope.activity = activityService.activity();
         var oid = parseInt(branch.oid);
         $scope.$parent.substationname = branch.name;
-        console.log('loadSubstations');
+        $log.debug('loadSubstations');
 
         if ($scope.activity.dateCreated) {
             var timestamp = dateService.formatDateForRestRequest($scope.activity.dateCreated);

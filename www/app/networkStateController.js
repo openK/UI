@@ -16,7 +16,7 @@ app.controller('NetworkStateController', ['$scope', '$http', '$timeout', '$trans
 
         if (branch && branch.level > 1) {
 
-            $rootScope.$broadcast('loadSubstations', branch);
+            $scope.$parent.$broadcast('loadSubstations', branch);
         }
     };
 
