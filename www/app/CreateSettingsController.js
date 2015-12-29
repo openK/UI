@@ -5,28 +5,15 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
 
     // configure the new startDate and finsheDate...
     var now = new Date($.now());
-    var quarters = parseInt(now.getMinutes() / 15);
-    var minutes = quarters * 15 + 30;
-    var hours = parseInt(minutes / 60);
-    var newStartDate = now;
-    var newDateFinished = now;
-    if (hours) {
-        newStartDate = new Date(newStartDate.setHours(newStartDate.getHours() + 1));
-        minutes = minutes % 60;
-        newStartDate = new Date(newStartDate.setMinutes(minutes, 0, 0));
-    } else {
-        newStartDate = new Date(newStartDate.setMinutes(minutes, 0, 0));
-    }
-    newDateFinished = new Date(newStartDate.getTime());
-    newDateFinished = new Date(newDateFinished.setMinutes(newDateFinished.getMinutes() + 30, 0, 0));
-
+    var newStartDate = new Date(now.setMinutes(parseInt((now.getMinutes() + 25) / 15) * 15));
+    var newFinishedDate = new Date(new Date(newStartDate.getTime()).setMinutes(newStartDate.getMinutes() + 30, 0, 0));
     $('#datestarted').daterangepicker({
         singleDatePicker: true,
         timePicker24Hour: true,
         timePicker: true,
         timePickerIncrement: 1,
         startDate: newStartDate,
-        minDate: new Date($.now()),
+        minDate: newStartDate,
         locale: {
             format: 'DD.MM.YYYY HH:mm',
             applyLabel: '&Uuml;bernehmen',
@@ -41,24 +28,14 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
         var start = new Date(picker.startDate);
         var end = new Date($('#datefinished').data('daterangepicker').startDate);
         if (start >= end) {
-            var quarters = parseInt(start.getMinutes() / 15);
-            var minutes = quarters * 15 + 30;
-            var hours = parseInt(minutes / 60);
-            var newEnd = start;
-            if (hours) {
-                newEnd = new Date(newEnd.setHours(newStartDate.getHours() + 1));
-                minutes = minutes % 60;
-                newEnd = new Date(newEnd.setMinutes(minutes, 0, 0));
-            } else {
-                newEnd = new Date(newEnd.setMinutes(minutes, 0, 0));
-            }
+            var newEnd = new Date(new Date(start.getTime()).setMinutes(parseInt(((start.getMinutes()+30)/15)*15)));
             $('#datefinished').daterangepicker({
                 singleDatePicker: true,
                 timePicker24Hour: true,
                 timePicker: true,
                 timePickerIncrement: 1,
                 startDate: newEnd,
-                minDate: start,
+                minDate: new Date(start.setMinutes(parseInt(((start.getMinutes()+15)/15)*15))),
                 locale: {
                     format: 'DD.MM.YYYY HH:mm',
                     applyLabel: '&Uuml;bernehmen',
@@ -76,8 +53,8 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
         timePicker24Hour: true,
         timePicker: true,
         timePickerIncrement: 1,
-        startDate: newDateFinished,
-        minDate: newDateFinished,
+        startDate: newStartDate,
+        minDate: newFinishedDate,
         locale: {
             format: 'DD.MM.YYYY HH:mm',
             applyLabel: '&Uuml;bernehmen',

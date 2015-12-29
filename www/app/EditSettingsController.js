@@ -6,22 +6,12 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
     }
 
     $scope.parentActivityId = activityService.currentParentActivityId();
-    var now = new Date($.now());
-    var quarters = parseInt(now.getMinutes() / 15);
-    var minutes = quarters * 15 + 30;
-    var hours = parseInt(minutes / 60);
-    var newDateStart = now;
-    if (hours) {
-        newDateStart = new Date(newDateStart.setHours(newDateStart.getHours() + 1));
-        minutes = minutes % 60;
-        newDateStart = new Date(newDateStart.setMinutes(minutes, 0, 0));
-    } else {
-        newDateStart = new Date(newDateStart.setMinutes(minutes, 0, 0));
-    }
-    var newDateFinished = new Date(newDateStart.getTime());
-    newDateFinished = new Date(newDateFinished.setMinutes(newDateFinished.getMinutes() + 30, 0, 0));
 
+    var now = new Date($.now());
+    var newDateStart = new Date(now.setMinutes(parseInt((now.getMinutes() + 25) / 15) * 15))
+    var newDateFinished = new Date(new Date(newDateStart.getTime()).setMinutes(newDateStart.getMinutes() + 30, 0, 0));
     var newStartDate = new Date($scope.activity.dateStarted);
+    now = new Date($.now());
     if (newStartDate < now) {
         newStartDate = newDateStart;
     }
@@ -40,6 +30,7 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
         locale: {
             format: 'DD.MM.YYYY HH:mm',
             applyLabel: '&Uuml;bernehmen',
+            cancelLabel: 'Abbrechen',
             daysOfWeek: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
             monthNames: ['Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
             firstDay: 1
@@ -50,24 +41,14 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
         var start = new Date(picker.startDate);
         var end = new Date($('#datefinished').data('daterangepicker').startDate);
         if (start >= end) {
-            var quarters = parseInt(start.getMinutes() / 15);
-            var minutes = quarters * 15 + 30;
-            var hours = parseInt(minutes / 60);
-            var newEnd = start;
-            if (hours) {
-                newEnd = new Date(newEnd.setHours(newEnd.getHours() + 1));
-                minutes = minutes % 60;
-                newEnd = new Date(newEnd.setMinutes(minutes, 0, 0));
-            } else {
-                newEnd = new Date(newEnd.setMinutes(minutes, 0, 0));
-            }
+            var newEnd = new Date(new Date(start.getTime()).setMinutes(parseInt(((start.getMinutes() + 30) / 15) * 15)));
             $('#datefinished').daterangepicker({
                 singleDatePicker: true,
                 timePicker24Hour: true,
                 timePicker: true,
                 timePickerIncrement: 1,
                 startDate: newEnd,
-                minDate: start,
+                minDate: new Date(start.setMinutes(parseInt(((start.getMinutes() + 15) / 15) * 15))),
                 locale: {
                     format: 'DD.MM.YYYY HH:mm',
                     applyLabel: '&Uuml;bernehmen',
@@ -85,11 +66,12 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
         timePicker24Hour: true,
         timePicker: true,
         timePickerIncrement: 1,
-        startDate: newFinishedDate,
-        minDate: newStartDate,
+        startDate: newStartDate,
+        minDate: newFinishedDate,
         locale: {
             format: 'DD.MM.YYYY HH:mm',
             applyLabel: '&Uuml;bernehmen',
+            cancelLabel: 'Abbrechen',
             daysOfWeek: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
             monthNames: ['Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
             firstDay: 1
@@ -97,7 +79,7 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
     });
 
     $scope.dateStarted = $filter('date')(new Date(newStartDate), 'dd.MM.yyyy HH:mm');
-    $scope.dateFinished = $filter('date')(new Date(newDateFinished), 'dd.MM.yyyy HH:mm');
+    $scope.dateFinished = $filter('date')(new Date(newFinishedDate), 'dd.MM.yyyy HH:mm');
     $scope.activityConfigData = activityService.activityConfigData().activity;
 
     if ($stateParams.taskId) {
