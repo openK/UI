@@ -28,14 +28,14 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
         var start = new Date(picker.startDate);
         var end = new Date($('#datefinished').data('daterangepicker').startDate);
         if (start >= end) {
-            var newEnd = new Date(new Date(start.getTime()).setMinutes(parseInt(((start.getMinutes()+30)/15)*15)));
+            var newEnd = new Date(new Date(start.getTime()).setMinutes(parseInt(((start.getMinutes() + 30) / 15) * 15)));
             $('#datefinished').daterangepicker({
                 singleDatePicker: true,
                 timePicker24Hour: true,
                 timePicker: true,
                 timePickerIncrement: 1,
                 startDate: newEnd,
-                minDate: new Date(start.setMinutes(parseInt(((start.getMinutes()+15)/15)*15))),
+                minDate: new Date(start.setMinutes(parseInt(((start.getMinutes() + 15) / 15) * 15))),
                 locale: {
                     format: 'DD.MM.YYYY HH:mm',
                     applyLabel: '&Uuml;bernehmen',
@@ -73,66 +73,71 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
                 $scope.currentParentActivity = a;
         });
     }
-    $scope.saveAndReturn = function () {
-        var dateStarted = dateService.formatDateForBackend($scope.activity.settings.dateStarted);
-        var dateFinished = dateService.formatDateForBackend($scope.activity.settings.dateFinished);
-        var dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
-        var postData = {
-            "dateCreated": dateCreated,
-            "createdBy": $scope.activity.createdBy,
-            "id": $scope.activity.activityId,
-            "parentActivityJpaId": $scope.parentActivityId,
-            "userSettingsJpa": {
-                "dateStarted": dateStarted,
-                "dateFinished": dateFinished,
-                "geographicalRegion": $scope.activity.settings.useWholeArea,
-                "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
-                "practise": $scope.activity.settings.practise,
-                "description": $scope.activity.settings.description
-            },
-            "activePowerJpaToBeReduced": {
-                "value": $scope.activity.settings.requiredReductionPower,
-                "multiplier": "M",
-                "unit": "W"
-            },
-            "subGeographicalRegionJpaList": $scope.activity.settings.subGeographicalRegions,
-            "substationJpaList": $scope.activity.settings.transformerStations,
-            "preselectionName": "",
-            "preselectionConfigurationJpa": {
-                "reductionSetting": $scope.activity.preselection.reductionSetting,
-                "discriminationCoefficientEnabled": $scope.activity.preselection.discriminationCoefficientEnabled,
-                "characteristicForMissingMeasurementFwt": $scope.activity.preselection.characteristicForMissingMeasurementFwt,
-                "characteristicForMissingMeasurementEfr": $scope.activity.preselection.characteristicForMissingMeasurementEfr,
-                "substituteValueWindFwt": $scope.activity.preselection.substituteValueWindFwt,
-                "substituteValuePhotovoltaicFwt": $scope.activity.preselection.substituteValuePhotovoltaicFwt,
-                "substituteValueBiogasFwt": $scope.activity.preselection.substituteValueBiogasFwt,
-                'substituteValueWindEfr': $scope.activity.preselection.substituteValueWindEfr,
-                'substituteValuePhotovoltaicEfr': $scope.activity.preselection.substituteValuePhotovoltaicEfr,
-                'substituteValueBiogasEfr': $scope.activity.preselection.substituteValueBiogasEfr
-            },
-            'synchronousMachineJpaReducedList': $scope.activity.substationProposalList,
-            "timeout": 30000
-        };
+    $scope.saveAndReturn = function (settingsForm) {
 
-        if (postData.parentActivityJpaId && postData.activityId) {
+        if (settingsForm.$valid && $scope.isValidTimeInterval($scope.activity.settings.dateStarted, $scope.activity.settings.dateFinished)) {
+            var dateStarted = dateService.formatDateForBackend($scope.activity.settings.dateStarted);
+            var dateFinished = dateService.formatDateForBackend($scope.activity.settings.dateFinished);
+            var dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
+            var postData = {
+                "dateCreated": dateCreated,
+                "createdBy": $scope.activity.createdBy,
+                "id": $scope.activity.activityId,
+                "parentActivityJpaId": $scope.parentActivityId,
+                "userSettingsJpa": {
+                    "dateStarted": dateStarted,
+                    "dateFinished": dateFinished,
+                    "geographicalRegion": $scope.activity.settings.useWholeArea,
+                    "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
+                    "practise": $scope.activity.settings.practise,
+                    "description": $scope.activity.settings.description
+                },
+                "activePowerJpaToBeReduced": {
+                    "value": $scope.activity.settings.requiredReductionPower,
+                    "multiplier": "M",
+                    "unit": "W"
+                },
+                "subGeographicalRegionJpaList": $scope.activity.settings.subGeographicalRegions,
+                "substationJpaList": $scope.activity.settings.transformerStations,
+                "preselectionName": "",
+                "preselectionConfigurationJpa": {
+                    "reductionSetting": $scope.activity.preselection.reductionSetting,
+                    "discriminationCoefficientEnabled": $scope.activity.preselection.discriminationCoefficientEnabled,
+                    "characteristicForMissingMeasurementFwt": $scope.activity.preselection.characteristicForMissingMeasurementFwt,
+                    "characteristicForMissingMeasurementEfr": $scope.activity.preselection.characteristicForMissingMeasurementEfr,
+                    "substituteValueWindFwt": $scope.activity.preselection.substituteValueWindFwt,
+                    "substituteValuePhotovoltaicFwt": $scope.activity.preselection.substituteValuePhotovoltaicFwt,
+                    "substituteValueBiogasFwt": $scope.activity.preselection.substituteValueBiogasFwt,
+                    'substituteValueWindEfr': $scope.activity.preselection.substituteValueWindEfr,
+                    'substituteValuePhotovoltaicEfr': $scope.activity.preselection.substituteValuePhotovoltaicEfr,
+                    'substituteValueBiogasEfr': $scope.activity.preselection.substituteValueBiogasEfr
+                },
+                'synchronousMachineJpaReducedList': $scope.activity.substationProposalList,
+                "timeout": 30000
+            };
 
-            $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
+            if (postData.parentActivityJpaId && postData.activityId) {
 
-                $state.go('state1',{show: 'Aktiv'});
+                $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
 
-            }).error(function (data, status, headers, config) {
-                $log.error('openk-eisman-portlet/rest/activity/');
-            });
+                    $state.go('state1', { show: 'Aktiv' });
 
+                }).error(function (data, status, headers, config) {
+                    $log.error('openk-eisman-portlet/rest/activity/');
+                });
+
+            } else {
+
+                $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
+
+                    $state.go('state1', { show: 'Aktiv' });
+
+                }).error(function (data, status, headers, config) {
+                    $log.error('openk-eisman-portlet/rest/activity/');
+                });
+            }
         } else {
-
-            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
-
-                $state.go('state1',{show: 'Aktiv'});
-
-            }).error(function (data, status, headers, config) {
-                $log.error('openk-eisman-portlet/rest/activity/');
-            });
+            $scope.settingsFormSubmitted = true;
         }
     };
 
@@ -183,7 +188,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
 
     $scope.isNoAreaDefined = function () {
 
-        return !$scope.activity.settings.useWholeArea &&
+        return !$scope.activity.settings.useWholeArea && 
             $scope.activity.settings.transformerStations.length === 0 &&
             $scope.activity.settings.subGeographicalRegions.length === 0;
     };

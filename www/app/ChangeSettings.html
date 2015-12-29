@@ -106,53 +106,35 @@
     <div class="row">
         <div class="alert alert-warning"
              data-ng-show="settingsFormSubmitted &&
-                (settingsForm.datestarted.$error.required || settingsForm.datefinished.$error.required
-                || isNoValidTimeInterval(activity.dateStarted, activity.dateFinished)
-                || activity.reasonOfReduction == ''
-                || settingsForm.requiredReductionPower.$invalid
-                || settingsFormSubmitted && isNoAreaDefined()
-                || activity.description == '' )">
-            <div>
-                <normal class="warning"
-                        data-ng-show="settingsFormSubmitted && settingsForm.datestarted.$error.required">
-                    {{'SETTINGS.DATESTARTED.ERROR' | translate}}
-                </normal>
+                            (settingsForm.datestarted.$invalid ||
+                             settingsForm.datefinished.$invalid ||
+                             activity.settings.reasonOfReduction == '' ||
+                             settingsForm.requiredReductionPower.$invalid ||
+                             isNoAreaDefined() ||
+                             activity.settings.description == '')">
+            <div class="warning"
+                 data-ng-show="settingsFormSubmitted && settingsForm.datestarted.$invalid">
+                {{'SETTINGS.DATESTARTED.ERROR' | translate}}
             </div>
-            <div>
-                <normal class="warning"
-                        data-ng-show="settingsFormSubmitted && settingsForm.datefinished.$error.required">
-                    {{'SETTINGS.DATEFINISHED.ERROR' | translate}}
-                </normal>
+            <div class="warning"
+                 data-ng-show="settingsFormSubmitted && settingsForm.datefinished.$invalid">
+                {{'SETTINGS.DATEFINISHED.ERROR' | translate}}
             </div>
-            <div>
-                <normal class="warning"
-                        data-ng-show="settingsFormSubmitted && isNoValidTimeInterval(activity.dateStarted, activity.dateFinished)">
-                    {{'SETTINGS.DATEINTERVAL.ERROR' | translate}}
-                </normal>
+            <div class="warning"
+                 data-ng-show="settingsFormSubmitted && activity.settings.reasonOfReduction == ''">
+                {{'SETTINGS.REASONOFREDUCTION.ERROR' | translate}}
             </div>
-            <div>
-                <normal class="warning"
-                        data-ng-show="settingsFormSubmitted && activity.reasonOfReduction == ''">
-                    {{'SETTINGS.REASONOFREDUCTION.ERROR' | translate}}
-                </normal>
+            <div class="warning"
+                 data-ng-show="settingsFormSubmitted && settingsForm.requiredReductionPower.$invalid">
+                {{'SETTINGS.REQUIREDREDUCTION.ERROR' | translate}}
             </div>
-            <div>
-                <normal class="warning"
-                        data-ng-show="settingsFormSubmitted && settingsForm.requiredReductionPower.$invalid">
-                    {{'SETTINGS.REQUIREDREDUCTION.ERROR' | translate}}
-                </normal>
+            <div class="warning"
+                 data-ng-show="settingsFormSubmitted && isNoAreaDefined()">
+                {{'SETTINGS.AREA.ERROR' | translate}}
             </div>
-            <div>
-                <normal class="warning"
-                        data-ng-show="settingsFormSubmitted && isNoAreaDefined()">
-                    {{'SETTINGS.AREA.ERROR' | translate}}
-                </normal>
-            </div>
-            <div>
-                <normal class="warning"
-                        data-ng-show="settingsFormSubmitted && activity.description == ''">
-                    {{'SETTINGS.DESCRIPTION.ERROR' | translate}}
-                </normal>
+            <div class="warning"
+                 data-ng-show="settingsFormSubmitted && activity.settings.description == ''">
+                {{'SETTINGS.DESCRIPTION.ERROR' | translate}}
             </div>
         </div>
         <div class="row">

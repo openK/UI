@@ -96,60 +96,36 @@
     <div class="col-xs-12">
         <div class="alert alert-warning"
              data-ng-show="settingsFormSubmitted &&
-                (settingsForm.datestarted.$error.required || settingsForm.datefinished.$error.required
-                || isNoValidTimeInterval(activity.settings.dateStarted, activity.settings.dateFinished)
-                || activity.settings.reasonOfReduction == ''
-                || settingsForm.requiredReductionPower.$invalid
-                || settingsFormSubmitted && isNoAreaDefined()
-                || activity.settings.description == '' || activity.settings.practise == '')">
-            <div>
-                <normal class="warning"
-                        data-ng-show="settingsFormSubmitted && settingsForm.datestarted.$error.required">
-                    {{'SETTINGS.DATESTARTED.ERROR' | translate}}
-                </normal>
+                            (settingsForm.datestarted.$invalid ||
+                             settingsForm.datefinished.$invalid ||
+                             activity.settings.reasonOfReduction == '' ||
+                             settingsForm.requiredReductionPower.$invalid ||
+                             isNoAreaDefined() ||
+                             activity.settings.description == '')">
+            <div class="warning"
+                 data-ng-show="settingsFormSubmitted && settingsForm.datestarted.$invalid">
+                {{'SETTINGS.DATESTARTED.ERROR' | translate}}
             </div>
-            <div>
-                <normal class="warning"
-                        data-ng-show="settingsFormSubmitted && settingsForm.datefinished.$error.required">
-                    {{'SETTINGS.DATEFINISHED.ERROR' | translate}}
-                </normal>
+            <div class="warning"
+                 data-ng-show="settingsFormSubmitted && settingsForm.datefinished.$invalid">
+                {{'SETTINGS.DATEFINISHED.ERROR' | translate}}
             </div>
-            <div>
-                <normal class="warning"
-                        data-ng-show="settingsFormSubmitted && isNoValidTimeInterval(activity.settings.dateStarted, activity.settings.dateFinished)">
-                    {{'SETTINGS.DATEINTERVAL.ERROR' | translate}}
-                </normal>
+            <div class="warning"
+                 data-ng-show="settingsFormSubmitted && activity.settings.reasonOfReduction == ''">
+                {{'SETTINGS.REASONOFREDUCTION.ERROR' | translate}}
             </div>
-            <div>
-                <normal class="warning"
-                        data-ng-show="settingsFormSubmitted && activity.settings.reasonOfReduction == ''">
-                    {{'SETTINGS.REASONOFREDUCTION.ERROR' | translate}}
-                </normal>
+            <div class="warning"
+                 data-ng-show="settingsFormSubmitted && settingsForm.requiredReductionPower.$invalid">
+                {{'SETTINGS.REQUIREDREDUCTION.ERROR' | translate}}
             </div>
-            <div>
-                <normal class="warning"
-                        data-ng-show="settingsFormSubmitted && settingsForm.requiredReductionPower.$invalid">
-                    {{'SETTINGS.REQUIREDREDUCTION.ERROR' | translate}}
-                </normal>
+            <div class="warning"
+                 data-ng-show="settingsFormSubmitted && isNoAreaDefined()">
+                {{'SETTINGS.AREA.ERROR' | translate}}
             </div>
-            <div>
-                <normal class="warning"
-                        data-ng-show="settingsFormSubmitted && isNoAreaDefined()">
-                    {{'SETTINGS.AREA.ERROR' | translate}}
-                </normal>
+            <div class="warning"
+                 data-ng-show="settingsFormSubmitted && activity.settings.description == ''">
+                {{'SETTINGS.DESCRIPTION.ERROR' | translate}}
             </div>
-            <div>
-                <normal class="warning"
-                        data-ng-show="settingsFormSubmitted && activity.settings.description == ''">
-                    {{'SETTINGS.DESCRIPTION.ERROR' | translate}}
-                </normal>
-            </div>
-            <!--<div>
-                <normal class="warning"
-                        data-ng-show="settingsFormSubmitted && activity.settings.practise === ''">
-                    {{'SETTINGS.PRACTICE.ERROR' | translate}}
-                </normal>
-            </div>-->
         </div>
     </div>
     <div class="row">
@@ -164,7 +140,7 @@
             </div>
         </div>
         <div class="col-xs-4">
-            <button data-ng-click="saveAndReturn()" data-ng-disabled="!settingsForm.$valid" class="btn btn-primary">
+            <button data-ng-click="saveAndReturn(settingsForm)" class="btn btn-primary">
                 {{'SETTINGS.SAVEACTIVITYANDRETURN' | translate}}
             </button>
             <div class="pull-right">

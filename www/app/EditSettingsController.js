@@ -168,7 +168,7 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
             },
             "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
             "substationJpaList": $scope.activity.transformerStations,
-            "parentActivityJpaId": $scope.parentActivityId,
+            //"parentActivityJpaId": $scope.parentActivityId,
             "preselectionName": "",
             "preselectionConfigurationJpa": {
                 "reductionSetting": $scope.activity.preselectionConfigurationDto.reductionSetting,
