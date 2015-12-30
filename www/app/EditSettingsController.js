@@ -153,6 +153,7 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
         $scope.activity.dateStarted = dateService.formatDateForBackend($scope.dateStarted);
         $scope.activity.dateFinished = dateService.formatDateForBackend($scope.dateFinished);
         var data = {
+            "id": $scope.activity.id,
             "userSettingsJpa": {
                 "dateStarted": $scope.activity.dateStarted,
                 "dateFinished": $scope.activity.dateFinished,
@@ -168,7 +169,7 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
             },
             "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
             "substationJpaList": $scope.activity.transformerStations,
-            //"parentActivityJpaId": $scope.parentActivityId,
+            "parentActivityJpaId": $scope.parentActivityId,
             "preselectionName": "",
             "preselectionConfigurationJpa": {
                 "reductionSetting": $scope.activity.preselectionConfigurationDto.reductionSetting,
