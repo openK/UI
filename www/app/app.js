@@ -34,7 +34,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     resolve: {
                         parentActivities: function (activityService, $stateParams, $rootScope) {
                             $rootScope.show = $stateParams.show;
-                            activityService.resetActivity();
+                            activityService.resetActivity(true);
                             return activityService.loadParentActivities(0, 5, null, null, null, $stateParams.show);
                         }
                     }
@@ -56,6 +56,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     controller: 'CreateDownRegulationController',
                     resolve: {
                         activity: function (activityService) {
+                            activityService.resetActivity();
                             return activityService.loadConfiguration();
                         }
 

@@ -31,8 +31,10 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
 
     var configData = {};
 
-    function resetActivity() {
-        configData = {};
+    function resetActivity(force) {
+        if (!force && configData) {
+            return;
+        }
         activity.dateCreated = null;
         activity.id = null;
         activity.preselection = {
