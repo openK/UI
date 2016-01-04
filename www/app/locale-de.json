@@ -196,7 +196,7 @@
   "PROCESS.EDIT.CANCEL": "Abbruch",
   "PROCESS.EDIT.CONFIRM": "Neues Enddatum speichern",
   "PROCESS.EDIT.RECENTDATE": "Aktuelles Enddatum: ",
-  "DATE.PATTERN": "dd.MM.yyyy HH:mm",
+  "DATE.PATTERN": "dd.MM.yyyy hh:mm",
   "PAGING.PAGE": "Seite",
   "PAGING.OF": "von",
   "PAGING.GOTO": "gehe zu Seite",
