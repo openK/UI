@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="datefinished" class="control-label col-xs-2">{{'SETTINGS.DATEFINISHED' | translate}} *</label>
+        <label for="datefinished" class="control-label col-xs-2">{{'SETTINGS.DATEFINISHED'| translate}} *</label>
         <div class="controls col-xs-3" data-ng-class="{'has-error': settingsForm.datefinished.$invalid}">
             <input type="text" required value="" data-ng-model="activity.settings.dateFinished" endrange
                    class="form-control" id="datefinished" name="datefinished">
@@ -24,7 +24,7 @@
     <div class="form-group">
         <label for="requiredReductionPower"
                data-ng-class="{'has-error': settingsForm.requiredReductionPower.$invalid}"
-               class="control-label col-xs-2">{{'SETTINGS.REQUIREDREDUCTION' | translate}}*</label>
+               class="control-label col-xs-2">{{'SETTINGS.REQUIREDREDUCTION'| translate}}*</label>
         <div class="col-xs-3">
             <div class="input-group input-group-sm"
                  data-ng-class="{'has-error': activity.settings.requiredReductionPower < 0 || !activity.settings.requiredReductionPower }">
@@ -36,7 +36,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="geographicalregion" class="control-label col-xs-2">{{'SETTINGS.WHOLEAREA' | translate}} *</label>
+        <label for="geographicalregion" class="control-label col-xs-2">{{'SETTINGS.WHOLEAREA'| translate}} *</label>
         <div class="col-xs-3">
             <label class="checkbox-inline">
                 <input type="checkbox" data-ng-value="true" data-ng-required="checkForWholeAreaRequired()"
@@ -47,7 +47,7 @@
         </div>
     </div>
     <div class="form-group selection">
-        <label for="subgeographicalregion" class="control-label col-xs-2">{{'SETTINGS.SUBGEOGRAPHICALREGION' | translate}} *</label>
+        <label for="subgeographicalregion" class="control-label col-xs-2">{{'SETTINGS.SUBGEOGRAPHICALREGION'| translate}} *</label>
         <div class="col-xs-3">
             <div id="subgeographicalregion" isteven-multi-select input-model="activityConfigData.subGeographicalRegions"
                  output-model="activity.settings.subGeographicalRegions" button-label="icon name" translation="multiSelectTranslation"
@@ -58,7 +58,7 @@
         </div>
     </div>
     <div class="form-group selection">
-        <label for="transformerstation" class="control-label col-xs-2">{{'SETTINGS.TRANSFORMERSTATIONS' | translate}} *</label>
+        <label for="transformerstation" class="control-label col-xs-2">{{'SETTINGS.TRANSFORMERSTATIONS'| translate}} *</label>
         <div class="col-xs-3">
             <div id="transformerstation" isteven-multi-select input-model="activityConfigData.transformerStations"
                  output-model="activity.settings.transformerStations" button-label="icon name" translation="multiSelectTranslation"
@@ -69,62 +69,62 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="description" class="control-label col-xs-2">{{'SETTINGS.DESCRIPTION' | translate}} *</label>
+        <label for="description" class="control-label col-xs-2">{{'SETTINGS.DESCRIPTION'| translate}} *</label>
         <div class="col-xs-3" data-ng-class="{'has-error': activity.settings.description == ''}">
             <textarea id="description" required data-ng-model="activity.settings.description" rows="3"
                       class="form-control"></textarea>
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-xs-2">{{'SETTINGS.PRACTICE' | translate}} *</label>
+        <label class="control-label col-xs-2">{{'SETTINGS.PRACTICE'| translate}} *</label>
         <div class="col-xs-2">
             <label class="radio-inline">
                 <input type="radio" required data-ng-model="activity.settings.practise" ng-value="true"
-                       name="practise"> {{'YES' | translate}}
+                       name="practise"> {{'YES'| translate}}
             </label>
         </div>
         <div class="col-xs-2">
             <label class="radio-inline">
                 <input type="radio" required ng-value="false" data-ng-model="activity.settings.practise"
-                       name="practise"> {{'NO' | translate}}
+                       name="practise"> {{'NO'| translate}}
             </label>
         </div>
     </div>
     <div class="col-xs-1">
-        *{{'MANDATORY' | translate}}
+        *{{'MANDATORY'| translate}}
     </div>
     <div class="col-xs-12">
         <div class="alert alert-warning"
              data-ng-show="settingsFormSubmitted &&
-                            (settingsForm.datestarted.$invalid ||
-                             settingsForm.datefinished.$invalid ||
-                             activity.settings.reasonOfReduction == '' ||
-                             settingsForm.requiredReductionPower.$invalid ||
-                             isNoAreaDefined() ||
-                             activity.settings.description == '')">
+                                     (settingsForm.datestarted.$invalid ||
+                                             settingsForm.datefinished.$invalid ||
+                                             activity.settings.reasonOfReduction == '' ||
+                                             settingsForm.requiredReductionPower.$invalid ||
+                                             isNoAreaDefined() ||
+                                             activity.settings.description == '')">
             <div class="warning"
                  data-ng-show="settingsFormSubmitted && settingsForm.datestarted.$invalid">
-                {{'SETTINGS.DATESTARTED.ERROR' | translate}}
+                {{'SETTINGS.DATESTARTED.ERROR'| translate}}
             </div>
             <div class="warning"
                  data-ng-show="settingsFormSubmitted && settingsForm.datefinished.$invalid">
-                {{'SETTINGS.DATEFINISHED.ERROR' | translate}}
+                {{'SETTINGS.DATEFINISHED.ERROR'| translate}}
             </div>
             <div class="warning"
                  data-ng-show="settingsFormSubmitted && activity.settings.reasonOfReduction == ''">
-                {{'SETTINGS.REASONOFREDUCTION.ERROR' | translate}}
+                {{'SETTINGS.REASONOFREDUCTION.ERROR'| translate}}
             </div>
             <div class="warning"
                  data-ng-show="settingsFormSubmitted && settingsForm.requiredReductionPower.$invalid">
-                {{'SETTINGS.REQUIREDREDUCTION.ERROR' | translate}}
+                {{'SETTINGS.REQUIREDREDUCTION.ERROR'| translate}}
             </div>
             <div class="warning"
                  data-ng-show="settingsFormSubmitted && isNoAreaDefined()">
-                {{'SETTINGS.AREA.ERROR' | translate}}
+                {{'SETTINGS.AREA.ERROR'| translate}}
             </div>
             <div class="warning"
                  data-ng-show="settingsFormSubmitted && activity.settings.description == ''">
-                {{'SETTINGS.DESCRIPTION.ERROR' | translate}}
+                {{'SETTINGS.DESCRIPTION.ERROR'| translate}}
             </div>
         </div>
     </div>
@@ -132,18 +132,19 @@
         <div class="col-xs-2">
             <div class="pull-right">
                 <button class="btn btn-default" ui-sref="Regulation.CreateDownRegulation">
-                    {{'BACK' | translate}}
+                    {{'BACK'| translate}}
                 </button>
                 <button class="btn btn-default" ui-sref="state1({show: 'Aktiv'})">
                     {{ 'CANCEL' | translate }}
                 </button>
             </div>
         </div>
-        <div class="col-xs-4">
-            <button data-ng-click="saveAndReturn(settingsForm)" class="btn btn-primary">
-                {{'SETTINGS.SAVEACTIVITYANDRETURN' | translate}}
-            </button>
+        <div class="col-xs-3">
+
             <div class="pull-right">
+                <button data-ng-click="saveAndReturn(settingsForm)" class="btn btn-primary">
+                    {{'SETTINGS.SAVEACTIVITYANDRETURN'| translate}}
+                </button>
                 <button class="btn btn-primary" data-ng-click="gotoStationList(settingsForm)">
                     {{'SETTINGS.CREATEADVICE'| translate}}
                 </button>
