@@ -202,24 +202,22 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
 
         if (settingsForm.$valid && $scope.isValidTimeInterval($scope.activity.settings.dateStarted, $scope.activity.settings.dateFinished)) {
 
-            $scope.activity.dateDiff = dateService.getDateDiff($scope.activity.settings.dateStarted, $scope.activity.settings.dateFinished);
+            //$scope.activity.dateDiff = dateService.getDateDiff($scope.activity.settings.dateStarted, $scope.activity.settings.dateFinished);
 
             $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/createreductionadvice", $scope.getPostData()).success(function (data) {
 
                 var advice;
                 if (data.id && data.parentActivityJpaId) {
-
                     advice = data.synchronousMachineJpaReducedList;
                     $scope.activity.id = data.id;
                     $scope.activity.parentActivityJpaId = data.parentActivityJpaId;
                     $scope.activity.substationProposalList = data.synchronousMachineJpaReducedList;
 
                 } else {
-                    advice = data.childrenActivityJpaList[0].synchronousMachineJpaReducedList;
-                    data.childrenActivityJpaList[0].parentActivityJpaId = data.activityId;
-                    $scope.activity.id = data.childrenActivityJpaList[0].id;
-                    $scope.activity.parentActivityJpaId = data.id;
-                    $scope.activity.substationProposalList = data.childrenActivityJpaList[0].synchronousMachineJpaReducedList;
+                    advice = data.synchronousMachineJpaReducedList;
+                    $scope.activity.id = null;
+                    $scope.activity.parentActivityJpaId = null;
+                    $scope.activity.substationProposalList = data.synchronousMachineJpaReducedList;
                 }
                 advice.forEach(function (value) {
                     value.getCalculatedPower = parseInt(value.generatorPowerMeasured.value - (value.reductionAdvice / 100 * value.generatingUnitJpa.maxOperatingP.value));

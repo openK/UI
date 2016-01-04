@@ -87,16 +87,16 @@ app.controller('CreateProposalConfirmationModalController', ['$scope', '$state',
             'synchronousMachineJpaReducedList': $scope.activity.substationProposalList,
         };
 
-        $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
+        //$http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
 
             $state.go('Regulation.CreateProposalConfirmation');
 
-        }).error(function (data, status, headers, config) {
+        //}).error(function (data, status, headers, config) {
 
-            $scope.$broadcast('displayError', ['Es gab einen Fehler bei der Datenabfrage.']);
-            $log.error('Can not load /openk-eisman-portlet/rest/activity/');
+        //    $scope.$broadcast('displayError', ['Es gab einen Fehler bei der Datenabfrage.']);
+        //    $log.error('Can not load /openk-eisman-portlet/rest/activity/');
 
-        });
+        //});
 
         $modalInstance.close();
     };
