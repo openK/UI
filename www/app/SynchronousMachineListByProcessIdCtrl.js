@@ -48,7 +48,7 @@ app.controller('SynchronousMachineListByProcessIdCtrl', ['$scope', '$state', '$r
                 },
                 {
                     name: 'netVoltage.value',
-                    cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.netVoltage.value | number : 2}} {{row.entity.netVoltage.multiplier}}{{row.entity.netVoltage.unit}}</div>',
+                    cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.netVoltage.value | kv}} {{row.entity.netVoltage.multiplier}}{{row.entity.netVoltage.unit}}</div>',
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.NETAREA',
                     width: '5%'
