@@ -26,7 +26,7 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
         timePicker: true,
         timePickerIncrement: 1,
         startDate: newStartDate,
-        minDate: newStartDate,
+        minDate: new Date(now.setMinutes(now.getMinutes() + 1)),
         locale: {
             format: 'DD.MM.YYYY HH:mm',
             applyLabel: '&Uuml;bernehmen',
@@ -41,14 +41,16 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
         var start = new Date(picker.startDate);
         var end = new Date($('#datefinished').data('daterangepicker').startDate);
         if (start >= end) {
+            var newMinFinishDate = new Date(start);
             var newEnd = new Date(new Date(start.getTime()).setMinutes(parseInt(((start.getMinutes() + 30) / 15) * 15)));
+            newMinFinishDate = new Date(newMinFinishDate.setMinutes(newMinFinishDate.getMinutes() + 1));
             $('#datefinished').daterangepicker({
                 singleDatePicker: true,
                 timePicker24Hour: true,
                 timePicker: true,
                 timePickerIncrement: 1,
                 startDate: newEnd,
-                minDate: new Date(start.setMinutes(parseInt(((start.getMinutes() + 15) / 15) * 15))),
+                minDate: start,
                 locale: {
                     format: 'DD.MM.YYYY HH:mm',
                     applyLabel: '&Uuml;bernehmen',
@@ -60,14 +62,15 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
             });
         }
     });
-
+    var minFinishDate = new Date(newStartDate);
+    minFinishDate = new Date(minFinishDate.setMinutes(minFinishDate.getMinutes() + 1));
     $('#datefinished').daterangepicker({
         singleDatePicker: true,
         timePicker24Hour: true,
         timePicker: true,
         timePickerIncrement: 1,
-        startDate: newStartDate,
-        minDate: newFinishedDate,
+        startDate: newFinishedDate,
+        minDate: minFinishDate,
         locale: {
             format: 'DD.MM.YYYY HH:mm',
             applyLabel: '&Uuml;bernehmen',
