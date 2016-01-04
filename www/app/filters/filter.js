@@ -121,4 +121,17 @@ app.filter('kv', function () {
     }
 });
 
+app.filter('decimalger', function () {
+
+    
+    return function (value) {
+        
+            return value.toString().replace(/\./,',');
+    }
+});
+
+
+
+
+
 
