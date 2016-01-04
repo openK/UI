@@ -30,7 +30,7 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
 
         if ($scope.activity.dateCreated) {
             var timestamp = dateService.formatDateForRestRequest($scope.activity.dateCreated);
-            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist/timestamp/").then(function (result) {
+            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist/timestamp/" + timestamp).then(function (result) {
                 $scope.substationList = result.data.synchronousMachineJpaList;
             }, function (error) {
                 $log.error('Can not load /openk-eisman-portlet/rest/substation/oid/' + oid + '/synchronousmachinelist/timestamp/' + timestamp);

@@ -106,14 +106,11 @@
                                 <td>{{data.injectionType| translate}}</td>
                                 <td>
                                     <ul class="regionlist">
-                                    <li data-ng-repeat="item in data.injectionList">{{item}}</li>
+                                    <li data-ng-repeat="item in data.injectionList | orderBy">{{item}}</li>
                                     </ul>
                                 </td>
                             </tr>
-
-                            
                         </table>
-
                     </div>
                 </div>
             </div>
