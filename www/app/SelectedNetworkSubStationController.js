@@ -152,7 +152,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
                 displayName: 'SUBSTATIONSGRID.CHANGE',
                 headerCellFilter: 'translate',
                 enableFiltering: false,
-                cellTemplate: '<div class="ui-grid-cell-contents" title="TOOLTIP"><div class="input-group input-group-sm"><select id="regulationSteps" ng-model="row.entity.subStationRegSteps" style="padding-top:2px;" class="form-control" ng-change="grid.appScope.changeSynchronousMachine(grid,row)"><option ng-repeat="item in row.entity.reductionSettingJpaList">{{item.setting.value}}</option></select></div></div>'
+                cellTemplate: '<div class="ui-grid-cell-contents" title="TOOLTIP"><div class="input-group input-group-sm"><select id="regulationSteps" ng-model="row.entity.subStationRegSteps" style="padding-top:2px;" class="form-control" ng-change="grid.appScope.changeSynchronousMachine(grid,row)"><option ng-repeat="item in row.entity.reductionSettingJpaList | orderBy: \'setting.value\'">{{item.setting.value}}</option></select></div></div>'
             },
             {
                 name: 'delete',
