@@ -124,7 +124,7 @@ app.controller('ChangeProposalConfirmationController', ['$scope', '$state', '$ht
             "id": $scope.activity.id
         };
 
-        $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/confirmactivity/", postData).success(function (data) {
+        $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/confirmactivity/", $scope.activity.calculatedReductionAdvice).success(function (data) {
             $state.go('state1', {show: 'Aktiv'});
             //window.location.search = '?page=details&activityId=' + $scope.parentActivityId;
         }).error(function (data, status, headers, config) {

@@ -87,21 +87,9 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
                     ]);
     }
 
-    function createActivity() {
-        return activity;
-    }
-
     function loadActivity() {
         return $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + '/openk-eisman-portlet/rest/activity/latestusersettings/' + currentParentActivityId).then(function (result) {
             activity = result.data;
-        });
-    }
-
-    function loadChildActivity() {
-        return $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + '/openk-eisman-portlet/rest/activity/latestusersettings/' + activity.id).then(function (result) {
-            var id = activity.id;
-            activity = result.data;
-            activity.id = id;
         });
     }
 
@@ -116,31 +104,9 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/lov/").then(function (result) {
                 configData.activity.transformerStations = result.data;
-                //if (activity.settings.transformerStations && configData.activity.transformerStations) {
-                //    var tmpTicked = activity.settings.transformerStations;
-                //    for (var i = 0; i < configData.activity.transformerStations.length; i++) {
-                //        for (var j = 0; j < tmpTicked.length; j++) {
-                //            if (configData.activity.transformerStations[i].mRid === tmpTicked[j].mRid) {
-                //                configData.activity.transformerStations[i].ticked = true;
-                //                break;
-                //            }
-                //        }
-                //    }
-                //}
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/lov/").then(function (result) {
                 configData.activity.subGeographicalRegions = result.data;
-                //if (activity.settings.subGeographicalRegions && configData.activity.subGeographicalRegions) {
-                //    var tmpTicked = activity.settings.subGeographicalRegions;
-                //    for (var i = 0; i < configData.activity.subGeographicalRegions.length; i++) {
-                //        for (var j = 0; j < tmpTicked.length; j++) {
-                //            if (configData.activity.subGeographicalRegions[i].mRid === tmpTicked[j].mRid) {
-                //                configData.activity.subGeographicalRegions[i].ticked = true;
-                //                break;
-                //            }
-                //        }
-                //    }
-                //}
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/hysteresis").then(function (result) {
                 configData.activity.hysteresis = result.data;
@@ -180,27 +146,7 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
         show = show || 'Aktiv';
 
         return $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/findprocessoverviewlist", { "params": params }).then(function (result) {
-            //$log.info("Success loading /openk-eisman-portlet/rest/findparentactivitylist");
             parentActivities = result.data;
-            //parentActivities.content = $filter('filter')(result.data.content, function (value, index, array) {
-            //    if (show === 'Beendet') {
-            //        if (value.processStatus === "Terminated") {
-            //            return true;
-            //        } else {
-            //            return false;
-            //        }
-            //    }
-            //    if (show === 'Aktiv') {
-            //        if (value.processStatus === "Live" || value.processStatus === "WithoutSchedule" || value.processStatus === "Pending") {
-            //            return true;
-            //        } else {
-            //            return false;
-            //        }
-            //    }
-            //    if (show === 'Deleted') {
-            //        return true;
-            //    }
-            //});
             return parentActivities;
         }, function (error) {
             $log.error('Cannot load /openk-eisman-portlet/rest/findprocessoverviewlist/');
@@ -209,6 +155,7 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
 
     var currentParentActivityId;
     var currentParentActivity;
+
     return {
         pageSize: pageSize,
         resetActivity: resetActivity,
@@ -221,9 +168,7 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
         activityConfigData: function () {
             return configData;
         },
-        createActivity: createActivity,
         loadActivity: loadActivity,
-        loadChildActivity: loadChildActivity,
         loadParentActivities: loadParentActivities,
         loadConfiguration: loadConfiguration,
         loadTaskConfiguration: loadTaskConfiguration,
