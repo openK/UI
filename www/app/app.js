@@ -131,7 +131,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     controller: 'ChangeDownRegulationController',
                     resolve: {
                         createActivity: function (activityService) {
-                            return activityService.loadChildActivity();
+                            return activityService.loadActivity();
                         }
                     }
                 }).state('ChangeRegulation.NetworkState', {
@@ -249,7 +249,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 }).state('EditRegulation.EditProposalConfirmation', {
                     url: '/EditProposalConfirmation/',
                     templateUrl: "app/EditProposalConfirmation.html",
-                    controller: 'CreateProposalConfirmationController',
+                    controller: 'EditProposalConfirmationController',
                 });
             // For any unmatched url, redirect to /state1
             $urlRouterProvider.otherwise("/Aktiv");
