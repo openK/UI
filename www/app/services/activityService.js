@@ -31,10 +31,8 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
 
     var configData = {};
 
-    function resetActivity(force) {
-        if (!force && configData) {
-            return;
-        }
+
+    function resetActivity() {
         activity.dateCreated = null;
         activity.id = null;
         activity.preselection = {
@@ -64,40 +62,15 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
     }
     ;
 
-    /*
-     Daten laden
-     */
-    function loadTaskConfiguration() {
-        if (configData.task) {
-            return $q.resolve(configData.task);
-        }
-        configData.task = {};
-        return $q.all([ $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/preselection/").then(function (result) {
-                            configData.task.templates = result.data;
-                        }),
-                        $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/reductionsettinglist/").then(function (result) {
-                            configData.task.regulationSteps = result.data;
-                        }),
-                        $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/reasonofreductions/").then(function (result) {
-                            configData.task.regulationReasons = result.data;
-                        }),
-                        $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/timeintervaldataexpired").then(function (result) {
-                            configData.task.timerTick = result.data;
-                        }),
-                    ]);
-    }
-
     function loadActivity() {
         return $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + '/openk-eisman-portlet/rest/activity/latestusersettings/' + currentParentActivityId).then(function (result) {
             activity = result.data;
         });
     }
 
-    function loadActivityConfiguration() {
-        if (configData.activity) {
-            return $q.resolve(configData.activity);
-        }
+    function loadConfiguration() {
         configData.activity = {};
+        configData.task = {};
         return $q.all([
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/reasonofreductions/").then(function (result) {
                 configData.activity.regulationReasons = result.data;
@@ -110,11 +83,20 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/hysteresis").then(function (result) {
                 configData.activity.hysteresis = result.data;
-            })
+            }),
+            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/preselection/").then(function (result) {
+                configData.task.templates = result.data;
+            }),
+            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/reductionsettinglist/").then(function (result) {
+                configData.task.regulationSteps = result.data;
+            }),
+            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/reasonofreductions/").then(function (result) {
+                configData.task.regulationReasons = result.data;
+            }),
+            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/timeintervaldataexpired").then(function (result) {
+                configData.task.timerTick = result.data;
+            }),
         ]);
-    }
-    var loadConfiguration = function () {
-        return $q.all([loadTaskConfiguration(), loadActivityConfiguration()]);
     }
     var parentActivities;
     var pageSize = 5;
@@ -171,8 +153,6 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
         loadActivity: loadActivity,
         loadParentActivities: loadParentActivities,
         loadConfiguration: loadConfiguration,
-        loadTaskConfiguration: loadTaskConfiguration,
-        loadActivityConfiguration: loadActivityConfiguration,
         currentParentActivityId: function (id) {
             if (id) {
                 currentParentActivityId = id;

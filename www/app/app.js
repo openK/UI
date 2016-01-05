@@ -1,6 +1,5 @@
 angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGrid', 'isteven-multi-select', 'ui.grid', 'ui.bootstrap', 'ngResource', 'ui.grid.selection', 'ui.grid.pagination', 'ui.grid.cellNav'])
-    .config([
-        '$stateProvider', '$urlRouterProvider', '$translateProvider', '$provide', function ($stateProvider, $urlRouterProvider, $translateProvider, $provide) {
+    .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$provide', function ($stateProvider, $urlRouterProvider, $translateProvider, $provide) {
 
             $provide.decorator('$state', [
                 "$delegate", "$stateParams", '$timeout', function ($delegate, $stateParams, $timeout) {
@@ -34,7 +33,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     resolve: {
                         parentActivities: function (activityService, $stateParams, $rootScope) {
                             $rootScope.show = $stateParams.show;
-                            activityService.resetActivity(true);
+                            activityService.resetActivity();
                             return activityService.loadParentActivities(0, 5, null, null, null, $stateParams.show);
                         }
                     }
@@ -55,8 +54,10 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     templateUrl: "app/CreateDownRegulation.html",
                     controller: 'CreateDownRegulationController',
                     resolve: {
-                        activity: function (activityService) {
-                            activityService.resetActivity();
+                        activity: function (activityService, $rootScope, $state) {
+                            if ($state.current.name === 'state1') {
+                                activityService.resetActivity();
+                            }
                             return activityService.loadConfiguration();
                         }
 

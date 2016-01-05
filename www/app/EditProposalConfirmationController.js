@@ -1,4 +1,4 @@
-app.controller('CreateProposalConfirmationController', ['$scope', '$state', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', 'activityService', function ($scope, $state, $http, $timeout, $translate, uiGridConstants, $log, activityService) {
+app.controller('EditProposalConfirmationController', ['$scope', '$state', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', 'activityService', function ($scope, $state, $http, $timeout, $translate, uiGridConstants, $log, activityService) {
 
     $scope.activity = activityService.activity();
 
