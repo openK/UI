@@ -162,7 +162,7 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
                 enableFiltering: false,
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.EDIT',
-                cellTemplate: '<div class="ui-grid-cell-contents" title="TOOLTIP"><div class="input-group input-group-sm"><select id="regulationSteps" ng-disabled="grid.appScope.isInUse(row)" required ng-model="row.entity.subStationRegSteps" style="padding-top:2px;" class="form-control" ng-change="grid.appScope.addSubStation(grid,row)"><option ng-repeat="item in row.entity.reductionSettingJpaList">{{item.setting.value}}</option></select></div> <button type="button" class="btn btn-default btn-xs" aria-label="Left Align" ng-click="grid.appScope.addSubStation(grid,row)"></button></div>'
+                cellTemplate: '<div class="ui-grid-cell-contents" title="TOOLTIP"><div class="input-group input-group-sm"><select id="regulationSteps" ng-disabled="grid.appScope.isInUse(row)" required ng-model="row.entity.subStationRegSteps" style="padding-top:2px;" class="form-control" ng-change="grid.appScope.addSubStation(grid,row)"><option ng-repeat="item in row.entity.reductionSettingJpaList | orderBy: \'setting.value\'">{{item.setting.value}}</option></select></div> <button type="button" class="btn btn-default btn-xs" aria-label="Left Align" ng-click="grid.appScope.addSubStation(grid,row)"></button></div>'
             }
             
       

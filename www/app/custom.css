@@ -369,4 +369,8 @@ table.tree-grid tr.tree-grid-row.ng-scope.level-3:hover{
     
     background-color: #eeeeee! important;
 }
+#proposalTree{
+    
+    height: 402px;
+}
 
