@@ -101,7 +101,7 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
 
     $scope.gotoStationList = function (settingsForm) {
 
-        if (settingsForm.$valid && $scope.isValidTimeInterval($scope.dateStarted, $scope.dateFinished)) {
+        if (settingsForm.$valid) {
 
             $scope.activity.dateStarted = dateService.formatDateForBackend($scope.dateStarted);
             $scope.activity.dateFinished = dateService.formatDateForBackend($scope.dateFinished);
