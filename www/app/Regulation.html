@@ -39,12 +39,12 @@
                 data-ng-class="{ 'btn-success' : currentWizardStep === 'CreateDownRegulation', 'btn-default' : currentWizardStep !== 'CreateDownRegulation'}">
             {{'WORKFLOW.SETTINGS' | translate}}
         </button>
-        <button class="btn btn-arrow-right" ui-sref="Regulation.CreateSettings" data-ng-disabled="!CanNavigateToCreateSettings"
+        <button class="btn btn-arrow-right" ui-sref="Regulation.CreateSettings" data-ng-disabled="!CanNavigateToCreateSettings || preselectionFormInValid"
                 data-ng-class="{ 'btn-success' : currentWizardStep === 'CreateSettings', 'btn-default' : currentWizardStep !== 'CreateSettings'}"
                 >
             {{'WORKFLOW.DATA' | translate}}
         </button>
-        <button class="btn btn-arrow-right" ui-sref="Regulation.CreateProposal.Main" data-ng-disabled="!CanNavigateToCreateProposal"
+        <button class="btn btn-arrow-right" ui-sref="Regulation.CreateProposal.Main" data-ng-disabled="!CanNavigateToCreateProposal || settingsFormInValid"
                 data-ng-class="{ 'btn-success' : currentWizardStep == 'CreateProposal', 'btn-default' : currentWizardStep !== 'CreateProposal'}">
             {{'WORKFLOW.REDUCTIONADVICE' | translate}}
         </button>

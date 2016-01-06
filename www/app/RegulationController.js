@@ -11,15 +11,18 @@
  *******************************************************************************/
 app.controller('RegulationController', ['$scope', '$state', '$rootScope', function ($scope, $state, $rootScope) {
 
+    $rootScope.preselectionFormInValid = false;
+    $rootScope.settingsFormInValid = true;
+
     $rootScope.currentWizardStep = 'CreateDownRegulation';
 
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
 
         if (toState.name === 'state1') {
             $rootScope.currentWizardStep = "CreateDownRegulation";
-            $scope.CanNavigateToCreateSettings = false;
-            $scope.CanNavigateToCreateProposal = false;
-            $scope.CanNavigateToCreateProposalConfirmation = false;
+            $rootScope.CanNavigateToCreateSettings = false;
+            $rootScope.CanNavigateToCreateProposal = false;
+            $rootScope.CanNavigateToCreateProposalConfirmation = false;
             $rootScope.selectedTemplate = null;
         }
         if (toState.name === 'Regulation.CreateDownRegulation') {
@@ -27,15 +30,15 @@ app.controller('RegulationController', ['$scope', '$state', '$rootScope', functi
         }
         if (toState.name === 'Regulation.CreateSettings') {
             $rootScope.currentWizardStep = "CreateSettings";
-            $scope.CanNavigateToCreateSettings = true;
+            $rootScope.CanNavigateToCreateSettings = true;
         }
         if (toState.name.indexOf('Regulation.CreateProposal') === 0) {
             $rootScope.currentWizardStep = "CreateProposal";
-            $scope.CanNavigateToCreateProposal = true;
+            $rootScope.CanNavigateToCreateProposal = true;
         }
         if (toState.name === 'Regulation.CreateProposalConfirmation') {
             $rootScope.currentWizardStep = "CreateProposalConfirmation";
-            $scope.CanNavigateToCreateProposalConfirmation = true;
+            $rootScope.CanNavigateToCreateProposalConfirmation = true;
         }
     });
 }]);

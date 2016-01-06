@@ -10,7 +10,6 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScope', '$http', '$modal', '$log', 'activityService', '$timeout', function ($scope, $state, $rootScope, $http, $modal, $log, activityService, $timeout) {
-
     $scope.activityConfigData = activityService.activityConfigData();
     $scope.$watch('activity.preselection.characteristicForMissingMeasurementFwt', function (newValue, oldValue) {
         if (newValue === oldValue) {
@@ -31,6 +30,13 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
             $scope.activity.preselection.substituteValuePhotovoltaicEfr = null;
             $scope.activity.preselection.substituteValueBiogasEfr = null;
         }
+    });
+
+    $scope.$watch('preselectionForm.$invalid', function (newValue, oldValue) {
+        if (newValue === oldValue) {
+            return;
+        }
+        $rootScope.preselectionFormInValid = newValue;
     });
 
     /*
