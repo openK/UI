@@ -16,6 +16,27 @@ app.controller('EditDownRegulationController', ['$scope', '$state', '$rootScope'
     $scope.parentActivityId = activityService.currentParentActivity();
     $scope.preselectionFormSubmitted = false;
 
+    $scope.$watch('activity.preselection.characteristicForMissingMeasurementFwt', function (newValue, oldValue) {
+        if (newValue === oldValue) {
+            return;
+        }
+        if (newValue !== 'SubstituteWithInputFactor') {
+            $scope.activity.preselection.substituteValueBiogasFwt = null;
+            $scope.activity.preselection.substituteValuePhotovoltaicFwt = null;
+            $scope.activity.preselection.substituteValueWindFwt = null;
+        }
+    });
+    $scope.$watch('activity.preselection.characteristicForMissingMeasurementEfr', function (newValue, oldValue) {
+        if (newValue === oldValue) {
+            return;
+        }
+        if (newValue !== 'SubstituteWithInputFactor') {
+            $scope.activity.preselection.substituteValueWindEfr = null;
+            $scope.activity.preselection.substituteValuePhotovoltaicEfr = null;
+            $scope.activity.preselection.substituteValueBiogasEfr = null;
+        }
+    });
+
     $scope.gotoSettings = function (preselectionForm) {
         if (preselectionForm.$valid) {
             $state.go('EditRegulation.EditSettings');

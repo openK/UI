@@ -12,6 +12,26 @@
 app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScope', '$http', '$modal', '$log', 'activityService', '$timeout', function ($scope, $state, $rootScope, $http, $modal, $log, activityService, $timeout) {
 
     $scope.activityConfigData = activityService.activityConfigData();
+    $scope.$watch('activity.preselection.characteristicForMissingMeasurementFwt', function (newValue, oldValue) {
+        if (newValue === oldValue) {
+            return;
+        }
+        if (newValue !== 'SubstituteWithInputFactor') {
+            $scope.activity.preselection.substituteValueBiogasFwt = null;
+            $scope.activity.preselection.substituteValuePhotovoltaicFwt = null;
+            $scope.activity.preselection.substituteValueWindFwt = null;
+        }
+    });
+    $scope.$watch('activity.preselection.characteristicForMissingMeasurementEfr', function (newValue, oldValue) {
+        if (newValue === oldValue) {
+            return;
+        }
+        if (newValue !== 'SubstituteWithInputFactor') {
+            $scope.activity.preselection.substituteValueWindEfr = null;
+            $scope.activity.preselection.substituteValuePhotovoltaicEfr = null;
+            $scope.activity.preselection.substituteValueBiogasEfr = null;
+        }
+    });
 
     /*
     * Preselection Data
