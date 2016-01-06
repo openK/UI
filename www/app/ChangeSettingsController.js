@@ -10,9 +10,16 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
     $scope.activity.reductionPositive = true;
 
     // configure the new startDate and finsheDate...
-    var now = new Date($.now());
-    var newStartDate = new Date(now.setMinutes(parseInt((now.getMinutes() + 25) / 15) * 15))
-    var newFinishedDate = new Date(new Date(newStartDate.getTime()).setMinutes(newStartDate.getMinutes() + 30, 0, 0));
+    var newStartDate = new Date(new Date($scope.activity.dateStarted).setSeconds(0));
+    var now = new Date(new Date($.now()).setSeconds(120));
+    if (newStartDate < now) {
+        now = new Date($.now());
+        newStartDate = new Date(now.setMinutes(parseInt((now.getMinutes() + 15) / 15) * 15));
+    }
+    var newFinishedDate = new Date(new Date($scope.activity.dateFinished).setSeconds(0));
+    if (newStartDate > newFinishedDate) {
+        newFinishedDate = new Date(new Date(newStartDate).setMinutes(parseInt((newStartDate.getMinutes() + 15) / 15) * 15));
+    }
     now = new Date($.now());
     $('#datestarted').daterangepicker({
         singleDatePicker: true,
