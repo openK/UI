@@ -39,29 +39,33 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
     });
 
     $('#datestarted').on('apply.daterangepicker', function (ev, picker) {
-        var start = new Date(picker.startDate);
+        // if start date changes adjust end date if necessary!!!!
+        // get the current end date...
         var end = new Date($('#datefinished').data('daterangepicker').startDate);
+        // get the current start date...
+        var start = new Date(picker.startDate);
+        // minimum end date is always one minute past start date...
+        var minEnd = new Date(new Date(start).setMinutes(start.getMinutes() + 1));
+        // add 30 minutes to start date if the end date is below the start date...
         if (start >= end) {
-            var newMinFinishDate = new Date(start);
-            var newEnd = new Date(new Date(start.getTime()).setMinutes(parseInt(((start.getMinutes() + 30) / 15) * 15)));
-            newMinFinishDate = new Date(newMinFinishDate.setMinutes(newMinFinishDate.getMinutes() + 1));
-            $('#datefinished').daterangepicker({
-                singleDatePicker: true,
-                timePicker24Hour: true,
-                timePicker: true,
-                timePickerIncrement: 1,
-                startDate: newEnd,
-                minDate: newMinFinishDate,
-                locale: {
-                    format: 'DD.MM.YYYY HH:mm',
-                    applyLabel: '&Uuml;bernehmen',
-                    cancelLabel: 'Abbrechen',
-                    daysOfWeek: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
-                    monthNames: ['Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-                    firstDay: 1
-                }
-            });
+            end = new Date(new Date(start).setMinutes(start.getMinutes() + 30));
         }
+        $('#datefinished').daterangepicker({
+            singleDatePicker: true,
+            timePicker24Hour: true,
+            timePicker: true,
+            timePickerIncrement: 1,
+            startDate: end,
+            minDate: minEnd,
+            locale: {
+                format: 'DD.MM.YYYY HH:mm',
+                applyLabel: '&Uuml;bernehmen',
+                cancelLabel: 'Abbrechen',
+                daysOfWeek: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+                monthNames: ['Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+                firstDay: 1
+            }
+        });
     });
 
     var minFinishDate = new Date(newStartDate);
