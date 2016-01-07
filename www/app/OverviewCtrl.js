@@ -303,7 +303,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                             case 'dateCreated':
                             case 'dateStarted':
                             case 'dateFinished':
-                                value = {key: detailsToBeDisplayed[j], value: $scope.overview.data[i][detailsToBeDisplayed[j]]};
+                                value = {key: detailsToBeDisplayed[j], value: $filter('date')($scope.overview.data[i][detailsToBeDisplayed[j]], "dd.MM.yyyy hh:mm")}; 
                                 $scope.data.isDate = true;
                                 break;
                             case 'activePowerJpaToBeReduced':
