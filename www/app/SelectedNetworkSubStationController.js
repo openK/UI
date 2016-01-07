@@ -217,6 +217,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$time
             unit: "W"
         };
         $scope.gridApi2.core.notifyDataChange(uiGridConstants.dataChange.ALL);
+        $log.debug($scope.activity.substationProposalList);
     };
     $scope.openModalConfirmProposal = function () {
 

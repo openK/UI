@@ -34,11 +34,11 @@
                     <div data-ng-if="activity.settings.useWholeArea">Gesamtes Netzgebiet</div>
                     <div data-ng-if="activity.settings.subGeographicalRegions.length > 0">
                         <div><strong>{{'subGeographicalRegions'| translate}}</strong></div>
-                        <div data-ng-repeat="(key,val) in activity.settings.subGeographicalRegions">{{val.name}}</div>
+                        <div data-ng-repeat="(key,val) in activity.settings.subGeographicalRegions | orderBy: 'name' as filtered_result track by val.name">{{val.name}}</div>
                     </div>
                     <div data-ng-if="activity.settings.transformerStations.length > 0">
                         <div><strong>{{'transformerStations'| translate}}</strong></div>
-                        <div data-ng-repeat="(key,val) in activity.settings.transformerStations">{{val.name}}</div>
+                        <div data-ng-repeat="(key,val) in activity.settings.transformerStations | orderBy: 'name' as filtered_result track by val.name">{{val.name}}</div>
                     </div>
                 </div>
 
