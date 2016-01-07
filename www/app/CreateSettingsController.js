@@ -5,7 +5,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
 
         $scope.activity = activityService.activity();
         $scope.activity.reductionPositive = true;
-        if ($rootScope.CanNavigateToCreateProposal == true) {
+        if ($rootScope.CanNavigateToCreateProposal === true) {
             $scope.settingsFormSubmitted = true;
         }
         $scope.$watch('settingsForm.$invalid', function (newValue, oldValue) {
