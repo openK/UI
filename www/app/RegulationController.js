@@ -9,7 +9,7 @@
  * Stefan Brockmann - initial API and implementation
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
-app.controller('RegulationController', ['$scope', '$state', '$rootScope','$filter', 'modalService', function ($scope, $state, $rootScope, $filter, modalService) {
+app.controller('RegulationController', ['$scope', '$state', '$rootScope','$filter', 'modalServiceNew', function ($scope, $state, $rootScope, $filter, modalServiceNew) {
 
         $rootScope.preselectionFormInValid = false;
         $rootScope.settingsFormInValid = true;
@@ -36,7 +36,7 @@ app.controller('RegulationController', ['$scope', '$state', '$rootScope','$filte
             }
         };
         var timerCallback = function (event, data) {
-            modalService.open($scope, 'app/partials/confirm.html');
+            $('#timermessage').css('display','block')
         };
         $scope.$on('timer-stopped', timerCallback);
 

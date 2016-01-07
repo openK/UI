@@ -55,7 +55,8 @@
                 data-ng-class="{ 'btn-success' : currentWizardStep == 'CreateProposalConfirmation', 'btn-default' : currentWizardStep !== 'CreateProposalConfirmation'}">
             {{'WORKFLOW.CONFIRM' | translate}}
         </button>
-        <div class="col-xs-5 zeit" data-ng-show="selectedStep == 'proposal' || selectedStep == 'confirm'">
+        
+        <!--div class="col-xs-5 zeit" data-ng-show="selectedStep == 'proposal' || selectedStep == 'confirm'">
             <div role="alert" ng-class="timeElapsed" ng-click="activeButton()">
                 <span aria-hidden="true"
                       class="glyphicon glyphicon-time"></span>
@@ -65,7 +66,8 @@
                 </timer>
                 {{'TIMER.END' | translate}}
             </div>
-        </div>
+        </div -->
+        
         <ul class="nav nav-tabs voffset nav-tabs-maincontent">
             <li ng-class="{active: currentState.name !== 'Regulation.NetworkState.Main'}"><a ng-click="goBack()" href="">Abregelung</a></li>
             <li ng-class="{active: currentState.name === 'Regulation.NetworkState.Main'}"><a ui-sref="Regulation.NetworkState.Main">Netzzustand</a></li>
