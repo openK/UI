@@ -10,7 +10,7 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('NetworkStateController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope) {
+app.controller('NetworkStateController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'modalServiceNew', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, modalServiceNew) {
 
     $scope.handleTreeClick = function (branch) {
 
@@ -72,13 +72,12 @@ app.controller('NetworkStateController', ['$scope', '$http', '$timeout', '$trans
 
     $scope.treeData = [];
 
-    $http.get(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/subgeographicalregion/tree/", {
-        "timeout": 30000
-    }).success(function (data) {
-        $scope.treeData = data;
-    }).error(function (data, status, headers, config) {
-        $scope.$broadcast('displayError', ['Es gab einen Fehler bei der Datenabfrage.']);
-        $log.error('Can not load /openk-eisman-portlet/rest/subgeographicalregion/tree/');
+    $http.get(Liferay.ThemeDisplay.getCDNBaseURL()+"/openk-eisman-portlet/rest/subgeographicalregion/tree/").then(function (result) {
+        $scope.treeData = result.data;
+    }, function (error) {
+        modalServiceNew.showErrorDialog(error).then(function () {
+            $state.go('state1', { show: 'Aktiv' });
+        });
     });
 
     /**

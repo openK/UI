@@ -1,4 +1,4 @@
-app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', function ($scope, $state, $stateParams, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService) {
+app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', 'modalServiceNew', function ($scope, $state, $stateParams, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService, modalServiceNew) {
 
         $scope.$parent.mytimer = false;
         $scope.$parent.$broadcast('timer-reset');
@@ -138,22 +138,26 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
 
                 if (postData.parentActivityJpaId && postData.activityId) {
 
-                    $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
+                    $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).then(function (result) {
 
                         $state.go('state1', {show: 'Aktiv'});
 
-                    }).error(function (data, status, headers, config) {
-                        $log.error('openk-eisman-portlet/rest/activity/');
+                    }, function (error) {
+                        modalServiceNew.showErrorDialog(error).then(function () {
+                            $state.go('state1', { show: 'Aktiv' });
+                        });
                     });
 
                 } else {
 
-                    $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
+                    $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).then(function (result) {
 
                         $state.go('state1', {show: 'Aktiv'});
 
-                    }).error(function (data, status, headers, config) {
-                        $log.error('openk-eisman-portlet/rest/activity/');
+                    }, function (error) {
+                        modalServiceNew.showErrorDialog(error).then(function () {
+                            $state.go('state1', { show: 'Aktiv' });
+                        });
                     });
                 }
             } else {
@@ -220,31 +224,32 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
 
                 //$scope.activity.dateDiff = dateService.getDateDiff($scope.activity.settings.dateStarted, $scope.activity.settings.dateFinished);
 
-                $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/createreductionadvice", $scope.getPostData()).success(function (data) {
+                $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/createreductionadvice", $scope.getPostData()).then(function (result) {
 
                     var advice;
-                    if (data.id && data.parentActivityJpaId) {
-                        advice = data.synchronousMachineJpaReducedList;
-                        $scope.activity.id = data.id;
-                        $scope.activity.parentActivityJpaId = data.parentActivityJpaId;
-                        $scope.activity.substationProposalList = data.synchronousMachineJpaReducedList;
+                    if (result.data.id && result.data.parentActivityJpaId) {
+                        advice = result.data.synchronousMachineJpaReducedList;
+                        $scope.activity.id = result.data.id;
+                        $scope.activity.parentActivityJpaId = result.data.parentActivityJpaId;
+                        $scope.activity.substationProposalList = result.data.synchronousMachineJpaReducedList;
 
                     } else {
-                        advice = data.synchronousMachineJpaReducedList;
+                        advice = result.data.synchronousMachineJpaReducedList;
                         $scope.activity.id = null;
                         $scope.activity.parentActivityJpaId = null;
-                        $scope.activity.substationProposalList = data.synchronousMachineJpaReducedList;
+                        $scope.activity.substationProposalList = result.data.synchronousMachineJpaReducedList;
                     }
                     advice.forEach(function (value) {
                         value.getCalculatedPower = parseInt(value.generatorPowerMeasured.value - (value.reductionAdvice / 100 * value.generatingUnitJpa.maxOperatingP.value));
                     });
 
-                    $scope.activity.calculatedReductionAdvice = data;
+                    $scope.activity.calculatedReductionAdvice = result.data;
 
                     $state.go('Regulation.CreateProposal.Main');
-                }).error(function (data, status, headers, config) {
-                    $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
-                    $log.error('Can not load /openk-eisman-portlet/rest/activity/createreductionadvice/');
+                }, function (error) {
+                    modalServiceNew.showErrorDialog(error).then(function () {
+                        $state.go('state1', { show: 'Aktiv' });
+                    });
                 });
 
             } else {

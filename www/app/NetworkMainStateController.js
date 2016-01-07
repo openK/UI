@@ -1,4 +1,4 @@
-app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootScope', '$translate', function ($scope, $http, $log, $rootScope, $translate) {
+app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootScope', '$translate', 'modalServiceNew', function ($scope, $http, $log, $rootScope, $translate, modalServiceNew) {
 
         $scope.handleTreeClick = function (branch) {
         
@@ -72,7 +72,9 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
         $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/tree/").then(function (result) {
             $scope.treeData = result.data;
         }, function (error) {
-            $log.error('Can not load /openk-eisman-portlet/rest/subgeographicalregion/tree/');
+            modalServiceNew.showErrorDialog(error).then(function () {
+                $state.go('state1', { show: 'Aktiv' });
+            });
         });
 
         /**

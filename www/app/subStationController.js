@@ -10,7 +10,7 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('SubStationController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'dateService', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, dateService) {
+app.controller('SubStationController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'dateService', 'modalServiceNew', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, dateService, modalServiceNew) {
 
     function rowTemplate() {
 
@@ -43,14 +43,14 @@ app.controller('SubStationController', ['$scope', '$http', '$timeout', '$transla
 
                 "timeout": 30000
 
-            }).success(function (data) {
+            }).then(function (result) {
 
-                $scope.substationList = data.synchronousMachineJpaList;
+                $scope.substationList = result.data.synchronousMachineJpaList;
 
-            }).error(function (data, status, headers, config) {
-
-                $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
-                $log.error('Can not load /openk-eisman-portlet/rest/substation/oid/' + oid + '/synchronousmachinelist/timestamp/' + timestamp);
+            }, function (error) {
+                modalServiceNew.showErrorDialog(error).then(function () {
+                    $state.go('state1', { show: 'Aktiv' });
+                });
             });
 
         } else {
@@ -59,14 +59,14 @@ app.controller('SubStationController', ['$scope', '$http', '$timeout', '$transla
 
                 "timeout": 30000
 
-            }).success(function (data) {
+            }).then(function (data) {
 
                 $scope.substationList = data.synchronousMachineJpaList;
 
-            }).error(function (data, status, headers, config) {
-
-                $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
-                $log.error('Can not load /openk-eisman-portlet/rest/substation/oid/' + oid + '/synchronousmachinelist');
+            }, function (error) {
+                modalServiceNew.showErrorDialog(error).then(function () {
+                    $state.go('state1', { show: 'Aktiv' });
+                });
             });
         }
 

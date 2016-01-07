@@ -10,7 +10,7 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('NetworkSubStateInfoController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', 'dateService', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, dateService) {
+app.controller('NetworkSubStateInfoController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', 'dateService', 'modalServiceNew', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, dateService, modalServiceNew) {
 
     function rowTemplate() {
         return '<div ng-class="{ \'hideRowSelectedSubStation\': grid.appScope.isInUse( row )  }">' +
@@ -35,13 +35,17 @@ app.controller('NetworkSubStateInfoController', ['$scope', '$http', '$timeout', 
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist/timestamp/").then(function (result) {
                 $scope.substationList = result.data.synchronousMachineJpaList;
             }, function (error) {
-                $log.error('Can not load /openk-eisman-portlet/rest/substation/oid/' + oid + '/synchronousmachinelist/timestamp/' + timestamp);
+                modalServiceNew.showErrorDialog(error).then(function () {
+                    $state.go('state1', { show: 'Aktiv' });
+                });
             });
         } else {
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist").then(function (result) {
                 $scope.substationList = result.data.synchronousMachineJpaList;
             }, function (error) {
-                $log.error('Can not load /openk-eisman-portlet/rest/substation/oid/' + oid + '/synchronousmachinelist');
+                modalServiceNew.showErrorDialog(error).then(function () {
+                    $state.go('state1', { show: 'Aktiv' });
+                });
             });
         }
     });
