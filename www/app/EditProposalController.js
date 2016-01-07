@@ -10,17 +10,20 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 app.controller('EditProposalController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', '$modal', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, $modal) {
-    $scope.activity = activityService.activity();
-    $scope.openModalConfirmProposal = function () {
-        $modal.open({
-            animation: true,
-            templateUrl: 'app/EditProposalConfirmationModal.html',
-            controller: 'EditProposalConfirmationModalController',
-            resolve: {
-                items: function () {
-                    return [$scope.activity];
+
+        $scope.$parent.mytimer = true;
+        $scope.$parent.$broadcast('timer-start');
+        $scope.activity = activityService.activity();
+        $scope.openModalConfirmProposal = function () {
+            $modal.open({
+                animation: true,
+                templateUrl: 'app/EditProposalConfirmationModal.html',
+                controller: 'EditProposalConfirmationModalController',
+                resolve: {
+                    items: function () {
+                        return [$scope.activity];
+                    }
                 }
-            }
-        });
-    };
-}]);
+            });
+        };
+    }]);

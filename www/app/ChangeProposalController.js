@@ -11,6 +11,8 @@
  *******************************************************************************/
 app.controller('ChangeProposalController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', '$modal', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, $modal) {
     $scope.activity = activityService.activity();
+    $scope.$parent.mytimer = true;
+    $scope.$parent.$broadcast('timer-start');
     $scope.openModalConfirmProposal = function () {
         $modal.open({
             animation: true,
