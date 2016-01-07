@@ -1,6 +1,6 @@
-app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($http, $q, $log, $filter) {
+app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceNew', '$state', function ($http, $q, $log, $filter, modalServiceNew, $state) {
 
-    var activity = {
+   var activity = {
         dateCreated: null,
         id: null,
         preselection: {
@@ -65,6 +65,8 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
     function loadActivity() {
         return $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + '/openk-eisman-portlet/rest/activity/latestusersettings/' + currentParentActivityId).then(function (result) {
             activity = result.data;
+        }, function (error) {
+            modalService.showErrorDialog(error);
         });
     }
 
@@ -131,6 +133,9 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', function ($htt
             parentActivities = result.data;
             return parentActivities;
         }, function (error) {
+            modalServiceNew.showErrorDialog(error).then(function () {
+                $state.go('state1', { show: 'Aktiv' });
+            });
             $log.error('Cannot load /openk-eisman-portlet/rest/findprocessoverviewlist/');
         });
     };
