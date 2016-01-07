@@ -9,7 +9,7 @@
  * Stefan Brockmann - initial API and implementation
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
-angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$log', '$timeout', '$http', '$filter', '$translate', '$state', '$stateParams', 'uiGridConstants', 'i18nService', 'activityService', 'modalService', 'dateService', '$uibModal', function ($scope, $rootScope, $log, $timeout, $http, $filter, $translate, $state, $stateParams, uiGridConstants, i18nService, activityService, modalService, dateService, $uibModal) {
+angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$log', '$timeout', '$http', '$filter', '$translate', '$state', '$stateParams', 'uiGridConstants', 'i18nService', 'activityService', 'modalService', 'dateService', '$uibModal', 'modalServiceNew', function ($scope, $rootScope, $log, $timeout, $http, $filter, $translate, $state, $stateParams, uiGridConstants, i18nService, activityService, modalService, dateService, $uibModal, modalServiceNew) {
         $scope.data = {};
         $scope.data.count = 0;
         $scope.data.details = {};
@@ -88,7 +88,9 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                     $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/deleteprocess", $scope.currentItem.id).then(function (result) {
                         $state.forceReload();
                     }, function (error) {
-                        console.log(JSON.stringify(error));
+                        modalServiceNew.showErrorDialog(error).then(function () {
+                            $state.forceReload();
+                        });
                     });
                     modalService.close();
                 }
@@ -112,10 +114,11 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                     if (distance > 0) {
                         var endDate = '"' + $filter('date')(new Date($.now() + 10000), 'yyyy-MM-ddTHH:mm:ss.sssZ') + '"';
                         return $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/modifydatefinished/" + $scope.currentItem.id, endDate).then(function (result) {
+                            $state.forceReload();
                         }, function (error) {
-                            console.log(JSON.stringify(error));
-                        }).finally(function () {
-                            modalService.close();
+                            modalServiceNew.showErrorDialog(error).then(function () {
+                                $state.forceReload();
+                            });
                         });
                     }
                 }
@@ -184,9 +187,9 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                                 return $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/modifydatefinished/" + $scope.currentItem.id, endDate).then(function (result) {
                                     $state.forceReload();
                                 }, function (error) {
-                                    console.log(JSON.stringify(error));
-                                }).finally(function () {
-                                    modalService.close();
+                                    modalServiceNew.showErrorDialog(error).then(function () {
+                                        $state.forceReload();
+                                    });
                                 });
                             }
                         };
@@ -196,13 +199,20 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
 
             };
             var callback = function () {
+                var minFinishDate = new Date($scope.currentItem.dateStarted);
+                var now = new Date($.now());
+                if (minFinishDate > now) {
+                    minFinishDate = new Date(minFinishDate.setMinutes(minFinishDate.getMinutes() + 1));
+                } else {
+                    minFinishDate = new Date(now.setMinutes(now.getMinutes() + 1));
+                }
                 $('#editdatefinished').daterangepicker({
                     singleDatePicker: true,
                     timePicker24Hour: true,
                     timePicker: true,
-                    timePickerIncrement: 15,
+                    timePickerIncrement: 1,
                     startDate: fd,
-                    minDate: new Date($.now()),
+                    minDate: minFinishDate,
                     locale: {
                         format: 'DD.MM.YYYY HH:mm',
                         applyLabel: '&Uuml;bernehmen',

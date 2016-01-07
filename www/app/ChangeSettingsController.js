@@ -1,4 +1,4 @@
-app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', function ($scope, $state, $stateParams, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService) {
+app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', 'modalServiceNew', function ($scope, $state, $stateParams, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService, modalServiceNew) {
 
     $scope.activity = activityService.activity();
     if ($scope.activity.pointOfInjectionType === 'GEOGRAPHICALREGION') {
@@ -167,9 +167,10 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
                 $scope.activity.calculatedReductionAdvice = result.data;
 
                 $state.go('ChangeRegulation.ChangeProposal.Main');
-            }, function (data, status, headers, config) {
-                $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
-                $log.error('Can not load /openk-eisman-portlet/rest/activity/createreductionadvice/');
+            }, function (error) {
+                modalServiceNew.showErrorDialog(error).then(function () {
+                    $state.go('state1', { show: 'Aktiv' });
+                });
             });
 
         } else {
