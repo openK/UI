@@ -9,36 +9,22 @@
  * Stefan Brockmann - initial API and implementation
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
-app.controller('RegulationController', ['$scope', '$state', '$rootScope','$filter', 'modalServiceNew', function ($scope, $state, $rootScope, $filter, modalServiceNew) {
+app.controller('RegulationController', ['$scope', '$state', '$rootScope', function ($scope, $state, $rootScope) {
 
         $rootScope.preselectionFormInValid = false;
         $rootScope.settingsFormInValid = true;
-
         $rootScope.currentWizardStep = 'CreateDownRegulation';
+
 
         $scope.mytimer = false;
         $scope.showTimer = function () {
-
             return $scope.mytimer;
         };
-        $scope.modalOptions = {
-            "headline": $filter('translate')('NETSTATE.EXPIRED.HEADLINE'),
-            "id": '',
-            "bodyText": $filter('translate')('NETSTATE.EXPIRED.TEXTBODY'),
-            "actionButtonText": $filter('translate')('NETSTATE.EXPIRED.CONFIRM'),
-            "closeButtonText": $filter('translate')('NETSTATE.EXPIRED.DENY'),
-            "close": function () {
-                modalService.close();
-            },
-            "ok": function () {
-                modalService.close();
-                $state.go('state1', {show: 'Aktiv'});
-            }
-        };
         var timerCallback = function (event, data) {
-            $('#timermessage').css('display','block')
+            $('#timermessage').css('display', 'block')
         };
         $scope.$on('timer-stopped', timerCallback);
+
 
         $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
 

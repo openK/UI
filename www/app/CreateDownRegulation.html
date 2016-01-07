@@ -230,16 +230,16 @@
     </div>
     <div class="row">
         <div class="col-xs-offset-3 col-xs-1">
-            <button class="btn btn-default" ui-sref="state1({show: 'Aktiv'})">
+            <button class="btn btn-default" type="button" data-ui-sref="state1({show: 'Aktiv'})">
                 {{ 'CANCEL' | translate }}
             </button>
         </div>
         <div class="col-xs-5">
             <div class="pull-right">
-                <button data-ng-click="openModal(preselectionForm)" data-ng-disabled="!preselectionForm.$valid" class="btn btn-primary">
+                <button data-ng-click="openModal(preselectionForm)" type="button" data-ng-disabled="!preselectionForm.$valid" class="btn btn-primary">
                     {{ 'PRESELECTION.SAVETEMPLATEAS' | translate }}
                 </button>
-                <button class="btn btn-primary" ng-click="gotoSettings(preselectionForm)">
+                <button class="btn btn-primary" type="button" data-ng-click="gotoSettings(preselectionForm)">
                     {{ 'NEXT' | translate }}
                 </button>
             </div>

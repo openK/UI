@@ -139,13 +139,13 @@
         </div>
         <div class="row">
             <div class="col-xs-offset-2 col-xs-4">
-                <button class="btn btn-default" ui-sref="ChangeRegulation.ChangeDownRegulation">
+                <button class="btn btn-default" type="button" data-ui-sref="ChangeRegulation.ChangeDownRegulation">
                     {{'BACK' | translate}}
                 </button>
-                <button class="btn btn-default" ui-sref="state1({show: 'Aktiv'})">
+                <button class="btn btn-default" type="button" data-ui-sref="state1({show: 'Aktiv'})">
                     {{ 'CANCEL' | translate }}
                 </button>
-                <button class="btn btn-primary pull-right" data-ng-click="gotoStationList(settingsForm)">
+                <button class="btn btn-primary pull-right" type="button" data-ng-click="gotoStationList(settingsForm)">
                     Abregelvorschlag erstellen
                 </button>
             </div>

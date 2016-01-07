@@ -12,6 +12,16 @@
 app.controller('EditRegulationController', ['$scope', '$state', '$rootScope', function ($scope, $state, $rootScope) {
 
     $rootScope.currentWizardStep = 'EditDownRegulation';
+    
+    $scope.mytimer = false;
+    $scope.showTimer = function () {
+        return $scope.mytimer;
+    };
+    var timerCallback = function (event, data) {
+        $('#timermessage').css('display', 'block')
+    };
+    $scope.$on('timer-stopped', timerCallback);
+    
 
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         if (toState.name === 'state1') {
