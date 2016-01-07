@@ -32,7 +32,7 @@
     <div class="center"></div>
 </div>-->
 <div style="position:absolute;width:100%;left:0px;top:0px;height:30px;background: rgba(0,0,0,0.3);" data-ng-show="showTimer()">
-    <div style="width:300px;height:30px;line-height:30px;color:green;font-size:20px;margin:0px auto;text-align:center;">Noch <timer countdown="1800" max-time-unit="'minute'" autostart="false" interval="1000">{{minutes}} Minuten {{sseconds}} Sekunden</timer></div>
+    <div style="width:300px;height:30px;line-height:30px;color:green;font-size:20px;margin:0px auto;text-align:center;">Noch <timer countdown="30" max-time-unit="'minute'" autostart="false" interval="1000">{{minutes}} Minuten {{sseconds}} Sekunden</timer></div>
 </div>
 <div class="row maincontent">
     <div class="col-xs-12 col-sm-12">
@@ -55,7 +55,8 @@
                 data-ng-class="{ 'btn-success' : currentWizardStep == 'CreateProposalConfirmation', 'btn-default' : currentWizardStep !== 'CreateProposalConfirmation'}">
             {{'WORKFLOW.CONFIRM' | translate}}
         </button>
-        <div class="col-xs-5 zeit" data-ng-show="selectedStep == 'proposal' || selectedStep == 'confirm'">
+        
+        <!--div class="col-xs-5 zeit" data-ng-show="selectedStep == 'proposal' || selectedStep == 'confirm'">
             <div role="alert" ng-class="timeElapsed" ng-click="activeButton()">
                 <span aria-hidden="true"
                       class="glyphicon glyphicon-time"></span>
@@ -65,7 +66,8 @@
                 </timer>
                 {{'TIMER.END' | translate}}
             </div>
-        </div>
+        </div -->
+        
         <ul class="nav nav-tabs voffset nav-tabs-maincontent">
             <li ng-class="{active: currentState.name !== 'Regulation.NetworkState.Main'}"><a ng-click="goBack()" href="">Abregelung</a></li>
             <li ng-class="{active: currentState.name === 'Regulation.NetworkState.Main'}"><a ui-sref="Regulation.NetworkState.Main">Netzzustand</a></li>
