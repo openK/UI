@@ -224,11 +224,11 @@
     </div>
     <div class="row">
         <div class=" col-xs-offset-2 col-xs-6">
-            <button class="btn btn-default" ui-sref="state1({show: 'Aktiv'})">
+            <button class="btn btn-default" type="button" data-ui-sref="state1({show: 'Aktiv'})">
                 {{ 'CANCEL' | translate }}
             </button>
             <div class="pull-right">
-                <button class="btn btn-primary" ng-click="gotoSettings(preselectionForm)">
+                <button class="btn btn-primary" type="button" data-ng-click="gotoSettings(preselectionForm)">
                     {{ 'NEXT' | translate }}
                 </button>
             </div>
