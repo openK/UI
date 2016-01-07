@@ -1,4 +1,4 @@
-app.controller('CreateProposalConfirmationController', ['$scope', '$state', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', 'activityService', function ($scope, $state, $http, $timeout, $translate, uiGridConstants, $log, activityService) {
+app.controller('CreateProposalConfirmationController', ['$scope', '$state', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', 'activityService', 'modalServiceNew', function ($scope, $state, $http, $timeout, $translate, uiGridConstants, $log, activityService, modalServiceNew) {
 
     $scope.activity = activityService.activity();
 
@@ -124,12 +124,12 @@ app.controller('CreateProposalConfirmationController', ['$scope', '$state', '$ht
             "id": $scope.activity.id
         };
 
-        $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/confirmactivity/", $scope.activity.calculatedReductionAdvice).success(function (data) {
+        $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/confirmactivity/", $scope.activity.calculatedReductionAdvice).then(function (result) {
             $state.go('state1', { show: 'Aktiv' });
-            //window.location.search = '?page=details&activityId=' + $scope.parentActivityId;
-        }).error(function (data, status, headers, config) {
-            $scope.$broadcast('displayError', ['Es gab einen Fehler bei der Datenabfrage.']);
-            $log.error('Can not load /openk-eisman-portlet/rest/confirmactivity/');
+        }, function (error) {
+            modalServiceNew.showErrorDialog(error).then(function () {
+                $state.go('state1', { show: 'Aktiv' });
+            });
         });
     };
 

@@ -66,7 +66,9 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceN
         return $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + '/openk-eisman-portlet/rest/activity/latestusersettings/' + currentParentActivityId).then(function (result) {
             activity = result.data;
         }, function (error) {
-            modalService.showErrorDialog(error);
+            modalServiceNew.showErrorDialog(error).then(function () {
+                $state.go('state1', { show: 'Aktiv' });
+            });
         });
     }
 
@@ -97,7 +99,7 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceN
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/timeintervaldataexpired").then(function (result) {
                 configData.task.timerTick = result.data;
-            }),
+            })
         ]);
     }
     var parentActivities;
