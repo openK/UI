@@ -394,4 +394,6 @@ table.tree-grid tr.tree-grid-row.ng-scope.level-3:hover{
     margin: 100px auto;
     
 }
-
+.error{
+    color:red ! important;
+}
