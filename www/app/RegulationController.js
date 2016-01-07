@@ -9,7 +9,7 @@
  * Stefan Brockmann - initial API and implementation
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
-app.controller('RegulationController', ['$scope', '$state', '$rootScope', function ($scope, $state, $rootScope) {
+app.controller('RegulationController', ['$scope', '$state', '$rootScope','$filter', 'modalService', function ($scope, $state, $rootScope, $filter, modalService) {
 
         $rootScope.preselectionFormInValid = false;
         $rootScope.settingsFormInValid = true;
