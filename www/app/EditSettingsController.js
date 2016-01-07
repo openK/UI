@@ -1,4 +1,4 @@
-app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', function ($scope, $state, $stateParams, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService) {
+angular.module('myApp').controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', 'modalServiceNew', function ($scope, $state, $stateParams, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService, modalServiceNew) {
 
     $scope.activity = activityService.activity();
     if ($scope.activity.pointOfInjectionType === 'GEOGRAPHICALREGION') {
@@ -93,8 +93,9 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
     if ($stateParams.taskId) {
 
         $scope.data.forEach(function (a) {
-            if (a.id == $stateParams.taskId)
+            if (a.id == $stateParams.taskId) {
                 $scope.currentParentActivity = a;
+            }
         });
     }
 
@@ -136,22 +137,26 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
 
         if (postData.parentActivityJpaId && postData.activityId) {
 
-            $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
+            $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).then(function (result) {
 
-                $state.go('state1',{show: 'Aktiv'});
+                $state.go('state1', { show: 'Aktiv' });
 
-            }).error(function (data, status, headers, config) {
-                $log.error('openk-eisman-portlet/rest/activity/');
+            }, function (error) {
+                modalServiceNew.showErrorDialog(error).then(function () {
+                    $state.go('state1', { show: 'Aktiv' });
+                });
             });
 
         } else {
 
-            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).success(function (data) {
+            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).then(function (result) {
 
-                $state.go('state1',{show: 'Aktiv'});
+                $state.go('state1', { show: 'Aktiv' });
 
-            }).error(function (data, status, headers, config) {
-                $log.error('openk-eisman-portlet/rest/activity/');
+            }, function (error) {
+                modalServiceNew.showErrorDialog(error).then(function () {
+                    $state.go('state1', { show: 'Aktiv' });
+                });
             });
         }
     };
@@ -210,33 +215,34 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
 
         if (settingsForm.$valid && $scope.isValidTimeInterval($scope.dateStarted, $scope.dateFinished)) {
 
-            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/createreductionadvice", $scope.getPostData()).success(function (data) {
+            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/createreductionadvice", $scope.getPostData()).then(function (result) {
 
                 var advice;
-                if (data.id && data.parentActivityJpaId) {
+                if (result.data.id && result.data.parentActivityJpaId) {
 
-                    advice = data.synchronousMachineJpaReducedList;
-                    $scope.activity.id = data.id;
-                    $scope.activity.parentActivityJpaId = data.parentActivityJpaId;
-                    $scope.activity.substationProposalList = data.synchronousMachineJpaReducedList;
+                    advice = result.data.synchronousMachineJpaReducedList;
+                    $scope.activity.id = result.data.id;
+                    $scope.activity.parentActivityJpaId = result.data.parentActivityJpaId;
+                    $scope.activity.substationProposalList = result.data.synchronousMachineJpaReducedList;
 
                 } else {
-                    advice = data.childrenActivityJpaList[0].synchronousMachineJpaReducedList;
-                    data.childrenActivityJpaList[0].parentActivityJpaId = data.activityId;
-                    $scope.activity.id = data.childrenActivityJpaList[0].id;
-                    $scope.activity.parentActivityJpaId = data.id;
-                    $scope.activity.substationProposalList = data.childrenActivityJpaList[0].synchronousMachineJpaReducedList;
+                    advice = result.data.childrenActivityJpaList[0].synchronousMachineJpaReducedList;
+                    result.data.childrenActivityJpaList[0].parentActivityJpaId = result.data.activityId;
+                    $scope.activity.id = result.data.childrenActivityJpaList[0].id;
+                    $scope.activity.parentActivityJpaId = result.data.id;
+                    $scope.activity.substationProposalList = result.data.childrenActivityJpaList[0].synchronousMachineJpaReducedList;
                 }
                 advice.forEach(function (value) {
                     value.getCalculatedPower = parseInt(value.generatorPowerMeasured.value - (value.reductionAdvice / 100 * value.generatingUnitJpa.maxOperatingP.value));
                 });
 
-                $scope.activity.calculatedReductionAdvice = data;
+                $scope.activity.calculatedReductionAdvice = result.data;
 
                 $state.go('EditRegulation.EditProposal.Main');
-            }).error(function (data, status, headers, config) {
-                $rootScope.$broadcast('displayError', 'Es gab einen Fehler bei der Datenabfrage.');
-                $log.error('Can not load /openk-eisman-portlet/rest/activity/createreductionadvice/');
+            }, function (error) {
+                modalServiceNew.showErrorDialog(error).then(function () {
+                    $state.go('state1', { show: 'Aktiv' });
+                });
             });
 
         } else {

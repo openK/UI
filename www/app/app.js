@@ -38,11 +38,6 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                         }
                     }
                 })
-                .state('state1details', {
-                    url: "/details/:activityId",
-                    templateUrl: "app/details.html",
-                    controller: 'DetailController'
-                })
                 // neuen Vorgang anlegen...
                 .state('Regulation', {
                     url: "/Regulation",

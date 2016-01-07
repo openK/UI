@@ -91,9 +91,12 @@ app.service('modalServiceNew', ['$modal', '$filter', function ($modal, $filter) 
     };
 
     self.showErrorDialog = function (error) {
-        var errorMessage = error;
-        if (error.status) {
+        var errorMessage = JSON.stringify(error);
+        if (error.status && error.statusText) {
             errorMessage = error.statusText + ' (' + error.status + ')';
+        }
+        if (error.message) {
+            errorMessage = error.message;
         }
         var modalDefaults = {
             templateUrl: 'app/partials/error.html'

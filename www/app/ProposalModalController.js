@@ -10,7 +10,7 @@
  * Jan Krueger - initial API and implementation XXX
  *******************************************************************************/
 
-app.controller('ProposalModalController', function ($scope, $rootScope, $modalInstance, $http, $filter, items) {
+app.controller('ProposalModalController', function ($scope, $rootScope, $modalInstance, $filter, items) {
 
     $scope.items = items;
 

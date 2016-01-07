@@ -10,7 +10,7 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('SelectedNetworkSubStationController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', '$modal', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, $modal) {
+app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', '$modal', function ($scope, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, $modal) {
 
     $scope.activity = activityService.activity();
     $rootScope.$on('showSubstationProposalGrid', function (event, row, job, subStationRegStep) {

@@ -11,6 +11,7 @@ var uglifyJs = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var jshint = require('gulp-jshint');
 
 var paths = {
     js: ['./www/app/**/*.js'],
@@ -18,8 +19,15 @@ var paths = {
     html: ['./www/app/**/*.html'],
 };
 
+gulp.task('lint', function () {
+    return gulp.src('./www/app/**/*.js')
+      .pipe(jshint())
+      .pipe(jshint.reporter('jshint-stylish'));
+});
+
 var browserSync = require('browser-sync').create();
-// Static server
+
+// Static server...
 gulp.task('serve', function() {
     browserSync.init({
         files:  ["./www/app/*.css", "./www/app/*.js", "./www/app/*.html"],
@@ -71,4 +79,4 @@ gulp.task('minify-js', function () {
         .pipe(gulp.dest('www/js'));
 });
 
-gulp.task('default', ['serve']);
+gulp.task('default', ['lint']);
