@@ -1,7 +1,7 @@
 app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootScope', '$translate', 'modalServiceNew', function ($scope, $http, $log, $rootScope, $translate, modalServiceNew) {
 
         $scope.handleTreeClick = function (branch) {
-        
+
             if (branch && branch.level > 1) {
                 $scope.$parent.$broadcast('loadSubstations', branch);
                 $rootScope.substationName = branch.name;
@@ -53,27 +53,42 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
                     click: $scope.handleTreeClick
                 }
             }
-/*
-            , {
-                field: "select",
-                displayName: ' ',
-                cellTemplate: '<button ng-hide="row.branch.level === 1" data-target="#spg" data-parent="#stats" data-toggle="collapse" class="btn btn-default btn-xs" ng-click="cellTemplateScope.click( row.branch )" type="button">' +
-                        '<span aria-hidden="true" class="glyphicon glyphicon-stats"></span>' +
-                        '</button>',
-                cellTemplateScope: {
-                    click: $scope.handleTreeClick
-                }
-            }
-*/
+            /*
+             , {
+             field: "select",
+             displayName: ' ',
+             cellTemplate: '<button ng-hide="row.branch.level === 1" data-target="#spg" data-parent="#stats" data-toggle="collapse" class="btn btn-default btn-xs" ng-click="cellTemplateScope.click( row.branch )" type="button">' +
+             '<span aria-hidden="true" class="glyphicon glyphicon-stats"></span>' +
+             '</button>',
+             cellTemplateScope: {
+             click: $scope.handleTreeClick
+             }
+             }
+             */
 
         ];
 
+        $scope.orderSubstations = function (response) {
+            for (var i = 0; i < response.length; i++) {
+
+                response[i].children.sort(function (a, b) {
+                    if (a.name < b.name) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                });
+            }
+
+            return response;
+        };
+
         $scope.treeData = [];
         $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/tree/").then(function (result) {
-            $scope.treeData = result.data;
+            $scope.treeData = $scope.orderSubstations(result.data);
         }, function (error) {
             modalServiceNew.showErrorDialog(error).then(function () {
-                $state.go('state1', { show: 'Aktiv' });
+                $state.go('state1', {show: 'Aktiv'});
             });
         });
 
