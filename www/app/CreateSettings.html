@@ -1,4 +1,30 @@
 <form name="settingsForm" class="form-horizontal" data-toggle="validator" novalidate>
+
+    <div class="row navheader">
+        <div class="col-xs-2">
+            <div class="pull-right">
+                <button class="btn btn-default" type="button" data-ui-sref="Regulation.CreateDownRegulation">
+                    {{'BACK'| translate}}
+                </button>
+                <button class="btn btn-default" type="button" data-ui-sref="state1({show: 'Aktiv'})">
+                    {{ 'CANCEL' | translate }}
+                </button>
+            </div>
+        </div>
+        <div class="col-xs-3">
+
+            <div class="pull-right">
+                <button type="button" data-ng-click="saveAndReturn(settingsForm)" class="btn btn-primary">
+                    {{'SETTINGS.SAVEACTIVITYANDRETURN'| translate}}
+                </button>
+                <button class="btn btn-primary" type="button" data-ng-click="gotoStationList(settingsForm)">
+                    {{'SETTINGS.CREATEADVICE'| translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+
+
     <div class="form-group">
         <label for="datestarted" class="control-label col-xs-2">{{'SETTINGS.DATESTARTED'| translate}} *</label>
         <div class="controls col-xs-3" data-ng-class="{'has-error': settingsForm.datestarted.$invalid}">
@@ -90,8 +116,11 @@
             </label>
         </div>
     </div>
-    <div class="col-xs-1">
-        *{{'MANDATORY'| translate}}
+
+    <div class="row navheader">
+        <div class="col-xs-2">
+            <div class="pull-right">*{{'MANDATORY'| translate}}</div>
+        </div>
     </div>
     <div class="col-xs-12">
         <div class="alert alert-warning"
@@ -128,27 +157,5 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-2">
-            <div class="pull-right">
-                <button class="btn btn-default" type="button" data-ui-sref="Regulation.CreateDownRegulation">
-                    {{'BACK'| translate}}
-                </button>
-                <button class="btn btn-default" type="button" data-ui-sref="state1({show: 'Aktiv'})">
-                    {{ 'CANCEL' | translate }}
-                </button>
-            </div>
-        </div>
-        <div class="col-xs-3">
 
-            <div class="pull-right">
-                <button type="button" data-ng-click="saveAndReturn(settingsForm)" class="btn btn-primary">
-                    {{'SETTINGS.SAVEACTIVITYANDRETURN'| translate}}
-                </button>
-                <button class="btn btn-primary" type="button" data-ng-click="gotoStationList(settingsForm)">
-                    {{'SETTINGS.CREATEADVICE'| translate}}
-                </button>
-            </div>
-        </div>
-    </div>
 </form>
