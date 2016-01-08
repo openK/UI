@@ -39,7 +39,7 @@
     "GRID.REASONOFREDUCTION": "Grund der Abregelung",
     "GRID.PRACTISE": "Übung",
     "GRID.ID": "ID",
-    "GRID.SUBSTATIONLIST": "Speisepunkte",
+    "GRID.SUBSTATIONLIST": "Speisepunkte (Wirkleistung in MW)",
     "GRID.EDIT": "Bearbeiten",
     "GRID.DESCRIPTION": "Beschreibung",
     "GRID.SEQNUM": "lfd. Nr.",
