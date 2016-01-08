@@ -26,15 +26,17 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
                     }
                 });
                 if (add) {
-
+                    calculatedValue = row.entity.generatorPowerMeasured.value - (row.entity.reductionAdvice / 100 * row.entity.generatingUnitJpa.maxOperatingP.value); 
+                    if(calculatedValue < 0){
+                        calculatedValue = 0;
+                    }
                     row.entity.reductionAdvice = row.entity.subStationRegSteps;
                     row.entity.activePowerJpaToBeReduced = {
-                        value: row.entity.generatorPowerMeasured.value - (row.entity.reductionAdvice / 100 * row.entity.generatingUnitJpa.maxOperatingP.value),
+                        value: calculatedValue,
                         multiplier: "M",
                         unit: "W"
                     };
                     $scope.activity.substationProposalList.push(row.entity);
-                    $scope.setProposalError();
                 }
             }
         });
@@ -146,7 +148,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.REDUCEDPOWER',
                     aggregationType: uiGridConstants.aggregationTypes.sum,
-                    footerCellTemplate: '<div class="ui-grid-cell-contents {{grid.appScope.getProposalError()}}" data-ng-class="{{grid.appScope.reductionerror}}">∑ {{col.getAggregationValue() | number : 2}} MW</div>'
+                    footerCellTemplate: '<div class="xx ui-grid-cell-contents {{grid.appScope.getProposalError()}}">∑ {{col.getAggregationValue() | number : 2}} MW</div>'
                 },
                 {
                     name: 'change',
@@ -204,15 +206,22 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
 
         $scope.getProposalError = function () {
 
-            $log.debug($scope.activity.settings.requiredReductionPower);
-            $log.debug($scope.gridApi2.grid.columns[11].getAggregationValue());
+            var requiredReductionPower;
+            try{
+                requiredReductionPower = $scope.activity.settings.requiredReductionPower;
+            }
+            catch(e){
+                requiredReductionPower = $scope.activity.reductionValue;
+            }
+            
+            $log.info(typeof requiredReductionPower.toFixed(2));
 
             var hysteresis = activityService.activityConfigData().activity.hysteresis || 5;
             hysteresis = 1 + hysteresis / 100;
 
             if (
-                    $scope.activity.settings.requiredReductionPower > $scope.gridApi2.grid.columns[11].getAggregationValue() ||
-                    $scope.gridApi2.grid.columns[11].getAggregationValue() > $scope.activity.settings.requiredReductionPower * hysteresis
+                    (requiredReductionPower - $scope.gridApi2.grid.columns[11].getAggregationValue()) > 0.001 ||
+                    $scope.gridApi2.grid.columns[11].getAggregationValue() > requiredReductionPower * hysteresis
                 )
             {
                 return "error";
@@ -224,10 +233,8 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
 
 
         $scope.changeSynchronousMachine = function (grid, row) {
-
-
+            $log.info('changeSynchronousMachine');
             row.entity.reductionAdvice = row.entity.subStationRegSteps;
-
             var calculatedvalue = row.entity.generatorPowerMeasured.value - ((row.entity.reductionAdvice / 100) * row.entity.generatingUnitJpa.maxOperatingP.value);
 
             // || (row.entity.generatingUnitJpa.maxOperatingP.value < row.entity.generatorPowerMeasured.value)
@@ -242,7 +249,6 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
                 unit: "W"
             };
             $scope.gridApi2.core.notifyDataChange(uiGridConstants.dataChange.ALL);
-            $scope.setProposalError();
 
         };
         $scope.openModalConfirmProposal = function () {

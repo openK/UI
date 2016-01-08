@@ -397,3 +397,29 @@ table.tree-grid tr.tree-grid-row.ng-scope.level-3:hover{
 .error{
     color:red ! important;
 }
+
+form .row.navheader{
+    
+    margin:20px 0px 40px 0px ! important;
+
+}
+
+.row.navheader{
+    
+    margin:20px 0px 0px 0px;
+    border-top:solid 1px #cccccc;
+    border-bottom:solid 1px #cccccc;
+    padding: 5px 0px 5px 0px;
+    background-color:#f5f5f5;
+    
+}
+
+.row.navfooter{
+    
+    margin:10px 0px 0px 0px;
+    border-top:solid 1px #cccccc;
+    border-bottom:solid 1px #cccccc;
+    padding: 5px 0px 5px 0px;
+    background-color:#f5f5f5;
+    
+}

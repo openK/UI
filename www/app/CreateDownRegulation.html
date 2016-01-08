@@ -1,4 +1,22 @@
-﻿<form name="preselectionForm" class="form-horizontal" data-toggle="validator">
+<form name="preselectionForm" class="form-horizontal" data-toggle="validator">
+    <div class="row navheader">
+        <div class="col-xs-offset-3 col-xs-1">
+            &nbsp;
+        </div>
+        <div class="col-xs-5">
+            <div class="pull-right">
+                <button class="btn btn-default" type="button" data-ui-sref="state1({show: 'Aktiv'})">
+                    {{ 'CANCEL' | translate }}
+                </button>
+                <button data-ng-click="openModal(preselectionForm)" type="button" data-ng-disabled="!preselectionForm.$valid" class="btn btn-primary">
+                    {{ 'PRESELECTION.SAVETEMPLATEAS' | translate }}
+                </button>
+                <button class="btn btn-primary" type="button" data-ng-click="gotoSettings(preselectionForm)">
+                    {{ 'NEXT' | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
     <div class="form-group">
         <label for="template" class="control-label col-xs-3">
             {{ 'PRESELECTION.USEFROMTEMPLATE' | translate }}
@@ -75,7 +93,7 @@
                             <div class="col-xs-6 checkboxes voffset">
                                 <div class="input-group input-group-sm"
                                      data-ng-class="{'has-error': preselectionForm.substituteValueWindFwt.$invalid}">
-                                    <span id="wind" class="input-group-addon">{{'WIND' | translate}}</span>
+                                    <span id="wind" class="input-group-addon">{{'WIND'| translate}}</span>
                                     <input type="number" min="0" name="substituteValueWindFwt" max="100"
                                            data-ng-required="activity.preselection.characteristicForMissingMeasurementFwt == 'SubstituteWithInputFactor'"
                                            data-ng-disabled="activity.preselection.characteristicForMissingMeasurementFwt != 'SubstituteWithInputFactor'"
@@ -86,7 +104,7 @@
                                 </div>
                                 <div class="input-group input-group-sm"
                                      data-ng-class="{'has-error': preselectionForm.substituteValuePhotovoltaicFwt.$invalid}">
-                                    <span id="pv" class="input-group-addon">{{'PV' | translate}}</span>
+                                    <span id="pv" class="input-group-addon">{{'PV'| translate}}</span>
                                     <input type="number" min="0" max="100" name="substituteValuePhotovoltaicFwt"
                                            data-ng-required="activity.preselection.characteristicForMissingMeasurementFwt == 'SubstituteWithInputFactor'"
                                            data-ng-disabled="activity.preselection.characteristicForMissingMeasurementFwt != 'SubstituteWithInputFactor'"
@@ -96,7 +114,7 @@
                                 </div>
                                 <div class="input-group input-group-sm"
                                      data-ng-class="{'has-error': preselectionForm.substituteValueBiogasFwt.$invalid}">
-                                    <span id="bio" class="input-group-addon">{{'BIO' | translate}}</span>
+                                    <span id="bio" class="input-group-addon">{{'BIO'| translate}}</span>
                                     <input type="number" name="substituteValueBiogasFwt" min="0" max="100"
                                            data-ng-required="activity.preselection.characteristicForMissingMeasurementFwt == 'SubstituteWithInputFactor'"
                                            data-ng-disabled="activity.preselection.characteristicForMissingMeasurementFwt != 'SubstituteWithInputFactor'"
@@ -187,62 +205,46 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-1">
-            *{{'MANDATORY' | translate}}
+    <div class="row navheader">
+        <div class="col-xs-3">
+            <div class="pull-right">*{{'MANDATORY'| translate}}</div>
         </div>
     </div>
     <div class="row">
         <div class="col-xs-12">
             <div class="alert alert-warning"
                  data-ng-show="preselectionFormSubmitted &&
-                     (preselectionForm.regulationsteps.$invalid || preselectionForm.missingMeasurementFwt.$error.required || preselectionForm.missingMeasurementEfr.$error.required
-                     || preselectionForm.substituteValueBiogasFwt.$invalid || preselectionForm.substituteValuePhotovoltaicFwt.$invalid || preselectionForm.substituteValueWindFwt.$invalid
-                     || preselectionForm.substituteValueBiogasEfr.$invalid || preselectionForm.substituteValuePhotovoltaicEfr.$invalid || preselectionForm.substituteValueWindEfr.$invalid)">
+                             (preselectionForm.regulationsteps.$invalid || preselectionForm.missingMeasurementFwt.$error.required || preselectionForm.missingMeasurementEfr.$error.required
+                                     || preselectionForm.substituteValueBiogasFwt.$invalid || preselectionForm.substituteValuePhotovoltaicFwt.$invalid || preselectionForm.substituteValueWindFwt.$invalid
+                                     || preselectionForm.substituteValueBiogasEfr.$invalid || preselectionForm.substituteValuePhotovoltaicEfr.$invalid || preselectionForm.substituteValueWindEfr.$invalid)">
                 <div>
                     <normal class="warning"
                             data-ng-show="preselectionFormSubmitted && preselectionForm.regulationsteps.$invalid">
-                        {{'PRESELECTION.REGULATIONSTEPS.ERROR' | translate}}
+                        {{'PRESELECTION.REGULATIONSTEPS.ERROR'| translate}}
                     </normal>
                 </div>
                 <div>
                     <normal class="warning"
                             data-ng-show="preselectionFormSubmitted && preselectionForm.missingMeasurementFwt.$error.required">
-                        {{'PRESELECTION.MISSINGMEASUREMENTFWT.ERROR' | translate}}
+                        {{'PRESELECTION.MISSINGMEASUREMENTFWT.ERROR'| translate}}
                     </normal>
                 </div>
                 <div>
                     <normal class="warning"
                             data-ng-show="preselectionFormSubmitted && preselectionForm.missingMeasurementEfr.$error.required">
-                        {{'PRESELECTION.MISSINGMEASUREMENTEFR.ERROR' | translate}}
+                        {{'PRESELECTION.MISSINGMEASUREMENTEFR.ERROR'| translate}}
                     </normal>
                 </div>
                 <div>
                     <normal class="warning"
                             data-ng-show="preselectionFormSubmitted &&
-                                (preselectionForm.substituteValueBiogasFwt.$invalid || preselectionForm.substituteValuePhotovoltaicFwt.$invalid || preselectionForm.substituteValueWindFwt.$invalid
-                                || preselectionForm.substituteValueBiogasEfr.$invalid || preselectionForm.substituteValuePhotovoltaicEfr.$invalid || preselectionForm.substituteValueWindEfr.$invalid)">
-                        {{'PRESELECTION.SUBSTITUTEWITHINPUTFACTORERROR' | translate}}
+                                        (preselectionForm.substituteValueBiogasFwt.$invalid || preselectionForm.substituteValuePhotovoltaicFwt.$invalid || preselectionForm.substituteValueWindFwt.$invalid
+                                                || preselectionForm.substituteValueBiogasEfr.$invalid || preselectionForm.substituteValuePhotovoltaicEfr.$invalid || preselectionForm.substituteValueWindEfr.$invalid)">
+                        {{'PRESELECTION.SUBSTITUTEWITHINPUTFACTORERROR'| translate}}
                     </normal>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-offset-3 col-xs-1">
-            <button class="btn btn-default" type="button" data-ui-sref="state1({show: 'Aktiv'})">
-                {{ 'CANCEL' | translate }}
-            </button>
-        </div>
-        <div class="col-xs-5">
-            <div class="pull-right">
-                <button data-ng-click="openModal(preselectionForm)" type="button" data-ng-disabled="!preselectionForm.$valid" class="btn btn-primary">
-                    {{ 'PRESELECTION.SAVETEMPLATEAS' | translate }}
-                </button>
-                <button class="btn btn-primary" type="button" data-ng-click="gotoSettings(preselectionForm)">
-                    {{ 'NEXT' | translate }}
-                </button>
-            </div>
-        </div>
-    </div>
+
 </form>

@@ -66,10 +66,23 @@ app.controller('NetworkMainStateInfoController', ['$scope', '$http', '$log', '$r
 */
 
         ];
+        $scope.orderSubstations = function (response) {
+            for (var i = 0; i < response.length; i++) {
 
+                response[i].children.sort(function (a, b) {
+                    if (a.name < b.name) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                });
+            }
+
+            return response;
+        };
         $scope.treeData = [];
         $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/tree/").then(function (result) {
-            $scope.treeData = result.data;
+            $scope.treeData = $scope.orderSubstations(result.data);
         }, function (error) {
             modalServiceNew.showErrorDialog(error).then(function () {
                 $state.go('state1', { show: 'Aktiv' });
