@@ -10,10 +10,13 @@
     
     <div class="col-xs-12">
         <!-- Button trigger modal -->
-        <button ui-sref="Regulation.CreateProposal.Main" class="btn btn-default">{{'BACK'| translate}}</button>
-        <button class="btn btn-default" ui-sref="state1({show: 'Aktiv'})">{{'CANCEL'| translate}}</button>
+        <button data-ui-sref="Regulation.CreateProposal.Main" class="btn btn-default">{{'BACK'| translate}}</button>
+        <button class="btn btn-default" data-ui-sref="state1({show: 'Aktiv'})">{{'CANCEL'| translate}}</button>
         <button data-ng-click="saveActivity()" class="btn btn-primary pull-right">
             {{'CONFIRM' | translate}}
         </button>
     </div>
 </div>
+
+
+
