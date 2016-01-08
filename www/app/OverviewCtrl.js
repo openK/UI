@@ -216,6 +216,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                     locale: {
                         format: 'DD.MM.YYYY HH:mm',
                         applyLabel: '&Uuml;bernehmen',
+                        cancelLabel: 'Abbrechen',
                         daysOfWeek: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
                         monthNames: ['Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
                         firstDay: 1
