@@ -30,7 +30,7 @@ app.controller('CreateProposalConfirmationModalController', ['$scope', '$state',
 
     $scope.activity.proposal.modal.diffReductionPower = $scope.activity.proposal.modal.sumRequiredReductionPower - $scope.activity.settings.requiredReductionPower;
     var red = $scope.activity.settings.requiredReductionPower * hysteresis / 100;
-    if ($scope.activity.proposal.modal.diffReductionPower < 0 || $scope.activity.proposal.modal.diffReductionPower > red) {
+    if ($scope.activity.proposal.modal.diffReductionPower <= 0 || $scope.activity.proposal.modal.diffReductionPower > red) {
         $scope.enough = "red";
     }
 

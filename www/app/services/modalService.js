@@ -93,7 +93,7 @@ app.service('modalServiceNew', ['$modal', '$filter', function ($modal, $filter) 
     self.showErrorDialog = function (error) {
         var errorMessage = JSON.stringify(error);
         if (error.status && error.statusText) {
-            errorMessage = error.statusText + ' (' + error.status + ')';
+            errorMessage = error.statusText + ' (' + error.status + ')' + (error.data ? ': ' + error.data : '');
         }
         if (error.message) {
             errorMessage = error.message;
