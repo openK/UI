@@ -79,4 +79,4 @@ gulp.task('minify-js', function () {
         .pipe(gulp.dest('www/js'));
 });
 
-gulp.task('default', ['lint']);
+gulp.task('default', ['serve']);
