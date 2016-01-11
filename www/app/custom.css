@@ -423,3 +423,7 @@ form .row.navheader{
     background-color:#f5f5f5;
     
 }
+
+.panel td{
+    vertical-align:top;
+}
