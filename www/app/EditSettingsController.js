@@ -2,10 +2,34 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
 
         $scope.$parent.mytimer = false;
         $scope.$parent.$broadcast('timer-reset');
-
+        $scope.activityConfigData = activityService.activityConfigData().activity;
         $scope.activity = activityService.activity();
         if ($scope.activity.pointOfInjectionType === 'GEOGRAPHICALREGION') {
             $scope.activity.useWholeArea = true;
+        }
+
+        if ($scope.activity.pointOfInjectionType === 'SUBSTATION' && $scope.activity.pointOfInjectionList) {
+            $scope.activity.transformerStations = [];
+            $scope.activity.pointOfInjectionList.forEach(function (name) {
+                $scope.activityConfigData.transformerStations.forEach(function (station) {
+                    if (station.name === name) {
+                        station.selected = true;
+                        station.ticked = true;
+                    }
+                });
+            })
+        }
+
+        if ($scope.activity.pointOfInjectionType === 'SUBGEOGRAPHICALREGION' && $scope.activity.pointOfInjectionList) {
+            $scope.activity.subGeographicalRegions = [];
+            $scope.activity.pointOfInjectionList.forEach(function (name) {
+                $scope.activityConfigData.subGeographicalRegions.forEach(function (station) {
+                    if (station.name === name) {
+                        station.selected = true;
+                        station.ticked = true;
+                    }
+                });
+            })
         }
 
         $scope.parentActivityId = activityService.currentParentActivityId();
