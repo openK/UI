@@ -8,7 +8,7 @@
     <div class="input-group input-group-sm" data-ng-class="{'has-error': templateName == ''}">
         <span id="bezeichnung" class="input-group-addon">{{ 'PRESELECTION.TEMPLATEDESCRIPTION' | translate}}</span>
         <input type="text" data-ng-model="templateName" name="templateName" required data-ng-disabled='saveOk'
-                placeholder="Name der Vorlage" class="form-control">
+               placeholder="Name der Vorlage" class="form-control">
     </div>
     <div class="alert alert-success" data-ng-show='saveOk'>{{ 'PRESELECTION.SAVEOK' | translate}}</div>
 </div>
@@ -17,6 +17,6 @@
         {{closeButtonText}}
     </button>
     <button class="btn btn-primary" data-ng-disabled="!templateName || saveOk" data-ng-click="ok()">
-        {{'SAVE' | translate}}
+        {{'SAVE'| translate}}
     </button>
 </div>
