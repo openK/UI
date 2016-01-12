@@ -98,11 +98,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-1">
-            *{{'MANDATORY' | translate}}
-        </div>
-    </div>
+
     <div class="row">
         <div class="alert alert-warning"
              data-ng-show="settingsFormSubmitted &&
@@ -137,7 +133,16 @@
                 {{'SETTINGS.DESCRIPTION.ERROR' | translate}}
             </div>
         </div>
-        <div class="row">
+        
+    <div class="row">
+        <div class="col-xs-2">
+            <div class="pull-right">
+            *{{'MANDATORY' | translate}}
+            </div>
+        </div>
+    </div>
+        
+        <div class="row navheader">
             <div class="col-xs-offset-2 col-xs-4">
                 <button class="btn btn-default" type="button" data-ui-sref="ChangeRegulation.ChangeDownRegulation">
                     {{'BACK' | translate}}

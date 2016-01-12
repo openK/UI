@@ -1,21 +1,19 @@
-<div class="col-sm-12 col-xs-12" >
-    
-    
-    <div data-ng-include="templPath + 'partials/activitydetails_p.html'"></div> 
-    
-    
-    
-    <div id="proposalListConfirm" class="col-xs-12 voffset table-responsive voffset">
-        <div class="grid table" data-ui-grid="substations" data-ui-grid-pagination data-ui-grid-selection></div>
-        <div data-ng-include="templPath + 'partials/custompaging.html'"></div>
+<div class="row maincontent">
+    <div class="col-sm-12 col-xs-12" >
+        <div data-ng-include="templPath + 'partials/activitydetails_p.html'"></div> 
+        <div id="proposalListConfirm" class="col-xs-12 voffset table-responsive voffset">
+            <div class="grid table" data-ui-grid="substations" data-ui-grid-pagination data-ui-grid-selection></div>
+            <div data-ng-include="templPath + 'partials/custompaging.html'"></div>
+        </div>
     </div>
+</div>
+<div class="row navheader">
     <div class="col-xs-12">
         <!-- Button trigger modal -->
-        <button data-ui-sref="ChangeRegulation.ChangeProposal.Main" class="btn btn-default">{{'BACK' | translate}}</button>
+        <button data-ui-sref="ChangeRegulation.ChangeProposal.Main" class="btn btn-default">{{'BACK'| translate}}</button>
         <button class="btn btn-default" data-ui-sref="state1({show: 'Aktiv'})">{{'CANCEL'| translate}}</button>
         <button data-ng-click="saveActivity()" class="btn btn-primary pull-right">
-            {{'CONFIRM' | translate}}
+            {{'CONFIRM'| translate}}
         </button>
     </div>
 </div>
-

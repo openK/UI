@@ -1,21 +1,3 @@
-<div class="row navheader">
-    <div class="col-xs-12">
-        <div class="form-group">
-            <div class="col-xs-12">
-                <button class="btn btn-default" data-ui-sref="Regulation.CreateSettings">
-                    {{'BACK'| translate}}
-                </button>
-                <button class="btn btn-default" data-ui-sref="state1({show: 'Aktiv'})">
-                    {{ 'CANCEL' | translate }}
-                </button>
-                <button class="btn btn-primary pull-right" data-ng-click="openModalConfirmProposal()">{{'NEXT'| translate}}</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
 <div class="row maincontent">
 
     <div class="col-xs-12">
@@ -27,6 +9,25 @@
     <div id="proposalList" class="col-xs-12 voffset table-responsive">
         <div data-ui-view="SelectedNetworkSubStations"></div>
     </div>
+</div>
+
+    <div class="row navheader">
+        <div class="col-xs-12">
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <button class="btn btn-default" data-ui-sref="Regulation.CreateSettings">
+                        {{'BACK'| translate}}
+                    </button>
+                    <button class="btn btn-default" data-ui-sref="state1({show: 'Aktiv'})">
+                        {{ 'CANCEL' | translate }}
+                    </button>
+                    <button class="btn btn-primary pull-right" data-ng-click="openModalConfirmProposal()">{{'NEXT'| translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="row maincontent">
 
     <div id="proposalTree" class="col-xs-3 col-sm-3 col-md-4">
         <div>
@@ -46,18 +47,3 @@
 </div>
 
 
-<div class="row navfooter">
-    <div class="col-xs-12">
-        <div class="form-group">
-            <div class="col-xs-12">
-                <button class="btn btn-default" data-ui-sref="Regulation.CreateSettings">
-                    {{'BACK'| translate}}
-                </button>
-                <button class="btn btn-default" data-ui-sref="state1({show: 'Aktiv'})">
-                    {{ 'CANCEL' | translate }}
-                </button>
-                <button class="btn btn-primary pull-right" data-ng-click="openModalConfirmProposal()">{{'NEXT'| translate}}</button>
-            </div>
-        </div>
-    </div>
-</div>

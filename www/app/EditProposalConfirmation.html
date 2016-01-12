@@ -1,9 +1,13 @@
-<div class="col-sm-12 col-xs-12" >
-    <div data-ng-include="templPath + 'partials/activitydetails_p.html'"></div>
-    <div id="proposalListConfirm" class="col-xs-12 voffset table-responsive voffset">
-        <div class="grid table" data-ui-grid="substations" data-ui-grid-pagination data-ui-grid-selection></div>
-        <div ng-include="templPath + 'partials/custompaging.html'"></div>
+<div class="row maincontent">
+    <div class="col-sm-12 col-xs-12" >
+        <div data-ng-include="templPath + 'partials/activitydetails_p.html'"></div>
+        <div id="proposalListConfirm" class="col-xs-12 voffset table-responsive voffset">
+            <div class="grid table" data-ui-grid="substations" data-ui-grid-pagination data-ui-grid-selection></div>
+            <div ng-include="templPath + 'partials/custompaging.html'"></div>
+        </div>
     </div>
+</div>
+<div class="row navheader">
     <div class="col-xs-12">
         <!-- Button trigger modal -->
         <button data-ui-sref="EditRegulation.EditProposal.Main" class="btn btn-default">{{'BACK'| translate}}</button>
