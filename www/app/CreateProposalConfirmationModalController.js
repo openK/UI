@@ -11,7 +11,7 @@
  *******************************************************************************/
 app.controller('CreateProposalConfirmationModalController', ['$scope', '$state', '$rootScope', '$modalInstance', '$http', '$filter', 'activityService', 'dateService', function ($scope, $state, $rootScope, $modalInstance, $http, $filter, activityService, dateService) {
 
-    $scope.activity = activityService.activity();
+    $scope.activity = activityService.childActivity();
     var hysteresis = activityService.activityConfigData().activity.hysteresis || 5;
 
     $scope.enough = "";
@@ -28,17 +28,17 @@ app.controller('CreateProposalConfirmationModalController', ['$scope', '$state',
         $scope.activity.proposal.modal.sumRequiredReductionPower += parseFloat(value.activePowerJpaToBeReduced.value);
     });
 
-    $scope.activity.proposal.modal.diffReductionPower = $scope.activity.proposal.modal.sumRequiredReductionPower - $scope.activity.settings.requiredReductionPower;
-    var red = $scope.activity.settings.requiredReductionPower * hysteresis / 100;
+    $scope.activity.proposal.modal.diffReductionPower = $scope.activity.proposal.modal.sumRequiredReductionPower - $scope.activity.requiredReductionPower;
+    var red = $scope.activity.requiredReductionPower * hysteresis / 100;
     if ($scope.activity.proposal.modal.diffReductionPower <= 0 || $scope.activity.proposal.modal.diffReductionPower > red) {
         $scope.enough = "red";
     }
 
-    //$scope.activity.proposal.modal.requiredReductionPowerWithSaving = $scope.activity.settings.requiredReductionPower + $scope.activity.settings.requiredReductionPower * ($scope.activity.preselection.securityFactorForReduction / 100);
+    //$scope.activity.proposal.modal.requiredReductionPowerWithSaving = $scope.activity.requiredReductionPower + $scope.activity.requiredReductionPower * ($scope.activity.securityFactorForReduction / 100);
 
     //$scope.activity.proposal.modal.requiredReductionPowerWithSaving = $filter('number')($scope.activity.proposal.modal.requiredReductionPowerWithSaving, 2);
     $scope.activity.proposal.modal.diffReductionPower = $filter('number')($scope.activity.proposal.modal.diffReductionPower, 2);
-    $scope.activity.proposal.modal.requiredReductionPower = $filter('number')($scope.activity.settings.requiredReductionPower, 2);
+    $scope.activity.proposal.modal.requiredReductionPower = $filter('number')($scope.activity.requiredReductionPower, 2);
     $scope.activity.proposal.modal.sumRequiredReductionPower = $filter('number')($scope.activity.proposal.modal.sumRequiredReductionPower, 2);
 
     $scope.cancel = function () {
@@ -49,8 +49,8 @@ app.controller('CreateProposalConfirmationModalController', ['$scope', '$state',
     $scope.dateCreated = $filter('date')(new Date($scope.activity.dateCreated), 'dd.MM.yyyy HH:mm');
 
     $scope.ok = function () {
-        var dateStarted = dateService.formatDateForBackend($scope.activity.settings.dateStarted);
-        var dateFinished = dateService.formatDateForBackend($scope.activity.settings.dateFinished);
+        var dateStarted = dateService.formatDateForBackend($scope.activity.dateStarted);
+        var dateFinished = dateService.formatDateForBackend($scope.activity.dateFinished);
         var postData = {
             "id": $scope.activity.id,
             "parentActivityJpaId": $scope.activity.parentActivityJpaId,
@@ -59,30 +59,30 @@ app.controller('CreateProposalConfirmationModalController', ['$scope', '$state',
             "userSettingsJpa": {
                 "dateStarted": dateStarted,
                 "dateFinished": dateFinished,
-                "geographicalRegion": $scope.activity.settings.useWholeArea,
-                "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
-                "practise": $scope.activity.settings.practise,
-                "description": $scope.activity.settings.description
+                "geographicalRegion": $scope.activity.useWholeArea,
+                "reasonOfReduction": $scope.activity.reasonOfReduction,
+                "practise": $scope.activity.practise,
+                "description": $scope.activity.description
             },
             "activePowerJpaToBeReduced": {
-                "value": $scope.activity.settings.requiredReductionPower,
+                "value": $scope.activity.requiredReductionPower,
                 "multiplier": "M",
                 "unit": "W"
             },
-            "subGeographicalRegionJpaList": $scope.activity.settings.subGeographicalRegions,
-            "substationJpaList": $scope.activity.settings.transformerStations,
+            "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
+            "substationJpaList": $scope.activity.transformerStations,
             "preselectionName": "",
             "preselectionConfigurationJpa": {
-                "reductionSetting": $scope.activity.preselection.reductionSetting,
-                "discriminationCoefficientEnabled": $scope.activity.preselection.discriminationCoefficientEnabled,
-                "characteristicForMissingMeasurementFwt": $scope.activity.preselection.characteristicForMissingMeasurementFwt,
-                "characteristicForMissingMeasurementEfr": $scope.activity.preselection.characteristicForMissingMeasurementEfr,
-                "substituteValueWindFwt": $scope.activity.preselection.substituteValueWindFwt,
-                "substituteValuePhotovoltaicFwt": $scope.activity.preselection.substituteValuePhotovoltaicFwt,
-                "substituteValueBiogasFwt": $scope.activity.preselection.substituteValueBiogasFwt,
-                'substituteValueWindEfr': $scope.activity.preselection.substituteValueWindEfr,
-                'substituteValuePhotovoltaicEfr': $scope.activity.preselection.substituteValuePhotovoltaicEfr,
-                'substituteValueBiogasEfr': $scope.activity.preselection.substituteValueBiogasEfr
+                "reductionSetting": $scope.activity.reductionSetting,
+                "discriminationCoefficientEnabled": $scope.activity.discriminationCoefficientEnabled,
+                "characteristicForMissingMeasurementFwt": $scope.activity.characteristicForMissingMeasurementFwt,
+                "characteristicForMissingMeasurementEfr": $scope.activity.characteristicForMissingMeasurementEfr,
+                "substituteValueWindFwt": $scope.activity.substituteValueWindFwt,
+                "substituteValuePhotovoltaicFwt": $scope.activity.substituteValuePhotovoltaicFwt,
+                "substituteValueBiogasFwt": $scope.activity.substituteValueBiogasFwt,
+                'substituteValueWindEfr': $scope.activity.substituteValueWindEfr,
+                'substituteValuePhotovoltaicEfr': $scope.activity.substituteValuePhotovoltaicEfr,
+                'substituteValueBiogasEfr': $scope.activity.substituteValueBiogasEfr
             },
             'synchronousMachineJpaReducedList': $scope.activity.substationProposalList,
         };

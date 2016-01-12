@@ -29,21 +29,21 @@
         <label for="datestarted" class="control-label col-xs-2">{{'SETTINGS.DATESTARTED'| translate}} *</label>
         <div class="controls col-xs-3" data-ng-class="{'has-error': settingsForm.datestarted.$invalid}">
             <input type="text" data-ng-required="true" required  value="" startrange
-                   data-ng-model="activity.settings.dateStarted" class="form-control"
+                   data-ng-model="activity.dateStarted" class="form-control"
                    id="datestarted" name="datestarted">
         </div>
     </div>
     <div class="form-group">
         <label for="datefinished" class="control-label col-xs-2">{{'SETTINGS.DATEFINISHED'| translate}} *</label>
         <div class="controls col-xs-3" data-ng-class="{'has-error': settingsForm.datefinished.$invalid}">
-            <input type="text" data-ng-required="true" required value="" data-ng-model="activity.settings.dateFinished" endrange
+            <input type="text" data-ng-required="true" required value="" data-ng-model="activity.dateFinished" endrange
                    class="form-control" id="datefinished" name="datefinished">
         </div>
     </div>
     <div class="form-group">
         <label for="reasonofreduction" class="control-label col-xs-2">{{'SETTINGS.REASONOFREDUCTION'| translate}} *</label>
-        <div class="col-xs-3" data-ng-class="{'has-error': activity.settings.reasonOfReduction == ''}">
-            <select id="reasonofreduction" data-ng-required="true"  data-ng-model="activity.settings.reasonOfReduction"
+        <div class="col-xs-3" data-ng-class="{'has-error': activity.reasonOfReduction == ''}">
+            <select id="reasonofreduction" data-ng-required="true"  data-ng-model="activity.reasonOfReduction"
                     data-ng-options="c for c in activityConfigData.regulationReasons track by c" class="form-control"></select>
         </div>
     </div>
@@ -53,8 +53,8 @@
                class="control-label col-xs-2">{{'SETTINGS.REQUIREDREDUCTION'| translate}}*</label>
         <div class="col-xs-3">
             <div class="input-group input-group-sm"
-                 data-ng-class="{'has-error': activity.settings.requiredReductionPower < 0 || !activity.settings.requiredReductionPower }">
-                <input type="number" min="0.01" step="any" data-ng-required="true"  data-ng-model="activity.settings.requiredReductionPower"
+                 data-ng-class="{'has-error': activity.requiredReductionPower < 0 || !activity.requiredReductionPower }">
+                <input type="number" min="0.01" step="any" data-ng-required="true"  data-ng-model="activity.requiredReductionPower"
                        data-area-describedby="requiredreductionaddon" name="requiredReductionPower" id="requiredReductionPower"
                        class="form-control">
                 <span id="requiredreductionaddon" class="input-group-addon">MW</span>
@@ -67,7 +67,7 @@
             <label class="checkbox-inline">
                 <input type="checkbox" data-ng-value="true" data-ng-required="checkForWholeAreaRequired()"
                        data-ng-disabled="checkForWholeAreaDisabling()"
-                       data-ng-model="activity.settings.useWholeArea" id="geographicalregion"
+                       data-ng-model="activity.useWholeArea" id="geographicalregion"
                        name="geographicalregion">
             </label>
         </div>
@@ -76,7 +76,7 @@
         <label for="subgeographicalregion" class="control-label col-xs-2">{{'SETTINGS.SUBGEOGRAPHICALREGION'| translate}} *</label>
         <div class="col-xs-3">
             <div id="subgeographicalregion" isteven-multi-select input-model="activityConfigData.subGeographicalRegions"
-                 output-model="activity.settings.subGeographicalRegions" button-label="icon name" translation="multiSelectTranslation"
+                 output-model="activity.subGeographicalRegions" button-label="icon name" translation="multiSelectTranslation"
                  item-label="icon name maker" tick-property="ticked"
                  is-disabled="checkForSubGeographicalRegionsDisabling()"
                  data-ng-required="checkSubGeographicalRegionsRequired()">
@@ -87,7 +87,7 @@
         <label for="transformerstation" class="control-label col-xs-2">{{'SETTINGS.TRANSFORMERSTATIONS'| translate}} *</label>
         <div class="col-xs-3">
             <div id="transformerstation" isteven-multi-select input-model="activityConfigData.transformerStations"
-                 output-model="activity.settings.transformerStations" button-label="icon name" translation="multiSelectTranslation"
+                 output-model="activity.transformerStations" button-label="icon name" translation="multiSelectTranslation"
                  item-label="icon name maker"
                  tick-property="ticked" is-disabled="checkForTransformerStationsDisabling()"
                  data-ng-required="checkForTransformerStationsRequired()">
@@ -96,8 +96,8 @@
     </div>
     <div class="form-group">
         <label for="description" class="control-label col-xs-2">{{'SETTINGS.DESCRIPTION'| translate}} *</label>
-        <div class="col-xs-3" data-ng-class="{'has-error': !activity.settings.description || description.$invalid}">
-            <textarea id="description" data-ng-required="true" data-ng-model="activity.settings.description" rows="3" name="description" 
+        <div class="col-xs-3" data-ng-class="{'has-error': !activity.description || description.$invalid}">
+            <textarea id="description" data-ng-required="true" data-ng-model="activity.description" rows="3" name="description" 
                       class="form-control"></textarea>
         </div>
     </div>
@@ -105,13 +105,13 @@
         <label class="control-label col-xs-2">{{'SETTINGS.PRACTICE'| translate}} *</label>
         <div class="col-xs-2">
             <label class="radio-inline">
-                <input type="radio" data-ng-required="true"  data-ng-model="activity.settings.practise" ng-value="true"
+                <input type="radio" data-ng-required="true"  data-ng-model="activity.practise" ng-value="true"
                        name="practise"> {{'YES'| translate}}
             </label>
         </div>
         <div class="col-xs-2">
             <label class="radio-inline">
-                <input type="radio"data-ng-required="true"  ng-value="false" data-ng-model="activity.settings.practise"
+                <input type="radio"data-ng-required="true"  ng-value="false" data-ng-model="activity.practise"
                        name="practise"> {{'NO'| translate}}
             </label>
         </div>
@@ -127,10 +127,10 @@
              data-ng-show="settingsFormSubmitted &&
                                      (settingsForm.datestarted.$invalid ||
                                              settingsForm.datefinished.$invalid ||
-                                             activity.settings.reasonOfReduction == '' ||
+                                             activity.reasonOfReduction == '' ||
                                              settingsForm.requiredReductionPower.$invalid ||
                                              isNoAreaDefined() ||
-                                             activity.settings.description == '')">
+                                             activity.description == '')">
             <div class="warning"
                  data-ng-show="settingsFormSubmitted && settingsForm.datestarted.$invalid">
                 {{'SETTINGS.DATESTARTED.ERROR'| translate}}
@@ -140,7 +140,7 @@
                 {{'SETTINGS.DATEFINISHED.ERROR'| translate}}
             </div>
             <div class="warning"
-                 data-ng-show="settingsFormSubmitted && activity.settings.reasonOfReduction == ''">
+                 data-ng-show="settingsFormSubmitted && activity.reasonOfReduction == ''">
                 {{'SETTINGS.REASONOFREDUCTION.ERROR'| translate}}
             </div>
             <div class="warning"
@@ -152,7 +152,7 @@
                 {{'SETTINGS.AREA.ERROR'| translate}}
             </div>
             <div class="warning"
-                 data-ng-show="settingsFormSubmitted && settingsForm.description.$invalid || !activity.settings.description">
+                 data-ng-show="settingsFormSubmitted && settingsForm.description.$invalid || !activity.description">
                 {{'SETTINGS.DESCRIPTION.ERROR'| translate}}
             </div>
         </div>

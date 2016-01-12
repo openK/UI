@@ -1,6 +1,6 @@
 app.controller('ChangeProposalConfirmationController', ['$scope', '$state', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', 'activityService', 'modalServiceNew', function ($scope, $state, $http, $timeout, $translate, uiGridConstants, $log, activityService, modalServiceNew) {
 
-    $scope.activity = activityService.activity();
+    $scope.activity = activityService.childActivity();
     $log.debug($scope.activity);
 
     $scope.searchOptions = {

@@ -20,7 +20,6 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
         $scope.data.currentpage = 0;
         $scope.parentActivities = {};
         $scope.data.currentpage = 1;
-        $scope.activity = activityService.activity();
 
         var detailsToBeDisplayed = ['dateCreated', 'createdBy', 'dateUpdated', 'updatedBy', 'description'];
         i18nService.setCurrentLang('de');
@@ -288,6 +287,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
 
         $scope.navigateToDetails = function (activityId) {
             activityService.currentParentActivityId(activityId);
+            $scope.activity = activityService.currentParentActivity();
             $scope.data.count = $scope.overview.data.length;
             for (var i = 0; i < $scope.data.count; i++) {
 
@@ -320,7 +320,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
 
                     }
                     $scope.currentItem = $scope.overview.data[i];
-                    $scope.childActivities.data = $scope.overview.data[i].actionOverviewDtoList;
+                    $scope.childActivities.data = $scope.overview.data[i].childActivityList;
 
                 }
             }
@@ -436,7 +436,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                 $scope.gridApi.selection.on.rowSelectionChanged($scope, function (row) {
                     $scope.navigateToDetails(row.entity.id);
                     $timeout(function () {
-                        activityService.activity($scope.childActivities.data[$scope.childActivities.data.length - 1]);
+                        activityService.childActivity($scope.childActivities.data[$scope.childActivities.data.length - 1]);
                         $scope.childGridApi.selection.selectRow($scope.childActivities.data[$scope.childActivities.data.length - 1]);
                         $scope.childGridApi.cellNav.scrollToFocus($scope.childActivities.data[$scope.overview.data.length - 1], $scope.childActivities.columnDefs[0]);
                     });

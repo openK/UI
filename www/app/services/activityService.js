@@ -1,43 +1,62 @@
 app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceNew', '$state', function ($http, $q, $log, $filter, modalServiceNew, $state) {
 
-   var activity = {
-        dateCreated: null,
-        id: null,
-        preselection: {
-            reductionSetting: '',
-            discriminationCoefficientEnabled: false,
-            characteristicForMissingMeasurementJpaFwt: '',
-            substituteValuePhotovoltaicFwt: null,
-            substituteValueWindFwt: null,
-            substituteValueBiogasFwt: null,
-            characteristicForMissingMeasurementJpaEfr: '',
-            substituteValuePhotovoltaicEfr: null,
-            substituteValueWindEfr: null,
-            substituteValueBiogasEfr: null
-        },
-        settings: {
-            dateStarted: '',
-            dateFinished: '',
-            reasonOfReduction: '',
-            requiredReductionPower: '',
-            useWholeArea: true,
-            subGeographicalRegions: {},
-            transformerStations: {},
-            description: '',
-            practise: false
-        },
-        substationProposalList: []
+    var createParentActivity = function () {
+        return {
+            id: null,
+            dateCreated: null,
+            createdBy: null,
+            updatedBy: null,
+            dateStarted: null,
+            dateFinished: null,
+            reductionValue: null,
+            reasonOfReduction: null,
+            dateDeactivated: null,
+            deactivatedBy: null,
+            description: null,
+            pointOfInjectionType: null,
+            processStatus: null,
+            pointOfInjectionList: null,
+            childActivityList: [{
+                id: null,
+                dateStarted: null,
+                dateFinished: null,
+                reductionSetting: 60,
+                discriminationCoefficientEnabled: false,
+                reasonOfReduction: null,
+                requiredReductionPower: null,
+                description: null,
+                practise: false,
+                seqNum: null,
+                processStatus: null,
+                characteristicForMissingMeasurementFwt: 'NotIncluded',
+                substituteValuePhotovoltaicFwt: null,
+                substituteValueWindFwt: null,
+                substituteValueBiogasFwt: null,
+                characteristicForMissingMeasurementEfr: 'NotIncluded',
+                substituteValuePhotovoltaicEfr: null,
+                substituteValueWindEfr: null,
+                substituteValueBiogasEfr: null,
+                useWholeArea: true,
+                subGeographicalRegions: null,
+                transformerStations: null,
+                substationProposalList: null
+            }],
+        };
     };
 
-    var configData = {};
-
-
-    function resetActivity() {
-        activity.dateCreated = null;
-        activity.id = null;
-        activity.preselection = {
+    var createChildActivity = function() {
+        return {
+            id: null,
+            dateStarted: null,
+            dateFinished: null,
             reductionSetting: 60,
+            reductionValue: null,
             discriminationCoefficientEnabled: false,
+            reasonOfReduction: null,
+            requiredReductionPower: null,
+            description: null,
+            practise: false,
+            processStatus: null,
             characteristicForMissingMeasurementFwt: 'NotIncluded',
             substituteValuePhotovoltaicFwt: null,
             substituteValueWindFwt: null,
@@ -45,26 +64,30 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceN
             characteristicForMissingMeasurementEfr: 'NotIncluded',
             substituteValuePhotovoltaicEfr: null,
             substituteValueWindEfr: null,
-            substituteValueBiogasEfr: null
-        };
-        activity.settings = {
-            dateStarted: '',
-            dateFinished: '',
-            reasonOfReduction: '',
-            requiredReductionPower: '',
+            substituteValueBiogasEfr: null,
             useWholeArea: true,
-            subGeographicalRegions: {},
-            transformerStations: {},
-            description: '',
-            practise: false
+            pointOfInjectionType: null,
+            pointOfInjectionList: null,
+            subGeographicalRegions: null,
+            transformerStations: null,
+            substationProposalList: null
         };
-        activity.substationProposalList = [];
+    };
+
+    var resetActivity = function () {
+        childActivity = createChildActivity();
     }
-    ;
+
+    var currentParentActivityId;
+    var currentParentActivity = createParentActivity();
+    var childActivity = createChildActivity();
+    var configData = {};
 
     function loadActivity() {
         return $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + '/openk-eisman-portlet/rest/activity/latestusersettings/' + currentParentActivityId).then(function (result) {
-            activity = result.data;
+            childActivity = result.data;
+            angular.extend(childActivity, childActivity.preselectionConfigurationDto);
+            delete childActivity.preselectionConfigurationDto;
         }, function (error) {
             modalServiceNew.showErrorDialog(error).then(function () {
                 $state.go('state1', { show: 'Aktiv' });
@@ -77,28 +100,25 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceN
         configData.task = {};
         return $q.all([
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/reasonofreductions/").then(function (result) {
-                configData.activity.regulationReasons = result.data;
+                configData.regulationReasons = result.data;
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/lov/").then(function (result) {
-                configData.activity.transformerStations = result.data;
+                configData.transformerStations = result.data;
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/lov/").then(function (result) {
-                configData.activity.subGeographicalRegions = result.data;
+                configData.subGeographicalRegions = result.data;
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/hysteresis").then(function (result) {
-                configData.activity.hysteresis = result.data;
+                configData.hysteresis = result.data;
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/preselection/").then(function (result) {
-                configData.task.templates = result.data;
+                configData.templates = result.data;
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/reductionsettinglist/").then(function (result) {
-                configData.task.regulationSteps = result.data;
-            }),
-            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/reasonofreductions/").then(function (result) {
-                configData.task.regulationReasons = result.data;
+                configData.regulationSteps = result.data;
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/timeintervaldataexpired").then(function (result) {
-                configData.task.timerTick = result.data;
+                configData.timerTick = result.data;
             })
         ]);
     }
@@ -133,6 +153,14 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceN
 
         return $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/findprocessoverviewlist", { "params": params }).then(function (result) {
             parentActivities = result.data;
+            parentActivities.content.forEach(function (parent) {
+                parent.childActivityList = [];
+                parent.actionOverviewDtoList.forEach(function (child) {
+                    parent.childActivityList.push(angular.extend({}, child));
+                });
+                delete parent.actionOverviewDtoList;
+            });
+
             return parentActivities;
         }, function (error) {
             modalServiceNew.showErrorDialog(error).then(function () {
@@ -142,18 +170,19 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceN
         });
     };
 
-    var currentParentActivityId;
-    var currentParentActivity;
 
     return {
         pageSize: pageSize,
+        createParentActivity: createParentActivity,
+        createChildActivity: createChildActivity,
         resetActivity: resetActivity,
-        activity: function (act) {
+        childActivity: function (act) {
             if (act) {
-                activity = act;
+                childActivity = act;
             }
-            return activity;
+            return childActivity;
         },
+
         activityConfigData: function () {
             return configData;
         },

@@ -13,7 +13,7 @@ app.controller('EditProposalController', ['$scope', '$http', '$timeout', '$trans
 
         $scope.$parent.mytimer = true;
         $scope.$parent.$broadcast('timer-start');
-        $scope.activity = activityService.activity();
+        $scope.activity = activityService.childActivity();
         $scope.openModalConfirmProposal = function () {
             $modal.open({
                 animation: true,

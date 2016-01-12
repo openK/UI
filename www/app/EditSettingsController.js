@@ -2,8 +2,8 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
 
         $scope.$parent.mytimer = false;
         $scope.$parent.$broadcast('timer-reset');
-        $scope.activityConfigData = activityService.activityConfigData().activity;
-        $scope.activity = activityService.activity();
+        $scope.activityConfigData = activityService.activityConfigData();
+        $scope.activity = activityService.childActivity();
         if ($scope.activity.pointOfInjectionType === 'GEOGRAPHICALREGION') {
             $scope.activity.useWholeArea = true;
         }
@@ -115,7 +115,7 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
 
         $scope.dateStarted = $filter('date')(new Date(newStartDate), 'dd.MM.yyyy HH:mm');
         $scope.dateFinished = $filter('date')(new Date(newFinishedDate), 'dd.MM.yyyy HH:mm');
-        $scope.activityConfigData = activityService.activityConfigData().activity;
+        $scope.activityConfigData = activityService.activityConfigData();
 
         if ($stateParams.taskId) {
 
@@ -146,16 +146,16 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
                 "substationJpaList": $scope.activity.transformerStations,
                 "preselectionName": "",
                 "preselectionConfigurationJpa": {
-                    "reductionSetting": $scope.activity.preselectionConfigurationDto.reductionSetting,
-                    "discriminationCoefficientEnabled": $scope.activity.preselectionConfigurationDto.discriminationCoefficientEnabled,
-                    "characteristicForMissingMeasurementFwt": $scope.activity.preselectionConfigurationDto.characteristicForMissingMeasurementFwt,
-                    "characteristicForMissingMeasurementEfr": $scope.activity.preselectionConfigurationDto.characteristicForMissingMeasurementEfr,
-                    "substituteValueWindFwt": $scope.activity.preselectionConfigurationDto.substituteValueWindFwt,
-                    "substituteValuePhotovoltaicFwt": $scope.activity.preselectionConfigurationDto.substituteValuePhotovoltaicFwt,
-                    "substituteValueBiogasFwt": $scope.activity.preselectionConfigurationDto.substituteValueBiogasFwt,
-                    'substituteValueWindEfr': $scope.activity.preselectionConfigurationDto.substituteValueWindEfr,
-                    'substituteValuePhotovoltaicEfr': $scope.activity.preselectionConfigurationDto.substituteValuePhotovoltaicEfr,
-                    'substituteValueBiogasEfr': $scope.activity.preselectionConfigurationDto.substituteValueBiogasEfr
+                    "reductionSetting": $scope.activity.reductionSetting,
+                    "discriminationCoefficientEnabled": $scope.activity.discriminationCoefficientEnabled,
+                    "characteristicForMissingMeasurementFwt": $scope.activity.characteristicForMissingMeasurementFwt,
+                    "characteristicForMissingMeasurementEfr": $scope.activity.characteristicForMissingMeasurementEfr,
+                    "substituteValueWindFwt": $scope.activity.substituteValueWindFwt,
+                    "substituteValuePhotovoltaicFwt": $scope.activity.substituteValuePhotovoltaicFwt,
+                    "substituteValueBiogasFwt": $scope.activity.substituteValueBiogasFwt,
+                    'substituteValueWindEfr': $scope.activity.substituteValueWindEfr,
+                    'substituteValuePhotovoltaicEfr': $scope.activity.substituteValuePhotovoltaicEfr,
+                    'substituteValueBiogasEfr': $scope.activity.substituteValueBiogasEfr
                 },
                 'synchronousMachineJpaReducedList': $scope.activity.substationProposalList,
                 "timeout": 30000
@@ -207,16 +207,16 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
                 "parentActivityJpaId": $scope.parentActivityId,
                 "preselectionName": "",
                 "preselectionConfigurationJpa": {
-                    "reductionSetting": $scope.activity.preselectionConfigurationDto.reductionSetting,
-                    "discriminationCoefficientEnabled": $scope.activity.preselectionConfigurationDto.discriminationCoefficientEnabled,
-                    "characteristicForMissingMeasurementFwt": $scope.activity.preselectionConfigurationDto.characteristicForMissingMeasurementFwt,
-                    "characteristicForMissingMeasurementEfr": $scope.activity.preselectionConfigurationDto.characteristicForMissingMeasurementEfr,
-                    "substituteValueWindFwt": $scope.activity.preselectionConfigurationDto.substituteValueWindFwt,
-                    "substituteValuePhotovoltaicFwt": $scope.activity.preselectionConfigurationDto.substituteValuePhotovoltaicFwt,
-                    "substituteValueBiogasFwt": $scope.activity.preselectionConfigurationDto.substituteValueBiogasFwt,
-                    'substituteValueWindEfr': $scope.activity.preselectionConfigurationDto.substituteValueWindEfr,
-                    'substituteValuePhotovoltaicEfr': $scope.activity.preselectionConfigurationDto.substituteValuePhotovoltaicEfr,
-                    'substituteValueBiogasEfr': $scope.activity.preselectionConfigurationDto.substituteValueBiogasEfr
+                    "reductionSetting": $scope.activity.reductionSetting,
+                    "discriminationCoefficientEnabled": $scope.activity.discriminationCoefficientEnabled,
+                    "characteristicForMissingMeasurementFwt": $scope.activity.characteristicForMissingMeasurementFwt,
+                    "characteristicForMissingMeasurementEfr": $scope.activity.characteristicForMissingMeasurementEfr,
+                    "substituteValueWindFwt": $scope.activity.substituteValueWindFwt,
+                    "substituteValuePhotovoltaicFwt": $scope.activity.substituteValuePhotovoltaicFwt,
+                    "substituteValueBiogasFwt": $scope.activity.substituteValueBiogasFwt,
+                    'substituteValueWindEfr': $scope.activity.substituteValueWindEfr,
+                    'substituteValuePhotovoltaicEfr': $scope.activity.substituteValuePhotovoltaicEfr,
+                    'substituteValueBiogasEfr': $scope.activity.substituteValueBiogasEfr
                 },
             };
 

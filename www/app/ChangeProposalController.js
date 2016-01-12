@@ -10,7 +10,7 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 app.controller('ChangeProposalController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', '$modal', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, $modal) {
-    $scope.activity = activityService.activity();
+    $scope.activity = activityService.childActivity();
     $scope.$parent.mytimer = true;
     $scope.$parent.$broadcast('timer-start');
     $scope.openModalConfirmProposal = function () {

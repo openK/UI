@@ -3,7 +3,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
         $scope.$parent.mytimer = false;
         $scope.$parent.$broadcast('timer-reset');
 
-        $scope.activity = activityService.activity();
+        $scope.activity = activityService.childActivity();
         $scope.activity.reductionPositive = true;
         if ($rootScope.CanNavigateToCreateProposal === true) {
             $scope.settingsFormSubmitted = true;
@@ -85,7 +85,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
             }
         });
 
-        $scope.activityConfigData = activityService.activityConfigData().activity;
+        $scope.activityConfigData = activityService.activityConfigData();
         if ($stateParams.taskId) {
 
             $scope.data.forEach(function (a) {
@@ -95,9 +95,9 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
         }
         $scope.saveAndReturn = function (settingsForm) {
 
-            if (settingsForm.$valid && $scope.isValidTimeInterval($scope.activity.settings.dateStarted, $scope.activity.settings.dateFinished)) {
-                var dateStarted = dateService.formatDateForBackend($scope.activity.settings.dateStarted);
-                var dateFinished = dateService.formatDateForBackend($scope.activity.settings.dateFinished);
+            if (settingsForm.$valid && $scope.isValidTimeInterval($scope.activity.dateStarted, $scope.activity.dateFinished)) {
+                var dateStarted = dateService.formatDateForBackend($scope.activity.dateStarted);
+                var dateFinished = dateService.formatDateForBackend($scope.activity.dateFinished);
                 var dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
                 var postData = {
                     "dateCreated": dateCreated,
@@ -107,30 +107,30 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
                     "userSettingsJpa": {
                         "dateStarted": dateStarted,
                         "dateFinished": dateFinished,
-                        "geographicalRegion": $scope.activity.settings.useWholeArea,
-                        "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
-                        "practise": $scope.activity.settings.practise,
-                        "description": $scope.activity.settings.description
+                        "geographicalRegion": $scope.activity.useWholeArea,
+                        "reasonOfReduction": $scope.activity.reasonOfReduction,
+                        "practise": $scope.activity.practise,
+                        "description": $scope.activity.description
                     },
                     "activePowerJpaToBeReduced": {
-                        "value": $scope.activity.settings.requiredReductionPower,
+                        "value": $scope.activity.requiredReductionPower,
                         "multiplier": "M",
                         "unit": "W"
                     },
-                    "subGeographicalRegionJpaList": $scope.activity.settings.subGeographicalRegions,
-                    "substationJpaList": $scope.activity.settings.transformerStations,
+                    "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
+                    "substationJpaList": $scope.activity.transformerStations,
                     "preselectionName": "",
                     "preselectionConfigurationJpa": {
-                        "reductionSetting": $scope.activity.preselection.reductionSetting,
-                        "discriminationCoefficientEnabled": $scope.activity.preselection.discriminationCoefficientEnabled,
-                        "characteristicForMissingMeasurementFwt": $scope.activity.preselection.characteristicForMissingMeasurementFwt,
-                        "characteristicForMissingMeasurementEfr": $scope.activity.preselection.characteristicForMissingMeasurementEfr,
-                        "substituteValueWindFwt": $scope.activity.preselection.substituteValueWindFwt,
-                        "substituteValuePhotovoltaicFwt": $scope.activity.preselection.substituteValuePhotovoltaicFwt,
-                        "substituteValueBiogasFwt": $scope.activity.preselection.substituteValueBiogasFwt,
-                        'substituteValueWindEfr': $scope.activity.preselection.substituteValueWindEfr,
-                        'substituteValuePhotovoltaicEfr': $scope.activity.preselection.substituteValuePhotovoltaicEfr,
-                        'substituteValueBiogasEfr': $scope.activity.preselection.substituteValueBiogasEfr
+                        "reductionSetting": $scope.activity.reductionSetting,
+                        "discriminationCoefficientEnabled": $scope.activity.discriminationCoefficientEnabled,
+                        "characteristicForMissingMeasurementFwt": $scope.activity.characteristicForMissingMeasurementFwt,
+                        "characteristicForMissingMeasurementEfr": $scope.activity.characteristicForMissingMeasurementEfr,
+                        "substituteValueWindFwt": $scope.activity.substituteValueWindFwt,
+                        "substituteValuePhotovoltaicFwt": $scope.activity.substituteValuePhotovoltaicFwt,
+                        "substituteValueBiogasFwt": $scope.activity.substituteValueBiogasFwt,
+                        'substituteValueWindEfr': $scope.activity.substituteValueWindEfr,
+                        'substituteValuePhotovoltaicEfr': $scope.activity.substituteValuePhotovoltaicEfr,
+                        'substituteValueBiogasEfr': $scope.activity.substituteValueBiogasEfr
                     },
                     'synchronousMachineJpaReducedList': $scope.activity.substationProposalList,
                     "timeout": 30000
@@ -170,36 +170,36 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
          */
         $scope.getPostData = function () {
 
-            var dateStarted = dateService.formatDateForBackend($scope.activity.settings.dateStarted);
-            var dateFinished = dateService.formatDateForBackend($scope.activity.settings.dateFinished);
+            var dateStarted = dateService.formatDateForBackend($scope.activity.dateStarted);
+            var dateFinished = dateService.formatDateForBackend($scope.activity.dateFinished);
             var data = {
                 "userSettingsJpa": {
                     "dateStarted": dateStarted,
                     "dateFinished": dateFinished,
-                    "geographicalRegion": $scope.activity.settings.useWholeArea,
-                    "reasonOfReduction": $scope.activity.settings.reasonOfReduction,
-                    "practise": $scope.activity.settings.practise,
-                    "description": $scope.activity.settings.description
+                    "geographicalRegion": $scope.activity.useWholeArea,
+                    "reasonOfReduction": $scope.activity.reasonOfReduction,
+                    "practise": $scope.activity.practise,
+                    "description": $scope.activity.description
                 },
                 "activePowerJpaToBeReduced": {
-                    "value": $scope.activity.settings.requiredReductionPower,
+                    "value": $scope.activity.requiredReductionPower,
                     "multiplier": "M",
                     "unit": "W"
                 },
-                "subGeographicalRegionJpaList": $scope.activity.settings.subGeographicalRegions,
-                "substationJpaList": $scope.activity.settings.transformerStations,
+                "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
+                "substationJpaList": $scope.activity.transformerStations,
                 "preselectionName": "",
                 "preselectionConfigurationJpa": {
-                    "reductionSetting": $scope.activity.preselection.reductionSetting,
-                    "discriminationCoefficientEnabled": $scope.activity.preselection.discriminationCoefficientEnabled,
-                    "characteristicForMissingMeasurementFwt": $scope.activity.preselection.characteristicForMissingMeasurementFwt,
-                    "characteristicForMissingMeasurementEfr": $scope.activity.preselection.characteristicForMissingMeasurementEfr,
-                    "substituteValueWindFwt": $scope.activity.preselection.substituteValueWindFwt,
-                    "substituteValuePhotovoltaicFwt": $scope.activity.preselection.substituteValuePhotovoltaicFwt,
-                    "substituteValueBiogasFwt": $scope.activity.preselection.substituteValueBiogasFwt,
-                    'substituteValueWindEfr': $scope.activity.preselection.substituteValueWindEfr,
-                    'substituteValuePhotovoltaicEfr': $scope.activity.preselection.substituteValuePhotovoltaicEfr,
-                    'substituteValueBiogasEfr': $scope.activity.preselection.substituteValueBiogasEfr
+                    "reductionSetting": $scope.activity.reductionSetting,
+                    "discriminationCoefficientEnabled": $scope.activity.discriminationCoefficientEnabled,
+                    "characteristicForMissingMeasurementFwt": $scope.activity.characteristicForMissingMeasurementFwt,
+                    "characteristicForMissingMeasurementEfr": $scope.activity.characteristicForMissingMeasurementEfr,
+                    "substituteValueWindFwt": $scope.activity.substituteValueWindFwt,
+                    "substituteValuePhotovoltaicFwt": $scope.activity.substituteValuePhotovoltaicFwt,
+                    "substituteValueBiogasFwt": $scope.activity.substituteValueBiogasFwt,
+                    'substituteValueWindEfr': $scope.activity.substituteValueWindEfr,
+                    'substituteValuePhotovoltaicEfr': $scope.activity.substituteValuePhotovoltaicEfr,
+                    'substituteValueBiogasEfr': $scope.activity.substituteValueBiogasEfr
                 },
             };
 
@@ -212,17 +212,17 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
 
         $scope.isNoAreaDefined = function () {
 
-            return !$scope.activity.settings.useWholeArea &&
-                    $scope.activity.settings.transformerStations.length === 0 &&
-                    $scope.activity.settings.subGeographicalRegions.length === 0;
+            return !$scope.activity.useWholeArea &&
+                    $scope.activity.transformerStations.length === 0 &&
+                    $scope.activity.subGeographicalRegions.length === 0;
         };
 
 
         $scope.gotoStationList = function (settingsForm) {
 
-            if (settingsForm.$valid && $scope.isValidTimeInterval($scope.activity.settings.dateStarted, $scope.activity.settings.dateFinished)) {
+            if (settingsForm.$valid && $scope.isValidTimeInterval($scope.activity.dateStarted, $scope.activity.dateFinished)) {
 
-                //$scope.activity.dateDiff = dateService.getDateDiff($scope.activity.settings.dateStarted, $scope.activity.settings.dateFinished);
+                //$scope.activity.dateDiff = dateService.getDateDiff($scope.activity.dateStarted, $scope.activity.dateFinished);
 
                 $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/createreductionadvice", $scope.getPostData()).then(function (result) {
 
@@ -262,27 +262,27 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
 
         $scope.checkForWholeAreaDisabling = function () {
 
-            return $scope.activity.settings.subGeographicalRegions.length > 0 || $scope.activity.settings.transformerStations.length > 0;
+            return ($scope.activity.subGeographicalRegions && $scope.activity.subGeographicalRegions.length > 0) || ($scope.activity.transformerStations && $scope.activity.transformerStations.length > 0);
         };
 
         $scope.checkForSubGeographicalRegionsDisabling = function () {
 
-            return $scope.activity.settings.useWholeArea || $scope.activity.settings.transformerStations.length > 0;
+            return $scope.activity.useWholeArea || ($scope.activity.transformerStations && $scope.activity.transformerStations.length > 0);
         };
 
         $scope.checkForTransformerStationsDisabling = function () {
 
-            return $scope.activity.settings.useWholeArea || $scope.activity.settings.subGeographicalRegions.length > 0;
+            return $scope.activity.useWholeArea || ($scope.activity.subGeographicalRegions && $scope.activity.subGeographicalRegions.length > 0);
         };
 
         $scope.checkForWholeAreaRequired = function () {
 
-            return !($scope.activity.settings.subGeographicalRegions.length > 0 || $scope.activity.settings.transformerStations.length > 0);
+            return !($scope.activity.subGeographicalRegions && $scope.activity.subGeographicalRegions.length > 0 || ($scope.activity.transformerStations && $scope.activity.transformerStations.length > 0));
         };
 
         $scope.checkForTransformerStationsRequired = function () {
 
-            return !($scope.activity.settings.useWholeArea || $scope.activity.settings.subGeographicalRegions.length > 0);
+            return !($scope.activity.useWholeArea || ($scope.activity.subGeographicalRegions && $scope.activity.subGeographicalRegions.length > 0));
         };
 
     }]);

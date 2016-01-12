@@ -37,7 +37,7 @@
             <div class="col-xs-1" data-ng-class="{'has-error': preselectionForm.regulationsteps.$invalid}">
                 <label class="radio-inline">
                     <input type="radio" data-ng-required="true" name="regulationsteps" value="{{n}}"
-                           data-ng-model="activity.preselection.reductionSetting"> {{n}}%
+                           data-ng-model="activity.reductionSetting"> {{n}}%
                 </label>
             </div>
         </div>
@@ -48,13 +48,13 @@
         </label>
         <div class="col-xs-1" data-ng-class="{'has-error': preselectionForm.discrimination.$invalid}">
             <label class="radio-inline">
-                <input type="radio" data-ng-value="true" data-ng-required="true" data-ng-model="activity.preselection.discriminationCoefficientEnabled" name="discrimination">
+                <input type="radio" data-ng-value="true" data-ng-required="true" data-ng-model="activity.discriminationCoefficientEnabled" name="discrimination">
                 {{ 'YES' | translate }}
             </label>
         </div>
         <div class="col-xs-1" data-ng-class="{'has-error': preselectionForm.discrimination.$invalid}">
             <label class="radio-inline">
-                <input type="radio" data-ng-value="false" data-ng-required="true" data-ng-model="activity.preselection.discriminationCoefficientEnabled" name="discrimination">
+                <input type="radio" data-ng-value="false" data-ng-required="true" data-ng-model="activity.discriminationCoefficientEnabled" name="discrimination">
                 {{ 'NO' | translate }}
             </label>
         </div>
@@ -70,22 +70,22 @@
                 </div>
                 <div class="panel-body">
                     <div class="checkboxes"
-                         data-ng-class="{'has-error': activity.preselection.characteristicForMissingMeasurementFwt.$invalid}">
+                         data-ng-class="{'has-error': activity.characteristicForMissingMeasurementFwt.$invalid}">
                         <label class="radio">
                             <input type="radio" name="missingMeasurementFwt" value="NotIncluded" required
-                                   data-ng-model="activity.preselection.characteristicForMissingMeasurementFwt">
+                                   data-ng-model="activity.characteristicForMissingMeasurementFwt">
                             {{ 'PRESELECTION.NOTINCLUDED' | translate }}
                         </label>
                         <label class="radio">
                             <input type="radio" name="missingMeasurementFwt" value="SubstituteByReference"
                                    required
-                                   data-ng-model="activity.preselection.characteristicForMissingMeasurementFwt">
+                                   data-ng-model="activity.characteristicForMissingMeasurementFwt">
                             {{ 'PRESELECTION.SUBSTITUTEBYREFERENCE' | translate }}
                         </label>
                         <label class="radio">
                             <input type="radio" name="missingMeasurementFwt" value="SubstituteWithInputFactor"
                                    required
-                                   data-ng-model="activity.preselection.characteristicForMissingMeasurementFwt">
+                                   data-ng-model="activity.characteristicForMissingMeasurementFwt">
                             {{ 'PRESELECTION.SUBSTITUTEWITHINPUTFACTOR' | translate }}
                         </label>
 
@@ -95,9 +95,9 @@
                                      data-ng-class="{'has-error': preselectionForm.substituteValueWindFwt.$invalid}">
                                     <span id="wind" class="input-group-addon">{{'WIND'| translate}}</span>
                                     <input type="number" min="0" name="substituteValueWindFwt" max="100"
-                                           data-ng-required="activity.preselection.characteristicForMissingMeasurementFwt == 'SubstituteWithInputFactor'"
-                                           data-ng-disabled="activity.preselection.characteristicForMissingMeasurementFwt != 'SubstituteWithInputFactor'"
-                                           data-ng-model="activity.preselection.substituteValueWindFwt"
+                                           data-ng-required="activity.characteristicForMissingMeasurementFwt == 'SubstituteWithInputFactor'"
+                                           data-ng-disabled="activity.characteristicForMissingMeasurementFwt != 'SubstituteWithInputFactor'"
+                                           data-ng-model="activity.substituteValueWindFwt"
                                            data-area-describedby="wind" class="form-control" />
                                     <span class="input-group-addon">%</span>
 
@@ -106,9 +106,9 @@
                                      data-ng-class="{'has-error': preselectionForm.substituteValuePhotovoltaicFwt.$invalid}">
                                     <span id="pv" class="input-group-addon">{{'PV'| translate}}</span>
                                     <input type="number" min="0" max="100" name="substituteValuePhotovoltaicFwt"
-                                           data-ng-required="activity.preselection.characteristicForMissingMeasurementFwt == 'SubstituteWithInputFactor'"
-                                           data-ng-disabled="activity.preselection.characteristicForMissingMeasurementFwt != 'SubstituteWithInputFactor'"
-                                           data-ng-model="activity.preselection.substituteValuePhotovoltaicFwt"
+                                           data-ng-required="activity.characteristicForMissingMeasurementFwt == 'SubstituteWithInputFactor'"
+                                           data-ng-disabled="activity.characteristicForMissingMeasurementFwt != 'SubstituteWithInputFactor'"
+                                           data-ng-model="activity.substituteValuePhotovoltaicFwt"
                                            data-area-describedby="pv" class="form-control" />
                                     <span class="input-group-addon">%</span>
                                 </div>
@@ -116,9 +116,9 @@
                                      data-ng-class="{'has-error': preselectionForm.substituteValueBiogasFwt.$invalid}">
                                     <span id="bio" class="input-group-addon">{{'BIO'| translate}}</span>
                                     <input type="number" name="substituteValueBiogasFwt" min="0" max="100"
-                                           data-ng-required="activity.preselection.characteristicForMissingMeasurementFwt == 'SubstituteWithInputFactor'"
-                                           data-ng-disabled="activity.preselection.characteristicForMissingMeasurementFwt != 'SubstituteWithInputFactor'"
-                                           data-ng-model="activity.preselection.substituteValueBiogasFwt"
+                                           data-ng-required="activity.characteristicForMissingMeasurementFwt == 'SubstituteWithInputFactor'"
+                                           data-ng-disabled="activity.characteristicForMissingMeasurementFwt != 'SubstituteWithInputFactor'"
+                                           data-ng-model="activity.substituteValueBiogasFwt"
                                            data-area-describedby="bio" class="form-control" />
                                     <span class="input-group-addon">%</span>
                                 </div>
@@ -135,22 +135,22 @@
                 </div>
                 <div class="panel-body">
                     <div class="checkboxes"
-                         data-ng-class="{'has-error': activity.preselection.characteristicForMissingMeasurementEfr.$invalid}">
+                         data-ng-class="{'has-error': activity.characteristicForMissingMeasurementEfr.$invalid}">
                         <label class="radio">
                             <input type="radio" name="missingMeasurementEfr" value="NotIncluded" required
-                                   data-ng-model="activity.preselection.characteristicForMissingMeasurementEfr">
+                                   data-ng-model="activity.characteristicForMissingMeasurementEfr">
                             {{ 'PRESELECTION.NOTINCLUDED'| translate }}
                         </label>
                         <label class="radio">
                             <input type="radio" name="missingMeasurementEfr" value="SubstituteByReference"
                                    required
-                                   data-ng-model="activity.preselection.characteristicForMissingMeasurementEfr">
+                                   data-ng-model="activity.characteristicForMissingMeasurementEfr">
                             {{ 'PRESELECTION.SUBSTITUTEBYREFERENCE'| translate }}
                         </label>
                         <label class="radio">
                             <input type="radio" name="missingMeasurementEfr" value="SubstituteWithInputFactor"
                                    required
-                                   data-ng-model="activity.preselection.characteristicForMissingMeasurementEfr">
+                                   data-ng-model="activity.characteristicForMissingMeasurementEfr">
                             {{ 'PRESELECTION.SUBSTITUTEWITHINPUTFACTOR'| translate }}
                         </label>
 
@@ -160,9 +160,9 @@
                                      data-ng-class="{'has-error': preselectionForm.substituteValueWindEfr.$invalid}">
                                     <span id="wind" class="input-group-addon">{{'WIND'| translate}}</span>
                                     <input type="number" min="0" name="substituteValueWindEfr" max="100"
-                                           data-ng-required="activity.preselection.characteristicForMissingMeasurementEfr == 'SubstituteWithInputFactor'"
-                                           data-ng-disabled="activity.preselection.characteristicForMissingMeasurementEfr != 'SubstituteWithInputFactor'"
-                                           data-ng-model="activity.preselection.substituteValueWindEfr"
+                                           data-ng-required="activity.characteristicForMissingMeasurementEfr == 'SubstituteWithInputFactor'"
+                                           data-ng-disabled="activity.characteristicForMissingMeasurementEfr != 'SubstituteWithInputFactor'"
+                                           data-ng-model="activity.substituteValueWindEfr"
                                            data-area-describedby="wind" class="form-control" />
                                     <span class="input-group-addon">%</span>
 
@@ -171,9 +171,9 @@
                                      data-ng-class="{'has-error': preselectionForm.substituteValuePhotovoltaicEfr.$invalid}">
                                     <span id="pv" class="input-group-addon">{{'PV'| translate}}</span>
                                     <input type="number" min="0" max="100" name="substituteValuePhotovoltaicEfr"
-                                           data-ng-required="activity.preselection.characteristicForMissingMeasurementEfr == 'SubstituteWithInputFactor'"
-                                           data-ng-disabled="activity.preselection.characteristicForMissingMeasurementEfr != 'SubstituteWithInputFactor'"
-                                           data-ng-model="activity.preselection.substituteValuePhotovoltaicEfr"
+                                           data-ng-required="activity.characteristicForMissingMeasurementEfr == 'SubstituteWithInputFactor'"
+                                           data-ng-disabled="activity.characteristicForMissingMeasurementEfr != 'SubstituteWithInputFactor'"
+                                           data-ng-model="activity.substituteValuePhotovoltaicEfr"
                                            data-area-describedby="pv" class="form-control" />
                                     <span class="input-group-addon">%</span>
                                 </div>
@@ -181,9 +181,9 @@
                                      data-ng-class="{'has-error': preselectionForm.substituteValueBiogasEfr.$invalid}">
                                     <span id="bio" class="input-group-addon">{{'BIO'| translate}}</span>
                                     <input type="number" name="substituteValueBiogasEfr" min="0" max="100"
-                                           data-ng-required="activity.preselection.characteristicForMissingMeasurementEfr == 'SubstituteWithInputFactor'"
-                                           data-ng-disabled="activity.preselection.characteristicForMissingMeasurementEfr != 'SubstituteWithInputFactor'"
-                                           data-ng-model="activity.preselection.substituteValueBiogasEfr"
+                                           data-ng-required="activity.characteristicForMissingMeasurementEfr == 'SubstituteWithInputFactor'"
+                                           data-ng-disabled="activity.characteristicForMissingMeasurementEfr != 'SubstituteWithInputFactor'"
+                                           data-ng-model="activity.substituteValueBiogasEfr"
                                            data-area-describedby="bio" class="form-control" />
                                     <span class="input-group-addon">%</span>
                                 </div>
@@ -200,7 +200,7 @@
         </label>
         <div class="col-xs-1">
             <div class="input-group">
-                <input type="text" readonly data-ng-model="activityConfigData.activity.hysteresis" class="form-control" />
+                <input type="text" readonly data-ng-model="activityConfigData.hysteresis" class="form-control" />
                 <div class="input-group-addon">%</div>
             </div>
         </div>

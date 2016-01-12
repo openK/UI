@@ -12,7 +12,7 @@
 
 app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', '$modal', function ($scope, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, $modal) {
 
-        $scope.activity = activityService.activity();
+        $scope.activity = activityService.childActivity();
         $rootScope.$on('showSubstationProposalGrid', function (event, row, job, subStationRegStep) {
 
             $log.info('showSubstationProposalGrid ' + job);
@@ -205,24 +205,11 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
 
 
         $scope.getProposalError = function () {
-
-            var requiredReductionPower;
-            try{
-                requiredReductionPower = $scope.activity.settings.requiredReductionPower;
-            }
-            catch(e){
-                requiredReductionPower = $scope.activity.reductionValue;
-            }
-            
-            $log.info(typeof requiredReductionPower.toFixed(2));
-
             var hysteresis = activityService.activityConfigData().activity.hysteresis || 5;
             hysteresis = 1 + hysteresis / 100;
 
-            if (
-                    (requiredReductionPower - $scope.gridApi2.grid.columns[11].getAggregationValue()) > 0.001 ||
-                    $scope.gridApi2.grid.columns[11].getAggregationValue() > requiredReductionPower * hysteresis
-                )
+            if (($scope.activity.reductionValue - $scope.gridApi2.grid.columns[11].getAggregationValue()) > 0.001 ||
+                 $scope.gridApi2.grid.columns[11].getAggregationValue() > $scope.activity.reductionValue * hysteresis)
             {
                 return "error";
             } 

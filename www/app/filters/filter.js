@@ -90,43 +90,44 @@ app.filter('decision', function () {
 app.filter('status', function () {
 
     return function (value) {
-        
-        var now =  new Date();
+
+        var now = new Date();
         var startdate = new Date(value[0]);
         var enddate = new Date(value[1]);
-        
-        if(now.getTime() >= startdate.getTime() && now.getTime() <= enddate.getTime()){
+
+        if (now.getTime() >= startdate.getTime() && now.getTime() <= enddate.getTime()) {
             return 'STATE.ACTIVE';
         }
-        else{
-            if(now.getTime() >= enddate.getTime()){
+        else {
+            if (now.getTime() >= enddate.getTime()) {
                 return 'STATE.FINISHED';
             }
-            else{
+            else {
                 return 'STATE.PENDING';
             }
         }
-        
-        
+
+
         return value[0];
     };
 });
 
 app.filter('kv', function () {
 
-    var kvdata = ['0,4','10','20','30','60','110','220','380'];
+    var kvdata = ['0,4', '10', '20', '30', '60', '110', '220', '380'];
     return function (value) {
-        
-            return kvdata[value];
+
+        return kvdata[value];
     }
 });
 
 app.filter('decimalger', function () {
 
-    
     return function (value) {
-        
-            return value.toString().replace(/\./,',');
+        if (!value) {
+            return value;
+        }
+        return value.toString().replace(/\./, ',');
     }
 });
 

@@ -7,7 +7,7 @@
         $scope.templateName = $rootScope.selectedTemplate.name;
     }
 
-    $scope.activity = activityService.activity();
+    $scope.activity = activityService.childActivity();
     $scope.templates = activityService.activityConfigData().templates;
 
     $scope.close = function () {
@@ -22,18 +22,18 @@
     $scope.ok = function () {
         var templateData = {
             preselectionConfigurationJpa: {
-                reductionSetting: $scope.activity.preselection.reductionSetting,
-                discriminationCoefficientEnabled: $scope.activity.preselection.discriminationCoefficientEnabled,
-                characteristicForMissingMeasurementFwt: $scope.activity.preselection.characteristicForMissingMeasurementFwt,
-                substituteValuePhotovoltaicFwt: $scope.activity.preselection.substituteValuePhotovoltaicFwt,
-                substituteValueWindFwt: $scope.activity.preselection.substituteValueWindFwt,
-                substituteValueBiogasFwt: $scope.activity.preselection.substituteValueBiogasFwt,
-                provideInServiceDate: $scope.activity.preselection.provideInServiceDate,
+                reductionSetting: $scope.activity.reductionSetting,
+                discriminationCoefficientEnabled: $scope.activity.discriminationCoefficientEnabled,
+                characteristicForMissingMeasurementFwt: $scope.activity.characteristicForMissingMeasurementFwt,
+                substituteValuePhotovoltaicFwt: $scope.activity.substituteValuePhotovoltaicFwt,
+                substituteValueWindFwt: $scope.activity.substituteValueWindFwt,
+                substituteValueBiogasFwt: $scope.activity.substituteValueBiogasFwt,
+                provideInServiceDate: $scope.activity.provideInServiceDate,
 
-                characteristicForMissingMeasurementEfr: $scope.activity.preselection.characteristicForMissingMeasurementEfr,
-                substituteValuePhotovoltaicEfr: $scope.activity.preselection.substituteValuePhotovoltaicEfr,
-                substituteValueWindEfr: $scope.activity.preselection.substituteValueWindEfr,
-                substituteValueBiogasEfr: $scope.activity.preselection.substituteValueBiogasEfr
+                characteristicForMissingMeasurementEfr: $scope.activity.characteristicForMissingMeasurementEfr,
+                substituteValuePhotovoltaicEfr: $scope.activity.substituteValuePhotovoltaicEfr,
+                substituteValueWindEfr: $scope.activity.substituteValueWindEfr,
+                substituteValueBiogasEfr: $scope.activity.substituteValueBiogasEfr
             },
             id: '',
             name: $scope.templateName

@@ -33,7 +33,6 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     resolve: {
                         parentActivities: function (activityService, $stateParams, $rootScope) {
                             $rootScope.show = $stateParams.show;
-                            activityService.resetActivity();
                             return activityService.loadParentActivities(0, 5, null, null, null, $stateParams.show);
                         }
                     }

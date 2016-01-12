@@ -104,10 +104,10 @@
              data-ng-show="settingsFormSubmitted &&
                             (settingsForm.datestarted.$invalid ||
                              settingsForm.datefinished.$invalid ||
-                             activity.settings.reasonOfReduction == '' ||
+                             activity.reasonOfReduction == '' ||
                              settingsForm.requiredReductionPower.$invalid ||
                              isNoAreaDefined() ||
-                             activity.settings.description == '')">
+                             activity.description == '')">
             <div class="warning"
                  data-ng-show="settingsFormSubmitted && settingsForm.datestarted.$invalid">
                 {{'SETTINGS.DATESTARTED.ERROR' | translate}}
@@ -117,7 +117,7 @@
                 {{'SETTINGS.DATEFINISHED.ERROR' | translate}}
             </div>
             <div class="warning"
-                 data-ng-show="settingsFormSubmitted && activity.settings.reasonOfReduction == ''">
+                 data-ng-show="settingsFormSubmitted && activity.reasonOfReduction == ''">
                 {{'SETTINGS.REASONOFREDUCTION.ERROR' | translate}}
             </div>
             <div class="warning"
@@ -129,7 +129,7 @@
                 {{'SETTINGS.AREA.ERROR' | translate}}
             </div>
             <div class="warning"
-                 data-ng-show="settingsFormSubmitted && activity.settings.description == ''">
+                 data-ng-show="settingsFormSubmitted && activity.description == ''">
                 {{'SETTINGS.DESCRIPTION.ERROR' | translate}}
             </div>
         </div>

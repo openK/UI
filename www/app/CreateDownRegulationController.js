@@ -11,24 +11,29 @@
  *******************************************************************************/
 app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScope', '$http', '$modal', '$log', 'activityService', '$timeout', function ($scope, $state, $rootScope, $http, $modal, $log, activityService, $timeout) {
     $scope.activityConfigData = activityService.activityConfigData();
-    $scope.$watch('activity.preselection.characteristicForMissingMeasurementFwt', function (newValue, oldValue) {
+    $scope.activity = activityService.childActivity();
+    $scope.$watch('activity.characteristicForMissingMeasurementFwt', function (newValue, oldValue) {
         if (newValue === oldValue) {
             return;
         }
         if (newValue !== 'SubstituteWithInputFactor') {
-            $scope.activity.preselection.substituteValueBiogasFwt = null;
-            $scope.activity.preselection.substituteValuePhotovoltaicFwt = null;
-            $scope.activity.preselection.substituteValueWindFwt = null;
+            $scope.activity.substituteValueBiogasFwt = null;
+            $scope.activity.substituteValuePhotovoltaicFwt = null;
+            $scope.activity.substituteValueWindFwt = null;
+        } else {
+            $scope.loadTemplateData($rootScope.selectedTemplate);
         }
     });
-    $scope.$watch('activity.preselection.characteristicForMissingMeasurementEfr', function (newValue, oldValue) {
+    $scope.$watch('activity.characteristicForMissingMeasurementEfr', function (newValue, oldValue) {
         if (newValue === oldValue) {
             return;
         }
         if (newValue !== 'SubstituteWithInputFactor') {
-            $scope.activity.preselection.substituteValueWindEfr = null;
-            $scope.activity.preselection.substituteValuePhotovoltaicEfr = null;
-            $scope.activity.preselection.substituteValueBiogasEfr = null;
+            $scope.activity.substituteValueWindEfr = null;
+            $scope.activity.substituteValuePhotovoltaicEfr = null;
+            $scope.activity.substituteValueBiogasEfr = null;
+        } else {
+            $scope.loadTemplateData($rootScope.selectedTemplate);
         }
     });
 
@@ -43,8 +48,8 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
     * Preselection Data
     */
     $rootScope.selectedTemplate = $rootScope.selectedTemplate || '';
-    $rootScope.templates = $scope.activityConfigData.task.templates;
-    $scope.regulationSteps = $scope.activityConfigData.task.regulationSteps;
+    $rootScope.templates = $scope.activityConfigData.templates;
+    $scope.regulationSteps = $scope.activityConfigData.regulationSteps;
     /*
     * Preselection Functions
     */
@@ -52,21 +57,19 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
 
         if (selectedTemplate) {
             $rootScope.selectedTemplate = selectedTemplate;
-            $scope.activity.preselection.reductionSetting = selectedTemplate.preselectionConfigurationJpa.reductionSetting;
-            $scope.activity.preselection.discriminationCoefficientEnabled = selectedTemplate.preselectionConfigurationJpa.discriminationCoefficientEnabled;
-            $scope.activity.preselection.characteristicForMissingMeasurementFwt = selectedTemplate.preselectionConfigurationJpa.characteristicForMissingMeasurementFwt;
-            $scope.activity.preselection.substituteValuePhotovoltaicFwt = selectedTemplate.preselectionConfigurationJpa.substituteValuePhotovoltaicFwt;
-            $scope.activity.preselection.substituteValueWindFwt = selectedTemplate.preselectionConfigurationJpa.substituteValueWindFwt;
-            $scope.activity.preselection.substituteValueBiogasFwt = selectedTemplate.preselectionConfigurationJpa.substituteValueBiogasFwt;
-            $scope.activity.preselection.characteristicForMissingMeasurementEfr = selectedTemplate.preselectionConfigurationJpa.characteristicForMissingMeasurementEfr;
-            $scope.activity.preselection.substituteValueWindEfr = selectedTemplate.preselectionConfigurationJpa.substituteValueWindEfr;
-            $scope.activity.preselection.substituteValuePhotovoltaicEfr = selectedTemplate.preselectionConfigurationJpa.substituteValuePhotovoltaicEfr;
-            $scope.activity.preselection.substituteValueBiogasEfr = selectedTemplate.preselectionConfigurationJpa.substituteValueBiogasEfr;
+            $scope.activity.reductionSetting = selectedTemplate.preselectionConfigurationJpa.reductionSetting;
+            $scope.activity.discriminationCoefficientEnabled = selectedTemplate.preselectionConfigurationJpa.discriminationCoefficientEnabled;
+            $scope.activity.characteristicForMissingMeasurementFwt = selectedTemplate.preselectionConfigurationJpa.characteristicForMissingMeasurementFwt;
+            $scope.activity.substituteValuePhotovoltaicFwt = selectedTemplate.preselectionConfigurationJpa.substituteValuePhotovoltaicFwt;
+            $scope.activity.substituteValueWindFwt = selectedTemplate.preselectionConfigurationJpa.substituteValueWindFwt;
+            $scope.activity.substituteValueBiogasFwt = selectedTemplate.preselectionConfigurationJpa.substituteValueBiogasFwt;
+            $scope.activity.characteristicForMissingMeasurementEfr = selectedTemplate.preselectionConfigurationJpa.characteristicForMissingMeasurementEfr;
+            $scope.activity.substituteValueWindEfr = selectedTemplate.preselectionConfigurationJpa.substituteValueWindEfr;
+            $scope.activity.substituteValuePhotovoltaicEfr = selectedTemplate.preselectionConfigurationJpa.substituteValuePhotovoltaicEfr;
+            $scope.activity.substituteValueBiogasEfr = selectedTemplate.preselectionConfigurationJpa.substituteValueBiogasEfr;
             $scope.activity.substationProposalList = selectedTemplate.substationJpaList;
         }
     };
-
-    $scope.activity = activityService.activity();
 
     if ($scope.parentActivityId) {
         $scope.activity.parentActivityJpaId = $scope.parentActivityId;

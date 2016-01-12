@@ -12,28 +12,32 @@
 app.controller('ChangeDownRegulationController', ['$scope', '$state', '$rootScope', '$http', '$modal', '$log', 'activityService', function ($scope, $state, $rootScope, $http, $modal, $log, activityService) {
 
     $scope.activityConfigData = activityService.activityConfigData();
-    $scope.activity = activityService.activity();
+    $scope.activity = activityService.childActivity();
     $scope.parentActivityId = activityService.currentParentActivity();
     $scope.preselectionFormSubmitted = false;
 
-    $scope.$watch('activity.preselection.characteristicForMissingMeasurementFwt', function (newValue, oldValue) {
+    $scope.$watch('activity.characteristicForMissingMeasurementFwt', function (newValue, oldValue) {
         if (newValue === oldValue) {
             return;
         }
         if (newValue !== 'SubstituteWithInputFactor') {
-            $scope.activity.preselection.substituteValueBiogasFwt = null;
-            $scope.activity.preselection.substituteValuePhotovoltaicFwt = null;
-            $scope.activity.preselection.substituteValueWindFwt = null;
+            $scope.activity.substituteValueBiogasFwt = null;
+            $scope.activity.substituteValuePhotovoltaicFwt = null;
+            $scope.activity.substituteValueWindFwt = null;
+        } else {
+            $scope.loadTemplateData($rootScope.selectedTemplate);
         }
     });
-    $scope.$watch('activity.preselection.characteristicForMissingMeasurementEfr', function (newValue, oldValue) {
+    $scope.$watch('activity.characteristicForMissingMeasurementEfr', function (newValue, oldValue) {
         if (newValue === oldValue) {
             return;
         }
         if (newValue !== 'SubstituteWithInputFactor') {
-            $scope.activity.preselection.substituteValueWindEfr = null;
-            $scope.activity.preselection.substituteValuePhotovoltaicEfr = null;
-            $scope.activity.preselection.substituteValueBiogasEfr = null;
+            $scope.activity.substituteValueWindEfr = null;
+            $scope.activity.substituteValuePhotovoltaicEfr = null;
+            $scope.activity.substituteValueBiogasEfr = null;
+        } else {
+            $scope.loadTemplateData($rootScope.selectedTemplate);
         }
     });
 

@@ -3,7 +3,7 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
     $scope.$parent.mytimer = false;
     $scope.$parent.$broadcast('timer-reset');
 
-    $scope.activity = activityService.activity();
+    $scope.activity = activityService.childActivity();
     if ($scope.activity.pointOfInjectionType === 'GEOGRAPHICALREGION') {
         $scope.activity.useWholeArea = true;
     }
@@ -131,16 +131,16 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
                 "pointOfInjectionList": $scope.activity.pointOfInjectionList,
                 "description": $scope.activity.description,
                 "preselectionConfigurationDto": {
-                    "reductionSetting": $scope.activity.preselectionConfigurationDto.reductionSetting,
-                    "discriminationCoefficientEnabled": $scope.activity.preselectionConfigurationDto.discriminationCoefficientEnabled,
-                    "characteristicForMissingMeasurementFwt": $scope.activity.preselectionConfigurationDto.characteristicForMissingMeasurementFwt,
-                    "characteristicForMissingMeasurementEfr": $scope.activity.preselectionConfigurationDto.characteristicForMissingMeasurementEfr,
-                    "substituteValueWindFwt": $scope.activity.preselectionConfigurationDto.substituteValueWindFwt,
-                    "substituteValuePhotovoltaicFwt": $scope.activity.preselectionConfigurationDto.substituteValuePhotovoltaicFwt,
-                    "substituteValueBiogasFwt": $scope.activity.preselectionConfigurationDto.substituteValueBiogasFwt,
-                    'substituteValueWindEfr': $scope.activity.preselectionConfigurationDto.substituteValueWindEfr,
-                    'substituteValuePhotovoltaicEfr': $scope.activity.preselectionConfigurationDto.substituteValuePhotovoltaicEfr,
-                    'substituteValueBiogasEfr': $scope.activity.preselectionConfigurationDto.substituteValueBiogasEfr
+                    "reductionSetting": $scope.activity.reductionSetting,
+                    "discriminationCoefficientEnabled": $scope.activity.discriminationCoefficientEnabled,
+                    "characteristicForMissingMeasurementFwt": $scope.activity.characteristicForMissingMeasurementFwt,
+                    "characteristicForMissingMeasurementEfr": $scope.activity.characteristicForMissingMeasurementEfr,
+                    "substituteValueWindFwt": $scope.activity.substituteValueWindFwt,
+                    "substituteValuePhotovoltaicFwt": $scope.activity.substituteValuePhotovoltaicFwt,
+                    "substituteValueBiogasFwt": $scope.activity.substituteValueBiogasFwt,
+                    'substituteValueWindEfr': $scope.activity.substituteValueWindEfr,
+                    'substituteValuePhotovoltaicEfr': $scope.activity.substituteValuePhotovoltaicEfr,
+                    'substituteValueBiogasEfr': $scope.activity.substituteValueBiogasEfr
                 }
             };
 
