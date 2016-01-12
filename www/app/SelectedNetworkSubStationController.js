@@ -242,7 +242,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
 
             $modal.open({
                 animation: true,
-                templateUrl: 'app/CreateProposalConfirmationModal.html',
+                templateUrl: templPath + 'CreateProposalConfirmationModal.html',
                 controller: 'CreateProposalConfirmationModalController',
                 resolve: {
                     items: function () {

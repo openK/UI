@@ -94,7 +94,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                     modalService.close();
                 }
             };
-            modalService.open($scope, 'app/partials/confirm.html');
+            modalService.open($scope, templPath + 'partials/confirm.html');
         };
 
         $scope.stopProcess = function () {
@@ -122,7 +122,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                     }
                 }
             };
-            modalService.open($scope, 'app/partials/confirm.html');
+            modalService.open($scope, templPath + 'partials/confirm.html');
         };
 
         $scope.hasReductions = function () {
@@ -152,7 +152,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                 }
 
             };
-            modalService.open($scope, 'app/partials/enginelist.html', false, 'SynchronousMachineListByProcessIdCtrl', '90p');
+            modalService.open($scope, templPath + 'partials/enginelist.html', false, 'SynchronousMachineListByProcessIdCtrl', '90p');
         };
 
         $scope.editFinishDate = function () {
@@ -192,7 +192,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                                 });
                             }
                         };
-                        modalService.open($scope, 'app/partials/confirm.html');
+                        modalService.open($scope, templPath + 'partials/confirm.html');
                     }, 100);
                 }
 
@@ -222,7 +222,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                     }
                 });
             };
-            modalService.open($scope, 'app/partials/editfinishdate.html', callback);
+            modalService.open($scope, templPath + 'partials/editfinishdate.html', callback);
         };
 
         var callPageObject = function () {

@@ -89,7 +89,7 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
     $scope.openModal = function (preselectionForm) {
         $modal.open({
             animation: true,
-            templateUrl: 'app/PreselectionModal.html',
+            templateUrl: templPath + templPath + 'PreselectionModal.html',
             controller: 'PreselectionModalController',
         });
     };

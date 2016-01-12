@@ -20,7 +20,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
             $translateProvider.preferredLanguage('de');
 
             $translateProvider.useStaticFilesLoader({
-                prefix: 'app/locale-',
+                prefix: templPath + 'locale-',
                 suffix: '.json'
             });
 
@@ -28,7 +28,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
             $stateProvider
                 .state('state1', {
                     url: "/:show",
-                    templateUrl: "app/overview.html",
+                    templateUrl: templPath + "overview.html",
                     controller: 'OverviewCtrl',
                     resolve: {
                         parentActivities: function (activityService, $stateParams, $rootScope) {
@@ -40,12 +40,12 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 // neuen Vorgang anlegen...
                 .state('Regulation', {
                     url: "/Regulation",
-                    templateUrl: "app/Regulation.html",
+                    templateUrl: templPath +  "Regulation.html",
                     controller: 'RegulationController',
                     abstract: true,
                 }).state('Regulation.CreateDownRegulation', {
                     url: '/CreateDownRegulation',
-                    templateUrl: "app/CreateDownRegulation.html",
+                    templateUrl: templPath + "CreateDownRegulation.html",
                     controller: 'CreateDownRegulationController',
                     resolve: {
                         activity: function (activityService, $rootScope, $state) {
@@ -58,48 +58,48 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     }
                 }).state('Regulation.NetworkState', {
                     url: '/NetworkState',
-                    templateUrl: "app/NetworkState.html",
+                    templateUrl: templPath +  "NetworkState.html",
                     abstract: true
                 }).state('Regulation.NetworkState.Main', {
                     url: '/Main',
                     views: {
                         "NetworkMainState": {
-                            templateUrl: "app/NetworkMainState.html",
+                            templateUrl: templPath +  "NetworkMainState.html",
                             controller: 'NetworkMainStateInfoController'
                         },
                         "NetworkSubState": {
-                            templateUrl: "app/NetworkSubState.html",
+                            templateUrl: templPath +  "NetworkSubState.html",
                             controller: 'NetworkSubStateInfoController'
                         }
                     }
                 }).state('Regulation.CreateSettings', {
                     url: '/CreateSettings',
-                    templateUrl: "app/CreateSettings.html",
+                    templateUrl: templPath +  "CreateSettings.html",
                     controller: 'CreateSettingsController',
                 }).state('Regulation.CreateProposal', {
                     url: '/CreateProposal',
-                    templateUrl: "app/CreateProposal.html",
+                    templateUrl: templPath +  "CreateProposal.html",
                     controller: 'CreateProposalController',
                     abstract: true
                 }).state('Regulation.CreateProposal.Main', {
                     url: '/Main',
                     views: {
                         "SelectedNetworkSubStations": {
-                            templateUrl: "app/SelectedNetworkSubStation.html",
+                            templateUrl: templPath +  "SelectedNetworkSubStation.html",
                             controller: "SelectedNetworkSubStationController"
                         },
                         "NetworkMainState": {
-                            templateUrl: "app/NetworkMainState.html",
+                            templateUrl: templPath +  "NetworkMainState.html",
                             controller: 'NetworkMainStateController'
                         },
                         "NetworkSubState": {
-                            templateUrl: "app/NetworkSubState.html",
+                            templateUrl: templPath +  "NetworkSubState.html",
                             controller: "NetworkSubStateController"
                         }
                     }
                 }).state('Regulation.CreateProposalConfirmation', {
                     url: '/CreateProposalConfirmation/',
-                    templateUrl: "app/CreateProposalConfirmation.html",
+                    templateUrl: templPath +  "CreateProposalConfirmation.html",
                     controller: 'CreateProposalConfirmationController',
                 })
 
@@ -111,7 +111,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 // neue Maßnahme hinzufuegen...
                 .state('ChangeRegulation', {
                     url: "/Change",
-                    templateUrl: "app/ChangeRegulation.html",
+                    templateUrl: templPath +  "ChangeRegulation.html",
                     controller: 'ChangeRegulationController',
                     abstract: true,
                     resolve: {
@@ -122,7 +122,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     }
                 }).state('ChangeRegulation.ChangeDownRegulation', {
                     url: '/ChangeDownRegulation',
-                    templateUrl: "app/ChangeDownRegulation.html",
+                    templateUrl: templPath +  "ChangeDownRegulation.html",
                     controller: 'ChangeDownRegulationController',
                     resolve: {
                         createActivity: function (activityService) {
@@ -131,27 +131,27 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     }
                 }).state('ChangeRegulation.NetworkState', {
                     url: '/NetworkState',
-                    templateUrl: "app/NetworkState.html",
+                    templateUrl: templPath +  "NetworkState.html",
                     abstract: true
                 }).state('ChangeRegulation.NetworkState.Main', {
                     url: '/Main',
                     views: {
                         "NetworkMainState": {
-                            templateUrl: "app/NetworkMainState.html",
+                            templateUrl: templPath +  "NetworkMainState.html",
                             controller: 'NetworkMainStateInfoController'
                         },
                         "NetworkSubState": {
-                            templateUrl: "app/NetworkSubState.html",
+                            templateUrl: templPath +  "NetworkSubState.html",
                             controller: 'NetworkSubStateInfoController'
                         }
                     }
                 }).state('ChangeRegulation.ChangeSettings', {
                     url: '/ChangeSettings',
-                    templateUrl: "app/ChangeSettings.html",
+                    templateUrl: templPath +  "ChangeSettings.html",
                     controller: 'ChangeSettingsController',
                 }).state('ChangeRegulation.ChangeProposal', {
                     url: '/ChangeProposal',
-                    templateUrl: "app/ChangeProposal.html",
+                    templateUrl: templPath +  "ChangeProposal.html",
                     controller: 'ChangeProposalController',
                     abstract: true
                 }).state('ChangeRegulation.ChangeProposal.Main', {
@@ -159,21 +159,21 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     cache: false,
                     views: {
                         "SelectedNetworkSubStations": {
-                            templateUrl: "app/SelectedNetworkSubStation.html",
+                            templateUrl: templPath +  "SelectedNetworkSubStation.html",
                             controller: "SelectedNetworkSubStationController"
                         },
                         "NetworkMainState": {
-                            templateUrl: "app/NetworkMainState.html",
+                            templateUrl: templPath +  "NetworkMainState.html",
                             controller: 'NetworkMainStateController'
                         },
                         "NetworkSubState": {
-                            templateUrl: "app/NetworkSubState.html",
+                            templateUrl: templPath +  "NetworkSubState.html",
                             controller: "NetworkSubStateController"
                         }
                     }
                 }).state('ChangeRegulation.ChangeProposalConfirmation', {
                     url: '/ChangeProposalConfirmation/',
-                    templateUrl: "app/ChangeProposalConfirmation.html",
+                    templateUrl: templPath +  "ChangeProposalConfirmation.html",
                     controller: 'ChangeProposalConfirmationController',
                 })
 
@@ -181,7 +181,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 // neue Maßnahme bearbeiten...
                 .state('EditRegulation', {
                     url: "/Edit",
-                    templateUrl: "app/EditRegulation.html",
+                    templateUrl: templPath +  "EditRegulation.html",
                     controller: 'EditRegulationController',
                     abstract: true,
                     resolve: {
@@ -192,7 +192,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     }
                 }).state('EditRegulation.EditDownRegulation', {
                     url: '/EditDownRegulation',
-                    templateUrl: "app/EditDownRegulation.html",
+                    templateUrl: templPath +  "EditDownRegulation.html",
                     controller: 'EditDownRegulationController',
                     resolve: {
                         loadActivity: function (activityService) {
@@ -201,27 +201,27 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     }
                 }).state('EditRegulation.NetworkState', {
                     url: '/NetworkState',
-                    templateUrl: "app/NetworkState.html",
+                    templateUrl: templPath +  "NetworkState.html",
                     abstract: true
                 }).state('EditRegulation.NetworkState.Main', {
                     url: '/Main',
                     views: {
                         "NetworkMainState": {
-                            templateUrl: "app/NetworkMainState.html",
+                            templateUrl: templPath +  "NetworkMainState.html",
                             controller: 'NetworkMainStateInfoController'
                         },
                         "NetworkSubState": {
-                            templateUrl: "app/NetworkSubState.html",
+                            templateUrl: templPath +  "NetworkSubState.html",
                             controller: 'NetworkSubStateInfoController'
                         }
                     }
                 }).state('EditRegulation.EditSettings', {
                     url: '/EditSettings',
-                    templateUrl: "app/EditSettings.html",
+                    templateUrl: templPath +  "EditSettings.html",
                     controller: 'EditSettingsController',
                 }).state('EditRegulation.EditProposal', {
                     url: '/EditProposal',
-                    templateUrl: "app/EditProposal.html",
+                    templateUrl: templPath +  "EditProposal.html",
                     controller: 'EditProposalController',
                     abstract: true
                 }).state('EditRegulation.EditProposal.Main', {
@@ -229,21 +229,21 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     cache: false,
                     views: {
                         "SelectedNetworkSubStations": {
-                            templateUrl: "app/SelectedNetworkSubStation.html",
+                            templateUrl: templPath +  "SelectedNetworkSubStation.html",
                             controller: "SelectedNetworkSubStationController"
                         },
                         "NetworkMainState": {
-                            templateUrl: "app/NetworkMainState.html",
+                            templateUrl: templPath +  "NetworkMainState.html",
                             controller: 'NetworkMainStateController'
                         },
                         "NetworkSubState": {
-                            templateUrl: "app/NetworkSubState.html",
+                            templateUrl: templPath +  "NetworkSubState.html",
                             controller: "NetworkSubStateController"
                         }
                     }
                 }).state('EditRegulation.EditProposalConfirmation', {
                     url: '/EditProposalConfirmation/',
-                    templateUrl: "app/EditProposalConfirmation.html",
+                    templateUrl: templPath +  "EditProposalConfirmation.html",
                     controller: 'EditProposalConfirmationController',
                 });
             // For any unmatched url, redirect to /state1
@@ -264,12 +264,13 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
         });
         $rootScope.goBack = function () {
             $state.go($rootScope.previousState, $rootScope.previousParams);
-        }
+        };
         $rootScope.multiSelectTranslation = {
             selectAll: "alles ausgewählen",
             selectNone: "nichts auswählen",
             reset: "zurücksetzen",
             search: "suchen...",
             nothingSelected: "keine Auswahl"
-        }
+        };
+        $rootScope.templPath = templPath;
     }]);
