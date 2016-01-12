@@ -22,7 +22,7 @@ app.controller('NetworkSubStateInfoController', ['$scope', '$http', '$timeout', 
     $scope.activity = activityService.activity();
     $log.log('NetworkSubStateInfoController');
     $log.log($scope.activity);
-    $scope.activity = activityService.activity();
+    $scope.activity = activityService.childActivity();
 
     $scope.$parent.$on('loadSubstationsInfo', function (event, branch) {
         $scope.activity = activityService.activity();

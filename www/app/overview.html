@@ -65,9 +65,9 @@
     </div>
     <div class="col-sm-12">
         <ul class="nav nav-tabs voffset nav-tabs-maincontent">
-            <li data-ng-class="{ active: show==='Aktiv'  }"><a data-ui-sref="state1({show: 'Aktiv'   })">aktiv und geplant</a></li>
-            <li data-ng-class="{ active: show==='Terminated'}"><a data-ui-sref="state1({show: 'Terminated' })">beendet</a></li>
-            <li data-ng-class="{ active: show==='Deleted'}"><a data-ui-sref="state1({show: 'Deleted' })">gelöscht</a></li>
+            <li data-ng-class="{ active: show === 'Aktiv'  }"><a data-ui-sref="state1({show: 'Aktiv'   })">aktiv und geplant</a></li>
+            <li data-ng-class="{ active: show === 'Terminated'}"><a data-ui-sref="state1({show: 'Terminated' })">beendet</a></li>
+            <li data-ng-class="{ active: show === 'Deleted'}"><a data-ui-sref="state1({show: 'Deleted' })">gelöscht</a></li>
         </ul>
         <div data-ui-grid-selection
              data-ui-grid-cellNav
@@ -82,10 +82,11 @@
             <span class="paging">{{"PAGING.PAGE"| translate}} {{data.currentpage}} {{"PAGING.OF"| translate}} {{data.totalPages}}</span>
             <a class="btn btn-primary btn-sm" ng-click="getNextPage()"><span aria-hidden="true" class="glyphicon glyphicon-step-forward"></span></a>
             <a class="btn btn-primary btn-sm" ng-click="getLastPage()"><span aria-hidden="true" class="glyphicon glyphicon-fast-forward"></span></a>
+            <!--
             <span class="paging">{{"PAGING.GOTO"| translate}}</span>
             <input type="text" class="goto" ng-model="data.currentpage" value="{{data.currentpage}}" placeholder="{{data.currentpage}}" />
             <a class="btn btn-primary btn-sm" ng-click="gotoPageNumber()"><span aria-hidden="true" class="glyphicon glyphicon-play"></span></a>
-
+            -->
 
         </div>
     </div>
@@ -106,7 +107,7 @@
                                 <td>{{data.injectionType| translate}}</td>
                                 <td>
                                     <ul class="regionlist">
-                                    <li data-ng-repeat="item in data.injectionList | orderBy">{{item}}</li>
+                                        <li data-ng-repeat="item in data.injectionList| orderBy">{{item}}</li>
                                     </ul>
                                 </td>
                             </tr>

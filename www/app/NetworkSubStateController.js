@@ -23,7 +23,7 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
     $scope.$parent.activity = activityService.childActivity();
 
     $scope.$parent.$on('loadSubstations', function (event, branch) {
-        $scope.activity = activityService.activity();
+        $scope.activity = activityService.childActivity();
         var oid = parseInt(branch.oid);
         $scope.$parent.substationname = branch.name;
         $log.debug('loadSubstations');

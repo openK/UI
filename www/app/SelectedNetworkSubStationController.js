@@ -222,7 +222,12 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
         $scope.changeSynchronousMachine = function (grid, row) {
             $log.info('changeSynchronousMachine');
             row.entity.reductionAdvice = row.entity.subStationRegSteps;
-            var calculatedvalue = row.entity.generatorPowerMeasured.value - ((row.entity.reductionAdvice / 100) * row.entity.generatingUnitJpa.maxOperatingP.value);
+            var calculatedvalue;
+                    
+                    if(row.entity.reductionAdvice === 0)
+                        calculatedvalue = row.entity.generatorPowerMeasured.value;
+                    else
+                        calculatedvalue = row.entity.generatorPowerMeasured.value - ((row.entity.reductionAdvice / 100) * row.entity.generatingUnitJpa.maxOperatingP.value);
 
             // || (row.entity.generatingUnitJpa.maxOperatingP.value < row.entity.generatorPowerMeasured.value)
 
