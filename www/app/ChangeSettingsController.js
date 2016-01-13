@@ -4,11 +4,14 @@ app.controller('ChangeSettingsController', ['$scope', '$state', '$stateParams', 
     $scope.$parent.$broadcast('timer-reset');
 
     $scope.activity = activityService.childActivity();
+
     if ($scope.activity.pointOfInjectionType === 'GEOGRAPHICALREGION') {
         $scope.activity.useWholeArea = true;
     }
-    if ($scope.activity.pointOfInjectionType && $scope.activity.pointOfInjectionType.length > 0)
+
+    if ($scope.activity.pointOfInjectionType && $scope.activity.pointOfInjectionType.length > 0) {
         $scope.activity.pointOfInjectionTypeString = $translate.instant($scope.activity.pointOfInjectionType);
+    }
 
     $scope.activity.reductionPositive = true;
 
