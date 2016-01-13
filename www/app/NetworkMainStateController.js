@@ -72,6 +72,12 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
             for (var i = 0; i < response.length; i++) {
                 response[i].children = response[i].substationJpaList;
                 response[i].children.sort(function (a, b) {
+                    if (!a.name) {
+                        a.name = "Virtuelles Umspannwerk"
+                    }
+                    if (!b.name) {
+                        b.name = "Virtuelles Umspannwerk"
+                    }
                     if (a.name < b.name) {
                         return -1;
                     } else {

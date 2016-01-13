@@ -10,7 +10,7 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('NetworkSubStateInfoController', ['$scope', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', 'dateService', 'modalServiceNew', function ($scope, $http, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, dateService, modalServiceNew) {
+app.controller('NetworkSubStateInfoController', ['$scope', '$state', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', 'dateService', 'modalServiceNew', function ($scope, $http, $state, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, dateService, modalServiceNew) {
 
     function rowTemplate() {
         return '<div ng-class="{ \'hideRowSelectedSubStation\': grid.appScope.isInUse( row )  }">' +
@@ -25,11 +25,10 @@ app.controller('NetworkSubStateInfoController', ['$scope', '$http', '$timeout', 
         $scope.activity = activityService.childActivity();
         var oid = parseInt(branch.oid);
         $scope.$parent.substationname = branch.name;
-        $log.debug('loadSubstationsInfo');
 
         if ($scope.activity.dateCreated) {
             var timestamp = dateService.formatDateForRestRequest($scope.activity.dateCreated);
-            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist/timestamp/").then(function (result) {
+            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist/timestamp/" + timestamp ).then(function (result) {
                 $scope.substationList = result.data.synchronousMachineJpaList;
             }, function (error) {
                 modalServiceNew.showErrorDialog(error).then(function () {
@@ -48,7 +47,6 @@ app.controller('NetworkSubStateInfoController', ['$scope', '$http', '$timeout', 
     });
 
     $rootScope.$on('showSubstationGrid', function (event, row, list, job) {
-        $log.info('showSubstationGrid');
         if (job === 'remove') {
             $scope.tmpSubstation = list;
             var mRid = row.mRid;
@@ -174,8 +172,6 @@ app.controller('NetworkSubStateInfoController', ['$scope', '$http', '$timeout', 
      */
     // todo: umbenennen addSynchronousMachine
     $scope.addSubStation = function (grid, myRow) {
-        $log.info('addSubstation');
-
         //add the row to the substationProposalList
         $rootScope.$broadcast('showSubstationProposalGrid', myRow, 'add');
     };

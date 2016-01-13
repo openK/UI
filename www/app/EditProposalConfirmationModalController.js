@@ -23,14 +23,21 @@ app.controller('EditProposalConfirmationModalController', ['$scope', '$state', '
 
     $scope.activity.dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
     $scope.dateStarted = $filter('date')(new Date($scope.activity.dateStarted), 'dd.MM.yyyy HH:mm');
+    if ($scope.dateStarted.toString() === 'Invalid Date') {
+        $scope.dateStarted = $scope.activity.dateStarted;
+    }
     $scope.dateFinished = $filter('date')(new Date($scope.activity.dateFinished), 'dd.MM.yyyy HH:mm');
-    $scope.dateCreated = $filter('date')(new Date($scope.activity.dateCreated), 'dd.MM.yyyy HH:mm');
+    if ($scope.dateFinished.toString() === 'Invalid Date') {
+        $scope.dateFinished = $scope.activity.dateFinished;
+    }
+    $scope.dateCreated = $filter('date') (new Date($scope.activity.dateCreated), 'dd.MM.yyyy HH:mm');
 
     var red = $scope.activity.reductionValue * hysteresis / 100;
 
     $scope.activity.substationProposalList.forEach(function (value, key) {
         $scope.activity.proposal.modal.sumRequiredReductionPower += parseFloat(value.activePowerJpaToBeReduced.value);
     });
+    $scope.activity.proposal.modal.sumRequiredReductionPower = $filter('number')($scope.activity.proposal.modal.sumRequiredReductionPower, 2);
     var a = parseFloat($scope.activity.proposal.modal.sumRequiredReductionPower);
     var b = parseFloat($scope.activity.proposal.modal.requiredReductionPower);
     $scope.activity.proposal.modal.diffReductionPower =  a - b;

@@ -23,7 +23,13 @@ app.controller('ChangeProposalConfirmationModalController', ['$scope', '$state',
 
     $scope.activity.dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
     $scope.dateStarted = $filter('date')(new Date($scope.activity.dateStarted), 'dd.MM.yyyy HH:mm');
+    if ($scope.dateStarted.toString() === 'Invalid Date') {
+        $scope.dateStarted = $scope.activity.dateStarted;
+    }
     $scope.dateFinished = $filter('date')(new Date($scope.activity.dateFinished), 'dd.MM.yyyy HH:mm');
+    if ($scope.dateFinished.toString() === 'Invalid Date') {
+        $scope.dateFinished = $scope.activity.dateFinished;
+    }
     $scope.dateCreated = $filter('date')(new Date($scope.activity.dateCreated), 'dd.MM.yyyy HH:mm');
 
     var red = $scope.activity.reductionValue * hysteresis / 100;

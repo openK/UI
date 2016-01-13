@@ -169,7 +169,6 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
     };
 
     $scope.isInUse = function (myRow) {
-
         var disabled = false;
         var tmpSubstations = $scope.activity.substationProposalList;
         if (tmpSubstations) {
