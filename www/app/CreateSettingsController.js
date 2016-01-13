@@ -113,7 +113,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
                         "description": $scope.activity.description
                     },
                     "activePowerJpaToBeReduced": {
-                        "value": $scope.activity.requiredReductionPower,
+                        "value": $scope.activity.reductionValue,
                         "multiplier": "M",
                         "unit": "W"
                     },
@@ -182,7 +182,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
                     "description": $scope.activity.description
                 },
                 "activePowerJpaToBeReduced": {
-                    "value": $scope.activity.requiredReductionPower,
+                    "value": $scope.activity.reductionValue,
                     "multiplier": "M",
                     "unit": "W"
                 },
