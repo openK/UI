@@ -19,13 +19,10 @@ app.controller('NetworkSubStateInfoController', ['$scope', '$http', '$timeout', 
             '</div>' +
             '</div>';
     }
-    $scope.activity = activityService.activity();
-    $log.log('NetworkSubStateInfoController');
-    $log.log($scope.activity);
     $scope.activity = activityService.childActivity();
 
     $scope.$parent.$on('loadSubstationsInfo', function (event, branch) {
-        $scope.activity = activityService.activity();
+        $scope.activity = activityService.childActivity();
         var oid = parseInt(branch.oid);
         $scope.$parent.substationname = branch.name;
         $log.debug('loadSubstationsInfo');

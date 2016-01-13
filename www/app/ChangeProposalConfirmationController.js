@@ -1,7 +1,6 @@
 app.controller('ChangeProposalConfirmationController', ['$scope', '$state', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', 'activityService', 'modalServiceNew', function ($scope, $state, $http, $timeout, $translate, uiGridConstants, $log, activityService, modalServiceNew) {
 
     $scope.activity = activityService.childActivity();
-    $log.debug($scope.activity);
 
     $scope.searchOptions = {
         pageNumber: 1,
@@ -124,9 +123,14 @@ app.controller('ChangeProposalConfirmationController', ['$scope', '$state', '$ht
             "id": $scope.activity.id
         };
 
+        $scope.activity.calculatedReductionAdvice.subGeographicalRegionJpaList.forEach(function (item) {
+            if (item.children) {
+                delete item.children;
+            }
+        });
+
         $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/confirmactivity/", $scope.activity.calculatedReductionAdvice).then(function (result) {
             $state.go('state1', {show: 'Aktiv'});
-            //window.location.search = '?page=details&activityId=' + $scope.parentActivityId;
         }, function (error) {
             modalServiceNew.showErrorDialog(error).then(function () {
                 $state.go('state1', { show: 'Aktiv' });

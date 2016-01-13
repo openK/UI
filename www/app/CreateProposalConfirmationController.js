@@ -2,7 +2,6 @@ app.controller('CreateProposalConfirmationController', ['$scope', '$state', '$ht
 
     $scope.activity = activityService.childActivity();
 
-
     $scope.searchOptions = {
         pageNumber: 1,
         pageSize: 25,
@@ -123,6 +122,12 @@ app.controller('CreateProposalConfirmationController', ['$scope', '$state', '$ht
         var postData = {
             "id": $scope.activity.id
         };
+
+        $scope.activity.calculatedReductionAdvice.subGeographicalRegionJpaList.forEach(function (item) {
+            if (item.children) {
+                delete item.children;
+            }
+        });
 
         $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/confirmactivity/", $scope.activity.calculatedReductionAdvice).then(function (result) {
             $state.go('state1', { show: 'Aktiv' });
