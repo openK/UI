@@ -1,4 +1,4 @@
-app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootScope', '$translate', 'modalServiceNew', function ($scope, $http, $log, $rootScope, $translate, modalServiceNew) {
+app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootScope', '$translate', 'modalServiceNew', 'activityService', function ($scope, $http, $log, $rootScope, $translate, modalServiceNew, activityService) {
 
         $scope.handleTreeClick = function (branch) {
 
@@ -70,7 +70,7 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
 
         $scope.orderSubstations = function (response) {
             for (var i = 0; i < response.length; i++) {
-
+                response[i].children = response[i].substationJpaList;
                 response[i].children.sort(function (a, b) {
                     if (a.name < b.name) {
                         return -1;
@@ -84,13 +84,8 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
         };
 
         $scope.treeData = [];
-        $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/tree/").then(function (result) {
-            $scope.treeData = $scope.orderSubstations(result.data);
-        }, function (error) {
-            modalServiceNew.showErrorDialog(error).then(function () {
-                $state.go('state1', {show: 'Aktiv'});
-            });
-        });
+        $scope.activity = activityService.childActivity();
+        $scope.treeData = $scope.orderSubstations($scope.activity.calculatedReductionAdvice.subGeographicalRegionJpaList);
 
         /**
          * Sums the Power of the Element (bio, pv and wind)

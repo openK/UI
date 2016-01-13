@@ -23,29 +23,7 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
     $scope.$parent.activity = activityService.childActivity();
 
     $scope.$parent.$on('loadSubstations', function (event, branch) {
-        $scope.activity = activityService.activity();
-        var oid = parseInt(branch.oid);
-        $scope.$parent.substationname = branch.name;
-        $log.debug('loadSubstations');
-
-        if ($scope.activity.dateCreated) {
-            var timestamp = dateService.formatDateForRestRequest($scope.activity.dateCreated);
-            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist/timestamp/" + timestamp).then(function (result) {
-                $scope.substationList = result.data.synchronousMachineJpaList;
-            }, function (error) {
-                modalServiceNew.showErrorDialog(error).then(function () {
-                    $state.go('state1', { show: 'Aktiv' });
-                });
-            });
-        } else {
-            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist").then(function (result) {
-                $scope.substationList = result.data.synchronousMachineJpaList;
-            }, function (error) {
-                modalServiceNew.showErrorDialog(error).then(function () {
-                    $state.go('state1', { show: 'Aktiv' });
-                });
-            });
-        }
+        $scope.substationList = branch.synchronousMachineJpaList;
     });
 
     $rootScope.$on('showSubstationGrid', function (event, row, list, job) {
