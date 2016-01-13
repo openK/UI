@@ -1,10 +1,10 @@
 <form name="preselectionForm" class="form-horizontal" data-toggle="validator">
 
     <div class="form-group">
-        <label for="template" class="control-label col-xs-3">
+        <label for="template" class="control-label col-xs-2">
             {{ 'PRESELECTION.USEFROMTEMPLATE' | translate }}
         </label>
-        <div class="col-xs-3">
+        <div class="col-xs-4">
             <select class="form-control" id="template" name="template"
                     data-ng-options="c.name for c in templates track by c.id"
                     data-ng-model="selectedTemplate"
@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-xs-3">
+        <label class="control-label col-xs-2">
             {{ 'PRESELECTION.REGULATIONSTEPS' | translate }} *
         </label>
 
@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-xs-3">
+        <label class="control-label col-xs-2">
             {{ 'PRESELECTION.DISCRIMINATIONFACTOR' | translate }} *
         </label>
         <div class="col-xs-1" data-ng-class="{'has-error': preselectionForm.discrimination.$invalid}">
@@ -43,10 +43,10 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-xs-3">
+        <label class="control-label col-xs-2">
             Ersatzwertverfahren *
         </label>
-        <div class="col-xs-3">
+        <div class="col-xs-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">bei ungültig gemessener Wirkleistung für Fernwirkanlagen</h3>
@@ -111,7 +111,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-3">
+        <div class="col-xs-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">bei ungültig gemessener Wirkleistung für EFR</h3>
@@ -178,7 +178,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-xs-3">
+        <label class="control-label col-xs-2">
             {{ 'PRESELECTION.HYSTERESIS' | translate }}
         </label>
         <div class="col-xs-1">
@@ -189,7 +189,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-3">
+        <div class="col-xs-4">
             <div class="pull-right">*{{'MANDATORY'| translate}}</div>
         </div>
     </div>
@@ -200,7 +200,7 @@
                 {{ 'CANCEL' | translate }}
             </button>
         </div>
-        <div class="col-xs-5">
+        <div class="col-xs-6">
             <div class="pull-right">
 
                 <button data-ng-click="openModal(preselectionForm)" type="button" data-ng-disabled="!preselectionForm.$valid" class="btn btn-primary">
