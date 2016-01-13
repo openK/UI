@@ -208,8 +208,8 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
             var hysteresis = activityService.activityConfigData().activity.hysteresis || 5;
             hysteresis = 1 + hysteresis / 100;
 
-            if (($scope.activity.reductionValue - $scope.gridApi2.grid.columns[11].getAggregationValue()) > 0.001 ||
-                 $scope.gridApi2.grid.columns[11].getAggregationValue() > $scope.activity.reductionValue * hysteresis)
+            if (($scope.activity.requiredReductionPower - $scope.gridApi2.grid.columns[11].getAggregationValue()) > 0.001 ||
+                 $scope.gridApi2.grid.columns[11].getAggregationValue() > $scope.activity.requiredReductionPower * hysteresis)
             {
                 return "error";
             } 
