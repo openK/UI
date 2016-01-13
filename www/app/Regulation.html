@@ -31,9 +31,7 @@
     <div class="filter"></div>
     <div class="center"></div>
 </div>-->
-<div style="position:absolute;width:100%;left:0px;top:0px;height:30px;background: rgba(0,0,0,0.3);" data-ng-show="showTimer()">
-    <div style="width:300px;height:30px;line-height:30px;color:green;font-size:20px;margin:0px auto;text-align:center;">Noch <timer countdown="1800" max-time-unit="'minute'" autostart="false" interval="1000">{{minutes}} Minuten {{sseconds}} Sekunden</timer></div>
-</div>
+<div data-ng-include="templPath + 'partials/timermessage.html'"></div>
 <div class="row maincontent">
     <div class="col-xs-12 col-sm-12">
         <h2>EISMAN</h2>
