@@ -28,7 +28,7 @@ app.factory('modalService', ['$modal', '$filter', function ($modal, $filter) {
             errorMessage = error.statusText + ' (' + error.status + ')';
         }
         modalInstance = $modal.open({
-            templateUrl: 'app/partials/error.html',
+            templateUrl: templPath + 'partials/error.html',
             scope: {
                 modalOptions: {
                     headline: $filter('translate')('ERROR.HEADER'),
@@ -49,7 +49,7 @@ app.service('modalServiceNew', ['$modal', '$filter', function ($modal, $filter) 
         backdrop: true,
         keyboard: true,
         modalFade: true,
-        templateUrl: 'app/partials/modal.html'
+        templateUrl: templPath + 'partials/modal.html'
     };
 
     var modalOptions = {
@@ -99,7 +99,7 @@ app.service('modalServiceNew', ['$modal', '$filter', function ($modal, $filter) 
             errorMessage = error.message;
         }
         var modalDefaults = {
-            templateUrl: 'app/partials/error.html'
+            templateUrl: templPath + 'partials/error.html'
         };
         var modalOptions = {
             actionButtonText: 'Ok',
@@ -111,7 +111,7 @@ app.service('modalServiceNew', ['$modal', '$filter', function ($modal, $filter) 
 
     self.showMessageDialog = function (header, message) {
         var modalDefaults = {
-            templateUrl: 'app/partials/message.html'
+            templateUrl: templPath + 'partials/message.html'
         };
         var modalOptions = {
             actionButtonText: 'Ok',

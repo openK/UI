@@ -208,8 +208,8 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
             var hysteresis = activityService.activityConfigData().activity.hysteresis || 5;
             hysteresis = 1 + hysteresis / 100;
 
-            if (($scope.activity.reductionValue - $scope.gridApi2.grid.columns[11].getAggregationValue()) > 0.001 ||
-                 $scope.gridApi2.grid.columns[11].getAggregationValue() > $scope.activity.reductionValue * hysteresis)
+            if (($scope.activity.requiredReductionPower - $scope.gridApi2.grid.columns[11].getAggregationValue()) > 0.001 ||
+                 $scope.gridApi2.grid.columns[11].getAggregationValue() > $scope.activity.requiredReductionPower * hysteresis)
             {
                 return "error";
             } 
@@ -222,7 +222,12 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
         $scope.changeSynchronousMachine = function (grid, row) {
             $log.info('changeSynchronousMachine');
             row.entity.reductionAdvice = row.entity.subStationRegSteps;
-            var calculatedvalue = row.entity.generatorPowerMeasured.value - ((row.entity.reductionAdvice / 100) * row.entity.generatingUnitJpa.maxOperatingP.value);
+            var calculatedvalue;
+                    
+                    if(row.entity.reductionAdvice === 0)
+                        calculatedvalue = row.entity.generatorPowerMeasured.value;
+                    else
+                        calculatedvalue = row.entity.generatorPowerMeasured.value - ((row.entity.reductionAdvice / 100) * row.entity.generatingUnitJpa.maxOperatingP.value);
 
             // || (row.entity.generatingUnitJpa.maxOperatingP.value < row.entity.generatorPowerMeasured.value)
 
@@ -242,7 +247,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
 
             $modal.open({
                 animation: true,
-                templateUrl: 'app/CreateProposalConfirmationModal.html',
+                templateUrl: templPath + 'CreateProposalConfirmationModal.html',
                 controller: 'CreateProposalConfirmationModalController',
                 resolve: {
                     items: function () {

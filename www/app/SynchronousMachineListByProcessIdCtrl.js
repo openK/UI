@@ -109,7 +109,7 @@ app.controller('SynchronousMachineListByProcessIdCtrl', ['$scope', '$state', '$r
                 $scope.gridApi2 = gridApi;
             }
         };
-        var url = Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/synchronousmaschinelistbyprocess/" + $scope.$parent.modalOptions.id;
+        var url = Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/synchronousmaschinelistbyprocess/" + $scope.$parent.modalOptions.id + "?size=1000";
         $http.get(url).then(function (response) {
             $scope.substations.data = response.data.content;
             $log.debug(response.data.content);

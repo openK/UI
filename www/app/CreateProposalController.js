@@ -17,7 +17,7 @@ app.controller('CreateProposalController', ['$scope', '$http', '$timeout', '$tra
 
             $modal.open({
                 animation: true,
-                templateUrl: 'app/CreateProposalConfirmationModal.html',
+                templateUrl: templPath + 'CreateProposalConfirmationModal.html',
                 controller: 'CreateProposalConfirmationModalController',
                 resolve: {
                     items: function () {
