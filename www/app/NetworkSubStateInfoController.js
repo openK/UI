@@ -10,7 +10,7 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 
-app.controller('NetworkSubStateInfoController', ['$scope', '$state', '$http', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', 'dateService', 'modalServiceNew', function ($scope, $http, $state, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, dateService, modalServiceNew) {
+app.controller('NetworkSubStateInfoController', ['$scope', '$http', '$state', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', 'dateService', 'modalServiceNew', function ($scope, $http, $state, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, dateService, modalServiceNew) {
 
     function rowTemplate() {
         return '<div ng-class="{ \'hideRowSelectedSubStation\': grid.appScope.isInUse( row )  }">' +
