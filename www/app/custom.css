@@ -427,3 +427,10 @@ form .row.navheader{
 .panel td{
     vertical-align:top;
 }
+
+.ui-grid-a11y-ariascreenreader-speakable{
+    display:none ! important;
+}
+.ranges{
+    width:100% ! important;
+}
