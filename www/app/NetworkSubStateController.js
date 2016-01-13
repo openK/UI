@@ -166,6 +166,7 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
 
         //add the row to the substationProposalList
         $rootScope.$broadcast('showSubstationProposalGrid', myRow, 'add');
+        myRow.entity.referencedSynchronousMachineJpa = null;
     };
 
     $scope.isInUse = function (myRow) {

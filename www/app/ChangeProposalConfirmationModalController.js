@@ -37,6 +37,7 @@ app.controller('ChangeProposalConfirmationModalController', ['$scope', '$state',
     $scope.activity.substationProposalList.forEach(function (value, key) {
         $scope.activity.proposal.modal.sumRequiredReductionPower += parseFloat(value.activePowerJpaToBeReduced.value);
     });
+    $scope.activity.proposal.modal.sumRequiredReductionPower = $filter('number')($scope.activity.proposal.modal.sumRequiredReductionPower, 2);
     var a = parseFloat($scope.activity.proposal.modal.sumRequiredReductionPower);
     var b = parseFloat($scope.activity.proposal.modal.requiredReductionPower);
     $scope.activity.proposal.modal.diffReductionPower = a - b;
