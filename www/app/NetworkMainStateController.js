@@ -68,16 +68,30 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
 
         ];
 
+        //$scope.orderSubstations = function (response) {
+        //    for (var i = 0; i < response.length; i++) {
+        //        response[i].children = response[i].substationJpaList;
+        //        response[i].children.sort(function (a, b) {
+        //            if (!a.name) {
+        //                a.name = "Virtuelles Umspannwerk"
+        //            }
+        //            if (!b.name) {
+        //                b.name = "Virtuelles Umspannwerk"
+        //            }
+        //            if (a.name < b.name) {
+        //                return -1;
+        //            } else {
+        //                return 1;
+        //            }
+        //        });
+        //    }
+
+        //    return response;
+        //};
+
         $scope.orderSubstations = function (response) {
             for (var i = 0; i < response.length; i++) {
-                response[i].children = response[i].substationJpaList;
                 response[i].children.sort(function (a, b) {
-                    if (!a.name) {
-                        a.name = "Virtuelles Umspannwerk"
-                    }
-                    if (!b.name) {
-                        b.name = "Virtuelles Umspannwerk"
-                    }
                     if (a.name < b.name) {
                         return -1;
                     } else {
@@ -90,8 +104,13 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
         };
 
         $scope.treeData = [];
-        $scope.activity = activityService.childActivity();
-        $scope.treeData = $scope.orderSubstations($scope.activity.calculatedReductionAdvice.subGeographicalRegionJpaList);
+        $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/tree/").then(function (result) {
+            $scope.treeData = $scope.orderSubstations(result.data);
+        }, function (error) {
+            modalServiceNew.showErrorDialog(error).then(function () {
+                $state.go('state1', { show: 'Aktiv' });
+            });
+        });
 
         /**
          * Sums the Power of the Element (bio, pv and wind)

@@ -123,12 +123,6 @@ app.controller('CreateProposalConfirmationController', ['$scope', '$state', '$ht
             "id": $scope.activity.id
         };
 
-        $scope.activity.calculatedReductionAdvice.subGeographicalRegionJpaList.forEach(function (item) {
-            if (item.children) {
-                delete item.children;
-            }
-        });
-
         $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/confirmactivity/", $scope.activity.calculatedReductionAdvice).then(function (result) {
             $state.go('state1', { show: 'Aktiv' });
         }, function (error) {
