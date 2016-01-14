@@ -37,15 +37,16 @@ app.controller('EditProposalConfirmationModalController', ['$scope', '$state', '
     $scope.activity.substationProposalList.forEach(function (value, key) {
         $scope.activity.proposal.modal.sumRequiredReductionPower += parseFloat(value.activePowerJpaToBeReduced.value);
     });
-    $scope.activity.proposal.modal.sumRequiredReductionPower = $filter('number')($scope.activity.proposal.modal.sumRequiredReductionPower, 2);
-    var a = parseFloat($scope.activity.proposal.modal.sumRequiredReductionPower);
-    var b = parseFloat($scope.activity.proposal.modal.requiredReductionPower);
-    $scope.activity.proposal.modal.diffReductionPower =  a - b;
-    $scope.activity.proposal.modal.diffReductionPower = $filter('number')($scope.activity.proposal.modal.diffReductionPower, 2);
 
+    var a = parseFloat($scope.activity.proposal.modal.sumRequiredReductionPower);
+    var b = parseFloat($scope.activity.reductionValue);
+    $scope.activity.proposal.modal.diffReductionPower =  a - b;
     if (parseFloat($scope.activity.proposal.modal.diffReductionPower) < 0 || Math.abs(parseFloat($scope.activity.proposal.modal.diffReductionPower)) > red) {
         $scope.enough = "red";
     }
+
+    $scope.activity.proposal.modal.sumRequiredReductionPower = $filter('number')($scope.activity.proposal.modal.sumRequiredReductionPower, 2);
+    $scope.activity.proposal.modal.diffReductionPower = $filter('number')($scope.activity.proposal.modal.diffReductionPower, 2);
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
