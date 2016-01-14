@@ -103,6 +103,7 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceN
                 configData.regulationReasons = result.data;
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/lov/").then(function (result) {
+                result.data = result.data.sort(function(a,b){if (a.name < b.name) return -1; else return 1;});
                 configData.transformerStations = result.data;
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/lov/").then(function (result) {
