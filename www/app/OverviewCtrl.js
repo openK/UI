@@ -169,6 +169,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                 "closeButtonText": $filter('translate')('PROCESS.EDIT.CANCEL'),
                 "close": function () {
                     modalService.close();
+                    $state.forceReload();
                 },
                 "ok": function () {
                     modalService.close();
@@ -181,6 +182,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                             "closeButtonText": $filter('translate')('PROCESS.EDIT.CANCEL'),
                             "close": function () {
                                 modalService.close();
+                                $state.forceReload();
                             },
                             "ok": function () {
                                 return $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/modifydatefinished/" + $scope.currentItem.id, endDate).then(function (result) {
