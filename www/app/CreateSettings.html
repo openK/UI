@@ -4,14 +4,14 @@
         <label for="datestarted" class="control-label col-xs-2">{{'SETTINGS.DATESTARTED'| translate}} *</label>
         <div class="controls col-xs-4" data-ng-class="{'has-error': settingsForm.datestarted.$invalid}">
             <input type="text" data-ng-required="true" required  value="" startrange
-                   data-ng-model="activity.dateStarted" class="form-control"
+                   data-ng-model="dateStarted" class="form-control"
                    id="datestarted" name="datestarted">
         </div>
     </div>
     <div class="form-group">
         <label for="datefinished" class="control-label col-xs-2">{{'SETTINGS.DATEFINISHED'| translate}} *</label>
         <div class="controls col-xs-4" data-ng-class="{'has-error': settingsForm.datefinished.$invalid}">
-            <input type="text" data-ng-required="true" required value="" data-ng-model="activity.dateFinished" endrange
+            <input type="text" data-ng-required="true" required value="" data-ng-model="dateFinished" endrange
                    class="form-control" id="datefinished" name="datefinished">
         </div>
     </div>
