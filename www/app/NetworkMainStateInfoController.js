@@ -4,7 +4,7 @@ app.controller('NetworkMainStateInfoController', ['$scope', '$http', '$log', '$r
         
             if (branch && branch.level > 1) {
                 $scope.$parent.$broadcast('loadSubstationsInfo', branch);
-                $log.log(branch.name);
+                $scope.$parent.substationName = branch.name;
             }
         };
 
