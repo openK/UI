@@ -5,6 +5,7 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
     $scope.activityConfigData = activityService.activityConfigData();
     $scope.activity.reductionPositive = true;
     $scope.parentActivityId = activityService.currentParentActivityId();
+    $scope.activity.parentActivityId = activityService.currentParentActivityId();
 
     if ($rootScope.CanNavigateToCreateProposal === true) {
         $scope.settingsFormSubmitted = true;
@@ -307,17 +308,15 @@ app.controller('EditSettingsController', ['$scope', '$state', '$stateParams', '$
 
             $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/createreductionadvice", $scope.getPostData()).then(function (result) {
 
-                var advice;
+                var advice = result.data.synchronousMachineJpaReducedList;;
                 if (result.data.id && result.data.parentActivityJpaId) {
-                    advice = result.data.synchronousMachineJpaReducedList;
                     $scope.activity.id = result.data.id;
                     $scope.activity.parentActivityJpaId = result.data.parentActivityJpaId;
                     $scope.activity.substationProposalList = result.data.synchronousMachineJpaReducedList;
 
                 } else {
-                    advice = result.data.synchronousMachineJpaReducedList;
-                    $scope.activity.id = null;
-                    $scope.activity.parentActivityJpaId = null;
+                    result.data.id = $scope.activity.id;
+                    result.data.parentActivityJpaId = $scope.activity.parentActivityJpaId;
                     $scope.activity.substationProposalList = result.data.synchronousMachineJpaReducedList;
                 }
                 advice.forEach(function (value) {
