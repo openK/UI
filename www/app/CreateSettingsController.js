@@ -110,7 +110,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
         timePicker24Hour: true,
         timePicker: true,
         timePickerIncrement: 1,
-        startDate: dateStarted,
+        startDate: new Date(dateStarted),
         minDate: new Date(now.setMinutes(now.getMinutes() + 1)),
         locale: {
             format: 'DD.MM.YYYY HH:mm',
@@ -157,7 +157,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
         timePicker24Hour: true,
         timePicker: true,
         timePickerIncrement: 1,
-        startDate: dateFinished,
+        startDate: new Date(dateFinished),
         minDate: new Date(new Date(dateStarted).setMinutes(dateStarted.getMinutes() + 1)),
         locale: {
             format: 'DD.MM.YYYY HH:mm',
@@ -178,17 +178,17 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
     $scope.saveAndReturn = function (settingsForm) {
 
         if (settingsForm.$valid && $scope.isValidTimeInterval($scope.dateStarted, $scope.dateFinished)) {
-            var dateStarted = dateService.formatDateForBackend($scope.dateStarted);
-            var dateFinished = dateService.formatDateForBackend($scope.dateFinished);
-            var dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
+            $scope.activity.dateStarted = dateService.formatDateForBackend($scope.dateStarted);
+            $scope.activity.dateFinished = dateService.formatDateForBackend($scope.dateFinished);
+            $scope.activity.dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
             var postData = {
-                "dateCreated": dateCreated,
+                "dateCreated": $scope.activity.dateCreated,
                 "createdBy": $scope.activity.createdBy,
                 "id": $scope.activity.activityId,
                 "parentActivityJpaId": $scope.parentActivityId,
                 "userSettingsJpa": {
-                    "dateStarted": dateStarted,
-                    "dateFinished": dateFinished,
+                    "dateStarted": $scope.activity.dateStarted,
+                    "dateFinished": $scope.activity.dateFinished,
                     "geographicalRegion": $scope.activity.useWholeArea,
                     "reasonOfReduction": $scope.activity.reasonOfReduction,
                     "practise": $scope.activity.practise,
@@ -252,12 +252,13 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
      */
     $scope.getPostData = function () {
 
-        var dateStarted = dateService.formatDateForBackend($scope.dateStarted);
-        var dateFinished = dateService.formatDateForBackend($scope.dateFinished);
+        $scope.activity.dateStarted = dateService.formatDateForBackend($scope.dateStarted);
+        $scope.activity.dateFinished = dateService.formatDateForBackend($scope.dateFinished);
+        $scope.activity.dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
         var data = {
             "userSettingsJpa": {
-                "dateStarted": dateStarted,
-                "dateFinished": dateFinished,
+                "dateStarted": $scope.activity.dateStarted,
+                "dateFinished": $scope.activity.dateFinished,
                 "geographicalRegion": $scope.activity.useWholeArea,
                 "reasonOfReduction": $scope.activity.reasonOfReduction,
                 "practise": $scope.activity.practise,
