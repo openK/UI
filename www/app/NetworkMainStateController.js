@@ -1,11 +1,13 @@
 app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootScope', '$translate', 'modalServiceNew', 'activityService', function ($scope, $http, $log, $rootScope, $translate, modalServiceNew, activityService) {
 
-        var transformerStations = activityService.childActivity().transformerStations;
+        var activity = activityService.childActivity();
         var transformerStationsArray = [];
-        for (var key in transformerStations) {
-            transformerStationsArray.push(transformerStations[key].name);
+
+        for(var i = 0; i < activity.calculatedReductionAdvice.substationJpaList.length; i++){
+             transformerStationsArray.push(activity.calculatedReductionAdvice.substationJpaList[i].name);
         }
 
+        $log.debug(activity);
         $scope.handleTreeClick = function (branch) {
 
             if (branch && branch.level > 1) {
@@ -13,7 +15,6 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
                 $scope.$parent.substationName = branch.name;
             }
         };
-
         $scope.treeColumns = [{
                 field: "name",
                 displayName: $translate.instant('STATE.NETWORK'),
@@ -72,7 +73,6 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
              */
 
         ];
-
         //$scope.orderSubstations = function (response) {
         //    for (var i = 0; i < response.length; i++) {
         //        response[i].children = response[i].substationJpaList;
@@ -107,16 +107,19 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
 
             return response;
         };
-
         $scope.treeData = [];
-        $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/tree/").then(function (result) {
+
+        var d = new Date();
+        var timestamp = d.getTime();
+
+        $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/tree/timestamp/" + timestamp + "/", activity.preselectionConfigurationJpa).then(function (result) {
 
             var treeData = $scope.orderSubstations(result.data);
             if (transformerStationsArray.length > 0) {
                 for (var i = 0; i < treeData.length; i++) {
                     reducedData = [];
                     for (var j = 0; j < treeData[i].children.length; j++) {
-                        if(transformerStationsArray.indexOf(treeData[i].children[j].name) > -1){
+                        if (transformerStationsArray.indexOf(treeData[i].children[j].name) > -1) {
                             reducedData.push(treeData[i].children[j]);
                         }
                     }
@@ -129,7 +132,6 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
                 $state.go('state1', {show: 'Aktiv'});
             });
         });
-
         /**
          * Sums the Power of the Element (bio, pv and wind)
          * @param data

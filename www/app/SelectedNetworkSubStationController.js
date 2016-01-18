@@ -12,7 +12,7 @@
 
 app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', '$modal', function ($scope, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, $modal) {
 
-        $scope.activity = activityService.childActivity();
+        $scope.activity = activityService.childActivity(); $log.debug($scope.activity);
         $scope.$parent.$on('showSubstationProposalGrid', function (event, row, job) {
 
             $log.info('showSubstationProposalGrid ' + job);

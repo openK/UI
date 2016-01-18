@@ -207,4 +207,5 @@
     "NETSTATE.EXPIRED.TEXTBODY": "Möchen Sie, dass auf der Basis des veränderten Netzzustandes ein neuer Abregelvorschlag erstellt wird?",
     "NETSTATE.EXPIRED.DENY": "Nein danke.",
     "NETSTATE.EXPIRED.CONFIRM": "Ja, bitte neuen Abregelvorschlag erstellen."
+
 }

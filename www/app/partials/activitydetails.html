@@ -31,14 +31,10 @@
                     </table>
                 </div>
                 <div class="col-md-4">
-                    <div data-ng-if="activity.useWholeArea">Gesamtes Netzgebiet</div>
-                    <div data-ng-if="activity.subGeographicalRegions.length > 0">
-                        <div><strong>{{'subGeographicalRegions'| translate}}</strong></div>
-                        <div data-ng-repeat="(key,val) in activity.subGeographicalRegions | orderBy: 'name' as filtered_result track by val.name">{{val.name}}</div>
-                    </div>
-                    <div data-ng-if="activity.calculatedReductionAdvice.substationJpaList.length > 0">
+                    <div>{{activity.pointOfInjectionType | translate}}</div>
+                    <div data-ng-if="activity.pointOfInjectionType ===  'SUBSTATION'">
                         <div><strong>{{'transformerStations'| translate}}</strong></div>
-                        <div data-ng-repeat="(key,val) in activity.calculatedReductionAdvice.substationJpaList | orderBy: 'name' as filtered_result track by val.name">{{val.name}}</div>
+                        <div data-ng-repeat="item in activity.calculatedReductionAdvice.substationJpaList | orderBy: 'name' as filtered_result track by item.name">{{item.name}}</div>
                     </div>
                 </div>
 
