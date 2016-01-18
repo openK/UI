@@ -177,12 +177,6 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
         }
     });
 
-    if ($stateParams.taskId) {
-        $scope.data.forEach(function (a) {
-            if (a.id == $stateParams.taskId)
-                $scope.currentParentActivity = a;
-        });
-    }
     $scope.saveAndReturn = function (settingsForm) {
 
         if (settingsForm.$valid && $scope.isValidTimeInterval($scope.dateStarted, $scope.dateFinished)) {
@@ -285,6 +279,8 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
                     "pointOfInjectionType": $scope.activity.pointOfInjectionType,
                     "pointOfInjectionList": $scope.activity.pointOfInjectionList,
                     "description": $scope.activity.description,
+                    "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
+                    "substationJpaList": $scope.activity.transformerStations,
                     "preselectionConfigurationDto": {
                         "reductionSetting": $scope.activity.reductionSetting,
                         "discriminationCoefficientEnabled": $scope.activity.discriminationCoefficientEnabled,
@@ -305,14 +301,6 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
                 var data = {
                     "id": $scope.activity.id,
                     "parentActivityJpaId": $scope.activity.parentActivityJpaId,
-                    "dateStarted": $scope.activity.dateStarted,
-                    "dateFinished": $scope.activity.dateFinished,
-                    "reductionValue": $scope.activity.reductionValue,
-                    "reasonOfReduction": $scope.activity.reasonOfReduction,
-                    "practise": $scope.activity.practise,
-                    "pointOfInjectionType": $scope.activity.pointOfInjectionType,
-                    "pointOfInjectionList": $scope.activity.pointOfInjectionList,
-                    "description": $scope.activity.description,
                     "userSettingsJpa": {
                         "dateStarted": $scope.activity.dateStarted,
                         "dateFinished": $scope.activity.dateFinished,

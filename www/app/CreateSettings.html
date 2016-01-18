@@ -114,7 +114,7 @@
         <div class="col-xs-4">
 
             <div class="pull-right">
-                <button type="button" data-ng-click="saveAndReturn(settingsForm)" class="btn btn-primary">
+                <button ng-if="mode=='new'" type="button" data-ng-click="saveAndReturn(settingsForm)" class="btn btn-primary">
                     {{'SETTINGS.SAVEACTIVITYANDRETURN'| translate}}
                 </button>
                 <button class="btn btn-primary" type="button" data-ng-click="gotoStationList(settingsForm)">
