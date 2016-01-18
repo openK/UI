@@ -78,17 +78,17 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                     }
                 }
             }).state('Regulation.CreateSettings', {
-                url: '/CreateSettings',
+                url: '/CreateSettings/:mode',
                 controller: 'CreateSettingsController',
-                templateUrl: function ($rootScope) {
+                templateUrl: function ($stateParams) {
                     var prefix = "Create";
-                    if ($rootScope.mode === 'new') {
+                    if ($stateParams.mode === 'new') {
                         prefix = 'Create'
                     }
-                    if ($rootScope.mode === 'add') {
+                    if ($stateParams.mode === 'add') {
                         prefix = 'Change'
                     }
-                    if ($rootScope.mode === 'edit') {
+                    if ($stateParams.mode === 'edit') {
                         prefix = 'Edit'
                     }
                     return templPath + prefix + "Settings.html"
