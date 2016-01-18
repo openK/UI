@@ -177,12 +177,6 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
         }
     });
 
-    if ($stateParams.taskId) {
-        $scope.data.forEach(function (a) {
-            if (a.id == $stateParams.taskId)
-                $scope.currentParentActivity = a;
-        });
-    }
     $scope.saveAndReturn = function (settingsForm) {
 
         if (settingsForm.$valid && $scope.isValidTimeInterval($scope.dateStarted, $scope.dateFinished)) {
@@ -285,6 +279,8 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
                     "pointOfInjectionType": $scope.activity.pointOfInjectionType,
                     "pointOfInjectionList": $scope.activity.pointOfInjectionList,
                     "description": $scope.activity.description,
+                    "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
+                    "substationJpaList": $scope.activity.transformerStations,
                     "preselectionConfigurationDto": {
                         "reductionSetting": $scope.activity.reductionSetting,
                         "discriminationCoefficientEnabled": $scope.activity.discriminationCoefficientEnabled,

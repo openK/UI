@@ -203,7 +203,7 @@
         <div class="col-xs-6">
             <div class="pull-right">
 
-                <button data-ng-click="openModal(preselectionForm)" type="button" data-ng-disabled="!preselectionForm.$valid" class="btn btn-primary">
+                <button ng-if="mode=='new'" data-ng-click="openModal(preselectionForm)" type="button" data-ng-disabled="!preselectionForm.$valid" class="btn btn-primary">
                     {{ 'PRESELECTION.SAVETEMPLATEAS' | translate }}
                 </button>
                 <button class="btn btn-primary" type="button" data-ng-click="gotoSettings(preselectionForm)">
