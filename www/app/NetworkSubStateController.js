@@ -29,7 +29,7 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
 
         if ($scope.activity.dateCreated) {
             var timestamp = dateService.formatDateForRestRequest($scope.activity.dateCreated);
-            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist/timestamp/" + timestamp).then(function (result) {
+            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist/timestamp/" + timestamp, $scope.$parent.activity.calculatedReductionAdvice.preselectionConfigurationJpa).then(function (result) {
                 $scope.substationList = result.data.synchronousMachineJpaList;
             }, function (error) {
                 modalServiceNew.showErrorDialog(error).then(function () {
@@ -37,7 +37,7 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
                 });
             });
         } else {
-            $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist").then(function (result) {
+            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/oid/" + oid + "/synchronousmachinelist",$scope.$parent.activity.calculatedReductionAdvice.preselectionConfigurationJpa).then(function (result) {
                 $log.info($scope.$parent.substationname + " : " + result.data.synchronousMachineJpaList.length);
                 $scope.substationList = result.data.synchronousMachineJpaList;
             }, function (error) {
