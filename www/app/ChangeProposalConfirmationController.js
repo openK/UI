@@ -55,7 +55,7 @@ app.controller('ChangeProposalConfirmationController', ['$scope', '$state', '$ht
                 displayName: 'SUBSTATIONSGRID.ZIP',
                 width: '4%'
             },
-            {name: 'name', headerCellFilter: 'translate', displayName: 'SUBSTATIONSGRID.STATIONNAME', width: '18%'},
+            { name: 'name', headerCellFilter: 'translate', displayName: 'SUBSTATIONSGRID.STATIONNAME', width: '18%' },
             {
                 name: 'feedInRanking',
                 headerCellFilter: 'translate',
@@ -119,17 +119,23 @@ app.controller('ChangeProposalConfirmationController', ['$scope', '$state', '$ht
     };
 
     $scope.saveActivity = function () {
-        var postData = {
-            "id": $scope.activity.id
-        };
-
-        $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/confirmactivity/", $scope.activity.calculatedReductionAdvice).then(function (result) {
-            $state.go('state1', {show: 'Aktiv'});
-        }, function (error) {
-            modalServiceNew.showErrorDialog(error).then(function () {
+        if ($scope.mode === 'edit') {
+            $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/confirmactivity/", $scope.activity.calculatedReductionAdvice).then(function (result) {
                 $state.go('state1', { show: 'Aktiv' });
+            }, function (error) {
+                modalServiceNew.showErrorDialog(error).then(function () {
+                    $state.go('state1', { show: 'Aktiv' });
+                });
             });
-        });
+        } else {
+            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/confirmactivity/", $scope.activity.calculatedReductionAdvice).then(function (result) {
+                $state.go('state1', { show: 'Aktiv' });
+            }, function (error) {
+                modalServiceNew.showErrorDialog(error).then(function () {
+                    $state.go('state1', { show: 'Aktiv' });
+                });
+            });
+        }
     };
 
     $timeout(function () {

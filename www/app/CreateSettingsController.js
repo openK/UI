@@ -2,9 +2,17 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
 
     $scope.activity = activityService.childActivity();
     $scope.$parent.mytimer = false;
+    $scope.IsInChangeMode = $state.current.name.indexOf('Change') >= 0 ? true: false;
+    $scope.IsInEditMode = $state.current.name.indexOf('Edit') >= 0 ? true : false;
     $scope.activityConfigData = activityService.activityConfigData();
     $scope.activity.reductionPositive = true;
-    $scope.parentActivityId = activityService.currentParentActivityId();
+    if ($rootScope.mode === 'edit' || $rootScope.mode === 'add') {
+        $scope.activity.parentActivityJpaId = activityService.currentParentActivityId();
+    }
+
+    if ($rootScope.mode === 'add') {
+        $scope.activity.id = null;
+    }
 
     if ($rootScope.CanNavigateToCreateProposal === true) {
         $scope.settingsFormSubmitted = true;
@@ -100,8 +108,8 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
         }
     }
 
-    $scope.dateStarted = $filter('date')(dateStarted, 'dd.MM.yyyy HH:mm');
-    $scope.dateFinished = $filter('date')(dateFinished, 'dd.MM.yyyy HH:mm');
+    $scope.dateStarted = $filter('date') (dateStarted, 'dd.MM.yyyy HH:mm');
+    $scope.dateFinished = $filter('date') (dateFinished, 'dd.MM.yyyy HH:mm');
 
 
     var now = new Date($.now());
@@ -185,7 +193,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
                 "dateCreated": $scope.activity.dateCreated,
                 "createdBy": $scope.activity.createdBy,
                 "id": $scope.activity.activityId,
-                "parentActivityJpaId": $scope.parentActivityId,
+                "parentActivityJpaId": $scope.activity.parentActivityJpaId,
                 "userSettingsJpa": {
                     "dateStarted": $scope.activity.dateStarted,
                     "dateFinished": $scope.activity.dateFinished,
@@ -218,7 +226,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
                 "timeout": 30000
             };
 
-            if (postData.parentActivityJpaId && postData.activityId) {
+            if (postData.parentActivityJpaId && postData.id) {
 
                 $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).then(function (result) {
 
@@ -247,48 +255,6 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
         }
     };
 
-    /*
-     * Usersettings Functions
-     */
-    $scope.getPostData = function () {
-
-        $scope.activity.dateStarted = dateService.formatDateForBackend($scope.dateStarted);
-        $scope.activity.dateFinished = dateService.formatDateForBackend($scope.dateFinished);
-        $scope.activity.dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
-        var data = {
-            "userSettingsJpa": {
-                "dateStarted": $scope.activity.dateStarted,
-                "dateFinished": $scope.activity.dateFinished,
-                "geographicalRegion": $scope.activity.useWholeArea,
-                "reasonOfReduction": $scope.activity.reasonOfReduction,
-                "practise": $scope.activity.practise,
-                "description": $scope.activity.description
-            },
-            "activePowerJpaToBeReduced": {
-                "value": $scope.activity.reductionValue,
-                "multiplier": "M",
-                "unit": "W"
-            },
-            "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
-            "substationJpaList": $scope.activity.transformerStations,
-            "preselectionName": "",
-            "preselectionConfigurationJpa": {
-                "reductionSetting": $scope.activity.reductionSetting,
-                "discriminationCoefficientEnabled": $scope.activity.discriminationCoefficientEnabled,
-                "characteristicForMissingMeasurementFwt": $scope.activity.characteristicForMissingMeasurementFwt,
-                "characteristicForMissingMeasurementEfr": $scope.activity.characteristicForMissingMeasurementEfr,
-                "substituteValueWindFwt": $scope.activity.substituteValueWindFwt,
-                "substituteValuePhotovoltaicFwt": $scope.activity.substituteValuePhotovoltaicFwt,
-                "substituteValueBiogasFwt": $scope.activity.substituteValueBiogasFwt,
-                'substituteValueWindEfr': $scope.activity.substituteValueWindEfr,
-                'substituteValuePhotovoltaicEfr': $scope.activity.substituteValuePhotovoltaicEfr,
-                'substituteValueBiogasEfr': $scope.activity.substituteValueBiogasEfr
-            },
-        };
-
-        return data;
-    };
-
     $scope.isValidTimeInterval = function (dateStarted, dateFinished) {
         return dateService.isDateBehind(dateStarted, dateFinished);
     };
@@ -302,22 +268,92 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
 
 
     $scope.gotoStationList = function (settingsForm) {
+        if (settingsForm.$valid) {
+            $scope.activity.dateStarted = dateService.formatDateForBackend($scope.dateStarted);
+            $scope.activity.dateFinished = dateService.formatDateForBackend($scope.dateFinished);
+            $scope.activity.dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
+            var url = Liferay.ThemeDisplay.getCDNBaseURL() + '/openk-eisman-portlet/rest/activity/createreductionadvice';
+            if ($scope.IsInChangeMode) {
+                var data = {
+                    "id": $scope.activity.id,
+                    "parentActivityJpaId": $scope.activity.parentActivityJpaId,
+                    "dateStarted": $scope.activity.dateStarted,
+                    "dateFinished": $scope.activity.dateFinished,
+                    "reductionValue": $scope.activity.reductionValue,
+                    "reasonOfReduction": $scope.activity.reasonOfReduction,
+                    "practise": $scope.activity.practise,
+                    "pointOfInjectionType": $scope.activity.pointOfInjectionType,
+                    "pointOfInjectionList": $scope.activity.pointOfInjectionList,
+                    "description": $scope.activity.description,
+                    "preselectionConfigurationDto": {
+                        "reductionSetting": $scope.activity.reductionSetting,
+                        "discriminationCoefficientEnabled": $scope.activity.discriminationCoefficientEnabled,
+                        "characteristicForMissingMeasurementFwt": $scope.activity.characteristicForMissingMeasurementFwt,
+                        "characteristicForMissingMeasurementEfr": $scope.activity.characteristicForMissingMeasurementEfr,
+                        "substituteValueWindFwt": $scope.activity.substituteValueWindFwt,
+                        "substituteValuePhotovoltaicFwt": $scope.activity.substituteValuePhotovoltaicFwt,
+                        "substituteValueBiogasFwt": $scope.activity.substituteValueBiogasFwt,
+                        'substituteValueWindEfr': $scope.activity.substituteValueWindEfr,
+                        'substituteValuePhotovoltaicEfr': $scope.activity.substituteValuePhotovoltaicEfr,
+                        'substituteValueBiogasEfr': $scope.activity.substituteValueBiogasEfr
+                    }
+                };
 
-        if (settingsForm.$valid && $scope.isValidTimeInterval($scope.dateStarted, $scope.dateFinished)) {
+                url += 'foraction'
 
-            $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/createreductionadvice", $scope.getPostData()).then(function (result) {
-
-                var advice;
+            } else {
+                var data = {
+                    "id": $scope.activity.id,
+                    "parentActivityJpaId": $scope.activity.parentActivityJpaId,
+                    "dateStarted": $scope.activity.dateStarted,
+                    "dateFinished": $scope.activity.dateFinished,
+                    "reductionValue": $scope.activity.reductionValue,
+                    "reasonOfReduction": $scope.activity.reasonOfReduction,
+                    "practise": $scope.activity.practise,
+                    "pointOfInjectionType": $scope.activity.pointOfInjectionType,
+                    "pointOfInjectionList": $scope.activity.pointOfInjectionList,
+                    "description": $scope.activity.description,
+                    "userSettingsJpa": {
+                        "dateStarted": $scope.activity.dateStarted,
+                        "dateFinished": $scope.activity.dateFinished,
+                        "geographicalRegion": $scope.activity.useWholeArea,
+                        "reasonOfReduction": $scope.activity.reasonOfReduction,
+                        "practise": $scope.activity.practise,
+                        "description": $scope.activity.description
+                    },
+                    "activePowerJpaToBeReduced": {
+                        "value": $scope.activity.reductionValue,
+                        "multiplier": "M",
+                        "unit": "W"
+                    },
+                    "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
+                    "substationJpaList": $scope.activity.transformerStations,
+                    "preselectionName": "",
+                    "preselectionConfigurationJpa": {
+                        "reductionSetting": $scope.activity.reductionSetting,
+                        "discriminationCoefficientEnabled": $scope.activity.discriminationCoefficientEnabled,
+                        "characteristicForMissingMeasurementFwt": $scope.activity.characteristicForMissingMeasurementFwt,
+                        "characteristicForMissingMeasurementEfr": $scope.activity.characteristicForMissingMeasurementEfr,
+                        "substituteValueWindFwt": $scope.activity.substituteValueWindFwt,
+                        "substituteValuePhotovoltaicFwt": $scope.activity.substituteValuePhotovoltaicFwt,
+                        "substituteValueBiogasFwt": $scope.activity.substituteValueBiogasFwt,
+                        'substituteValueWindEfr': $scope.activity.substituteValueWindEfr,
+                        'substituteValuePhotovoltaicEfr': $scope.activity.substituteValuePhotovoltaicEfr,
+                        'substituteValueBiogasEfr': $scope.activity.substituteValueBiogasEfr
+                    },
+                };
+            }
+            $http.post(url, data).then(function (result) {
+                var advice = result.data.synchronousMachineJpaReducedList;
                 if (result.data.id && result.data.parentActivityJpaId) {
-                    advice = result.data.synchronousMachineJpaReducedList;
                     $scope.activity.id = result.data.id;
                     $scope.activity.parentActivityJpaId = result.data.parentActivityJpaId;
+                    $scope.activity.activePowerJpaToBeReduced = { value: result.data.activePowerJpaToBeReduced.value };
                     $scope.activity.substationProposalList = result.data.synchronousMachineJpaReducedList;
 
                 } else {
-                    advice = result.data.synchronousMachineJpaReducedList;
-                    $scope.activity.id = null;
-                    $scope.activity.parentActivityJpaId = null;
+                    result.data.id = $scope.activity.id;
+                    result.data.parentActivityJpaId = $scope.activity.parentActivityJpaId;
                     $scope.activity.substationProposalList = result.data.synchronousMachineJpaReducedList;
                 }
                 advice.forEach(function (value) {
@@ -325,16 +361,18 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
                 });
 
                 $scope.activity.calculatedReductionAdvice = result.data;
-
+                $scope.activity.calculatedReductionAdvice.dateStarted = $scope.activity.dateStarted;
+                $scope.activity.calculatedReductionAdvice.dateFinished = $scope.activity.dateFinished;
                 $state.go('Regulation.CreateProposal.Main');
             }, function (error) {
                 modalServiceNew.showErrorDialog(error).then(function () {
-                    $state.go('state1', { show: 'Aktiv' });
+                    $state.go('state1', {
+                        show: 'Aktiv'
+                    });
                 });
             });
 
         } else {
-
             $scope.settingsFormSubmitted = true;
         }
 
