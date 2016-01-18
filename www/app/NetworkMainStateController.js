@@ -111,8 +111,8 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
 
         var d = new Date();
         var timestamp = d.getTime();
-
-        $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/tree/timestamp/" + timestamp + "/", activity.preselectionConfigurationJpa).then(function (result) {
+        $log.debug(activity.preselectionConfigurationJpa);
+        $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/tree/timestamp/" + timestamp + "/", activity.calculatedReductionAdvice.preselectionConfigurationJpa).then(function (result) {
 
             var treeData = $scope.orderSubstations(result.data);
             if (transformerStationsArray.length > 0) {
