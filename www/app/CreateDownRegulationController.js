@@ -79,7 +79,7 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
     $scope.preselectionFormSubmitted = false;
     $scope.gotoSettings = function (preselectionForm) {
         if (preselectionForm.$valid) {
-            $state.go('Regulation.CreateSettings');
+            $state.go('Regulation.CreateSettings', { mode: $rootScope.mode });
         } else {
             $rootScope.CanNavigateToCreateSettings = false;
             $scope.preselectionFormSubmitted = true;

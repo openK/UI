@@ -273,7 +273,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
             $scope.activity.dateFinished = dateService.formatDateForBackend($scope.dateFinished);
             $scope.activity.dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
             var url = Liferay.ThemeDisplay.getCDNBaseURL() + '/openk-eisman-portlet/rest/activity/createreductionadvice';
-            if ($scope.IsInChangeMode) {
+            if ($scope.mode == 'add') {
                 var data = {
                     "id": $scope.activity.id,
                     "parentActivityJpaId": $scope.activity.parentActivityJpaId,

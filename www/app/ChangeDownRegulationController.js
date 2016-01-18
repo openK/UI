@@ -43,7 +43,7 @@ app.controller('ChangeDownRegulationController', ['$scope', '$state', '$rootScop
 
     $scope.gotoSettings = function (preselectionForm) {
         if (preselectionForm.$valid) {
-            $state.go('ChangeRegulation.ChangeSettings');
+            $state.go('ChangeRegulation.ChangeSettings', { mode: $rootScope.mode });
         } else {
             $rootScope.CanNavigateToChangeSettings = false;
             $scope.preselectionFormSubmitted = true;
