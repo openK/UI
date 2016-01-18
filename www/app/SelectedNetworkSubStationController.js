@@ -71,12 +71,14 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
             columnDefs: [
                 {
                     name: 'generatingUnitJpa.registeredGeneratorJpa.unitTypeJpa',
+                    headerTooltip: $translate.instant('SUBSTATIONSGRID.TECHNICALTYPE.ABBREVIATION'),
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.TECHNICALTYPE.ABBREVIATION',
                     width: '4%'
                 },
                 {
                     name: 'maxU.value',
+                    headerTooltip: $translate.instant('SUBSTATIONSGRID.NETAREA'),
                     cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.maxU.value | kv}} {{row.entity.maxU.multiplier}}{{row.entity.maxU.unit}}</div>',
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.NETAREA',
@@ -84,25 +86,35 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
                 },
                 {
                     name: 'communicationTypeJpa',
+                    headerTooltip: $translate.instant('SUBSTATIONSGRID.COMMUNICATIONTYPE.ABBREVIATION'),
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.COMMUNICATIONTYPE.ABBREVIATION',
                     width: '6%'
                 },
                 {
                     name: 'locationJpa.mainAddress.postalCode',
+                    headerTooltip: $translate.instant('SUBSTATIONSGRID.ZIP'),
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.ZIP',
                     width: '4%'
                 },
-                {name: 'name', headerCellFilter: 'translate', displayName: 'SUBSTATIONSGRID.STATIONNAME', width: '18%'},
+                {
+                    name: 'name',
+                    headerTooltip: $translate.instant('SUBSTATIONSGRID.STATIONNAME'),
+                    headerCellFilter: 'translate',
+                    displayName: 'SUBSTATIONSGRID.STATIONNAME',
+                    width: '18%'
+                },
                 {
                     name: 'feedInRanking',
+                    headerTooltip: $translate.instant('SUBSTATIONSGRID.RANKORDER.ABBREVIATION'),
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.RANKORDER.ABBREVIATION',
                     width: '4%'
                 },
                 {
                     name: 'feedInPriority',
+                    headerTooltip: $translate.instant('SUBSTATIONSGRID.PRIORITYFACTOR.ABBREVIATION'),
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.PRIORITYFACTOR.ABBREVIATION',
                     width: '4%'
@@ -110,6 +122,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
                 // Aktuelle Regelstufe
                 {
                     name: 'reductionSettingMeasured.value',
+                    headerTooltip: $translate.instant('SUBSTATIONSGRID.REDUCTIONSETTING.MEASURED.ABBREVIATION'),
                     cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.reductionSettingMeasured.value | number : 0}} %</div>',
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.REDUCTIONSETTING.MEASURED.ABBREVIATION',
@@ -118,6 +131,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
                 // Installierte Leistung
                 {
                     name: 'generatingUnitJpa.maxOperatingP.value',
+                    headerTooltip: $translate.instant('SUBSTATIONSGRID.INSTALLEDPOWER.ABBREVIATION'),
                     cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.generatingUnitJpa.maxOperatingP.value | number : 2}} {{row.entity.generatingUnitJpa.maxOperatingP.multiplier}}{{row.entity.generatingUnitJpa.maxOperatingP.unit}}</div>',
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.INSTALLEDPOWER.ABBREVIATION',
@@ -128,6 +142,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
                 // Aktuelle Wirkleistung
                 {
                     name: 'generatorPowerMeasured.value',
+                    headerTooltip: $translate.instant('SUBSTATIONSGRID.GENERATORVOLTAGE.MEASURED.ABBREVIATION'),
                     cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.generatorPowerMeasured.value | number : 2}} {{row.entity.generatorPowerMeasured.multiplier}}{{row.entity.generatorPowerMeasured.unit}}</div>',
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.GENERATORVOLTAGE.MEASURED.ABBREVIATION',
@@ -138,6 +153,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
                 // abregeln auf
                 {
                     name: 'reductionAdvice',
+                    headerTooltip: $translate.instant('SUBSTATIONSGRID.REDUCTIONSETTING.TO.SET'),
                     cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.reductionAdvice | number : 0}} %</div>',
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.REDUCTIONSETTING.TO.SET'
@@ -145,14 +161,16 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
                 // abgeregelte Leistung
                 {
                     name: 'activePowerJpaToBeReduced.value',
+                    headerTooltip: $translate.instant('SUBSTATIONSGRID.REDUCEDPOWER'),
                     cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.activePowerJpaToBeReduced.value | number : 2}} MW</div>',
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.REDUCEDPOWER',
                     aggregationType: uiGridConstants.aggregationTypes.sum,
-                    footerCellTemplate: '<div class="xx ui-grid-cell-contents {{grid.appScope.getProposalError()}}">∑ {{col.getAggregationValue() | number : 2}} MW</div>'
+                    footerCellTemplate: '<div class="ui-grid-cell-contents {{grid.appScope.getProposalError()}}">∑ {{col.getAggregationValue() | number : 2}} MW</div>'
                 },
                 {
                     name: 'change',
+                    headerTooltip: $translate.instant('SUBSTATIONSGRID.CHANGE'),
                     displayName: 'SUBSTATIONSGRID.CHANGE',
                     headerCellFilter: 'translate',
                     enableFiltering: false,
@@ -160,6 +178,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
                 },
                 {
                     name: 'delete',
+                    headerTooltip: $translate.instant('SUBSTATIONSGRID.DELETE'),
                     displayName: 'SUBSTATIONSGRID.DELETE',
                     headerCellFilter: 'translate',
                     enableFiltering: false,
@@ -210,14 +229,12 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
             } catch (e) {
                 requiredReductionPower = $scope.activity.reductionValue;
             }
-
-
             var hysteresis = activityService.activityConfigData().hysteresis || 5;
             hysteresis = 1 + hysteresis / 100;
-
             if (
-                    (requiredReductionPower - $scope.gridApi2.grid.columns[11].getAggregationValue()) > 0.001 ||
-                    $scope.gridApi2.grid.columns[11].getAggregationValue() > requiredReductionPower * hysteresis
+                    ((requiredReductionPower - $scope.gridApi2.grid.columns[11].getAggregationValue()) >= 0.001 ||
+                            $scope.gridApi2.grid.columns[11].getAggregationValue() > requiredReductionPower * hysteresis)
+
                     ) {
                 return "error";
             } else {
@@ -233,7 +250,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
 
             // || (row.entity.generatingUnitJpa.maxOperatingP.value < row.entity.generatorPowerMeasured.value)
 
-            if ((calculatedvalue < 0)) {
+            if ((calculatedvalue < 0 || row.entity.reductionAdvice === 100)) {
                 calculatedvalue = 0;
             }
 
