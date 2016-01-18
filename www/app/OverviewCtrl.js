@@ -44,9 +44,11 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
             var dateStarted = new Date($scope.currentItem.dateStarted);
             var dateFinished = new Date($scope.currentItem.dateFinished);
             var now = $.now();
+            $log.info($scope.currentItem.dateFinished);
             if ($scope.currentItem.id && $scope.currentItem.processStatus === "Pending" || ($scope.currentItem.processStatus === "Live" && (now >= dateStarted.getTime() && now <= dateFinished.getTime()))) {
                 return true;
             } else {
+                ;
                 return false;
             }
         };
@@ -127,10 +129,9 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
 
         $scope.hasReductions = function () {
 
-            if(typeof $scope.currentItem.processStatus === 'undefined') {
+            if (typeof $scope.currentItem.processStatus === 'undefined') {
                 return false;
-            }
-            else{
+            } else {
                 if ($scope.currentItem.processStatus === 'WithoutSchedule' || $scope.currentItem.processStatus === 'WithoutScheduleDeleted') {
                     return false;
                 } else {
@@ -165,6 +166,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                 "id": $scope.currentItem.id,
                 "bodyText": $filter('translate')('PROCESS.EDIT.RECENTDATE'),
                 "finishdate": $scope.currentItem.dateFinished,
+                "startdate": $scope.currentItem.dateStarted,
                 "actionButtonText": $filter('translate')('PROCESS.EDIT.CONFIRM'),
                 "closeButtonText": $filter('translate')('PROCESS.EDIT.CANCEL'),
                 "close": function () {
@@ -306,7 +308,8 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                             case 'dateCreated':
                             case 'dateStarted':
                             case 'dateFinished':
-                                value = {key: detailsToBeDisplayed[j], value: $filter('date')($scope.overview.data[i][detailsToBeDisplayed[j]], "dd.MM.yyyy HH:mm")}; 
+                            case 'dateUpdated':
+                                value = {key: detailsToBeDisplayed[j], value: $filter('date')($scope.overview.data[i][detailsToBeDisplayed[j]], "dd.MM.yyyy HH:mm")};
                                 $scope.data.isDate = true;
                                 break;
                             case 'activePowerJpaToBeReduced':
