@@ -20,18 +20,18 @@
             <div class="pull-right">
                 <button name="buttonNavigateToCreate"
                         class="btn btn-primary"
-                        data-ui-sref="Regulation.CreateDownRegulation">
+                        data-ui-sref="Regulation.CreateDownRegulation({mode: 'new'})">
                     {{ 'CREATE' | translate }}
                 </button>
                 <button name="buttonNavigateToEdit"
                         class="btn btn-primary"
                         data-ng-disabled="!isEditable()"
-                        data-ui-sref="EditRegulation.EditDownRegulation">
+                        data-ui-sref="Regulation.CreateDownRegulation({mode: 'edit'})">
                     {{ 'EDIT.ACTIVITY' | translate }}
                 </button>
                 <button class="btn btn-primary"
                         data-ng-disabled="!canAddActivity()"
-                        data-ui-sref="ChangeRegulation.ChangeDownRegulation">
+                        data-ui-sref="Regulation.CreateDownRegulation({mode: 'add'})">
                     {{ 'CREATECHILDACTIVITY' | translate }}
                 </button>
                 <button name="buttonNavigateToCreateChildActivity"

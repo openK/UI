@@ -18,6 +18,7 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceN
             pointOfInjectionList: null,
             childActivityList: [{
                 id: null,
+                parentActivityJpaId: null,
                 dateStarted: null,
                 dateFinished: null,
                 reductionSetting: 60,
@@ -44,9 +45,10 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceN
         };
     };
 
-    var createChildActivity = function() {
+    var createChildActivity = function () {
         return {
             id: null,
+            parentActivityJpaId: null,
             dateStarted: null,
             dateFinished: null,
             reductionSetting: 60,
@@ -103,7 +105,7 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceN
                 configData.regulationReasons = result.data;
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/substation/lov/").then(function (result) {
-                result.data = result.data.sort(function(a,b){if (a.name < b.name) return -1; else return 1;});
+                result.data = result.data.sort(function (a, b) { if (a.name < b.name) return -1; else return 1; });
                 configData.transformerStations = result.data;
             }),
             $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/lov/").then(function (result) {

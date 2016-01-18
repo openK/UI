@@ -9,9 +9,10 @@
  * Stefan Brockmann - initial API and implementation
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
-app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScope', '$http', '$modal', '$log', 'activityService', '$timeout', function ($scope, $state, $rootScope, $http, $modal, $log, activityService, $timeout) {
+app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScope', '$http', '$modal', '$log', 'activityService', '$timeout', '$stateParams', function ($scope, $state, $rootScope, $http, $modal, $log, activityService, $timeout, $stateParams) {
     $scope.activityConfigData = activityService.activityConfigData();
     $scope.activity = activityService.childActivity();
+    $rootScope.mode = $stateParams.mode || $rootScope.mode;
     $scope.$watch('activity.characteristicForMissingMeasurementFwt', function (newValue, oldValue) {
         if (newValue === oldValue) {
             return;
