@@ -67,6 +67,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
             enablePaginationControls: false,
             enableHorizontalScrollbar: 0,
             enableVerticalScrollbar: 2, // 0: never, 1: always, 2: when needed
+            resizable: true,
             data: "activity.substationProposalList",
             columnDefs: [
                 {
