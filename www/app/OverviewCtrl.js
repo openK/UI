@@ -376,58 +376,67 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
             columnDefs: [
                 {
                     name: 'id',
+                    headerTooltip: 'GRID.ID',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.ID',
                     width: '4%'
                 },
                 {
                     name: 'dateCreated',
+                    headerTooltip: 'GRID.CREATED',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.CREATED',
                     cellFilter: "date : 'dd.MM.yyyy HH:mm'",
-                    width: '8%'
+                    width: '10%'
                 },
                 {
                     name: 'dateStarted',
+                    headerTooltip: 'GRID.STARTDATE',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.STARTDATE',
                     cellFilter: "date : 'dd.MM.yyyy HH:mm'",
-                    width: '8%'
+                    width: '10%'
                 },
                 {
                     name: 'dateFinished',
+                    headerTooltip: 'GRID.ENDDATE',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.ENDDATE',
                     cellFilter: "date : 'dd.MM.yyyy HH:mm'",
-                    width: '8%'
+                    width: '10%'
                 },
                 {
                     name: 'reductionValue',
+                    headerTooltip: 'GRID.POWERTOBEREDUCED',
                     cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.reductionValue | number : 2}} MW</div>',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.POWERTOBEREDUCED',
-                    width: '11%'
+                    width: '20%'
                 },
                 {
                     name: 'reasonOfReduction',
+                    headerTooltip: 'GRID.REASONOFREDUCTION',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.REASONOFREDUCTION',
                     width: '30%'
+
                 },
                 {
                     name: 'processStatus',
+                    headerTooltip: 'STATE.STATE',
                     headerCellFilter: 'translate',
                     cellFilter: 'translate',
-                    displayName: 'STATE.STATE'
+                    displayName: 'STATE.STATE',
+                    width: '10%'
 
                 },
                 {
                     name: 'practice',
+                    headerTooltip: 'GRID.PRACTISE',
                     headerCellFilter: 'translate',
                     displayName: 'GRID.PRACTISE',
                     enableFiltering: false,
                     cellFilter: 'booleanFilter'
-
                 }
             ],
             onRegisterApi: function (gridApi) {
@@ -508,6 +517,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
             enablePaginationControls: false,
             enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
             enableVerticalScrollbar: uiGridConstants.scrollbars.NEVER,
+            resizable: true,
             columnDefs: [
                 {
                     field: 'seqNum',
