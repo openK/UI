@@ -150,6 +150,12 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceN
             params.filter.isTerminated = "false";
         }
 
+        params.sort = params.sort.replace("dateStarted", "userSettingsJpa.dateStarted");
+        params.sort = params.sort.replace("dateFinished", "userSettingsJpa.dateFinished");
+        params.sort = params.sort.replace("reasonOfReduction", "userSettingsJpa.reasonOfReduction");
+        params.sort = params.sort.replace("practise", "userSettingsJpa.practise");
+        params.sort = params.sort.replace("reductionValue", "activePowerJpaToBeReduced.value");
+
         console.log('filter:' + params.filter);
 
         show = show || 'Aktiv';

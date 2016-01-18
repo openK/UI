@@ -49,13 +49,19 @@
             $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/preselection/" + templateData.id, templateData).then(function (result) {
                 $scope.saveOk = true;
                 $scope.closeButtonText = "Schließen";
+                $rootScope.templates.forEach(function (tpl) {
+                    if (tpl.name == result.data.name) {
+                        angular.copy(result.data, tpl);
+                        $rootScope.selectedTemplate = tpl;
+                    }
+                });
             });
         } else {
             $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/preselection/", templateData).then(function (result) {
-                $rootScope.templates.push(result.data);
-                $rootScope.selectedTemplate = result.data;
                 $scope.saveOk = true;
                 $scope.closeButtonText = "Schließen";
+                $rootScope.selectedTemplate = result.data;
+                $rootScope.templates.push(result.data);
             });
         }
     };

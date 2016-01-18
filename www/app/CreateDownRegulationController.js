@@ -22,10 +22,21 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
             $scope.activity.substituteValuePhotovoltaicFwt = null;
             $scope.activity.substituteValueWindFwt = null;
         } else {
-            $scope.loadTemplateData($rootScope.selectedTemplate);
+            $scope.updateTemplateFwtData($rootScope.selectedTemplate);
         }
     });
-    $scope.$watch('activity.characteristicForMissingMeasurementEfr', function (newValue, oldValue) {
+
+    $scope.updateTemplateFwtData = function (selectedTemplate) {
+
+        if (selectedTemplate) {
+            $scope.activity.substituteValuePhotovoltaicFwt = selectedTemplate.preselectionConfigurationJpa.substituteValuePhotovoltaicFwt;
+            $scope.activity.substituteValueWindFwt = selectedTemplate.preselectionConfigurationJpa.substituteValueWindFwt;
+            $scope.activity.substituteValueBiogasFwt = selectedTemplate.preselectionConfigurationJpa.substituteValueBiogasFwt;
+        }
+    };
+
+
+        $scope.$watch('activity.characteristicForMissingMeasurementEfr', function (newValue, oldValue) {
         if (newValue === oldValue) {
             return;
         }
@@ -34,9 +45,18 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
             $scope.activity.substituteValuePhotovoltaicEfr = null;
             $scope.activity.substituteValueBiogasEfr = null;
         } else {
-            $scope.loadTemplateData($rootScope.selectedTemplate);
+            $scope.updateTemplateEfrData($rootScope.selectedTemplate);
         }
     });
+
+    $scope.updateTemplateEfrData = function (selectedTemplate) {
+
+        if (selectedTemplate) {
+            $scope.activity.substituteValueWindEfr = selectedTemplate.preselectionConfigurationJpa.substituteValueWindEfr;
+            $scope.activity.substituteValuePhotovoltaicEfr = selectedTemplate.preselectionConfigurationJpa.substituteValuePhotovoltaicEfr;
+            $scope.activity.substituteValueBiogasEfr = selectedTemplate.preselectionConfigurationJpa.substituteValueBiogasEfr;
+        }
+    };
 
     $scope.$watch('preselectionForm.$invalid', function (newValue, oldValue) {
         if (newValue === oldValue) {
@@ -71,6 +91,7 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
             $scope.activity.substationProposalList = selectedTemplate.substationJpaList;
         }
     };
+
 
     if ($scope.parentActivityId) {
         $scope.activity.parentActivityJpaId = $scope.parentActivityId;
