@@ -35,7 +35,9 @@
 <div class="row maincontent">
     <div class="col-xs-12 col-sm-12">
         <h2>EISMAN</h2>
-        <h3>{{'CREATE.ACTIVITY' | translate}}:</h3>
+        <h3 ng-if="mode=='new'">{{'CREATE.ACTIVITY' | translate}}:</h3>
+        <h3 ng-if="mode=='add'">{{'CREATECHILDACTIVITY' | translate}}:</h3>
+        <h3 ng-if="mode=='edit'">{{'EDIT.ACTIVITY' | translate}}:</h3>
         <button class="btn btn-arrow-right" ui-sref="Regulation.CreateDownRegulation" 
                 data-ng-class="{ 'btn-success' : currentWizardStep === 'CreateDownRegulation', 'btn-default' : currentWizardStep !== 'CreateDownRegulation'}">
             {{'WORKFLOW.SETTINGS' | translate}}
