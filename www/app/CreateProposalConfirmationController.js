@@ -34,25 +34,29 @@ app.controller('CreateProposalConfirmationController', ['$scope', '$state', '$ht
             {
                 name: 'generatingUnitJpa.registeredGeneratorJpa.unitTypeJpa',
                 headerCellFilter: 'translate',
-                displayName: 'SUBSTATIONSGRID.TECHNICALTYPE'
+                displayName: 'SUBSTATIONSGRID.TECHNICALTYPE',
+                headerTooltip : 'SUBSTATIONSGRID.TECHNICALTYPE'
             },
             {
                 name: 'maxU.value',
                 cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.maxU.value | kv}} {{row.entity.maxU.multiplier}}{{row.entity.maxU.unit}}</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.NETAREA',
+                headerTooltip: 'SUBSTATIONSGRID.NETAREA',
                 width: '5%'
             },
             {
                 name: 'communicationTypeJpa',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.COMMUNICATIONTYPE.ABBREVIATION',
+                headerTooltip: 'SUBSTATIONSGRID.COMMUNICATIONTYPE.ABBREVIATION',
                 width: '6%'
             },
             {
                 name: 'locationJpa.mainAddress.postalCode',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.ZIP',
+                headerTooltip: 'SUBSTATIONSGRID.ZIP',
                 width: '4%'
             },
             {name: 'name', headerCellFilter: 'translate', displayName: 'SUBSTATIONSGRID.STATIONNAME', width: '18%'},
@@ -60,12 +64,14 @@ app.controller('CreateProposalConfirmationController', ['$scope', '$state', '$ht
                 name: 'feedInRanking',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.RANKORDER.ABBREVIATION',
+                headerTooltip: 'SUBSTATIONSGRID.RANKORDER.ABBREVIATION',
                 width: '4%'
             },
             {
                 name: 'feedInPriority',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.PRIORITYFACTOR.ABBREVIATION',
+                headerTooltip: 'SUBSTATIONSGRID.PRIORITYFACTOR.ABBREVIATION',
                 width: '4%'
             },
             // Aktuelle Regelstufe
@@ -74,14 +80,16 @@ app.controller('CreateProposalConfirmationController', ['$scope', '$state', '$ht
                 cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.reductionSettingMeasured.value | number : 0}} %</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.REDUCTIONSETTING.MEASURED.ABBREVIATION',
+                headerTooltip: 'SUBSTATIONSGRID.REDUCTIONSETTING.MEASURED.ABBREVIATION',
                 width: '9%'
             },
             // Installierte Leistung
             {
                 name: 'generatingUnitJpa.maxOperatingP.value',
-                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.generatingUnitJpa.maxOperatingP.value | number : 2}} {{row.entity.generatingUnitJpa.maxOperatingP.multiplier}}{{row.entity.generatingUnitJpa.maxOperatingP.unit}}</div>',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.generatingUnitJpa.maxOperatingP.value | number : 2}} {{row.entity.generatingUnitJpa.maxOperatingP.multiplier}}{{row.entity.generatingUnitJpa.maxOperatingP.unit}}</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.INSTALLEDPOWER.ABBREVIATION',
+                headerTooltip: 'SUBSTATIONSGRID.INSTALLEDPOWER.ABBREVIATION',
                 aggregationType: uiGridConstants.aggregationTypes.sum,
                 footerCellTemplate: '<div class="ui-grid-cell-contents">∑ {{col.getAggregationValue() | number : 2}} MW</div>',
                 width: '9%'
@@ -89,9 +97,10 @@ app.controller('CreateProposalConfirmationController', ['$scope', '$state', '$ht
             // Aktuelle Wirkleistung
             {
                 name: 'generatorPowerMeasured.value',
-                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.generatorPowerMeasured.value | number : 2}} {{row.entity.generatorPowerMeasured.multiplier}}{{row.entity.generatorPowerMeasured.unit}}</div>',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.generatorPowerMeasured.value | number : 2}} {{row.entity.generatorPowerMeasured.multiplier}}{{row.entity.generatorPowerMeasured.unit}}</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.GENERATORVOLTAGE.MEASURED.ABBREVIATION',
+                headerTooltip: 'SUBSTATIONSGRID.GENERATORVOLTAGE.MEASURED.ABBREVIATION',
                 aggregationType: uiGridConstants.aggregationTypes.sum,
                 footerCellTemplate: '<div class="ui-grid-cell-contents">∑ {{col.getAggregationValue() | number : 2}} MW</div>',
                 width: '9%'
@@ -99,16 +108,18 @@ app.controller('CreateProposalConfirmationController', ['$scope', '$state', '$ht
             // abregeln auf
             {
                 name: 'reductionAdvice',
-                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.reductionAdvice | number : 0}} %</div>',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.reductionAdvice | number : 0}} %</div>',
                 headerCellFilter: 'translate',
-                displayName: 'SUBSTATIONSGRID.REDUCTIONSETTING.TO.SET'
+                displayName: 'SUBSTATIONSGRID.REDUCTIONSETTING.TO.SET',
+                headerTooltip: 'SUBSTATIONSGRID.REDUCTIONSETTING.TO.SET'
             },
             // abgeregelte Leistung
             {
                 name: 'activePowerJpaToBeReduced.value',
-                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align">{{row.entity.activePowerJpaToBeReduced.value | number : 2}} MW</div>',
+                cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.activePowerJpaToBeReduced.value | number : 2}} MW</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.REDUCEDPOWER',
+                headerTooltip: 'SUBSTATIONSGRID.REDUCEDPOWER',
                 aggregationType: uiGridConstants.aggregationTypes.sum,
                 footerCellTemplate: '<div class="ui-grid-cell-contents">∑ {{col.getAggregationValue() | number : 2}} MW</div>'
             }
