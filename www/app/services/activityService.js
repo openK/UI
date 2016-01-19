@@ -86,6 +86,9 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceN
     var configData = {};
 
     function loadActivity() {
+        if (!currentParentActivityId) {
+            return $q.when();
+        }
         return $http.get(Liferay.ThemeDisplay.getCDNBaseURL() + '/openk-eisman-portlet/rest/activity/latestusersettings/' + currentParentActivityId).then(function (result) {
             childActivity = result.data;
             angular.extend(childActivity, childActivity.preselectionConfigurationDto);
