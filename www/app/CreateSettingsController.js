@@ -2,7 +2,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
 
     $scope.activity = activityService.childActivity();
     $scope.$parent.mytimer = false;
-    $scope.IsInChangeMode = $state.current.name.indexOf('Change') >= 0 ? true: false;
+    $scope.IsInChangeMode = $state.current.name.indexOf('Change') >= 0 ? true : false;
     $scope.IsInEditMode = $state.current.name.indexOf('Edit') >= 0 ? true : false;
     $scope.activityConfigData = activityService.activityConfigData();
     $scope.activity.reductionPositive = true;
@@ -23,27 +23,31 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
     }
 
     if ($scope.activity.pointOfInjectionType === 'SUBSTATION' && $scope.activity.pointOfInjectionList) {
-        $scope.activity.transformerStations = [];
-        $scope.activity.pointOfInjectionList.forEach(function (name) {
-            $scope.activityConfigData.transformerStations.forEach(function (station) {
-                if (station.name === name) {
-                    station.selected = true;
-                    station.ticked = true;
-                }
-            });
-        })
+        if (!$scope.activity.transformerStations) {
+            $scope.activity.transformerStations = [];
+            $scope.activity.pointOfInjectionList.forEach(function (name) {
+                $scope.activityConfigData.transformerStations.forEach(function (station) {
+                    if (station.name === name) {
+                        station.selected = true;
+                        station.ticked = true;
+                    }
+                });
+            })
+        }
     }
 
     if ($scope.activity.pointOfInjectionType === 'SUBGEOGRAPHICALREGION' && $scope.activity.pointOfInjectionList) {
-        $scope.activity.subGeographicalRegions = [];
-        $scope.activity.pointOfInjectionList.forEach(function (name) {
-            $scope.activityConfigData.subGeographicalRegions.forEach(function (station) {
-                if (station.name === name) {
-                    station.selected = true;
-                    station.ticked = true;
-                }
-            });
-        })
+        if (!$scope.activity.transformerStations) {
+            $scope.activity.subGeographicalRegions = [];
+            $scope.activity.pointOfInjectionList.forEach(function (name) {
+                $scope.activityConfigData.subGeographicalRegions.forEach(function (station) {
+                    if (station.name === name) {
+                        station.selected = true;
+                        station.ticked = true;
+                    }
+                });
+            })
+        }
     }
 
     $scope.$watch('activity.transformerStations', function (newValue, oldValue) {
@@ -108,8 +112,8 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
         }
     }
 
-    $scope.dateStarted = $filter('date') (dateStarted, 'dd.MM.yyyy HH:mm');
-    $scope.dateFinished = $filter('date') (dateFinished, 'dd.MM.yyyy HH:mm');
+    $scope.dateStarted = $filter('date')(dateStarted, 'dd.MM.yyyy HH:mm');
+    $scope.dateFinished = $filter('date')(dateFinished, 'dd.MM.yyyy HH:mm');
 
 
     var now = new Date($.now());
@@ -224,11 +228,15 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
 
                 $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).then(function (result) {
 
-                    $state.go('state1', { show: 'Aktiv' });
+                    $state.go('state1', {
+                        show: 'Aktiv'
+                    });
 
                 }, function (error) {
                     modalServiceNew.showErrorDialog(error).then(function () {
-                        $state.go('state1', { show: 'Aktiv' });
+                        $state.go('state1', {
+                            show: 'Aktiv'
+                        });
                     });
                 });
 
@@ -236,11 +244,15 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
 
                 $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).then(function (result) {
 
-                    $state.go('state1', { show: 'Aktiv' });
+                    $state.go('state1', {
+                        show: 'Aktiv'
+                    });
 
                 }, function (error) {
                     modalServiceNew.showErrorDialog(error).then(function () {
-                        $state.go('state1', { show: 'Aktiv' });
+                        $state.go('state1', {
+                            show: 'Aktiv'
+                        });
                     });
                 });
             }
