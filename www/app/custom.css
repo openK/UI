@@ -346,6 +346,7 @@ table.table.tree-grid th{
 table.table.tree-grid{
     
     border-top: solid 1px #ddd;
+    border-right: solid 1px #ddd;
 }
 
 .ui-grid-cell.ng-scope.ui-grid-disable-selection{
@@ -433,4 +434,47 @@ form .row.navheader{
 }
 .ranges{
     width:100% ! important;
+}
+
+table.table.tree-grid thead,
+table.table.tree-grid tbody{
+    
+    display:block;
+}
+
+table.table.tree-grid tbody{
+    
+    overflow-y: scroll;
+    height: 300px;
+}
+
+table.table.tree-grid thead th,
+table.table.tree-grid tbody td
+{
+    
+    width: 60px;
+}
+
+table.table.tree-grid thead th:nth-child(1),
+table.table.tree-grid tbody td:nth-child(1){
+    
+    width: 65px;
+}
+
+table.table.tree-grid thead th:nth-child(6),
+table.table.tree-grid tbody td:nth-child(6){
+    
+    width: 71px;
+}
+
+table.table.tree-grid thead th:nth-child(2),
+table.table.tree-grid tbody td:nth-child(2){
+    
+    width: 200px;
+    overflow:hidden;
+}
+
+form.form-horizontal{
+    
+    margin-top:10px;
 }
