@@ -12,7 +12,8 @@
 
 app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$translate', 'uiGridConstants', '$log', '$rootScope', 'activityService', '$modal', function ($scope, $timeout, $translate, uiGridConstants, $log, $rootScope, activityService, $modal) {
 
-        $scope.activity = activityService.childActivity(); $log.debug($scope.activity);
+        $scope.activity = activityService.childActivity();
+        $log.debug($scope.activity);
         $scope.$parent.$on('showSubstationProposalGrid', function (event, row, job) {
 
             $log.info('showSubstationProposalGrid ' + job);
@@ -50,7 +51,15 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
                 filter: []
             }
         };
-
+        var sortByNumber = function (a, b) {
+            if (a === b) {
+                return 0;
+            }
+            if (a < b) {
+                return -1;
+            }
+            return 1;
+        };
         $scope.substations = {
             enablePagination: false,
             enableFiltering: true,
@@ -68,6 +77,7 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
             enableHorizontalScrollbar: 0,
             enableVerticalScrollbar: 2, // 0: never, 1: always, 2: when needed
             resizable: true,
+            enableSorting: true,
             data: "activity.substationProposalList",
             columnDefs: [
                 {
@@ -127,7 +137,8 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
                     cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.reductionSettingMeasured.value | number : 0}} %</div>',
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.REDUCTIONSETTING.MEASURED.ABBREVIATION',
-                    width: '9%'
+                    width: '9%',
+                    sortingAlgorithm: sortByNumber
                 },
                 // Installierte Leistung
                 {
@@ -138,7 +149,8 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
                     displayName: 'SUBSTATIONSGRID.INSTALLEDPOWER.ABBREVIATION',
                     aggregationType: uiGridConstants.aggregationTypes.sum,
                     footerCellTemplate: '<div class="ui-grid-cell-contents">∑ {{col.getAggregationValue() | number : 2}} MW</div>',
-                    width: '9%'
+                    width: '9%',
+                    sortingAlgorithm: sortByNumber
                 },
                 // Aktuelle Wirkleistung
                 {
@@ -149,7 +161,8 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
                     displayName: 'SUBSTATIONSGRID.GENERATORVOLTAGE.MEASURED.ABBREVIATION',
                     aggregationType: uiGridConstants.aggregationTypes.sum,
                     footerCellTemplate: '<div class="ui-grid-cell-contents">∑ {{col.getAggregationValue() | number : 2}} MW</div>',
-                    width: '9%'
+                    width: '9%',
+                    sortingAlgorithm: sortByNumber
                 },
                 // abregeln auf
                 {
@@ -157,7 +170,8 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
                     headerTooltip: $translate.instant('SUBSTATIONSGRID.REDUCTIONSETTING.TO.SET'),
                     cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.reductionAdvice | number : 0}} %</div>',
                     headerCellFilter: 'translate',
-                    displayName: 'SUBSTATIONSGRID.REDUCTIONSETTING.TO.SET'
+                    displayName: 'SUBSTATIONSGRID.REDUCTIONSETTING.TO.SET',
+                    sortingAlgorithm: sortByNumber
                 },
                 // abgeregelte Leistung
                 {
@@ -167,6 +181,12 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
                     headerCellFilter: 'translate',
                     displayName: 'SUBSTATIONSGRID.REDUCEDPOWER',
                     aggregationType: uiGridConstants.aggregationTypes.sum,
+                    sortingAlgorithm: sortByNumber,
+                    sort: {
+                        direction: uiGridConstants.DESC,
+                        ignoreSort: false,
+                        priority: 0
+                    },
                     footerCellTemplate: '<div class="ui-grid-cell-contents {{grid.appScope.getProposalError()}}">∑ {{col.getAggregationValue() | number : 2}} MW</div>'
                 },
                 {
@@ -190,7 +210,6 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
             onRegisterApi: function (gridApi) {
                 $scope.currentPage = 1;
                 $scope.gridApi2 = gridApi;
-
             }
         };
         $timeout(function () {
@@ -222,7 +241,6 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
                 }
             });
         };
-
         $scope.getProposalError = function () {
             var requiredReductionPower;
             try {
@@ -248,7 +266,6 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
             $log.info('changeSynchronousMachine');
             row.entity.reductionAdvice = row.entity.subStationRegSteps;
             var calculatedvalue = row.entity.generatorPowerMeasured.value - ((row.entity.reductionAdvice / 100) * row.entity.generatingUnitJpa.maxOperatingP.value);
-
             // || (row.entity.generatingUnitJpa.maxOperatingP.value < row.entity.generatorPowerMeasured.value)
 
             if ((calculatedvalue < 0 || row.entity.reductionAdvice === 100)) {
@@ -261,7 +278,6 @@ app.controller('SelectedNetworkSubStationController', ['$scope', '$timeout', '$t
                 unit: "W"
             };
             $scope.gridApi2.core.notifyDataChange(uiGridConstants.dataChange.ALL);
-
         };
         $scope.openModalConfirmProposal = function () {
 
