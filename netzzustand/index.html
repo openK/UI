@@ -52,18 +52,18 @@
     <body ng-app="myApp">
         <div class="row maincontent">
             <div class="col-xs-12 col-sm-12">
-                <h2 style="margin-left:16px;">Netzzustand</h2>
+                <h2 style="margin-left:22px;">Netzzustand</h2>
                 <div style="padding-top: 10px">
-                    <div style="margin-top:20px;">
-                        <div id="proposalTree"  class="col-xs-3 col-sm-3 col-md-5" style="height:auto;">
+                    <div style="margin-top:20px;padding:8px;">
+                        <div id="proposalTree"  class="col-xs-3 col-sm-3 col-md-4" style="height:auto;">
                             <h4> {{'GRID.SUBSTATIONLIST'| translate}}</h4>
-                            <div data-ng-controller="NetworkMainStateController" class="table-responsive" style="height:602px;">
+                            <div data-ng-controller="NetworkMainStateController" style="height:602px;">
                                 <tree-grid col-defs="treeColumns" tree-data="treeData" icon-leaf="glyphicon glyphicon-arrow-right"
                                            icon-expand="glyphicon glyphicon-folder-open" icon-collapse="glyphicon glyphicon-folder-open"
                                            expand-on="name"></tree-grid>
                             </div>
                         </div>
-                        <div id="stats" class="col-xs-9 col-sm-9 col-md-7 table-responsive">
+                        <div id="stats" class="col-xs-9 col-sm-9 col-md-8 table-responsive">
                             <h4>{{ substationName}} &nbsp;</h4>
                             <div data-ng-controller="NetworkSubStateController">
                                 <div class="grid table" data-ui-grid="substations" data-ui-grid-pagination data-ui-grid-selection style="height:600px;"></div>
