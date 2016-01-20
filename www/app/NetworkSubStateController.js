@@ -123,7 +123,13 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
                 headerTooltip: 'SUBSTATIONSGRID.ZIP',
                 width: '6%'
             },
-            { name: 'name', headerCellFilter: 'translate', displayName: 'SUBSTATIONSGRID.STATIONNAME', width: '23%' },
+            { 
+                name: 'name', 
+                headerCellFilter: 'translate', 
+                displayName: 'SUBSTATIONSGRID.STATIONNAME', 
+                headerTooltip: 'SUBSTATIONSGRID.STATIONNAME', 
+                width: '23%' 
+            },
             {
                 name: 'feedInRanking',
                 headerCellFilter: 'translate',
