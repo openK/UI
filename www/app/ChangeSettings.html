@@ -62,7 +62,7 @@
             <div class="col-xs-4">
                 <div class="list-group">
                     <a href="" class="list-group-item">
-                        <p ng-repeat="ip in activity.pointOfInjectionList" class="list-group-item-text">
+                        <p ng-repeat="ip in activity.pointOfInjectionList | orderBy" class="list-group-item-text">
                             {{ip}}
                         </p>
                     </a>
