@@ -1,0 +1,419 @@
+<!--
+/*******************************************************************************
+* Copyright (c) 2015 BTC AG.
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*     Stefan Brockmann - initial API and implementation
+*     Jan Krueger - Login Portlet
+*******************************************************************************/
+-->
+
+/* Liferay Login */
+label[for="_58_login"] {
+    padding-right: 7px;
+    margin-bottom: 20px;
+}
+
+label[for="_58_password"] {
+    padding-right: 36px;
+    margin-bottom: 20px;
+}
+
+label[for="_58_firstName"] {
+    padding-right: 60px;
+    margin-bottom: 20px;
+}
+
+label[for="_58_middleName"] {
+    padding-right: 115px;
+    margin-bottom: 20px;
+}
+
+label[for="_58_lastName"] {
+    padding-right: 130px;
+    margin-bottom: 20px;
+}
+
+label[for="_58_screenName"] {
+    padding-right: 45px;
+    margin-bottom: 20px;
+}
+
+label[for="_58_emailAddress"] {
+    padding-right: 40px;
+    margin-bottom: 20px;
+}
+
+label[for="_58_birthday"] {
+    margin-bottom: 10px;
+}
+
+#_58_birthday {
+    margin-bottom: 10px;
+}
+
+label[for="_58_male"] {
+    padding-right: 6px;
+    margin-bottom: 20px;
+}
+
+label[for="_58_captchaText"] {
+    padding-right: 6px;
+    margin-bottom: 20px;
+}
+
+/*#_58_rjus_column1_2 {*/
+/*visibility: hidden;*/
+/*}*/
+
+.loading-display {
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    position: fixed;
+}
+
+.loading-display .filter {
+    opacity: 0.25;
+    background: #000;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+}
+
+.loading-display .center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-image: url("../img/spinner.gif");
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 50px;
+}
+
+.mac-popover {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding-top: 20px;
+}
+
+.mac-popover .tip {
+    display: none;
+}
+
+#grid-overview {
+    height: 750px;
+}
+
+.ui-grid-header-cell {
+    min-height: 60px !important;
+}
+
+.ui-grid-header-canvas {
+    background: white !important;
+}
+
+.ui-grid-cell-align-right {
+    text-align: right;
+}
+
+.portlet-topper {
+    a: white;
+}
+
+.btn-default {
+    background-image: none !important;
+    background-color: white !important;
+}
+
+.selection .multiSelect > button {
+    background-image: none;
+    background-color: white;
+    border: 1px solid #b7cbda;
+    border-radius: 8px;
+    min-height: 34px !important;
+}
+
+.tree-grid table, .tree-grid td {
+    border: 1px solid #ccdbe6;
+}
+
+.tree-grid .level-1 {
+    background: none repeat scroll 0 0 #f5f8fc;
+    padding-left: 5px;
+}
+
+.tree-grid .level-2 {
+    background: none repeat scroll 0 0 #ffffff;
+    padding-left: 15px;
+}
+
+.tree-grid tr td:first-child {
+    width: 65px;
+}
+
+.tree-grid .level-3 .indented {
+    left: 0px;
+}
+
+.tree-grid .level-2 .indented {
+    left: 10px;
+}
+
+/*
+#proposalTree, #proposalStats {
+    height: 440px;
+}
+*/
+
+.label-required {
+    color: #a94442;
+}
+
+input[type="checkbox"] {
+    top: -1px;
+}
+
+.confirmContentBox {
+    padding: 0;
+    margin-left: 10px;
+}
+
+.hideRowSelectedSubStation {
+    opacity: 0.30;
+}
+
+.ui-grid-footer-cell{
+    padding: 0px 0px 0px 5px;
+    text-align:right;
+}
+
+a {
+   outline: 0 ! important;
+}
+
+.infobar .panel.panel-default:first-child{
+    margin-left:0px;
+}
+table.settings td.tlabel{
+    display: table-cell ! important;
+    font-weight:bold;
+    padding-right: 10px ! important;
+}
+table.settings td{
+    padding-right: 20px;
+}
+
+.modal-90p{
+    
+    width:90% ! important;
+}
+
+ul.regionlist{
+    margin:0px;
+    padding:0px;
+    list-style: none;
+}
+
+select.ampmselect{
+    display:none;
+}
+
+div.loader{
+    
+    position: fixed;
+    left:0px;
+    top:0px;
+    width:100%;
+    height:100%;
+    background: rgba(0, 0, 0, 0.2);
+    z-index:1000;
+
+}
+
+
+#floatingCirclesG{
+	position:relative;
+	width:125px;
+	height:125px;
+	margin: 100px auto;
+	transform:scale(0.6);
+		-o-transform:scale(0.6);
+		-ms-transform:scale(0.6);
+		-webkit-transform:scale(0.6);
+		-moz-transform:scale(0.6);
+}
+
+.f_circleG{
+	position:absolute;
+	background-color:rgb(255,255,255);
+	height:22px;
+	width:22px;
+	border-radius:12px;
+		-o-border-radius:12px;
+		-ms-border-radius:12px;
+		-webkit-border-radius:12px;
+		-moz-border-radius:12px;
+	animation-name:f_fadeG;
+		-o-animation-name:f_fadeG;
+		-ms-animation-name:f_fadeG;
+		-webkit-animation-name:f_fadeG;
+		-moz-animation-name:f_fadeG;
+	animation-duration:1.2s;
+		-o-animation-duration:1.2s;
+		-ms-animation-duration:1.2s;
+		-webkit-animation-duration:1.2s;
+		-moz-animation-duration:1.2s;
+	animation-iteration-count:infinite;
+		-o-animation-iteration-count:infinite;
+		-ms-animation-iteration-count:infinite;
+		-webkit-animation-iteration-count:infinite;
+		-moz-animation-iteration-count:infinite;
+	animation-direction:normal;
+		-o-animation-direction:normal;
+		-ms-animation-direction:normal;
+		-webkit-animation-direction:normal;
+		-moz-animation-direction:normal;
+}
+
+#frotateG_01{
+	left:0;
+	top:51px;
+	animation-delay:0.45s;
+		-o-animation-delay:0.45s;
+		-ms-animation-delay:0.45s;
+		-webkit-animation-delay:0.45s;
+		-moz-animation-delay:0.45s;
+}
+
+#frotateG_02{
+	left:15px;
+	top:15px;
+	animation-delay:0.6s;
+		-o-animation-delay:0.6s;
+		-ms-animation-delay:0.6s;
+		-webkit-animation-delay:0.6s;
+		-moz-animation-delay:0.6s;
+}
+
+#frotateG_03{
+	left:51px;
+	top:0;
+	animation-delay:0.75s;
+		-o-animation-delay:0.75s;
+		-ms-animation-delay:0.75s;
+		-webkit-animation-delay:0.75s;
+		-moz-animation-delay:0.75s;
+}
+
+#frotateG_04{
+	right:15px;
+	top:15px;
+	animation-delay:0.9s;
+		-o-animation-delay:0.9s;
+		-ms-animation-delay:0.9s;
+		-webkit-animation-delay:0.9s;
+		-moz-animation-delay:0.9s;
+}
+
+#frotateG_05{
+	right:0;
+	top:51px;
+	animation-delay:1.05s;
+		-o-animation-delay:1.05s;
+		-ms-animation-delay:1.05s;
+		-webkit-animation-delay:1.05s;
+		-moz-animation-delay:1.05s;
+}
+
+#frotateG_06{
+	right:15px;
+	bottom:15px;
+	animation-delay:1.2s;
+		-o-animation-delay:1.2s;
+		-ms-animation-delay:1.2s;
+		-webkit-animation-delay:1.2s;
+		-moz-animation-delay:1.2s;
+}
+
+#frotateG_07{
+	left:51px;
+	bottom:0;
+	animation-delay:1.35s;
+		-o-animation-delay:1.35s;
+		-ms-animation-delay:1.35s;
+		-webkit-animation-delay:1.35s;
+		-moz-animation-delay:1.35s;
+}
+
+#frotateG_08{
+	left:15px;
+	bottom:15px;
+	animation-delay:1.5s;
+		-o-animation-delay:1.5s;
+		-ms-animation-delay:1.5s;
+		-webkit-animation-delay:1.5s;
+		-moz-animation-delay:1.5s;
+}
+
+
+
+@keyframes f_fadeG{
+	0%{
+		background-color:rgb(0,0,0);
+	}
+
+	100%{
+		background-color:rgb(255,255,255);
+	}
+}
+
+@-o-keyframes f_fadeG{
+	0%{
+		background-color:rgb(0,0,0);
+	}
+
+	100%{
+		background-color:rgb(255,255,255);
+	}
+}
+
+@-ms-keyframes f_fadeG{
+	0%{
+		background-color:rgb(0,0,0);
+	}
+
+	100%{
+		background-color:rgb(255,255,255);
+	}
+}
+
+@-webkit-keyframes f_fadeG{
+	0%{
+		background-color:rgb(0,0,0);
+	}
+
+	100%{
+		background-color:rgb(255,255,255);
+	}
+}
+
+@-moz-keyframes f_fadeG{
+	0%{
+		background-color:rgb(0,0,0);
+	}
+
+	100%{
+		background-color:rgb(255,255,255);
+	}
+}
+

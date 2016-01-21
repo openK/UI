@@ -191,17 +191,17 @@ body {
 }
 
 
-    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
-        border-top: 1px solid #ddd;
-        padding: 4px;
-        vertical-align: top;
-      
-    }
-    
-    .table > thead > tr > th {
-        padding: 6px 0px 35px 6px;
-    }
-    
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    border-top: 1px solid #ddd;
+    padding: 4px;
+    vertical-align: top;
+
+}
+
+.table > thead > tr > th {
+    padding: 6px 0px 35px 6px;
+}
+
 
 @media screen and (max-width: 767px) {
     .row-offcanvas {
@@ -253,7 +253,7 @@ body {
 
 
 .ui-grid-cell button.btn-sm.btn-default{
-    
+
     margin:2px;
     height: 26px;
     width: 26px;
@@ -261,30 +261,30 @@ body {
 }
 
 .ui-grid-pager-panel{
-    
+
     border-top: solid 1px #d4d4d4;
     background-color: #efefef;
 }
 
 .mtdefault{
-    
+
     margin-top: 10px;
 }
 
 button.btn-sm.btn-default.active{
-    
+
     background-color:green ! important;
 } 
 
 .ui-grid-row.active div{
-    
-     background-color:#b4f371 ! important;
-     background-image: none ! important;
+
+    background-color:#b4f371 ! important;
+    background-image: none ! important;
 }
 
 
 div.panel-default{
-    
+
     min-height: 120px;
 }
 
@@ -292,14 +292,14 @@ div.panel-default{
 
 
 .toolbar{
-    
+
     position:absolute;
     right: 10px;
     top: 20px;
 }
 
 div.panel.panel-default.panel-details, div.panel.panel-default.panel-activities{
-    
+
     min-height:436px;
 }
 
@@ -307,7 +307,7 @@ div.panel.panel-default.panel-details, div.panel.panel-default.panel-activities{
     padding:4px 20px 4px 4px;
 }
 .panel-details table tr td:first-child{
-    
+
     font-weight:bold;
 }
 .feature-heading{
@@ -331,7 +331,7 @@ span.paging{
 
 .cursor{
     cursor:pointer;
-    
+
 }
 
 .align-right{
@@ -339,44 +339,44 @@ span.paging{
 }
 
 table.table.tree-grid th{
-    
+
     border: solid 1px #ddd;
 }
 
 table.table.tree-grid{
-    
+
     border-top: solid 1px #ddd;
     border-right: solid 1px #ddd;
 }
 
 .ui-grid-cell.ng-scope.ui-grid-disable-selection{
-    
+
     border-bottom: solid 1px #ddd;
-    
+
 }
 
 a i.indented.tree-icon.glyphicon.glyphicon-arrow-right{
-    
+
     margin-left: 30px;
 }
 
 table.tree-grid tr.tree-grid-row.ng-scope.level-3.active td{
-    
+
     background-color: #ffffff ! important;
-    
+
 }
 
 table.tree-grid tr.tree-grid-row.ng-scope.level-3:hover{
-    
+
     background-color: #eeeeee! important;
 }
 #proposalTree{
-    
+
     height: 402px;
 }
 
 #timermessage{
-    
+
     position: fixed;
     left:0px;
     top:0px;
@@ -387,42 +387,42 @@ table.tree-grid tr.tree-grid-row.ng-scope.level-3:hover{
 }
 
 #timermessage .messagebox{
-    
+
     width: 420px;
     height: 300px;
     padding: 10px;
     background-color: white;
     margin: 100px auto;
-    
+
 }
 .error{
     color:red ! important;
 }
 
 form .row.navheader{
-    
+
     margin:20px 0px 40px 0px ! important;
 
 }
 
 .row.navheader{
-    
+
     margin:0px 0px 0px 0px;
     border-top:solid 1px #cccccc;
     border-bottom:solid 1px #cccccc;
     padding: 5px 0px 5px 0px;
     background-color:#f5f5f5;
-    
+
 }
 
 .row.navfooter{
-    
+
     margin:10px 0px 0px 0px;
     border-top:solid 1px #cccccc;
     border-bottom:solid 1px #cccccc;
     padding: 5px 0px 5px 0px;
     background-color:#f5f5f5;
-    
+
 }
 
 .panel td{
@@ -438,43 +438,38 @@ form .row.navheader{
 
 table.table.tree-grid thead,
 table.table.tree-grid tbody{
-    
+
     display:block;
 }
 
 table.table.tree-grid tbody{
-    
+
     overflow-y: scroll;
-    height: 300px;
+    height: 540px;
 }
 
 table.table.tree-grid thead th,
 table.table.tree-grid tbody td
 {
-    
+
     width: 60px;
 }
 
 table.table.tree-grid thead th:nth-child(1),
 table.table.tree-grid tbody td:nth-child(1){
-    
+
     width: 65px;
 }
 
 table.table.tree-grid thead th:nth-child(6),
 table.table.tree-grid tbody td:nth-child(6){
-    
+
     width: 71px;
 }
 
 table.table.tree-grid thead th:nth-child(2),
 table.table.tree-grid tbody td:nth-child(2){
-    
+
     width: 200px;
     overflow:hidden;
-}
-
-form.form-horizontal{
-    
-    margin-top:10px;
 }

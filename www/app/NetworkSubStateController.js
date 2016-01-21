@@ -98,6 +98,7 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
                 name: 'generatingUnitJpa.registeredGeneratorJpa.unitTypeJpa',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.TECHNICALTYPE.ABBREVIATION',
+                headerTooltip: 'SUBSTATIONSGRID.TECHNICALTYPE.ABBREVIATION',
                 width: '6%'
             },
             {
@@ -105,31 +106,42 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
                 cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope">{{row.entity.maxU.value | kv}} {{row.entity.maxU.multiplier}}{{row.entity.maxU.unit}}</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.NETAREA',
+                headerTooltip: 'SUBSTATIONSGRID.NETAREA',
               //  width: '8%'
             },
             {
                 name: 'communicationTypeJpa',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.COMMUNICATIONTYPE.ABBREVIATION',
+                headerTooltip: 'SUBSTATIONSGRID.COMMUNICATIONTYPE.ABBREVIATION',
                 width: '8%'
             },
             {
                 name: 'locationJpa.mainAddress.postalCode',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.ZIP',
+                headerTooltip: 'SUBSTATIONSGRID.ZIP',
                 width: '6%'
             },
-            { name: 'name', headerCellFilter: 'translate', displayName: 'SUBSTATIONSGRID.STATIONNAME', width: '23%' },
+            { 
+                name: 'name', 
+                headerCellFilter: 'translate', 
+                displayName: 'SUBSTATIONSGRID.STATIONNAME', 
+                headerTooltip: 'SUBSTATIONSGRID.STATIONNAME', 
+                width: '23%' 
+            },
             {
                 name: 'feedInRanking',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.RANKORDER.ABBREVIATION',
+                headerTooltip: 'SUBSTATIONSGRID.RANKORDER.ABBREVIATION',
                 width: '6%'
             },
             {
                 name: 'feedInPriority',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.PRIORITYFACTOR.ABBREVIATION',
+                headerTooltip: 'SUBSTATIONSGRID.PRIORITYFACTOR.ABBREVIATION',
                 width: '6%'
             },
             // Aktuelle Regelstufe
@@ -138,6 +150,7 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
                 cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.reductionSettingMeasured.value | number : 0}} %</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.REDUCTIONSETTING.MEASURED.ABBREVIATION',
+                headerTooltip: 'SUBSTATIONSGRID.REDUCTIONSETTING.MEASURED.ABBREVIATION',
                 width: '9%'
             },
             // Installierte Leistung
@@ -146,6 +159,7 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
                 cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.generatingUnitJpa.maxOperatingP.value | number : 2}} {{row.entity.generatingUnitJpa.maxOperatingP.multiplier}}{{row.entity.generatingUnitJpa.maxOperatingP.unit}}</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.INSTALLEDPOWER.ABBREVIATION',
+                headerTooltip: 'SUBSTATIONSGRID.INSTALLEDPOWER.ABBREVIATION',
                 aggregationType: uiGridConstants.aggregationTypes.sum,
                 footerCellTemplate: '<div class="ui-grid-cell-contents">∑ {{col.getAggregationValue() | number : 2}} MW</div>',
                 width: '9%'
@@ -156,6 +170,7 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
                 cellTemplate: '<div class="ui-grid-cell-contents ng-binding ng-scope ui-grid-cell-align-right">{{row.entity.generatorPowerMeasured.value | number : 2}} {{row.entity.generatorPowerMeasured.multiplier}}{{row.entity.generatorPowerMeasured.unit}}</div>',
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.GENERATORVOLTAGE.MEASURED.ABBREVIATION',
+                headerTooltip: 'SUBSTATIONSGRID.GENERATORVOLTAGE.MEASURED.ABBREVIATION',
                 aggregationType: uiGridConstants.aggregationTypes.sum,
                 footerCellTemplate: '<div class="ui-grid-cell-contents">∑ {{col.getAggregationValue() | number : 2}} MW</div>',
                 width: '9%'
@@ -166,6 +181,7 @@ app.controller('NetworkSubStateController', ['$scope', '$http', '$timeout', '$tr
                 enableFiltering: false,
                 headerCellFilter: 'translate',
                 displayName: 'SUBSTATIONSGRID.EDIT',
+                headerTooltip: 'SUBSTATIONSGRID.EDIT',
                 cellTemplate: '<div class="ui-grid-cell-contents" title="TOOLTIP"><div class="input-group input-group-sm"><select id="regulationSteps" ng-disabled="grid.appScope.isInUse(row)" required ng-model="row.entity.subStationRegSteps" style="padding-top:2px;" class="form-control" ng-change="grid.appScope.addSubStation(grid,row)"><option ng-repeat="item in row.entity.reductionSettingJpaList | orderBy: \'setting.value\'">{{item.setting.value}}</option></select></div> <button type="button" class="btn btn-default btn-xs" aria-label="Left Align" ng-click="grid.appScope.addSubStation(grid,row)"></button></div>'
             }
             
