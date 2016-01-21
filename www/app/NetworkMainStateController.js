@@ -3,8 +3,8 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
         var activity = activityService.childActivity();
         var transformerStationsArray = [];
 
-        for(var i = 0; i < activity.calculatedReductionAdvice.substationJpaList.length; i++){
-             transformerStationsArray.push(activity.calculatedReductionAdvice.substationJpaList[i].name);
+        for (var i = 0; i < activity.calculatedReductionAdvice.substationJpaList.length; i++) {
+            transformerStationsArray.push(activity.calculatedReductionAdvice.substationJpaList[i].name);
         }
 
         $log.debug(activity);
@@ -109,8 +109,7 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
         };
         $scope.treeData = [];
 
-        var d = new Date();
-        var timestamp = d.getTime();
+        var timestamp = dateService.formatDateForRestRequest($scope.activity.dateCreated);
         $log.debug(activity.preselectionConfigurationJpa);
         $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/tree/timestamp/" + timestamp + "/", activity.calculatedReductionAdvice.preselectionConfigurationJpa).then(function (result) {
 
