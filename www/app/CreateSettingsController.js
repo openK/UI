@@ -23,8 +23,8 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
     }
 
 
-    if ($scope.activity.pointOfInjectionType === 'SUBSTATION' && $scope.activity.pointOfInjectionList) {
-        if (!$scope.activity.transformerStations) {
+    if ($scope.activity.pointOfInjectionType === 'SUBSTATION') {
+        if (!$scope.activity.transformerStations && $scope.activity.pointOfInjectionList) {
             $scope.activity.transformerStations = [];
             $scope.activity.pointOfInjectionList.forEach(function (name) {
                 $scope.activityConfigData.transformerStations.forEach(function (station) {
@@ -37,8 +37,8 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
         }
     }
 
-    if ($scope.activity.pointOfInjectionType === 'SUBGEOGRAPHICALREGION' && $scope.activity.pointOfInjectionList) {
-        if (!$scope.activity.transformerStations) {
+    if ($scope.activity.pointOfInjectionType === 'SUBGEOGRAPHICALREGION') {
+        if (!$scope.activity.transformerStations && $scope.activity.pointOfInjectionList) {
             $scope.activity.subGeographicalRegions = [];
             $scope.activity.pointOfInjectionList.forEach(function (name) {
                 $scope.activityConfigData.subGeographicalRegions.forEach(function (station) {
@@ -59,7 +59,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
             $scope.activity.pointOfInjectionType = 'SUBSTATION';
             $scope.activity.useWholeArea = false;
         } else {
-            if ($scope.activity.subGeographicalRegions.length == 0) {
+            if ($scope.activity.subGeographicalRegions.length == 0 && $scope.activity.transformerStations.length == 0) {
                 $scope.activity.useWholeArea = true;
             }
         }
@@ -73,7 +73,7 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
             $scope.activity.pointOfInjectionType = 'SUBGEOGRAPHICALREGION';
             $scope.activity.useWholeArea = false;
         } else {
-            if ($scope.activity.transformerStations.length == 0) {
+            if ($scope.activity.transformerStations.length == 0 && $scope.activity.subGeographicalRegions.length == 0) {
                 $scope.activity.useWholeArea = true;
             }
         }

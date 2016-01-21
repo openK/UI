@@ -31,9 +31,12 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 templateUrl: templPath + "overview.html",
                 controller: 'OverviewCtrl',
                 resolve: {
-                    parentActivities: function (activityService, $stateParams, $rootScope) {
+                    parentActivities: function (activityService, $stateParams, $q, $rootScope) {
                         $rootScope.show = $stateParams.show;
-                        return activityService.loadParentActivities(0, 5, null, null, null, $stateParams.show);
+                        var promises = [];
+                        promises.push(activityService.loadConfiguration());
+                        promises.push(activityService.loadParentActivities(0, 5, null, null, null, $stateParams.show));
+                        return $q.all(promises);
                     }
                 }
             })
@@ -48,17 +51,14 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 templateUrl: templPath + "CreateDownRegulation.html",
                 controller: 'CreateDownRegulationController',
                 resolve: {
-                    activity: function (activityService, $q, $state, $stateParams) {
+                    activity: function (activityService, $state, $stateParams, $q) {
                         if ($state.current.name === 'state1') {
                             activityService.resetActivity();
                         }
-                        var promises = [];
                         if ($stateParams.mode !== 'new') {
-                            promises.push(activityService.loadActivity());
+                            return activityService.loadActivity();
                         }
-
-                        promises.push(activityService.loadConfiguration());
-                        return $q.all(promises);
+                        return $q.when();
                     }
 
                 }
