@@ -1,9 +1,9 @@
-<form name="settingsForm" class="form-horizontal" data-toggle="validator" novalidate>
+<form name="settingsForm" class="form-horizontal" novalidate >
 
     <div class="form-group">
         <label for="datestarted" class="control-label col-xs-2">{{'SETTINGS.DATESTARTED'| translate}} *</label>
         <div class="controls col-xs-4" data-ng-class="{'has-error': settingsForm.datestarted.$invalid}">
-            <input type="text" data-ng-required="true" required  value="" startrange
+            <input type="text" data-ng-required="true" required value="" startrange
                    data-ng-model="dateStarted" class="form-control"
                    id="datestarted" name="datestarted">
         </div>
@@ -20,7 +20,7 @@
 
         <div class="col-xs-4" data-ng-class="{'has-error': !activity.reasonOfReduction}">
 
-            <select id="reasonofreduction" data-ng-required="true"  data-ng-model="activity.reasonOfReduction"
+            <select id="reasonofreduction" data-ng-required="true" data-ng-model="activity.reasonOfReduction"
                     data-ng-options="c for c in activityConfigData.regulationReasons track by c" class="form-control"></select>
         </div>
     </div>
@@ -31,7 +31,7 @@
         <div class="col-xs-4">
             <div class="input-group input-group-sm"
                  data-ng-class="{'has-error': activity.reductionValue < 0 || !activity.reductionValue }">
-                <input type="number" min="0.01" step="any" data-ng-required="true"  data-ng-model="activity.reductionValue"
+                <input type="number" min="0.01" step="any" data-ng-required="true" data-ng-model="activity.reductionValue"
                        data-area-describedby="requiredreductionaddon" name="requiredReductionPower" id="requiredReductionPower"
                        class="form-control">
                 <span id="requiredreductionaddon" class="input-group-addon">MW</span>
@@ -74,7 +74,7 @@
     <div class="form-group">
         <label for="description" class="control-label col-xs-2">{{'SETTINGS.DESCRIPTION'| translate}} *</label>
         <div class="col-xs-4" data-ng-class="{'has-error': !activity.description || description.$invalid}">
-            <textarea id="description" data-ng-required="true" data-ng-model="activity.description" rows="3" name="description" 
+            <textarea id="description" data-ng-required="true" data-ng-model="activity.description" rows="3" name="description"
                       class="form-control"></textarea>
         </div>
     </div>
@@ -82,13 +82,13 @@
         <label class="control-label col-xs-2">{{'SETTINGS.PRACTICE'| translate}} *</label>
         <div class="col-xs-2">
             <label class="radio-inline">
-                <input type="radio" data-ng-required="true"  data-ng-model="activity.practise" ng-value="true"
+                <input type="radio" data-ng-required="true" data-ng-model="activity.practise" ng-value="true"
                        name="practise"> {{'YES'| translate}}
             </label>
         </div>
         <div class="col-xs-2">
             <label class="radio-inline">
-                <input type="radio"data-ng-required="true"  ng-value="false" data-ng-model="activity.practise"
+                <input type="radio" data-ng-required="true" ng-value="false" data-ng-model="activity.practise"
                        name="practise"> {{'NO'| translate}}
             </label>
         </div>
@@ -99,11 +99,11 @@
             <div class="pull-right">*{{'MANDATORY'| translate}}</div>
         </div>
     </div>
-    
+
     <div class="row navheader">
         <div class="col-xs-2">
             <div class="pull-right">
-                <button class="btn btn-default" type="button" data-ui-sref="Regulation.CreateDownRegulation">
+                <button class="btn btn-default" type="button" data-ui-sref="Regulation.CreateDownRegulation({ mode: mode })">
                     {{'BACK'| translate}}
                 </button>
                 <button class="btn btn-default" type="button" data-ui-sref="state1({show: 'Aktiv'})">
@@ -114,48 +114,48 @@
         <div class="col-xs-4">
 
             <div class="pull-right">
-                <button ng-if="mode=='new'" type="button" data-ng-click="saveAndReturn(settingsForm)" class="btn btn-primary">
+                <button ng-if="mode=='new'" type="submit" ng-click="saveWithoutRegulation()" ng-disabled="settingsForm.$submitted && settingsForm.$invalid" class="btn btn-primary">
                     {{'SETTINGS.SAVEACTIVITYANDRETURN'| translate}}
                 </button>
-                <button class="btn btn-primary" type="button" data-ng-click="gotoStationList(settingsForm)">
+                <button class="btn btn-primary" type="submit" ui-sref="Regulation.CreateProposal.Main" ng-disabled="settingsForm.$submitted && settingsForm.$invalid">
                     {{'SETTINGS.CREATEADVICE'| translate}}
                 </button>
             </div>
         </div>
     </div>
-    
-    
+
+
     <div class="col-xs-12">
         <div class="alert alert-warning"
-             data-ng-show="settingsFormSubmitted &&
+             data-ng-show="settingsForm.$submitted &&
                                      (settingsForm.datestarted.$invalid ||
                                              settingsForm.datefinished.$invalid ||
                                              !activity.reasonOfReduction ||
                                              settingsForm.requiredReductionPower.$invalid ||
                                              isNoAreaDefined() ||
-                                             activity.description == '')">
+                                             settingsForm.description.$invalid || !activity.description)">
             <div class="warning"
-                 data-ng-show="settingsFormSubmitted && settingsForm.datestarted.$invalid">
+                 data-ng-show="settingsForm.$submitted && settingsForm.datestarted.$invalid">
                 {{'SETTINGS.DATESTARTED.ERROR'| translate}}
             </div>
             <div class="warning"
-                 data-ng-show="settingsFormSubmitted && settingsForm.datefinished.$invalid">
+                 data-ng-show="settingsForm.$submitted && settingsForm.datefinished.$invalid">
                 {{'SETTINGS.DATEFINISHED.ERROR'| translate}}
             </div>
             <div class="warning"
-                 data-ng-show="settingsFormSubmitted && !activity.reasonOfReduction">
+                 data-ng-show="settingsForm.$submitted && !activity.reasonOfReduction">
                 {{'SETTINGS.REASONOFREDUCTION.ERROR'| translate}}
             </div>
             <div class="warning"
-                 data-ng-show="settingsFormSubmitted && settingsForm.requiredReductionPower.$invalid">
+                 data-ng-show="settingsForm.$submitted && settingsForm.requiredReductionPower.$invalid">
                 {{'SETTINGS.REQUIREDREDUCTION.ERROR'| translate}}
             </div>
             <div class="warning"
-                 data-ng-show="settingsFormSubmitted && isNoAreaDefined()">
+                 data-ng-show="settingsForm.$submitted && isNoAreaDefined()">
                 {{'SETTINGS.AREA.ERROR'| translate}}
             </div>
             <div class="warning"
-                 data-ng-show="settingsFormSubmitted && settingsForm.description.$invalid || !activity.description">
+                 data-ng-show="settingsForm.$submitted && settingsForm.description.$invalid || !activity.description">
                 {{'SETTINGS.DESCRIPTION.ERROR'| translate}}
             </div>
         </div>

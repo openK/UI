@@ -1,26 +1,27 @@
-app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', '$rootScope', '$http', '$modal', '$log', 'activityService', '$translate', '$filter', 'dateService', 'modalServiceNew', function ($scope, $state, $stateParams, $rootScope, $http, $modal, $log, activityService, $translate, $filter, dateService, modalServiceNew) {
+app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', '$modal', 'activityService', '$filter', 'dateService', 'modalServiceNew', '$translate', function ($scope, $state, $stateParams, $modal, activityService, $filter, dateService, modalServiceNew, $translate) {
 
     $scope.activity = activityService.childActivity();
+    activityService.mode($stateParams.mode || activityService.mode());
     $scope.$parent.mytimer = false;
-    $scope.IsInChangeMode = $state.current.name.indexOf('Change') >= 0 ? true : false;
-    $scope.IsInEditMode = $state.current.name.indexOf('Edit') >= 0 ? true : false;
     $scope.activityConfigData = activityService.activityConfigData();
     $scope.activity.reductionPositive = true;
-    if ($rootScope.mode === 'edit' || $rootScope.mode === 'add') {
+
+    if (activityService.mode === 'edit' || activityService.mode === 'add') {
         $scope.activity.parentActivityJpaId = activityService.currentParentActivityId();
     }
 
-    if ($rootScope.mode === 'add') {
+    if (activityService.mode === 'add') {
         $scope.activity.id = null;
-    }
-
-    if ($rootScope.CanNavigateToCreateProposal === true) {
-        $scope.settingsFormSubmitted = true;
     }
 
     if ($scope.activity.pointOfInjectionType === 'GEOGRAPHICALREGION') {
         $scope.activity.useWholeArea = true;
     }
+
+    if ($scope.activity.pointOfInjectionType && $scope.activity.pointOfInjectionType.length > 0) {
+        $scope.activity.pointOfInjectionTypeString = $translate.instant($scope.activity.pointOfInjectionType);
+    }
+
 
     if ($scope.activity.pointOfInjectionType === 'SUBSTATION' && $scope.activity.pointOfInjectionList) {
         if (!$scope.activity.transformerStations) {
@@ -89,13 +90,6 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
         }
     }, true);
 
-    $scope.$watch('settingsForm.$invalid', function (newValue, oldValue) {
-        if (newValue === oldValue) {
-            return;
-        }
-        $rootScope.settingsFormInValid = newValue;
-    });
-
     // configure the new startDate and finsheDate...
     var now = new Date($.now());
     var dateStarted = new Date(now.setMinutes(parseInt((now.getMinutes() + 30) / 15) * 15))
@@ -115,6 +109,13 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
     $scope.dateStarted = $filter('date')(dateStarted, 'dd.MM.yyyy HH:mm');
     $scope.dateFinished = $filter('date')(dateFinished, 'dd.MM.yyyy HH:mm');
 
+    $scope.$watch('dateStarted', function (newValue, oldValue) {
+        $scope.activity.dateStarted = dateService.formatDateForBackend(newValue);
+    });
+
+    $scope.$watch('dateFinished', function (newValue, oldValue) {
+        $scope.activity.dateFinished = dateService.formatDateForBackend(newValue);
+    });
 
     var now = new Date($.now());
     $('#datestarted').daterangepicker({
@@ -181,85 +182,31 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
         }
     });
 
-    $scope.saveAndReturn = function (settingsForm) {
+    $scope.saveWithoutRegulation = function () {
 
-        if (settingsForm.$valid && $scope.isValidTimeInterval($scope.dateStarted, $scope.dateFinished)) {
-            $scope.activity.dateStarted = dateService.formatDateForBackend($scope.dateStarted);
-            $scope.activity.dateFinished = dateService.formatDateForBackend($scope.dateFinished);
-            $scope.activity.dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
-            var postData = {
-                "dateCreated": $scope.activity.dateCreated,
-                "createdBy": $scope.activity.createdBy,
-                "id": $scope.activity.activityId,
-                "parentActivityJpaId": $scope.activity.parentActivityJpaId,
-                "userSettingsJpa": {
-                    "dateStarted": $scope.activity.dateStarted,
-                    "dateFinished": $scope.activity.dateFinished,
-                    "geographicalRegion": $scope.activity.useWholeArea,
-                    "reasonOfReduction": $scope.activity.reasonOfReduction,
-                    "practise": $scope.activity.practise,
-                    "description": $scope.activity.description
-                },
-                "activePowerJpaToBeReduced": {
-                    "value": $scope.activity.reductionValue,
-                    "multiplier": "M",
-                    "unit": "W"
-                },
-                "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
-                "substationJpaList": $scope.activity.transformerStations,
-                "preselectionName": "",
-                "preselectionConfigurationJpa": {
-                    "reductionSetting": $scope.activity.reductionSetting,
-                    "discriminationCoefficientEnabled": $scope.activity.discriminationCoefficientEnabled,
-                    "characteristicForMissingMeasurementFwt": $scope.activity.characteristicForMissingMeasurementFwt,
-                    "characteristicForMissingMeasurementEfr": $scope.activity.characteristicForMissingMeasurementEfr,
-                    "substituteValueWindFwt": $scope.activity.substituteValueWindFwt,
-                    "substituteValuePhotovoltaicFwt": $scope.activity.substituteValuePhotovoltaicFwt,
-                    "substituteValueBiogasFwt": $scope.activity.substituteValueBiogasFwt,
-                    'substituteValueWindEfr': $scope.activity.substituteValueWindEfr,
-                    'substituteValuePhotovoltaicEfr': $scope.activity.substituteValuePhotovoltaicEfr,
-                    'substituteValueBiogasEfr': $scope.activity.substituteValueBiogasEfr
-                },
-                'synchronousMachineJpaReducedList': $scope.activity.substationProposalList,
-                "timeout": 30000
-            };
-
-            if (postData.parentActivityJpaId && postData.id) {
-
-                $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).then(function (result) {
-
-                    $state.go('state1', {
-                        show: 'Aktiv'
-                    });
-
-                }, function (error) {
-                    modalServiceNew.showErrorDialog(error).then(function () {
-                        $state.go('state1', {
-                            show: 'Aktiv'
-                        });
-                    });
-                });
-
-            } else {
-
-                $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", postData).then(function (result) {
-
-                    $state.go('state1', {
-                        show: 'Aktiv'
-                    });
-
-                }, function (error) {
-                    modalServiceNew.showErrorDialog(error).then(function () {
-                        $state.go('state1', {
-                            show: 'Aktiv'
-                        });
-                    });
-                });
-            }
-        } else {
-            $scope.settingsFormSubmitted = true;
+        if ($scope.settingsForm.$invalid) {
+            return;
         }
+
+        activityService.saveWithoutRegulation($scope.activity).then(function () {
+            $state.go('state1', {
+                show: 'Aktiv'
+            });
+        }, function () {
+            modalServiceNew.showErrorDialog(error).then(function () {
+                $state.go('state1', {
+                    show: 'Aktiv'
+                });
+            });
+        });
     };
+
+    $scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+        if (toState.name === 'Regulation.CreateProposal.Main' && $scope.settingsForm.$invalid) {
+            event.preventDefault();
+        }
+        $scope.settingsForm.$setSubmitted();
+    });
 
     $scope.isValidTimeInterval = function (dateStarted, dateFinished) {
         return dateService.isDateBehind(dateStarted, dateFinished);
@@ -272,112 +219,6 @@ app.controller('CreateSettingsController', ['$scope', '$state', '$stateParams', 
                 $scope.activity.subGeographicalRegions.length === 0;
     };
 
-
-    $scope.gotoStationList = function (settingsForm) {
-        if (settingsForm.$valid) {
-            $scope.activity.dateStarted = dateService.formatDateForBackend($scope.dateStarted);
-            $scope.activity.dateFinished = dateService.formatDateForBackend($scope.dateFinished);
-            $scope.activity.dateCreated = $scope.activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
-            var url = Liferay.ThemeDisplay.getCDNBaseURL() + '/openk-eisman-portlet/rest/activity/createreductionadvice';
-            if ($scope.mode == 'add') {
-                var data = {
-                    "id": $scope.activity.id,
-                    "parentActivityJpaId": $scope.activity.parentActivityJpaId,
-                    "dateStarted": $scope.activity.dateStarted,
-                    "dateFinished": $scope.activity.dateFinished,
-                    "reductionValue": $scope.activity.reductionValue,
-                    "reasonOfReduction": $scope.activity.reasonOfReduction,
-                    "practise": $scope.activity.practise,
-                    "pointOfInjectionType": $scope.activity.pointOfInjectionType,
-                    "pointOfInjectionList": $scope.activity.pointOfInjectionList,
-                    "description": $scope.activity.description,
-                    "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
-                    "substationJpaList": $scope.activity.transformerStations,
-                    "preselectionConfigurationDto": {
-                        "reductionSetting": $scope.activity.reductionSetting,
-                        "discriminationCoefficientEnabled": $scope.activity.discriminationCoefficientEnabled,
-                        "characteristicForMissingMeasurementFwt": $scope.activity.characteristicForMissingMeasurementFwt,
-                        "characteristicForMissingMeasurementEfr": $scope.activity.characteristicForMissingMeasurementEfr,
-                        "substituteValueWindFwt": $scope.activity.substituteValueWindFwt,
-                        "substituteValuePhotovoltaicFwt": $scope.activity.substituteValuePhotovoltaicFwt,
-                        "substituteValueBiogasFwt": $scope.activity.substituteValueBiogasFwt,
-                        'substituteValueWindEfr': $scope.activity.substituteValueWindEfr,
-                        'substituteValuePhotovoltaicEfr': $scope.activity.substituteValuePhotovoltaicEfr,
-                        'substituteValueBiogasEfr': $scope.activity.substituteValueBiogasEfr
-                    }
-                };
-
-                url += 'foraction'
-
-            } else {
-                var data = {
-                    "id": $scope.activity.id,
-                    "parentActivityJpaId": $scope.activity.parentActivityJpaId,
-                    "userSettingsJpa": {
-                        "dateStarted": $scope.activity.dateStarted,
-                        "dateFinished": $scope.activity.dateFinished,
-                        "geographicalRegion": $scope.activity.useWholeArea,
-                        "reasonOfReduction": $scope.activity.reasonOfReduction,
-                        "practise": $scope.activity.practise,
-                        "description": $scope.activity.description
-                    },
-                    "activePowerJpaToBeReduced": {
-                        "value": $scope.activity.reductionValue,
-                        "multiplier": "M",
-                        "unit": "W"
-                    },
-                    "subGeographicalRegionJpaList": $scope.activity.subGeographicalRegions,
-                    "substationJpaList": $scope.activity.transformerStations,
-                    "preselectionName": "",
-                    "preselectionConfigurationJpa": {
-                        "reductionSetting": $scope.activity.reductionSetting,
-                        "discriminationCoefficientEnabled": $scope.activity.discriminationCoefficientEnabled,
-                        "characteristicForMissingMeasurementFwt": $scope.activity.characteristicForMissingMeasurementFwt,
-                        "characteristicForMissingMeasurementEfr": $scope.activity.characteristicForMissingMeasurementEfr,
-                        "substituteValueWindFwt": $scope.activity.substituteValueWindFwt,
-                        "substituteValuePhotovoltaicFwt": $scope.activity.substituteValuePhotovoltaicFwt,
-                        "substituteValueBiogasFwt": $scope.activity.substituteValueBiogasFwt,
-                        'substituteValueWindEfr': $scope.activity.substituteValueWindEfr,
-                        'substituteValuePhotovoltaicEfr': $scope.activity.substituteValuePhotovoltaicEfr,
-                        'substituteValueBiogasEfr': $scope.activity.substituteValueBiogasEfr
-                    },
-                };
-            }
-            $http.post(url, data).then(function (result) {
-                var advice = result.data.synchronousMachineJpaReducedList;
-                if (result.data.id && result.data.parentActivityJpaId) {
-                    $scope.activity.id = result.data.id;
-                    $scope.activity.parentActivityJpaId = result.data.parentActivityJpaId;
-                    $scope.activity.activePowerJpaToBeReduced = { value: result.data.activePowerJpaToBeReduced.value };
-                    $scope.activity.substationProposalList = result.data.synchronousMachineJpaReducedList;
-
-                } else {
-                    result.data.id = $scope.activity.id;
-                    result.data.parentActivityJpaId = $scope.activity.parentActivityJpaId;
-                    $scope.activity.substationProposalList = result.data.synchronousMachineJpaReducedList;
-                }
-                advice.forEach(function (value) {
-                    value.getCalculatedPower = parseInt(value.generatorPowerMeasured.value - (value.reductionAdvice / 100 * value.generatingUnitJpa.maxOperatingP.value));
-                });
-
-                $scope.activity.calculatedReductionAdvice = result.data;
-                $scope.activity.calculatedReductionAdvice.dateStarted = $scope.activity.dateStarted;
-                $scope.activity.calculatedReductionAdvice.dateFinished = $scope.activity.dateFinished;
-                $state.go('Regulation.CreateProposal.Main');
-            }, function (error) {
-                modalServiceNew.showErrorDialog(error).then(function () {
-                    $state.go('state1', {
-                        show: 'Aktiv'
-                    });
-                });
-            });
-
-        } else {
-            $scope.settingsFormSubmitted = true;
-        }
-
-        return false;
-    };
 
     $scope.checkForWholeAreaDisabling = function () {
 

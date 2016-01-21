@@ -1,4 +1,4 @@
-app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceNew', '$state', function ($http, $q, $log, $filter, modalServiceNew, $state) {
+app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceNew', '$state', 'dateService', function ($http, $q, $log, $filter, modalServiceNew, $state, dateService) {
 
     var createParentActivity = function () {
         return {
@@ -182,12 +182,190 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceN
         });
     };
 
+    var saveWithoutRegulation = function (activity) {
+        var dateStarted = dateService.formatDateForBackend(activity.dateStarted);
+        var dateFinished = dateService.formatDateForBackend(activity.dateFinished);
+        var dateCreated = activity.dateCreated || $filter('date')(new Date($.now()), 'yyyy-MM-ddTHH:mm:ss.sssZ');
+        var data = {
+            "dateCreated": dateCreated,
+            "createdBy": activity.createdBy,
+            "id": activity.id,
+            "parentActivityJpaId": activity.parentActivityJpaId,
+            "userSettingsJpa": {
+                "dateStarted": dateStarted,
+                "dateFinished": dateFinished,
+                "geographicalRegion": activity.useWholeArea,
+                "reasonOfReduction": activity.reasonOfReduction,
+                "practise": activity.practise,
+                "description": activity.description
+            },
+            "activePowerJpaToBeReduced": {
+                "value": activity.reductionValue,
+                "multiplier": "M",
+                "unit": "W"
+            },
+            "subGeographicalRegionJpaList": activity.subGeographicalRegions,
+            "substationJpaList": activity.transformerStations,
+            "preselectionName": "",
+            "preselectionConfigurationJpa": {
+                "reductionSetting": activity.reductionSetting,
+                "discriminationCoefficientEnabled": activity.discriminationCoefficientEnabled,
+                "characteristicForMissingMeasurementFwt": activity.characteristicForMissingMeasurementFwt,
+                "characteristicForMissingMeasurementEfr": activity.characteristicForMissingMeasurementEfr,
+                "substituteValueWindFwt": activity.substituteValueWindFwt,
+                "substituteValuePhotovoltaicFwt": activity.substituteValuePhotovoltaicFwt,
+                "substituteValueBiogasFwt": activity.substituteValueBiogasFwt,
+                'substituteValueWindEfr': activity.substituteValueWindEfr,
+                'substituteValuePhotovoltaicEfr': activity.substituteValuePhotovoltaicEfr,
+                'substituteValueBiogasEfr': activity.substituteValueBiogasEfr
+            },
+            'synchronousMachineJpaReducedList': activity.substationProposalList,
+        };
+
+        if (data.parentActivityJpaId && data.id) {
+            return $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", data);
+        } else {
+            return $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/", data);
+        }
+    };
+
+    var _mode;
+    var mode = function (m) {
+        if(m) {
+            _mode = m;
+        }
+        return _mode;
+    };
+
+    var calculateReductionAdvice = function () {
+        var url = Liferay.ThemeDisplay.getCDNBaseURL() + '/openk-eisman-portlet/rest/activity/createreductionadvice';
+
+        if (mode() == 'add') {
+            var data = {
+                "id": null,
+                "parentActivityJpaId": childActivity.parentActivityJpaId,
+                "dateStarted": childActivity.dateStarted,
+                "dateFinished": childActivity.dateFinished,
+                "reductionValue": childActivity.reductionValue,
+                "reasonOfReduction": childActivity.reasonOfReduction,
+                "practise": childActivity.practise,
+                "pointOfInjectionType": childActivity.pointOfInjectionType,
+                "pointOfInjectionList": childActivity.pointOfInjectionList,
+                "description": childActivity.description,
+                "subGeographicalRegionJpaList": childActivity.subGeographicalRegions,
+                "substationJpaList": childActivity.transformerStations,
+                "preselectionConfigurationDto": {
+                    "reductionSetting": childActivity.reductionSetting,
+                    "discriminationCoefficientEnabled": childActivity.discriminationCoefficientEnabled,
+                    "characteristicForMissingMeasurementFwt": childActivity.characteristicForMissingMeasurementFwt,
+                    "characteristicForMissingMeasurementEfr": childActivity.characteristicForMissingMeasurementEfr,
+                    "substituteValueWindFwt": childActivity.substituteValueWindFwt,
+                    "substituteValuePhotovoltaicFwt": childActivity.substituteValuePhotovoltaicFwt,
+                    "substituteValueBiogasFwt": childActivity.substituteValueBiogasFwt,
+                    'substituteValueWindEfr': childActivity.substituteValueWindEfr,
+                    'substituteValuePhotovoltaicEfr': childActivity.substituteValuePhotovoltaicEfr,
+                    'substituteValueBiogasEfr': childActivity.substituteValueBiogasEfr
+                }
+            };
+
+            url += 'foraction'
+
+        } else {
+            var data = {
+                "id": childActivity.id,
+                "parentActivityJpaId": childActivity.parentActivityJpaId,
+                "userSettingsJpa": {
+                    "dateStarted": childActivity.dateStarted,
+                    "dateFinished": childActivity.dateFinished,
+                    "geographicalRegion": childActivity.useWholeArea,
+                    "reasonOfReduction": childActivity.reasonOfReduction,
+                    "practise": childActivity.practise,
+                    "description": childActivity.description
+                },
+                "activePowerJpaToBeReduced": {
+                    "value": childActivity.reductionValue,
+                    "multiplier": "M",
+                    "unit": "W"
+                },
+                "subGeographicalRegionJpaList": childActivity.subGeographicalRegions,
+                "substationJpaList": childActivity.transformerStations,
+                "preselectionName": "",
+                "preselectionConfigurationJpa": {
+                    "reductionSetting": childActivity.reductionSetting,
+                    "discriminationCoefficientEnabled": childActivity.discriminationCoefficientEnabled,
+                    "characteristicForMissingMeasurementFwt": childActivity.characteristicForMissingMeasurementFwt,
+                    "characteristicForMissingMeasurementEfr": childActivity.characteristicForMissingMeasurementEfr,
+                    "substituteValueWindFwt": childActivity.substituteValueWindFwt,
+                    "substituteValuePhotovoltaicFwt": childActivity.substituteValuePhotovoltaicFwt,
+                    "substituteValueBiogasFwt": childActivity.substituteValueBiogasFwt,
+                    'substituteValueWindEfr': childActivity.substituteValueWindEfr,
+                    'substituteValuePhotovoltaicEfr': childActivity.substituteValuePhotovoltaicEfr,
+                    'substituteValueBiogasEfr': childActivity.substituteValueBiogasEfr
+                },
+            };
+        }
+        return $http.post(url, data).then(function (result) {
+            var advice = result.data.synchronousMachineJpaReducedList;
+            if (result.data.id && result.data.parentActivityJpaId) {
+                childActivity.id = result.data.id;
+                childActivity.parentActivityJpaId = result.data.parentActivityJpaId;
+                childActivity.activePowerJpaToBeReduced = { value: result.data.activePowerJpaToBeReduced.value };
+                childActivity.substationProposalList = result.data.synchronousMachineJpaReducedList;
+
+            } else {
+                result.data.id = childActivity.id;
+                result.data.parentActivityJpaId = childActivity.parentActivityJpaId;
+                childActivity.substationProposalList = result.data.synchronousMachineJpaReducedList;
+            }
+            advice.forEach(function (value) {
+                value.getCalculatedPower = parseInt(value.generatorPowerMeasured.value - (value.reductionAdvice / 100 * value.generatingUnitJpa.maxOperatingP.value));
+            });
+
+            childActivity.calculatedReductionAdvice = result.data;
+            childActivity.calculatedReductionAdvice.dateStarted = childActivity.dateStarted;
+            childActivity.calculatedReductionAdvice.dateFinished = childActivity.dateFinished;
+            return $q.when(result);
+        }, function (error) {
+            return $q.reject(error);
+        });
+    }
+
+    var saveActivity = function () {
+        if (mode() === 'edit') {
+            return $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/confirmactivity/", childActivity.calculatedReductionAdvice);
+        } else {
+            childActivity.calculatedReductionAdvice.id = null;
+            return $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/confirmactivity/", childActivity.calculatedReductionAdvice);
+        }
+    };
+    var deleteProcess = function (parentId) {
+        return $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/deleteprocess", parentId);
+    };
+
+    var changeDateFinished = function (parentId, endDate) {
+        return $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/modifydatefinished/" + parentId, endDate);
+    };
+
+    var stopProcess = function (parentId) {
+        var endDate = '"' + $filter('date')(new Date($.now() + 10000), 'yyyy-MM-ddTHH:mm:ss.sssZ') + '"';
+        return changeDateFinished(parentId, endDate);
+    }
 
     return {
         pageSize: pageSize,
         createParentActivity: createParentActivity,
         createChildActivity: createChildActivity,
         resetActivity: resetActivity,
+        saveWithoutRegulation: saveWithoutRegulation,
+        calculateReductionAdvice: calculateReductionAdvice,
+        saveActivity: saveActivity,
+        loadActivity: loadActivity,
+        loadParentActivities: loadParentActivities,
+        loadConfiguration: loadConfiguration,
+        deleteProcess: deleteProcess,
+        changeDateFinished: changeDateFinished,
+        stopProcess: stopProcess,
+        mode: mode,
         childActivity: function (act) {
             if (act) {
                 childActivity = act;
@@ -198,9 +376,6 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceN
         activityConfigData: function () {
             return configData;
         },
-        loadActivity: loadActivity,
-        loadParentActivities: loadParentActivities,
-        loadConfiguration: loadConfiguration,
         currentParentActivityId: function (id) {
             if (id) {
                 currentParentActivityId = id;

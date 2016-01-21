@@ -10,9 +10,11 @@
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
 app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScope', '$http', '$modal', '$log', 'activityService', '$timeout', '$stateParams', function ($scope, $state, $rootScope, $http, $modal, $log, activityService, $timeout, $stateParams) {
+
     $scope.activityConfigData = activityService.activityConfigData();
     $scope.activity = activityService.childActivity();
-    $rootScope.mode = $stateParams.mode || $rootScope.mode;
+    activityService.mode($stateParams.mode || activityService.mode());
+    $rootScope.mode = activityService.mode();
     $scope.$watch('activity.characteristicForMissingMeasurementFwt', function (newValue, oldValue) {
         if (newValue === oldValue) {
             return;
@@ -36,7 +38,7 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
     };
 
 
-        $scope.$watch('activity.characteristicForMissingMeasurementEfr', function (newValue, oldValue) {
+    $scope.$watch('activity.characteristicForMissingMeasurementEfr', function (newValue, oldValue) {
         if (newValue === oldValue) {
             return;
         }
@@ -57,13 +59,6 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
             $scope.activity.substituteValueBiogasEfr = selectedTemplate.preselectionConfigurationJpa.substituteValueBiogasEfr;
         }
     };
-
-    $scope.$watch('preselectionForm.$invalid', function (newValue, oldValue) {
-        if (newValue === oldValue) {
-            return;
-        }
-        $rootScope.preselectionFormInValid = newValue;
-    });
 
     /*
     * Preselection Data
@@ -92,21 +87,9 @@ app.controller('CreateDownRegulationController', ['$scope', '$state', '$rootScop
         }
     };
 
-
     if ($scope.parentActivityId) {
         $scope.activity.parentActivityJpaId = $scope.parentActivityId;
     }
-
-    $scope.preselectionFormSubmitted = false;
-    $scope.gotoSettings = function (preselectionForm) {
-        if (preselectionForm.$valid) {
-            $state.go('Regulation.CreateSettings', { mode: $rootScope.mode });
-        } else {
-            $rootScope.CanNavigateToCreateSettings = false;
-            $scope.preselectionFormSubmitted = true;
-        }
-        return false;
-    };
 
     $scope.openModal = function (preselectionForm) {
         $modal.open({

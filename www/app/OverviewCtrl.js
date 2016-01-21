@@ -9,7 +9,7 @@
  * Stefan Brockmann - initial API and implementation
  * Jan Krueger - initial API and implementation
  *******************************************************************************/
-angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$log', '$timeout', '$http', '$filter', '$translate', '$state', '$stateParams', 'uiGridConstants', 'i18nService', 'activityService', 'modalService', 'dateService', '$uibModal', 'modalServiceNew', function ($scope, $rootScope, $log, $timeout, $http, $filter, $translate, $state, $stateParams, uiGridConstants, i18nService, activityService, modalService, dateService, $uibModal, modalServiceNew) {
+angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$log', '$timeout', '$filter', '$translate', '$state', '$stateParams', 'uiGridConstants', 'i18nService', 'activityService', 'modalService', 'dateService', '$uibModal', 'modalServiceNew', function ($scope, $rootScope, $log, $timeout, $filter, $translate, $state, $stateParams, uiGridConstants, i18nService, activityService, modalService, dateService, $uibModal, modalServiceNew) {
         $scope.data = {};
         $scope.data.count = 0;
         $scope.data.details = {};
@@ -86,7 +86,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                     modalService.close();
                 },
                 "ok": function () {
-                    $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/deleteprocess", $scope.currentItem.id).then(function (result) {
+                    activityService.deleteProcess($scope.currentItem.id).then(function (result) {
                         $state.forceReload();
                     }, function (error) {
                         modalServiceNew.showErrorDialog(error).then(function () {
@@ -113,8 +113,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                     var originalProcessFinishDate = new Date($scope.currentItem.dateFinished);
                     var distance = originalProcessFinishDate.getTime() - $.now();
                     if (distance > 0) {
-                        var endDate = '"' + $filter('date')(new Date($.now() + 10000), 'yyyy-MM-ddTHH:mm:ss.sssZ') + '"';
-                        return $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/modifydatefinished/" + $scope.currentItem.id, endDate).then(function (result) {
+                        return activityService.stopProcess($scope.currentItem.id).then(function (result) {
                             $state.forceReload();
                         }, function (error) {
                             modalServiceNew.showErrorDialog(error).then(function () {
@@ -187,7 +186,7 @@ angular.module('myApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$lo
                                 $state.forceReload();
                             },
                             "ok": function () {
-                                return $http.put(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/activity/modifydatefinished/" + $scope.currentItem.id, endDate).then(function (result) {
+                                return activityService.changeDateFinished($scope.currentItem.id, endDate).then(function (result) {
                                     $state.forceReload();
                                 }, function (error) {
                                     modalServiceNew.showErrorDialog(error).then(function () {

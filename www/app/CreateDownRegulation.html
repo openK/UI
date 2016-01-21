@@ -1,4 +1,4 @@
-<form name="preselectionForm" class="form-horizontal" data-toggle="validator" novalidate>
+<form name="preselectionForm" class="form-horizontal" novalidate>
 
     <div class="form-group">
         <label for="template" class="control-label col-xs-2">
@@ -202,11 +202,10 @@
         </div>
         <div class="col-xs-6">
             <div class="pull-right">
-
-                <button ng-if="mode=='new'" data-ng-click="openModal(preselectionForm)" type="button" data-ng-disabled="!preselectionForm.$valid" class="btn btn-primary">
+                <button ng-if="mode=='new'" data-ng-click="openModal(preselectionForm)" type="submit" data-ng-disabled="preselectionForm.$invalid" class="btn btn-primary">
                     {{ 'PRESELECTION.SAVETEMPLATEAS' | translate }}
                 </button>
-                <button class="btn btn-primary" type="button" data-ng-click="gotoSettings(preselectionForm)">
+                <button class="btn btn-primary" type="submit" ui-sref="Regulation.CreateSettings({ mode: mode })" data-ng-disabled="preselectionForm.$invalid" >
                     {{ 'NEXT' | translate }}
                 </button>
             </div>
@@ -217,31 +216,31 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="alert alert-warning"
-                 data-ng-show="preselectionFormSubmitted &&
+                 data-ng-show="preselectionForm.$submitted &&
                              (preselectionForm.regulationsteps.$invalid || preselectionForm.missingMeasurementFwt.$error.required || preselectionForm.missingMeasurementEfr.$error.required
                                      || preselectionForm.substituteValueBiogasFwt.$invalid || preselectionForm.substituteValuePhotovoltaicFwt.$invalid || preselectionForm.substituteValueWindFwt.$invalid
                                      || preselectionForm.substituteValueBiogasEfr.$invalid || preselectionForm.substituteValuePhotovoltaicEfr.$invalid || preselectionForm.substituteValueWindEfr.$invalid)">
                 <div>
                     <normal class="warning"
-                            data-ng-show="preselectionFormSubmitted && preselectionForm.regulationsteps.$invalid">
+                            data-ng-show="preselectionForm.$submitted && preselectionForm.regulationsteps.$invalid">
                         {{'PRESELECTION.REGULATIONSTEPS.ERROR'| translate}}
                     </normal>
                 </div>
                 <div>
                     <normal class="warning"
-                            data-ng-show="preselectionFormSubmitted && preselectionForm.missingMeasurementFwt.$error.required">
+                            data-ng-show="preselectionForm.$submitted && preselectionForm.missingMeasurementFwt.$error.required">
                         {{'PRESELECTION.MISSINGMEASUREMENTFWT.ERROR'| translate}}
                     </normal>
                 </div>
                 <div>
                     <normal class="warning"
-                            data-ng-show="preselectionFormSubmitted && preselectionForm.missingMeasurementEfr.$error.required">
+                            data-ng-show="preselectionForm.$submitted && preselectionForm.missingMeasurementEfr.$error.required">
                         {{'PRESELECTION.MISSINGMEASUREMENTEFR.ERROR'| translate}}
                     </normal>
                 </div>
                 <div>
                     <normal class="warning"
-                            data-ng-show="preselectionFormSubmitted &&
+                            data-ng-show="preselectionForm.$submitted &&
                                         (preselectionForm.substituteValueBiogasFwt.$invalid || preselectionForm.substituteValuePhotovoltaicFwt.$invalid || preselectionForm.substituteValueWindFwt.$invalid
                                                 || preselectionForm.substituteValueBiogasEfr.$invalid || preselectionForm.substituteValuePhotovoltaicEfr.$invalid || preselectionForm.substituteValueWindEfr.$invalid)">
                         {{'PRESELECTION.SUBSTITUTEWITHINPUTFACTORERROR'| translate}}

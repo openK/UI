@@ -56,6 +56,7 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                         if ($stateParams.mode !== 'new') {
                             promises.push(activityService.loadActivity());
                         }
+
                         promises.push(activityService.loadConfiguration());
                         return $q.all(promises);
                     }
@@ -82,14 +83,8 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                 controller: 'CreateSettingsController',
                 templateUrl: function ($stateParams) {
                     var prefix = "Create";
-                    if ($stateParams.mode === 'new') {
-                        prefix = 'Create'
-                    }
                     if ($stateParams.mode === 'add') {
                         prefix = 'Change'
-                    }
-                    if ($stateParams.mode === 'edit') {
-                        prefix = 'Edit'
                     }
                     return templPath + prefix + "Settings.html"
                 },
@@ -113,7 +108,18 @@ angular.module('myApp', ['ui.router', 'timer', 'pascalprecht.translate', 'treeGr
                         templateUrl: templPath + "NetworkSubState.html",
                         controller: "NetworkSubStateController"
                     }
+                },
+                resolve: {
+                    calculateAdvice: function (activityService, modalServiceNew, $state, $q) {
+                        return activityService.calculateReductionAdvice().then(function (result) {
+                            $q.when(result);
+                        }, function (error) {
+                            modalServiceNew.showErrorDialog(error);
+                            return $q.reject(error);
+                        });
+                    }
                 }
+
             }).state('Regulation.CreateProposalConfirmation', {
                 url: '/CreateProposalConfirmation/',
                 templateUrl: templPath + "CreateProposalConfirmation.html",
