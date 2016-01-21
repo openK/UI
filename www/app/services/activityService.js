@@ -320,8 +320,10 @@ app.factory('activityService', ['$http', '$q', '$log', '$filter', 'modalServiceN
             advice.forEach(function (value) {
                 value.getCalculatedPower = parseInt(value.generatorPowerMeasured.value - (value.reductionAdvice / 100 * value.generatingUnitJpa.maxOperatingP.value));
             });
-
+            childActivity.dateCreated = result.data.dateCreated;
             childActivity.calculatedReductionAdvice = result.data;
+            childActivity.calculatedReductionAdvice.dateCreated = childActivity.dateCreated;
+            childActivity.calculatedReductionAdvice.dateStarted = childActivity.dateStarted;
             childActivity.calculatedReductionAdvice.dateStarted = childActivity.dateStarted;
             childActivity.calculatedReductionAdvice.dateFinished = childActivity.dateFinished;
             return $q.when(result);
