@@ -1,4 +1,4 @@
-app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootScope', '$translate', 'modalServiceNew', 'activityService', function ($scope, $http, $log, $rootScope, $translate, modalServiceNew, activityService) {
+app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootScope', '$translate', 'modalServiceNew', 'activityService', 'dateService', function ($scope, $http, $log, $rootScope, $translate, modalServiceNew, activityService, dateService) {
 
         var activity = activityService.childActivity();
         var transformerStationsArray = [];
