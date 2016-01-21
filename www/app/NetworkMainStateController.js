@@ -109,7 +109,7 @@ app.controller('NetworkMainStateController', ['$scope', '$http', '$log', '$rootS
         };
         $scope.treeData = [];
 
-        var timestamp = dateService.formatDateForRestRequest($scope.activity.dateCreated);
+        var timestamp = dateService.formatDateForRestRequest(activity.dateCreated);
         $log.debug(activity.preselectionConfigurationJpa);
         $http.post(Liferay.ThemeDisplay.getCDNBaseURL() + "/openk-eisman-portlet/rest/subgeographicalregion/tree/timestamp/" + timestamp + "/", activity.calculatedReductionAdvice.preselectionConfigurationJpa).then(function (result) {
 
