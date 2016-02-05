@@ -31,7 +31,7 @@ git clone https://github.com/openK/UI.git
 cd UI
 ```
 
-If you just want to start a new project without the openK-US commit history then you can do:
+If you just want to start a new project without the openK-UI commit history then you can do:
 
 ```bash
 git clone --depth=1 https://github.com/openK/UI.git <your-project-name>
