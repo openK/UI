@@ -248,7 +248,7 @@ tests when you push to GitHub.
 You will need to enable the integration between Travis and GitHub. See the Travis website for more
 instruction on how to do this.
 
-#Helpful links
+###Helpful links
 
 [git]: http://git-scm.com/
 [bower]: http://bower.io
