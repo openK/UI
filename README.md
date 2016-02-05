@@ -4,11 +4,8 @@ This project is an application skeleton for a typical openK-UI web app based on 
 You can use it to quickly bootstrap your angular webapp projects and dev environment for these
 projects.
 
-The openK-UI contains a sample AngularJS application and is preconfigured to install the Angular
-framework and a bunch of development and testing tools for instant web development gratification.
-
-The openK-UI app doesn't do much, just shows how to wire two controllers and views together.
-
+The openK-UI contains aa AngularJS application and is preconfigured to install the Angular
+framework and a bunch of development and testing tools for instant start of web development.
 
 ## Getting Started
 
