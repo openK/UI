@@ -248,9 +248,7 @@ tests when you push to GitHub.
 You will need to enable the integration between Travis and GitHub. See the Travis website for more
 instruction on how to do this.
 
-## Contact
-
-For more information on AngularJS please check out http://angularjs.org/
+#Helpful links
 
 [git]: http://git-scm.com/
 [bower]: http://bower.io
