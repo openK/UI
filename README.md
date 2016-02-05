@@ -248,8 +248,6 @@ tests when you push to GitHub.
 You will need to enable the integration between Travis and GitHub. See the Travis website for more
 instruction on how to do this.
 
-###Helpful links
-
 [git]: http://git-scm.com/
 [bower]: http://bower.io
 [npm]: https://www.npmjs.org/
@@ -259,3 +257,4 @@ instruction on how to do this.
 [karma]: http://karma-runner.github.io
 [travis]: https://travis-ci.org/
 [http-server]: https://github.com/nodeapps/http-server
+
