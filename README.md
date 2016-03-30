@@ -4,11 +4,8 @@ This project is an application skeleton for a typical openK-UI web app based on 
 You can use it to quickly bootstrap your angular webapp projects and dev environment for these
 projects.
 
-The openK-UI contains a sample AngularJS application and is preconfigured to install the Angular
-framework and a bunch of development and testing tools for instant web development gratification.
-
-The openK-UI app doesn't do much, just shows how to wire two controllers and views together.
-
+The openK-UI contains aa AngularJS application and is preconfigured to install the Angular
+framework and a bunch of development and testing tools for instant start of web development.
 
 ## Getting Started
 
@@ -34,7 +31,7 @@ git clone https://github.com/openK/UI.git
 cd UI
 ```
 
-If you just want to start a new project without the openK-US commit history then you can do:
+If you just want to start a new project without the openK-UI commit history then you can do:
 
 ```bash
 git clone --depth=1 https://github.com/openK/UI.git <your-project-name>
@@ -251,10 +248,6 @@ tests when you push to GitHub.
 You will need to enable the integration between Travis and GitHub. See the Travis website for more
 instruction on how to do this.
 
-## Contact
-
-For more information on AngularJS please check out http://angularjs.org/
-
 [git]: http://git-scm.com/
 [bower]: http://bower.io
 [npm]: https://www.npmjs.org/
@@ -264,3 +257,4 @@ For more information on AngularJS please check out http://angularjs.org/
 [karma]: http://karma-runner.github.io
 [travis]: https://travis-ci.org/
 [http-server]: https://github.com/nodeapps/http-server
+
